@@ -2,7 +2,7 @@
 #define __PLAYER_H__
 
 #include "Module.h"
-
+#include "Animation.h"
 #include "SDL/include/SDL.h"
 
 class Player : public Module
@@ -21,16 +21,25 @@ public:
 	// Called before the first frame
 	bool Start();
 
+	bool Update(float dt);
+
 	bool PostUpdate();
 
 	// Called before quitting
 	bool CleanUp();
 
-	SDL_Texture* Idle = nullptr;
-	SDL_Texture* Fall = nullptr;
-	SDL_Texture* Hit = nullptr;
-	SDL_Texture* Run = nullptr;
-	SDL_Texture* Jump = nullptr;
+	SDL_Texture* idle = nullptr;
+	SDL_Texture* fall = nullptr;
+	SDL_Texture* hit = nullptr;
+	SDL_Texture* run = nullptr;
+	SDL_Texture* jump = nullptr;
+
+	Animation* currentAnimation = nullptr;
+
+	Animation idleAnim;
+
+	uint positionX = 0;
+	uint positionY = 0;
 
 };
 
