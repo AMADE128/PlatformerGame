@@ -51,7 +51,7 @@ void Map::Draw()
 			{
 				int tileId = layer->Get(x, y);
 				cord = MapToWorld(x, y);
-				//tileset = GetTilesetFromTileId(tileId);
+				tileset = GetTilesetFromTileId(tileId);
 				if (tileId > 0)
 				{
 					// L04: TODO 9: Complete the draw function
