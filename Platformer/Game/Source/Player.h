@@ -3,6 +3,8 @@
 
 #include "Module.h"
 
+#include "SDL/include/SDL.h"
+
 class Player : public Module
 {
 
