@@ -38,9 +38,6 @@ public:
 
 	Animation idleAnim;
 
-	uint positionX = 0;
-	uint positionY = 0;
-
 };
 
 #endif // __PLAYER_H__
