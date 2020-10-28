@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-up" width="90" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="1">
  <tileset firstgid="1" name="tileset" tilewidth="16" tileheight="16" tilecount="242" columns="22">
-  <image source="D:/UPC things/2ndo/Desarrollo/Free/Terrain/Terrain (16x16).png" width="352" height="176"/>
+  <image source="Terrain (16x16).png" width="352" height="176"/>
  </tileset>
  <tileset firstgid="243" name="background" tilewidth="32" tileheight="32" tilecount="4" columns="2">
-  <image source="D:/UPC things/2ndo/Desarrollo/Free/Background/Purple.png" width="64" height="64"/>
+  <image source="Purple.png" width="64" height="64"/>
  </tileset>
  <layer id="5" name="background" width="90" height="20">
   <data>

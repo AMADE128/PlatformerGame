@@ -115,11 +115,11 @@ TileSet* Map::GetTilesetFromTileId(int id) const
 	ListItem<TileSet*>* item = data.tilesets.start;
 	TileSet* set = item->data;
 
-	if (id < 25)
+	if (id < 243)
 	{
 		set = item->data;
 	}
-	else if (id > 24)
+	else if (id > 242)
 	{
 		item = item->next;
 		set = item->data;
