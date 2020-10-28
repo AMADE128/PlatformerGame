@@ -1,0 +1,23 @@
+﻿  Main.cpp
+  App.cpp
+  Audio.cpp
+  Input.cpp
+  Map.cpp
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Map.cpp(78,19): warning C4244: '=': conversión de 'float' a 'TYPE'; posible pérdida de datos
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Map.cpp(78,19): warning C4244:         with
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Map.cpp(78,19): warning C4244:         [
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Map.cpp(78,19): warning C4244:             TYPE=int
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Map.cpp(78,19): warning C4244:         ]
+  Scene.cpp
+  Render.cpp
+  Textures.cpp
+  Window.cpp
+  Log.cpp
+  pugixml.cpp
+  Generando código...
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Map.cpp(79,19): warning C4244: '=': conversión de 'float' a 'TYPE'; posible pérdida de datos
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Map.cpp(79,19): warning C4244:         with
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Map.cpp(79,19): warning C4244:         [
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Map.cpp(79,19): warning C4244:             TYPE=int
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Map.cpp(79,19): warning C4244:         ]
+  Game.vcxproj -> C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Build\Debug\Game.exe
