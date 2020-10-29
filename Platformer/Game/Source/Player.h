@@ -62,9 +62,10 @@ public:
 	float speed_y = 2;
 	float speed_xLastFrame = 2;
 	float speed_yLastFrame = 2;
+	int JumpCounter = 180;
 
 	bool god = false;
-	bool gravity = false;
+	bool gravity = true;
 
 };
 

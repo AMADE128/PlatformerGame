@@ -83,9 +83,9 @@ bool Player::Start()
 	idleRight = app->tex->Load("Assets/textures/Character/Idle (32x32).png");
 	idleLeft = app->tex->Load("Assets/textures/Character/Idle-left (32x32).png");
 	fallRight = app->tex->Load("Assets/textures/Character/Fall.png");
-	fallLeft = app->tex->Load("Assets/textures/Character/Fall-Left.png");
+	fallLeft = app->tex->Load("Assets/textures/Character/Fall-left.png");
 	deathRight = app->tex->Load("Assets/textures/Character/Hit (32x32).png");
-	deathLeft = app->tex->Load("Assets/textures/Character/Hit (32x32)-Left.png");
+	deathLeft = app->tex->Load("Assets/textures/Character/Hit (32x32)-left.png");
 	runRight = app->tex->Load("Assets/textures/Character/Run (32x32).png");
 	runLeft = app->tex->Load("Assets/textures/Character/Run (32x32)-left.png");
 	jumpRight = app->tex->Load("Assets/textures/Character/Jump (32x32).png");
@@ -93,7 +93,7 @@ bool Player::Start()
 
 	currentAnimation = &idleRightAnim;
 	currentTex = idleRight;
-
+	speed_y = 0.3f;
 	return true;
 }
 
@@ -104,8 +104,7 @@ bool Player::PreUpdate()
 
 bool Player::Update(float dt)
 {
-
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && JumpCounter == 180)
 	{
 		if (god == true)
 		{
@@ -116,7 +115,8 @@ bool Player::Update(float dt)
 		else if (god == false)
 		{
 			speed_yLastFrame = speed_y;
-			speed_y = -0.3f;
+			speed_y = -0.7f;
+			JumpCounter = 0;
 			position.y += speed_y;
 			currentTex = jumpRight;
 			currentAnimation = &jumpRightAnim;
@@ -184,6 +184,43 @@ bool Player::Update(float dt)
 	if (gravity == true)
 	{
 		position.y += speed_y;
+	}
+
+	if (JumpCounter < 179)
+	{
+		JumpCounter++;
+	}
+	if (JumpCounter == 90) 
+	{
+		speed_y = -0.5f;
+	}
+	else if (JumpCounter == 110) 
+	{
+		speed_y = -0.4f;
+	}
+	else if (JumpCounter == 135)
+	{
+		speed_y = -0.3f;
+	}
+	else if (JumpCounter == 130)
+	{
+		speed_y = -0.2f;
+	}
+	else if (JumpCounter == 140) 
+	{
+		speed_y = -0.1f;
+	}
+	else if (JumpCounter == 165)
+	{
+		speed_y = 0.1f;
+	}
+	else if (JumpCounter == 174)
+	{
+		speed_y = 0.2f;
+	}
+	else if (JumpCounter == 179) {
+		speed_y = 0.4f;
+		JumpCounter = 180;
 	}
 
 	currentAnimation->Update();
