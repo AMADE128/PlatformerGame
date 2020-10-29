@@ -155,8 +155,6 @@ bool Player::PostUpdate()
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
 	app->render->DrawTexture(currentTex, position.x, position.y, &rect);
 
-	SDL_RenderCopyEx(app->render->renderer, currentTex, &rect, &rect, NULL, NULL, flip);
-
 	return true;
 }
 
