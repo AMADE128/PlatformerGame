@@ -91,6 +91,8 @@ public:
     // Called before render is available
     bool Awake(pugi::xml_node& conf);
 
+	bool Start();
+
     // Called each loop iteration
     void Draw();
 
@@ -106,6 +108,8 @@ public:
 	// L05: TODO 2: Add orthographic world to map coordinates
 	iPoint WorldToMap(int x, int y) const;
 
+	TileSet* GetTilesetFromTileId(int id) const;
+
 private:
 
 	// L03: Methods to load all required map data
@@ -114,7 +118,7 @@ private:
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 
-	TileSet* GetTilesetFromTileId(int id) const;
+	
 
 public:
 

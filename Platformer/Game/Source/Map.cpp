@@ -3,9 +3,12 @@
 #include "Render.h"
 #include "Textures.h"
 #include "Map.h"
+#include "Collisions.h"
+#include "Scene.h"
 
 #include "Defs.h"
 #include "Log.h"
+#include "Collider.h"
 
 #include <math.h>
 
@@ -29,6 +32,11 @@ bool Map::Awake(pugi::xml_node& config)
     return ret;
 }
 
+bool Map::Start()
+{
+	return true;
+}
+
 // Draw the map (all requried layers)
 void Map::Draw()
 {
@@ -36,11 +44,9 @@ void Map::Draw()
 
 	// L04: DONE 5: Prepare the loop to draw all tilesets + DrawTexture()
 	
-	ListItem<TileSet*>* item2 = data.tilesets.start;
 	MapLayer* layer;
-	TileSet* tileset = data.tilesets.start->data;
+	TileSet* tileset;
 	iPoint cord;
-
 
 	for (ListItem<MapLayer*>* item = data.layers.start; item; item = item->next)
 	{
@@ -127,10 +133,13 @@ TileSet* Map::GetTilesetFromTileId(int id) const
 	else if (id > 258 && id < 268)
 	{
 		item = item->next;
+		item = item->next;
 		set = item->data;
 	}
-	else if (id > 267)
+	else if (id == 268)
 	{
+		item = item->next;
+		item = item->next;
 		item = item->next;
 		set = item->data;
 	}

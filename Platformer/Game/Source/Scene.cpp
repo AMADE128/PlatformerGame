@@ -6,6 +6,7 @@
 #include "Window.h"
 #include "Scene.h"
 #include "Map.h"
+#include "Collisions.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -24,6 +25,8 @@ bool Scene::Awake()
 {
 	LOG("Loading Scene");
 	bool ret = true;
+
+
 
 	return ret;
 }
@@ -70,7 +73,7 @@ bool Scene::Update(float dt)
 		}
 
 	if(app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		if (app->render->camera.x > -2222)
+		if (app->render->camera.x > -2271)
 		{
 			app->render->camera.x -= 2;
 		}

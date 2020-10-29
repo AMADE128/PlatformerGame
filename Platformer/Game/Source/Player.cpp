@@ -5,6 +5,8 @@
 #include "Render.h"
 #include "Input.h"
 
+#include "Collisions.h"
+
 #define TILESIZE 32
 
 Player::Player() : Module()
@@ -90,6 +92,8 @@ bool Player::Start()
 	runLeft = app->tex->Load("Assets/textures/Character/Run (32x32)-left.png");
 	jumpRight = app->tex->Load("Assets/textures/Character/Jump (32x32).png");
 	jumpLeft = app->tex->Load("Assets/textures/Character/Jump (32x32)-left.png");
+
+	collider = app->collision->AddCollider({ (int)position.x, (int)position.y, TILESIZE, TILESIZE}, Collider::Type::PLAYER, this);
 
 	currentAnimation = &idleRightAnim;
 	currentTex = idleRight;
@@ -224,7 +228,7 @@ bool Player::Update(float dt)
 	}
 
 	currentAnimation->Update();
-
+	collider->SetPos(position.x, position.y);
 
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
 	app->render->DrawTexture(currentTex, position.x, position.y, &rect);
@@ -253,5 +257,22 @@ bool Player::CleanUp()
 	app->tex->UnLoad(jumpRight);
 	app->tex->UnLoad(jumpLeft);
 
+	app->collision->RemoveCollider(collider);
+
+	return true;
+}
+
+
+bool Player::StopMovementY(Collider* c1, Collider* c2)
+{
+	gravity = false;
+	speed_y = 0;
+
+	return true;
+}
+
+bool Player::Fall(Collider* c1, Collider* c2)
+{
+	
 	return true;
 }

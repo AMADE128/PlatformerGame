@@ -7,6 +7,8 @@
 
 #include "Point.h"
 
+struct Collider;
+
 class Player : public Module
 {
 
@@ -29,9 +31,14 @@ public:
 
 	bool PostUpdate();
 
+	bool StopMovementY(Collider* c1, Collider* c2) override;
+
+	bool Fall(Collider* c1, Collider* c2) override;
+
 	// Called before quitting
 	bool CleanUp();
 	SDL_Texture* currentTex = nullptr;
+
 	SDL_Texture* idleRight = nullptr;
 	SDL_Texture* idleLeft = nullptr;
 	SDL_Texture* fallRight = nullptr;
@@ -63,6 +70,8 @@ public:
 	float speed_xLastFrame = 2;
 	float speed_yLastFrame = 2;
 	int JumpCounter = 180;
+
+	Collider* collider = nullptr;
 
 	bool god = false;
 	bool gravity = true;
