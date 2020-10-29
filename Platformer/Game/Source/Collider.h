@@ -11,10 +11,8 @@ struct Collider
 	{
 		NONE,
 		GROUND,
-		WALL,  //Wall that lets the player pass from one side
+		WALL,
 		PLAYER,
-		ENEMY,
-		GODMODE,
 
 
 		MAX
@@ -29,10 +27,10 @@ struct Collider
 
 	//Variables
 	SDL_Rect rect;
-	bool pendingToDelete = false;
 	Type type;
 	Module* listener = nullptr;
 };
 
 
 #endif // !__COLLIDER_H_
+
