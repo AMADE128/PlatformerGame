@@ -32,24 +32,36 @@ public:
 	// Called before quitting
 	bool CleanUp();
 	SDL_Texture* currentTex = nullptr;
-	SDL_Texture* idle = nullptr;
-	SDL_Texture* fall = nullptr;
-	SDL_Texture* run = nullptr;
-	SDL_Texture* jump = nullptr;
-	SDL_Texture* death = nullptr;
+	SDL_Texture* idleRight = nullptr;
+	SDL_Texture* idleLeft = nullptr;
+	SDL_Texture* fallRight = nullptr;
+	SDL_Texture* fallLeft = nullptr;
+	SDL_Texture* runRight = nullptr;
+	SDL_Texture* runLeft = nullptr;
+	SDL_Texture* jumpRight = nullptr;
+	SDL_Texture* jumpLeft = nullptr;
+	SDL_Texture* deathRight = nullptr;
+	SDL_Texture* deathLeft = nullptr;
 
 	Animation* currentAnimation = nullptr;
 
-	Animation idleAnim;
-	Animation fallAnim;
-	Animation runAnim;
-	Animation jumpAnim;
-	Animation deathAnim;
+	Animation idleRightAnim;
+	Animation idleLeftAnim;
+	Animation fallRightAnim;
+	Animation fallLeftAnim;
+	Animation runRightAnim;
+	Animation runLeftAnim;
+	Animation jumpRightAnim;
+	Animation jumpLeftAnim;
+	Animation deathRightAnim;
+	Animation deathLeftAnim;
 
 	fPoint position;
 
 	float speed_x = 2;
 	float speed_y = 2;
+	float speed_xLastFrame = 2;
+	float speed_yLastFrame = 2;
 
 	bool god = false;
 	bool gravity = false;

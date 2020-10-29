@@ -14,27 +14,51 @@ Player::Player() : Module()
 
 	for (int i = 0; i < TILESIZE * 11; i += TILESIZE)
 	{
-		idleAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
+		idleRightAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
 	}
-	idleAnim.loop = true;
-	idleAnim.speed = 0.1f;
+	idleRightAnim.loop = true;
+	idleRightAnim.speed = 0.1f;
+
+	for (int i = 0; i < TILESIZE * 11; i += TILESIZE)
+	{
+		idleLeftAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
+	}
+	idleLeftAnim.loop = true;
+	idleLeftAnim.speed = 0.1f;
 
 	for (int i = 0; i < TILESIZE * 12; i += TILESIZE)
 	{
-		runAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
+		runRightAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
 	}
-	runAnim.loop = true;
-	runAnim.speed = 0.1f;
+	runRightAnim.loop = true;
+	runRightAnim.speed = 0.1f;
 
-	fallAnim.PushBack({ 0, 0, TILESIZE, TILESIZE });
+	for (int i = 0; i < TILESIZE * 12; i += TILESIZE)
+	{
+		runLeftAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
+	}
+	runLeftAnim.loop = true;
+	runLeftAnim.speed = 0.1f;
 
-	jumpAnim.PushBack({ 0, 0, TILESIZE, TILESIZE });
+	fallRightAnim.PushBack({ 0, 0, TILESIZE, TILESIZE });
+
+	fallLeftAnim.PushBack({ 0, 0, TILESIZE, TILESIZE });
+
+	jumpRightAnim.PushBack({ 0, 0, TILESIZE, TILESIZE });
+
+	jumpLeftAnim.PushBack({ 0, 0, TILESIZE, TILESIZE });
 
 	for (int i = 0; i < TILESIZE * 7; i += TILESIZE)
 	{
-		deathAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
+		deathRightAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
 	}
-	deathAnim.speed = 0.1f;
+	deathRightAnim.speed = 0.1f;
+
+	for (int i = 0; i < TILESIZE * 7; i += TILESIZE)
+	{
+		deathLeftAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
+	}
+	deathLeftAnim.speed = 0.1f;
 }
 
 // Destructor
@@ -56,14 +80,19 @@ bool Player::Start()
 	position.x = 100;
 	position.y = 500;
 	//Cargar texturas
-	idle = app->tex->Load("Assets/textures/Character/Idle (32x32).png");
-	fall = app->tex->Load("Assets/textures/Character/Fall.png");
-	death = app->tex->Load("Assets/textures/Character/Hit (32x32).png");
-	run = app->tex->Load("Assets/textures/Character/Run (32x32).png");
-	jump = app->tex->Load("Assets/textures/Character/Jump (32x32).png");
+	idleRight = app->tex->Load("Assets/textures/Character/Idle (32x32).png");
+	idleLeft = app->tex->Load("Assets/textures/Character/Idle-left (32x32).png");
+	fallRight = app->tex->Load("Assets/textures/Character/Fall.png");
+	fallLeft = app->tex->Load("Assets/textures/Character/Fall-Left.png");
+	deathRight = app->tex->Load("Assets/textures/Character/Hit (32x32).png");
+	deathLeft = app->tex->Load("Assets/textures/Character/Hit (32x32)-Left.png");
+	runRight = app->tex->Load("Assets/textures/Character/Run (32x32).png");
+	runLeft = app->tex->Load("Assets/textures/Character/Run (32x32)-left.png");
+	jumpRight = app->tex->Load("Assets/textures/Character/Jump (32x32).png");
+	jumpLeft = app->tex->Load("Assets/textures/Character/Jump (32x32)-left.png");
 
-	currentAnimation = &idleAnim;
-	currentTex = idle;
+	currentAnimation = &idleRightAnim;
+	currentTex = idleRight;
 
 	return true;
 }
@@ -80,15 +109,17 @@ bool Player::Update(float dt)
 	{
 		if (god == true)
 		{
-			speed_y = 0.3f;
-			position.y -= speed_y;
+			speed_yLastFrame = speed_y;
+			speed_y = -0.3f;
+			position.y += speed_y;
 		}
 		else if (god == false)
 		{
-			speed_y = 0.3f;
-			position.y -= speed_y;
-			currentTex = jump;
-			currentAnimation = &jumpAnim;
+			speed_yLastFrame = speed_y;
+			speed_y = -0.3f;
+			position.y += speed_y;
+			currentTex = jumpRight;
+			currentAnimation = &jumpRightAnim;
 		}
 
 	}
@@ -96,30 +127,34 @@ bool Player::Update(float dt)
 	{
 		if (god == true)
 		{
+			speed_yLastFrame = speed_y;
 			speed_y = 0.3f;
 			position.y += speed_y;
 		}
 		else if (god == false)
 		{
+			speed_yLastFrame = speed_y;
 			speed_y = 0.3f;
 			position.y += speed_y;
-			currentTex = fall;
-			currentAnimation = &fallAnim;
+			currentTex = fallRight;
+			currentAnimation = &fallRightAnim;
 		}
 	}
 	else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && app->input->GetKey(SDL_SCANCODE_D) != KEY_REPEAT)
 	{
 		if (god == true)
 		{
-			speed_x = 0.3f;
-			position.x -= speed_x;
+			speed_xLastFrame = speed_x;
+			speed_x = -0.3f;
+			position.x += speed_x;
 		}
 		else if (god == false)
 		{
-			speed_x = 0.3f;
-			position.x -= speed_x;
-			currentTex = run;
-			currentAnimation = &runAnim;
+			speed_xLastFrame = speed_x;
+			speed_x = -0.3f;
+			position.x += speed_x;
+			currentTex = runLeft;
+			currentAnimation = &runLeftAnim;
 		}
 
 	}
@@ -127,21 +162,23 @@ bool Player::Update(float dt)
 	{
 		if (god == true)
 		{
+			speed_xLastFrame = speed_x;
 			speed_x = 0.3f;
 			position.x += speed_x;
 		}
 		else if (god == false)
 		{
+			speed_xLastFrame = speed_x;
 			speed_x = 0.3f;
 			position.x += speed_x;
-			currentTex = run;
-			currentAnimation = &runAnim;
+			currentTex = runRight;
+			currentAnimation = &runRightAnim;
 		}
 	}
 	else
 	{
-		currentAnimation = &idleAnim;
-		currentTex = idle;
+		currentAnimation = &idleRightAnim;
+		currentTex = idleRight;
 	}
 
 	if (gravity == true)
@@ -168,11 +205,16 @@ bool Player::CleanUp()
 	LOG("Unloading particles");
 
 	//Aqui deletamos cosas
-	app->tex->UnLoad(idle);
-	app->tex->UnLoad(fall);
-	app->tex->UnLoad(death);
-	app->tex->UnLoad(run);
-	app->tex->UnLoad(jump);
+	app->tex->UnLoad(idleRight);
+	app->tex->UnLoad(idleLeft);
+	app->tex->UnLoad(fallRight);
+	app->tex->UnLoad(fallLeft);
+	app->tex->UnLoad(deathRight);
+	app->tex->UnLoad(deathLeft);
+	app->tex->UnLoad(runRight);
+	app->tex->UnLoad(runLeft);
+	app->tex->UnLoad(jumpRight);
+	app->tex->UnLoad(jumpLeft);
 
 	return true;
 }
