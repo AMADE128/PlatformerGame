@@ -1,2 +1,15 @@
-﻿  Main.cpp
-  Game.vcxproj -> C:\Users\POL\Documents\GitHub\Aprending_Team-Platformer_Alpha\Platformer\Build\Debug\Game.exe
+﻿  Player.cpp
+C:\Users\POL\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Animation.h(60,19): warning C4244: 'initializing': conversion from 'const float' to 'int', possible loss of data
+C:\Users\POL\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Animation.h(62,30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\POL\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Animation.h(69,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\POL\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(156,59): warning C4244: 'argument': conversion from 'TYPE' to 'int', possible loss of data
+          with
+          [
+              TYPE=float
+          ]
+C:\Users\POL\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(156,47): warning C4244: 'argument': conversion from 'TYPE' to 'int', possible loss of data
+          with
+          [
+              TYPE=float
+          ]
+  Game.vcxproj -> C:\Users\POL\Documents\GitHub\PlatformerGame\Platformer\Build\Debug\Game.exe
