@@ -70,60 +70,69 @@ bool Player::Start()
 
 bool Player::PreUpdate()
 {
+	return true;
+}
+
+bool Player::Update(float dt)
+{
+
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
 		if (god == true)
 		{
-			speed_y = 0.2f;
+			speed_y = 0.3f;
 			position.y -= speed_y;
 		}
 		else if (god == false)
 		{
-			speed_y = 0.2f;
+			speed_y = 0.3f;
 			position.y -= speed_y;
+			currentTex = jump;
+			currentAnimation = &jumpAnim;
 		}
-		
+
 	}
 	else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
 		if (god == true)
 		{
-			speed_y = 0.2f;
+			speed_y = 0.3f;
 			position.y += speed_y;
 		}
 		else if (god == false)
 		{
-			speed_y = 0.2f;
+			speed_y = 0.3f;
 			position.y += speed_y;
+			currentTex = fall;
+			currentAnimation = &fallAnim;
 		}
 	}
-	else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && app->input->GetKey(SDL_SCANCODE_D) != KEY_REPEAT)
 	{
 		if (god == true)
 		{
-			speed_x = 0.2f;
+			speed_x = 0.3f;
 			position.x -= speed_x;
 		}
 		else if (god == false)
 		{
-			speed_x = 0.2f;
+			speed_x = 0.3f;
 			position.x -= speed_x;
 			currentTex = run;
 			currentAnimation = &runAnim;
-			flip = SDL_FLIP_HORIZONTAL;
 		}
-		
+
 	}
-	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && app->input->GetKey(SDL_SCANCODE_A) != KEY_REPEAT)
 	{
 		if (god == true)
 		{
-			speed_x = 0.2f;
+			speed_x = 0.3f;
 			position.x += speed_x;
 		}
 		else if (god == false)
 		{
-			speed_x = 0.2f;
+			speed_x = 0.3f;
 			position.x += speed_x;
 			currentTex = run;
 			currentAnimation = &runAnim;
@@ -140,23 +149,17 @@ bool Player::PreUpdate()
 		position.y += speed_y;
 	}
 
-	return true;
-}
-
-bool Player::Update(float dt)
-{
 	currentAnimation->Update();
+
+
+	SDL_Rect rect = currentAnimation->GetCurrentFrame();
+	app->render->DrawTexture(currentTex, position.x, position.y, &rect);
 
 	return true;
 }
 
 bool Player::PostUpdate()
 {
-	SDL_Rect rect = currentAnimation->GetCurrentFrame();
-	app->render->DrawTexture(currentTex, position.x, position.y, &rect);
-
-	SDL_RenderCopyEx(app->render->renderer, currentTex, &rect, &rect, NULL, NULL, flip);
-
 	return true;
 }
 

@@ -37,8 +37,6 @@ public:
 	SDL_Texture* run = nullptr;
 	SDL_Texture* jump = nullptr;
 	SDL_Texture* death = nullptr;
-	
-	SDL_RendererFlip flip;
 
 	Animation* currentAnimation = nullptr;
 

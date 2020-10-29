@@ -81,16 +81,11 @@ bool Scene::Update(float dt)
 			app->render->camera.x += 2;
 		}
 
-	//app->render->DrawTexture(img, 380, 100); // Placeholder not needed any more
-
 	// Draw map
 	app->map->Draw();
 
 	// L03: DONE 7: Set the window title with map/tileset info
-	SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
-				   app->map->data.width, app->map->data.height,
-				   app->map->data.tileWidth, app->map->data.tileHeight,
-				   app->map->data.tilesets.count());
+	SString title("Platformer Game");
 
 	app->win->SetTitle(title.GetString());
 
