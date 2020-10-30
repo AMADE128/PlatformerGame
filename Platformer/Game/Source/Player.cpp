@@ -72,6 +72,8 @@ bool Player::Awake()
 	LOG("Init Player");
 	bool ret = true;
 
+	firstTime = SDL_GetTicks();
+
 	return ret;
 }
 
@@ -108,21 +110,21 @@ bool Player::PreUpdate()
 
 bool Player::Update(float dt)
 {
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && JumpCounter == 180 && y_downcollision == true)
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && y_downCollision == true)
 	{
 		if (god == true)
 		{
 			speed_yLastFrame = speed_y;
-			speed_y = -0.3f;
+			speed_y = -1;
 			position.y += speed_y;
 		}
 		else if (god == false)
 		{
-			y_downcollision = false;
 			speed_yLastFrame = speed_y;
-			speed_y = -0.7f;
-			JumpCounter = 0;
-			position.y += speed_y;
+			if (!isJumping) // Only jump if it is not yet currently jumping
+			{
+				isJumping = true;
+			}
 		}
 
 	}
@@ -131,20 +133,8 @@ bool Player::Update(float dt)
 		if (god == true)
 		{
 			speed_yLastFrame = speed_y;
-			speed_y = 0.3f;
+			speed_y = 1;
 			position.y += speed_y;
-		}
-		else if (god == false)
-		{
-			/*speed_yLastFrame = speed_y;
-			speed_y = 0.3f;
-			position.y += speed_y;
-			currentTex = fallRight;
-			currentAnimation = &fallRightAnim;
-			if (app->render->camera.y < 0)
-			{
-				app->render->camera.y -= 2;
-			}*/
 		}
 	}
 	else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && app->input->GetKey(SDL_SCANCODE_D) != KEY_REPEAT)
@@ -155,9 +145,9 @@ bool Player::Update(float dt)
 			speed_x = 1;
 			position.x -= speed_x;
 		}
-		else if (god == false && x_leftcollision == false)
+		else if (god == false && x_leftCollision == false)
 		{
-			x_rightcollision = false;
+			x_rightcCollision = false;
 			speed_xLastFrame = speed_x;
 			speed_x = 1;
 			position.x -= speed_x;
@@ -165,7 +155,7 @@ bool Player::Update(float dt)
 			{
 				app->render->camera.x += 1;
 			}
-			if (y_downcollision == true || x_leftcollision == true)
+			if (y_downCollision == true || x_leftCollision == true)
 			{
 				currentTex = runLeft;
 				currentAnimation = &runLeftAnim;
@@ -186,9 +176,9 @@ bool Player::Update(float dt)
 			speed_x = 1;
 			position.x += speed_x;
 		}
-		else if (god == false && x_rightcollision == false)
+		else if (god == false && x_rightcCollision == false)
 		{
-			x_leftcollision = false;
+			x_leftCollision = false;
 			speed_xLastFrame = speed_x;
 			speed_x = 1;
 			position.x += speed_x;
@@ -196,7 +186,7 @@ bool Player::Update(float dt)
 			{
 				app->render->camera.x -= 1;
 			}
-			if (y_downcollision == true || x_rightcollision == true)
+			if (y_downCollision == true || x_rightcCollision == true)
 			{
 				currentTex = runRight;
 				currentAnimation = &runRightAnim;
@@ -241,53 +231,24 @@ bool Player::Update(float dt)
 				currentTex = jumpLeft;
 			}
 		}
-		else if (speed_y > 0)
-		{
-
-		}
 	}
 
-	if (y_downcollision == false)
+	if (isJumping)
 	{
-		position.y += speed_y;
+		y_downCollision = false;
+		position.y -= 3;
 	}
 
-	if (JumpCounter < 179)
+	if (y_downCollision == true)
 	{
-		JumpCounter++;
+		speed_y = 0;
 	}
-	if (JumpCounter == 90) 
+	else
 	{
-		speed_y = -0.5f;
+		speed_y += 0.1f;
+		if (speed_y < gravity) speed_y = gravity;
 	}
-	else if (JumpCounter == 110) 
-	{
-		speed_y = -0.4f;
-	}
-	else if (JumpCounter == 135)
-	{
-		speed_y = -0.3f;
-	}
-	else if (JumpCounter == 130)
-	{
-		speed_y = -0.2f;
-	}
-	else if (JumpCounter == 140) 
-	{
-		speed_y = -0.1f;
-	}
-	else if (JumpCounter == 165)
-	{
-		speed_y = 0.1f;
-	}
-	else if (JumpCounter == 174)
-	{
-		speed_y = 0.2f;
-	}
-	else if (JumpCounter == 179) {
-		speed_y = 0.4f;
-		JumpCounter = 180;
-	}
+	position.y += speed_y;
 
 	currentAnimation->Update();
 	collider->SetPos(position.x, position.y);
@@ -329,8 +290,8 @@ bool Player::StopMovementY(Collider* c1, Collider* c2)
 {
 	if (c1->rect.y < c2->rect.y)
 	{
-		y_downcollision = true;
-		speed_y = 0.f;
+		y_downCollision = true;
+		isJumping = false;
 	}
 
 	return true;
@@ -340,12 +301,12 @@ bool Player::StopMovement(Collider* c1, Collider* c2)
 {
 	if (c1->rect.x < c2->rect.x && c1->rect.y > c2->rect.y)
 	{
-		x_rightcollision = true;
+		x_rightcCollision = true;
 		speed_x = 0.f;
 	}
 	else if (c1->rect.x > c2->rect.x && c1->rect.y > c2->rect.y)
 	{
-		x_leftcollision = true;
+		x_leftCollision = true;
 		speed_x = 0.f;
 	}
 	return true;

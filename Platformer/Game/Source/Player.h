@@ -62,21 +62,30 @@ public:
 	Animation deathRightAnim;
 	Animation deathLeftAnim;
 
+	int firstTime;
+
 	fPoint position;
 
-	float speed_x = 2;
-	float speed_y = 2;
-	float speed_xLastFrame = 2;
-	float speed_yLastFrame = 2;
-	int JumpCounter = 100;
+	float speed_x;
+	float speed_y;
+	float speed_y0;
+	float speed_xLastFrame;
+	float speed_yLastFrame;
 
 	Collider* collider = nullptr;
 
 	bool god = false;
-	bool y_downcollision;
-	bool y_upcollision;
-	bool x_leftcollision;
-	bool x_rightcollision;
+	bool y_downCollision;
+	bool y_upCollision;
+	bool x_leftCollision;
+	bool x_rightcCollision;
+
+	int t0;
+	int t;
+	fPoint pos0;
+	int gravity;
+	bool isJumping;
+
 
 };
 

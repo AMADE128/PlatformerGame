@@ -1,34 +1,26 @@
-﻿  App.cpp
-C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Animation.h(60,19): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
-C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Animation.h(62,30): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-  Collisions.cpp
-C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Animation.h(69,18): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Animation.h(60,19): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
-C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Animation.h(62,30): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
-  Player.cpp
-C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Animation.h(69,18): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+﻿  Player.cpp
 C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Animation.h(60,19): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
 C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Animation.h(62,30): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
 C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Animation.h(69,18): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(293,39): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
-C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(293,39): warning C4244:         with
-C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(293,39): warning C4244:         [
-C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(293,39): warning C4244:             TYPE=float
-C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(293,39): warning C4244:         ]
-C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(293,27): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
-C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(293,27): warning C4244:         with
-C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(293,27): warning C4244:         [
-C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(293,27): warning C4244:             TYPE=float
-C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(293,27): warning C4244:         ]
-C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(296,59): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
-C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(296,59): warning C4244:         with
-C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(296,59): warning C4244:         [
-C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(296,59): warning C4244:             TYPE=float
-C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(296,59): warning C4244:         ]
-  Generando código...
-C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(296,47): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
-C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(296,47): warning C4244:         with
-C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(296,47): warning C4244:         [
-C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(296,47): warning C4244:             TYPE=float
-C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(296,47): warning C4244:         ]
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(249,36): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(254,39): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(254,39): warning C4244:         with
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(254,39): warning C4244:         [
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(254,39): warning C4244:             TYPE=float
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(254,39): warning C4244:         ]
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(254,27): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(254,27): warning C4244:         with
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(254,27): warning C4244:         [
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(254,27): warning C4244:             TYPE=float
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(254,27): warning C4244:         ]
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(257,59): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(257,59): warning C4244:         with
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(257,59): warning C4244:         [
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(257,59): warning C4244:             TYPE=float
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(257,59): warning C4244:         ]
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(257,47): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(257,47): warning C4244:         with
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(257,47): warning C4244:         [
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(257,47): warning C4244:             TYPE=float
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Player.cpp(257,47): warning C4244:         ]
   Game.vcxproj -> C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Build\Debug\Game.exe
