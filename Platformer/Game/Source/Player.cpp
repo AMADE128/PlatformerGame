@@ -9,7 +9,7 @@
 
 #define TILESIZE 32
 
-Player::Player() : Module()
+Player::Player(bool startEnabled) : Module(startEnabled)
 {
 	name.Create("player");
 	

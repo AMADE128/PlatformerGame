@@ -10,7 +10,7 @@ class Collisions : public Module
 {
 public:
 
-	Collisions();
+	Collisions(bool StartEnabled);
 
 	// Destructor
 	virtual ~Collisions();

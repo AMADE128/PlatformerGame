@@ -12,13 +12,13 @@ class Module
 {
 public:
 
-	Module() : active(false)
-	{}
+	Module::Module(bool StartEnabled) : isEnabled(StartEnabled)
+	{
+
+	}
 
 	void Init()
-	{
-		active = true;
-	}
+	{}
 
 	// Called before render is available
 	// L01: DONE 5: Sending config file to all modules
@@ -88,10 +88,34 @@ public:
 		return true;
 	}
 
+	void Module::Enable()
+	{
+		if (!isEnabled)
+		{
+			isEnabled = true;
+			Start();
+		}
+	}
+
+	void Module::Disable()
+	{
+		if (isEnabled)
+		{
+			isEnabled = false;
+			CleanUp();
+		}
+	}
+
 public:
 
 	SString name;
 	bool active;
+
+	inline bool IsEnabled() const { return isEnabled; }
+
+	bool isEnabled = true;
+
+
 
 };
 

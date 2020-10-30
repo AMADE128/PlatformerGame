@@ -14,7 +14,7 @@ class Player : public Module
 
 public:
 
-	Player();
+	Player(bool StartEnabled);
 
 	// Destructor
 	virtual ~Player();
