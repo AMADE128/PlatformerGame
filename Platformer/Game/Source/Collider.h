@@ -13,6 +13,7 @@ struct Collider
 		GROUND,
 		WALL,
 		PLAYER,
+		AIR,
 
 
 		MAX

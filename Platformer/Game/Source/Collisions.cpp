@@ -20,6 +20,7 @@ Collisions::Collisions() : Module()
 	matrix[Collider::Type::PLAYER][Collider::Type::GROUND] = STOP_Y;
 	matrix[Collider::Type::PLAYER][Collider::Type::PLAYER] = NOTHING;
 	matrix[Collider::Type::PLAYER][Collider::Type::NONE] = NOTHING;
+	matrix[Collider::Type::PLAYER][Collider::Type::AIR] = FALL;
 
 }
 
@@ -41,7 +42,11 @@ bool Collisions::Start()
 	MapLayer* layer;
 	TileSet* tileset;
 	iPoint cord;
+
 	SDL_Rect coll;
+	SDL_Rect full = { 0, 0, app->map->data.width * app->map->data.tileWidth , app->map->data.height * app->map->data.tileHeight };
+
+	AddCollider(full, Collider::Type::AIR, this);
 
 	for (ListItem<MapLayer*>* item = app->map->data.layers.start; item; item = item->next)
 	{
@@ -56,12 +61,12 @@ bool Collisions::Start()
 				if (tileId > 258 && tileId < 268)
 				{
 					coll = { cord.x, cord.y, tileset->GetTileRect(tileId).w, tileset->GetTileRect(tileId).h };
-					app->collision->AddCollider(coll, Collider::Type::GROUND, this);
+					AddCollider(coll, Collider::Type::GROUND, this);
 				}
 				if (tileId > 268)
 				{
 					coll = { cord.x, cord.y, tileset->GetTileRect(tileId).w, tileset->GetTileRect(tileId).h };
-					app->collision->AddCollider(coll, Collider::Type::WALL, this);
+					AddCollider(coll, Collider::Type::WALL, this);
 				}
 			}
 		}
@@ -99,6 +104,9 @@ bool Collisions::PreUpdate()
 
 				if (matrix[c1->type][c2->type] == STOP_Y && c1->listener)
 					c1->listener->StopMovementY(c1, c2);
+
+				if (matrix[c1->type][c2->type] == FALL && c1->listener)
+					c1->listener->Fall(c1, c2);
 			}
 		}
 	}
@@ -141,6 +149,9 @@ void Collisions::DebugDraw()
 			break;
 		case Collider::Type::PLAYER: // blue
 			app->render->DrawRectangle(colliders[i]->rect, 0, 0, 255, alpha);
+			break;
+		case Collider::Type::AIR: // blue
+			app->render->DrawRectangle(colliders[i]->rect, 255, 255, 255, alpha);
 			break;
 
 		}

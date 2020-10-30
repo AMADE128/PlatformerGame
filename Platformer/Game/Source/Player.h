@@ -34,6 +34,8 @@ public:
 	bool StopMovementY(Collider* c1, Collider* c2) override;
 	bool StopMovement(Collider* c1, Collider* c2) override;
 
+	bool Fall(Collider* c1, Collider* c2) override;
+
 	// Called before quitting
 	bool CleanUp();
 	SDL_Texture* currentTex = nullptr;
@@ -68,7 +70,6 @@ public:
 
 	float speed_x;
 	float speed_y;
-	float speed_y0;
 	float speed_xLastFrame;
 	float speed_yLastFrame;
 
@@ -78,13 +79,11 @@ public:
 	bool y_downCollision;
 	bool y_upCollision;
 	bool x_leftCollision;
-	bool x_rightcCollision;
+	bool x_rightCollision;
+	bool isColliding;
 
-	int t0;
-	int t;
-	fPoint pos0;
-	int gravity;
 	bool isJumping;
+	int diff;
 
 
 };
