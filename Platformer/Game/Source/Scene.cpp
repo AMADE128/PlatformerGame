@@ -6,7 +6,6 @@
 #include "Window.h"
 #include "Scene.h"
 #include "Map.h"
-#include "Collisions.h"
 
 #include "Defs.h"
 #include "Log.h"
