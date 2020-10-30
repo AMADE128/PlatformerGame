@@ -59,30 +59,6 @@ bool Scene::Update(float dt)
 	if(app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		app->SaveGameRequest();
 
-	if(app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		if (app->render->camera.y > -1151)
-		{
-			app->render->camera.y -= 2;
-		}
-
-	if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		if (app->render->camera.y < 0)
-		{
-			app->render->camera.y += 2;
-		}
-
-	if(app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		if (app->render->camera.x > -2271)
-		{
-			app->render->camera.x -= 2;
-		}
-
-	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		if (app->render->camera.x < 0)
-		{
-			app->render->camera.x += 2;
-		}
-
 	// Draw map
 	app->map->Draw();
 

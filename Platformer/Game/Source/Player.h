@@ -32,8 +32,7 @@ public:
 	bool PostUpdate();
 
 	bool StopMovementY(Collider* c1, Collider* c2) override;
-
-	bool Fall(Collider* c1, Collider* c2) override;
+	bool StopMovement(Collider* c1, Collider* c2) override;
 
 	// Called before quitting
 	bool CleanUp();
@@ -69,12 +68,15 @@ public:
 	float speed_y = 2;
 	float speed_xLastFrame = 2;
 	float speed_yLastFrame = 2;
-	int JumpCounter = 180;
+	int JumpCounter = 100;
 
 	Collider* collider = nullptr;
 
 	bool god = false;
-	bool gravity = true;
+	bool y_downcollision;
+	bool y_upcollision;
+	bool x_leftcollision;
+	bool x_rightcollision;
 
 };
 

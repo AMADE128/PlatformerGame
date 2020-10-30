@@ -83,7 +83,7 @@ bool Player::Start()
 	position.y = 500;
 	//Cargar texturas
 	idleRight = app->tex->Load("Assets/textures/Character/Idle (32x32).png");
-	idleLeft = app->tex->Load("Assets/textures/Character/Idle-left (32x32).png");
+	idleLeft = app->tex->Load("Assets/textures/Character/Idle (32x32)-left.png");
 	fallRight = app->tex->Load("Assets/textures/Character/Fall.png");
 	fallLeft = app->tex->Load("Assets/textures/Character/Fall-left.png");
 	deathRight = app->tex->Load("Assets/textures/Character/Hit (32x32).png");
@@ -108,7 +108,7 @@ bool Player::PreUpdate()
 
 bool Player::Update(float dt)
 {
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && JumpCounter == 180)
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && JumpCounter == 180 && y_downcollision == true)
 	{
 		if (god == true)
 		{
@@ -118,12 +118,11 @@ bool Player::Update(float dt)
 		}
 		else if (god == false)
 		{
+			y_downcollision = false;
 			speed_yLastFrame = speed_y;
 			speed_y = -0.7f;
 			JumpCounter = 0;
 			position.y += speed_y;
-			currentTex = jumpRight;
-			currentAnimation = &jumpRightAnim;
 		}
 
 	}
@@ -137,11 +136,15 @@ bool Player::Update(float dt)
 		}
 		else if (god == false)
 		{
-			speed_yLastFrame = speed_y;
+			/*speed_yLastFrame = speed_y;
 			speed_y = 0.3f;
 			position.y += speed_y;
 			currentTex = fallRight;
 			currentAnimation = &fallRightAnim;
+			if (app->render->camera.y < 0)
+			{
+				app->render->camera.y -= 2;
+			}*/
 		}
 	}
 	else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && app->input->GetKey(SDL_SCANCODE_D) != KEY_REPEAT)
@@ -149,16 +152,29 @@ bool Player::Update(float dt)
 		if (god == true)
 		{
 			speed_xLastFrame = speed_x;
-			speed_x = -0.3f;
-			position.x += speed_x;
+			speed_x = 1;
+			position.x -= speed_x;
 		}
-		else if (god == false)
+		else if (god == false && x_leftcollision == false)
 		{
+			x_rightcollision = false;
 			speed_xLastFrame = speed_x;
-			speed_x = -0.3f;
-			position.x += speed_x;
-			currentTex = runLeft;
-			currentAnimation = &runLeftAnim;
+			speed_x = 1;
+			position.x -= speed_x;
+			if (app->render->camera.x < 0)
+			{
+				app->render->camera.x += 1;
+			}
+			if (y_downcollision == true || x_leftcollision == true)
+			{
+				currentTex = runLeft;
+				currentAnimation = &runLeftAnim;
+			}
+			else
+			{
+				currentTex = jumpLeft;
+				currentAnimation = &jumpLeftAnim;
+			}
 		}
 
 	}
@@ -167,25 +183,71 @@ bool Player::Update(float dt)
 		if (god == true)
 		{
 			speed_xLastFrame = speed_x;
-			speed_x = 0.3f;
+			speed_x = 1;
 			position.x += speed_x;
 		}
-		else if (god == false)
+		else if (god == false && x_rightcollision == false)
 		{
+			x_leftcollision = false;
 			speed_xLastFrame = speed_x;
-			speed_x = 0.3f;
+			speed_x = 1;
 			position.x += speed_x;
-			currentTex = runRight;
-			currentAnimation = &runRightAnim;
+			if (app->render->camera.x > -2271)
+			{
+				app->render->camera.x -= 1;
+			}
+			if (y_downcollision == true || x_rightcollision == true)
+			{
+				currentTex = runRight;
+				currentAnimation = &runRightAnim;
+			}
+			else
+			{
+				currentTex = jumpRight;
+				currentAnimation = &jumpRightAnim;
+			}
 		}
+		
+	}
+	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP || app->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
+	{
+		speed_x = 0;
 	}
 	else
 	{
-		currentAnimation = &idleRightAnim;
-		currentTex = idleRight;
+		if (speed_y == 0 && speed_x == 0)
+		{
+			if (speed_xLastFrame > 0)
+			{
+				currentAnimation = &idleRightAnim;
+				currentTex = idleRight;
+			}
+			else if (speed_xLastFrame < 0)
+			{
+				currentAnimation = &idleLeftAnim;
+				currentTex = idleLeft;
+			}
+		}
+		if (speed_y < 0)
+		{
+			if (speed_x > 0 || speed_x == 0 && speed_xLastFrame > 0)
+			{
+				currentTex = jumpRight;
+				currentAnimation = &jumpRightAnim;
+			}
+			else if (speed_x < 0 || speed_x == 0 && speed_xLastFrame > 0)
+			{
+				currentAnimation = &jumpLeftAnim;
+				currentTex = jumpLeft;
+			}
+		}
+		else if (speed_y > 0)
+		{
+
+		}
 	}
 
-	if (gravity == true)
+	if (y_downcollision == false)
 	{
 		position.y += speed_y;
 	}
@@ -265,14 +327,26 @@ bool Player::CleanUp()
 
 bool Player::StopMovementY(Collider* c1, Collider* c2)
 {
-	gravity = false;
-	speed_y = 0;
+	if (c1->rect.y < c2->rect.y)
+	{
+		y_downcollision = true;
+		speed_y = 0.f;
+	}
 
 	return true;
 }
 
-bool Player::Fall(Collider* c1, Collider* c2)
+bool Player::StopMovement(Collider* c1, Collider* c2)
 {
-	
+	if (c1->rect.x < c2->rect.x && c1->rect.y > c2->rect.y)
+	{
+		x_rightcollision = true;
+		speed_x = 0.f;
+	}
+	else if (c1->rect.x > c2->rect.x && c1->rect.y > c2->rect.y)
+	{
+		x_leftcollision = true;
+		speed_x = 0.f;
+	}
 	return true;
 }

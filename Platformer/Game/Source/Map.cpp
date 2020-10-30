@@ -143,6 +143,14 @@ TileSet* Map::GetTilesetFromTileId(int id) const
 		item = item->next;
 		set = item->data;
 	}
+	else if (id > 268)
+	{
+		item = item->next;
+		item = item->next;
+		item = item->next;
+		item = item->next;
+		set = item->data;
+	}
 
 	return set;
 }

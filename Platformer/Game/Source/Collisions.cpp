@@ -16,12 +16,7 @@ Collisions::Collisions() : Module()
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
 		colliders[i] = nullptr;
 
-	matrix[Collider::Type::WALL][Collider::Type::WALL] = NOTHING;
-	matrix[Collider::Type::WALL][Collider::Type::GROUND] = NOTHING;
-	matrix[Collider::Type::WALL][Collider::Type::PLAYER] = STOP;
-	matrix[Collider::Type::WALL][Collider::Type::NONE] = NOTHING;
-
-	matrix[Collider::Type::PLAYER][Collider::Type::WALL] = NOTHING;
+	matrix[Collider::Type::PLAYER][Collider::Type::WALL] = STOP;
 	matrix[Collider::Type::PLAYER][Collider::Type::GROUND] = STOP_Y;
 	matrix[Collider::Type::PLAYER][Collider::Type::PLAYER] = NOTHING;
 	matrix[Collider::Type::PLAYER][Collider::Type::NONE] = NOTHING;
@@ -63,6 +58,11 @@ bool Collisions::Start()
 					coll = { cord.x, cord.y, tileset->GetTileRect(tileId).w, tileset->GetTileRect(tileId).h };
 					app->collision->AddCollider(coll, Collider::Type::GROUND, this);
 				}
+				if (tileId > 268)
+				{
+					coll = { cord.x, cord.y, tileset->GetTileRect(tileId).w, tileset->GetTileRect(tileId).h };
+					app->collision->AddCollider(coll, Collider::Type::WALL, this);
+				}
 			}
 		}
 	}
@@ -97,24 +97,8 @@ bool Collisions::PreUpdate()
 				if (matrix[c1->type][c2->type] == STOP && c1->listener)
 					c1->listener->StopMovement(c1, c2);
 
-				if (matrix[c2->type][c1->type] == STOP && c2->listener)
-					c2->listener->StopMovement(c2, c1);
-
 				if (matrix[c1->type][c2->type] == STOP_Y && c1->listener)
 					c1->listener->StopMovementY(c1, c2);
-
-				if (matrix[c2->type][c1->type] == STOP_Y && c2->listener)
-					c2->listener->StopMovementY(c2, c1);
-
-				if (matrix[c1->type][c2->type] == FALL && c1->listener)
-					c1->listener->Fall(c1, c2);
-
-				if (matrix[c2->type][c1->type] == FALL && c2->listener)
-					c2->listener->Fall(c2, c1);
-			}
-			else
-			{
-				app->player->gravity = true;
 			}
 		}
 	}
@@ -147,15 +131,15 @@ void Collisions::DebugDraw()
 		switch (colliders[i]->type)
 		{
 		case Collider::Type::NONE: // white
-			app->render->DrawRectangle(colliders[i]->rect, 0, 0, 0, alpha);
+			app->render->DrawRectangle(colliders[i]->rect, 255, 255, 255, alpha);
 			break;
-		case Collider::Type::WALL: // blue
-			app->render->DrawRectangle(colliders[i]->rect, 0, 0, 0, alpha);
+		case Collider::Type::WALL: // green
+			app->render->DrawRectangle(colliders[i]->rect, 0, 255, 0, alpha);
 			break;
-		case Collider::Type::GROUND: // purple
+		case Collider::Type::GROUND: // red
 			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 0, alpha);
 			break;
-		case Collider::Type::PLAYER: // purple
+		case Collider::Type::PLAYER: // blue
 			app->render->DrawRectangle(colliders[i]->rect, 0, 0, 255, alpha);
 			break;
 
