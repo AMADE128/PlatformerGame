@@ -9,7 +9,7 @@ class Scene : public Module
 {
 public:
 
-	Scene(bool StartEnabled);
+	Scene();
 
 	// Destructor
 	virtual ~Scene();

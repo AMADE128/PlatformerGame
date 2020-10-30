@@ -30,7 +30,7 @@ class Input : public Module
 
 public:
 
-	Input(bool StartEnabled);
+	Input();
 
 	// Destructor
 	virtual ~Input();

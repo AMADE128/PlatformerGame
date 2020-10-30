@@ -6,13 +6,11 @@
 #include "Window.h"
 #include "Scene.h"
 #include "Map.h"
-#include "Player.h"
-#include"Collisions.h"
 
 #include "Defs.h"
 #include "Log.h"
 
-Scene::Scene(bool startEnabled) : Module(startEnabled)
+Scene::Scene() : Module()
 {
 	name.Create("scene");
 }
@@ -38,12 +36,6 @@ bool Scene::Start()
 	// L03: DONE: Load map
 	//app->map->Load("hello2.tmx");
 	app->map->Load("map1.tmx");
-
-	app->map->Enable();
-	app->collision->Enable();
-	app->player->Enable();
-	app->audio->Enable();
-
 	
 	// Load music
 	//app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
@@ -93,10 +85,6 @@ bool Scene::PostUpdate()
 bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
-	app->player->Disable();
-	app->collision->Disable();
-	app->audio->Disable();
-	app->map->Disable();
 
 	return true;
 }

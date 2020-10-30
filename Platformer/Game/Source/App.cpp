@@ -8,8 +8,6 @@
 #include "Map.h"
 #include "Player.h"
 #include "Collisions.h"
-#include "SceneMenu.h"
-#include "FadeToBlack.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -22,17 +20,15 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 {
 	frames = 0;
 
-	win = new Window(true);
-	input = new Input(true);
-	render = new Render(true);
-	tex = new Textures(true);
-	audio = new Audio(false);
-	scene = new Scene(false);
-	map = new Map(true);
-	player = new Player(false);
-	collision = new Collisions(false);
-	scenemenu = new SceneMenu(true);
-	fadetoblack = new FadeToBlack(true);
+	win = new Window();
+	input = new Input();
+	render = new Render();
+	tex = new Textures();
+	audio = new Audio();
+	scene = new Scene();
+	map = new Map();
+	player = new Player();
+	collision = new Collisions();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -44,8 +40,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(player);
 	AddModule(collision);
-	AddModule(scenemenu);
-	AddModule(fadetoblack);
 
 	// Render last to swap buffer
 	AddModule(render);
@@ -99,7 +93,7 @@ bool App::Awake()
 		ListItem<Module*>* item;
 		item = modules.start;
 
-		while ((item != NULL) && (ret == true) && item->data->IsEnabled() == true)
+		while ((item != NULL) && (ret == true))
 		{
 			// L01: DONE 5: Add a new argument to the Awake method to receive a pointer to an xml node.
 			// If the section with the module name exists in config.xml, fill the pointer with the valid xml_node
@@ -120,7 +114,7 @@ bool App::Start()
 	ListItem<Module*>* item;
 	item = modules.start;
 
-	while(item != NULL && ret == true && item->data->isEnabled != false)
+	while(item != NULL && ret == true)
 	{
 		ret = item->data->Start();
 		item = item->next;

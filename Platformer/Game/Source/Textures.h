@@ -12,7 +12,7 @@ class Textures : public Module
 {
 public:
 
-	Textures(bool StartEnabled);
+	Textures();
 
 	// Destructor
 	virtual ~Textures();
