@@ -73,6 +73,8 @@ public:
 	float speed_xLastFrame;
 
 	Collider* collider = nullptr;
+	bool stopMovementX;
+	bool stopMovementY;
 
 	bool god = false;
 	bool y_downCollision;

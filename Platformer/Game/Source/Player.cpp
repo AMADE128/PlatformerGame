@@ -279,7 +279,7 @@ bool Player::Update(float dt)
 		x_leftCollision = false;
 		x_rightCollision = false;
 		//speed_y = -0.5f;
-		position.y += -3;
+		position.y += -2.5f;
 	}
 
 	if (y_downCollision == true)
@@ -340,14 +340,19 @@ bool Player::StopMovementY(Collider* c1, Collider* c2)
 {
 	if (c1->rect.y < c2->rect.y)
 	{
-		//position.y = c2->rect.y - c1->rect.h;
 		y_upCollision = false;
-		y_downCollision = true;
+		if (isJumping == true)
+		{
+			y_downCollision = false;
+		}
+		else if (isJumping == false)
+		{
+			y_downCollision = true;
+		}
 		isJumping = false;
 	}
-	else if (c1->rect.y > c2->rect.y)
+	else if (c1->rect.y  > c2->rect.y)
 	{
-		//position.y = c2->rect.y + c2->rect.h;
 		y_downCollision = false;
 		y_upCollision = true;
 		isJumping = false;
@@ -358,17 +363,17 @@ bool Player::StopMovementY(Collider* c1, Collider* c2)
 
 bool Player::StopMovement(Collider* c1, Collider* c2)
 {
-	if (c1->rect.x < c2->rect.x && c1->rect.y > c2->rect.y)
+	if (c1->rect.x < c2->rect.x && (c1->rect.y + TILESIZE) > c2->rect.y)
 	{
 		x_rightCollision = true;
 		speed_x = 0.f;
-		position.x -= 0.2f;
+		position.x -= 0.1f;
 	}
-	else if (c1->rect.x > c2->rect.x && c1->rect.y > c2->rect.y)
+	if (c1->rect.x > c2->rect.x && (c1->rect.y + TILESIZE) > c2->rect.y)
 	{
 		x_leftCollision = true;
 		speed_x = 0.f;
-		position.x += 0.2f;
+		position.x += 0.1f;
 	}
 	return true;
 }
