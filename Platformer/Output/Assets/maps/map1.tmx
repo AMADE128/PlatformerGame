@@ -8921,7 +8921,7 @@
  </layer>
  <layer id="10" name="wall" width="76" height="39" visible="0">
   <data>
-   <tile/>
+   <tile gid="269"/>
    <tile/>
    <tile/>
    <tile/>

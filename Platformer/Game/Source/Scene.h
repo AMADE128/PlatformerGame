@@ -34,8 +34,6 @@ public:
 
 private:
 	SDL_Texture* img;
-	Collider* CamaraPos;
-	iPoint CameraWorldToMap;
 };
 
 #endif // __SCENE_H__
