@@ -46,6 +46,7 @@ struct MapLayer
 	SString	name;
 	int width;
 	int height;
+	int visible;
 	uint* data;
 
 	MapLayer() : data(NULL)

@@ -51,6 +51,8 @@ public:
 	SDL_Texture* deathRight = nullptr;
 	SDL_Texture* deathLeft = nullptr;
 
+	bool flip;
+
 	Animation* currentAnimation = nullptr;
 
 	Animation idleRightAnim;
@@ -64,14 +66,11 @@ public:
 	Animation deathRightAnim;
 	Animation deathLeftAnim;
 
-	int firstTime;
-
 	fPoint position;
 
 	float speed_x;
 	float speed_y;
 	float speed_xLastFrame;
-	float speed_yLastFrame;
 
 	Collider* collider = nullptr;
 
@@ -80,10 +79,8 @@ public:
 	bool y_upCollision;
 	bool x_leftCollision;
 	bool x_rightCollision;
-	bool isColliding;
 
 	bool isJumping;
-	int diff;
 
 
 };

@@ -72,8 +72,6 @@ bool Player::Awake()
 	LOG("Init Player");
 	bool ret = true;
 
-	firstTime = SDL_GetTicks();
-
 	return ret;
 }
 
@@ -85,20 +83,16 @@ bool Player::Start()
 	position.y = 500;
 	//Cargar texturas
 	idleRight = app->tex->Load("Assets/textures/Character/Idle (32x32).png");
-	idleLeft = app->tex->Load("Assets/textures/Character/Idle (32x32)-left.png");
 	fallRight = app->tex->Load("Assets/textures/Character/Fall.png");
-	fallLeft = app->tex->Load("Assets/textures/Character/Fall-left.png");
 	deathRight = app->tex->Load("Assets/textures/Character/Hit (32x32).png");
-	deathLeft = app->tex->Load("Assets/textures/Character/Hit (32x32)-left.png");
 	runRight = app->tex->Load("Assets/textures/Character/Run (32x32).png");
-	runLeft = app->tex->Load("Assets/textures/Character/Run (32x32)-left.png");
 	jumpRight = app->tex->Load("Assets/textures/Character/Jump (32x32).png");
-	jumpLeft = app->tex->Load("Assets/textures/Character/Jump (32x32)-left.png");
 
 	collider = app->collision->AddCollider({ (int)position.x, (int)position.y, TILESIZE, TILESIZE}, Collider::Type::PLAYER, this);
 
 	currentAnimation = &idleRightAnim;
 	currentTex = idleRight;
+	flip = false;
 	speed_y = 0.3f;
 	return true;
 }
@@ -114,13 +108,11 @@ bool Player::Update(float dt)
 	{
 		if (god == true)
 		{
-			speed_yLastFrame = speed_y;
 			position.y += speed_y;
 		}
 		else if (god == false)
 		{
 			y_downCollision = false;
-			speed_yLastFrame = speed_y;
 			if (!isJumping) // Solo salta cuando no esté en el aire
 			{
 				isJumping = true;
@@ -132,7 +124,6 @@ bool Player::Update(float dt)
 	{
 		if (god == true)
 		{
-			speed_yLastFrame = speed_y;
 			speed_y = 1;
 			position.y += speed_y;
 		}
@@ -157,25 +148,27 @@ bool Player::Update(float dt)
 			}
 			if (y_downCollision == true)
 			{
-				currentTex = runLeft;
-				currentAnimation = &runLeftAnim;
+				currentTex = runRight;
+				currentAnimation = &runRightAnim;
+				flip = true;
 			}
 			else
 			{
+				flip = true;
 				if ((-3 + speed_y) < 0)
 				{
 					if (speed_x <= 0 && speed_xLastFrame < 0)
 					{
-						currentAnimation = &jumpLeftAnim;
-						currentTex = jumpLeft;
+						currentAnimation = &jumpRightAnim;
+						currentTex = jumpRight;
 					}
 				}
 				else if ((-3 + speed_y) >= 0)
 				{
 					if (speed_x <= 0 && speed_xLastFrame < 0)
 					{
-						currentAnimation = &fallLeftAnim;
-						currentTex = fallLeft;
+						currentAnimation = &fallRightAnim;
+						currentTex = fallRight;
 					}
 				}
 			}
@@ -204,9 +197,11 @@ bool Player::Update(float dt)
 			{
 				currentTex = runRight;
 				currentAnimation = &runRightAnim;
+				flip = false;
 			}
 			else
 			{
+				flip = false;
 				if ((-3 + speed_y) < 0)
 				{
 					if (speed_x >= 0 && speed_xLastFrame > 0)
@@ -237,41 +232,41 @@ bool Player::Update(float dt)
 		{
 			if (speed_y == 0)
 			{
+				currentAnimation = &idleRightAnim;
+				currentTex = idleRight;
 				if (speed_xLastFrame > 0)
 				{
-					currentAnimation = &idleRightAnim;
-					currentTex = idleRight;
+					flip = false;
 				}
 				else if (speed_xLastFrame < 0)
 				{
-					currentAnimation = &idleLeftAnim;
-					currentTex = idleLeft;
+					flip = true;
 				}
 			}
 			else if ((-3 + speed_y) < 0)
 			{
+				currentAnimation = &jumpRightAnim;
+				currentTex = jumpRight;
 				if (speed_xLastFrame > 0)
 				{
-					currentAnimation = &jumpRightAnim;
-					currentTex = jumpRight;
+					flip = false;
 				}
 				else if (speed_xLastFrame < 0)
 				{
-					currentAnimation = &jumpLeftAnim;
-					currentTex = jumpLeft;
+					flip = true;
 				}
 			}
 			else if ((-3 + speed_y) >= 0)
 			{
+				currentTex = fallRight;
+				currentAnimation = &fallRightAnim;
 				if (speed_xLastFrame > 0)
 				{
-					currentTex = fallRight;
-					currentAnimation = &fallRightAnim;
+					flip = false;
 				}
 				else if (speed_xLastFrame < 0)
 				{
-					currentTex = fallLeft;
-					currentAnimation = &fallLeftAnim;
+					flip = true;
 				}
 			}
 		}
@@ -285,7 +280,6 @@ bool Player::Update(float dt)
 		x_rightCollision = false;
 		//speed_y = -0.5f;
 		position.y += -3;
-		diff = position.y;
 	}
 
 	if (y_downCollision == true)
@@ -303,7 +297,14 @@ bool Player::Update(float dt)
 	collider->SetPos(position.x, position.y);
 
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
-	app->render->DrawTexture(currentTex, position.x, position.y, &rect);
+	if (flip == true)
+	{
+		app->render->DrawTextureFlip(currentTex, position.x, position.y, &rect);
+	}
+	else if (flip == false)
+	{
+		app->render->DrawTexture(currentTex, position.x, position.y, &rect);
+	}
 
 	return true;
 }

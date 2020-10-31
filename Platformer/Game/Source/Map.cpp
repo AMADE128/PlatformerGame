@@ -58,7 +58,7 @@ void Map::Draw()
 				int tileId = layer->Get(x, y);
 				cord = MapToWorld(x, y);
 				tileset = GetTilesetFromTileId(tileId);
-				if (tileId > 0)
+				if (tileId > 0 && layer->visible != 0)
 				{
 					// L04: TODO 9: Complete the draw function
 					app->render->DrawTexture(tileset->texture, cord.x, cord.y, &tileset->GetTileRect(tileId));
@@ -350,6 +350,7 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	layer->name = node.attribute("name").as_string("");
 	layer->width = node.attribute("width").as_int(0);
 	layer->height = node.attribute("height").as_int(0);
+	layer->visible = node.attribute("visible").as_int(0);
 
 	int size = layer->width * layer->height;
 

@@ -15,7 +15,7 @@
  <tileset firstgid="269" name="wall" tilewidth="16" tileheight="16" tilecount="9" columns="3">
   <image source="wall.png" width="48" height="48"/>
  </tileset>
- <layer id="7" name="background" width="76" height="39">
+ <layer id="7" name="background" width="76" height="39" visible="1">
   <data>
    <tile gid="243"/>
    <tile gid="244"/>
@@ -2983,7 +2983,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="2" name="platforms" width="76" height="39">
+ <layer id="2" name="platforms" width="76" height="39" visible="1">
   <data>
    <tile/>
    <tile/>
@@ -5951,7 +5951,7 @@
    <tile gid="30"/>
   </data>
  </layer>
- <layer id="9" name="collisions" width="76" height="39">
+ <layer id="9" name="collisions" width="76" height="39" visible="0">
   <data>
    <tile/>
    <tile/>
@@ -8919,7 +8919,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="10" name="wall" width="76" height="39">
+ <layer id="10" name="wall" width="76" height="39" visible="0">
   <data>
    <tile/>
    <tile/>
