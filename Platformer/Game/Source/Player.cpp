@@ -188,10 +188,9 @@ bool Player::Update(float dt)
 			speed_xLastFrame = speed_x;
 			speed_x = 0.7f;
 			position.x += speed_x;
-			if (app->render->camera.x > -2271)
-			{
-				app->render->camera.x -= 2;
-			}
+			
+			app->render->camera.x -= 2;
+
 			if (y_downCollision == true)
 			{
 				currentTex = runRight;

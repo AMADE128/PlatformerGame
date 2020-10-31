@@ -6,6 +6,7 @@
 #include "Window.h"
 #include "Scene.h"
 #include "Map.h"
+#include "Collisions.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -36,6 +37,10 @@ bool Scene::Start()
 	// L03: DONE: Load map
 	//app->map->Load("hello2.tmx");
 	app->map->Load("map1.tmx");
+	uint x, y;
+	app->win->GetWindowSize(x, y);
+	SDL_Rect camera = { 0, 0, x/3, y/3};
+	CamaraPos = app->collision->AddCollider(camera, Collider::Type::CAMERA, this);
 	
 	// Load music
 	//app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
@@ -62,6 +67,10 @@ bool Scene::Update(float dt)
 	// Draw map
 	app->map->Draw();
 
+	CameraWorldToMap = app->map->MapToWorld(app->render->camera.x, app->render->camera.y);
+
+	CamaraPos->SetPos(CameraWorldToMap.x, CameraWorldToMap.y);
+	
 	// L03: DONE 7: Set the window title with map/tileset info
 	SString title("Platformer Game");
 

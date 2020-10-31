@@ -14,6 +14,7 @@ struct Collider
 		WALL,
 		PLAYER,
 		AIR,
+		CAMERA,
 
 
 		MAX
