@@ -142,10 +142,9 @@ bool Player::Update(float dt)
 			speed_xLastFrame = speed_x;
 			speed_x = -0.7f;
 			position.x += speed_x;
-			if (app->render->camera.x < 0)
-			{
-				app->render->camera.x += 2;
-			}
+			
+			app->render->camera.x += 2;
+			
 			if (y_downCollision == true)
 			{
 				currentTex = runRight;
@@ -350,6 +349,7 @@ bool Player::StopMovementY(Collider* c1, Collider* c2)
 			y_downCollision = true;
 		}
 		isJumping = false;
+		position.y = c2->rect.y - 31;
 	}
 	else if (c1->rect.y  > c2->rect.y)
 	{
@@ -363,13 +363,13 @@ bool Player::StopMovementY(Collider* c1, Collider* c2)
 
 bool Player::StopMovement(Collider* c1, Collider* c2)
 {
-	if (c1->rect.x < c2->rect.x && (c1->rect.y + TILESIZE) > c2->rect.y)
+	if (c1->rect.x < c2->rect.x && (c1->rect.y + TILESIZE-3) > c2->rect.y)
 	{
 		x_rightCollision = true;
 		speed_x = 0.f;
 		position.x -= 0.1f;
 	}
-	if (c1->rect.x > c2->rect.x && (c1->rect.y + TILESIZE) > c2->rect.y)
+	if (c1->rect.x > c2->rect.x && (c1->rect.y + TILESIZE-3) > c2->rect.y)
 	{
 		x_leftCollision = true;
 		speed_x = 0.f;
