@@ -31,11 +31,14 @@ public:
 
 	// Play a previously loaded WAV
 	bool PlayFx(unsigned int fx, int repeat = 0);
+	bool UnloadFX(unsigned int id);
 
+	bool SetVolume(unsigned int id, int volume);
+
+	List<Mix_Chunk*>	fx;
 private:
 
 	_Mix_Music* music;
-	List<Mix_Chunk *>	fx;
 };
 
 #endif // __AUDIO_H__
