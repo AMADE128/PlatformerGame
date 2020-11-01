@@ -12,8 +12,8 @@
 #include "Collisions.h"
 
 #define TILESIZE 96
-#define POSXINIT 100
-#define POXYINIT 1000
+#define POSXINIT 720
+#define POXYINIT 1584
 
 Player::Player() : Module()
 {
@@ -22,27 +22,28 @@ Player::Player() : Module()
 
 	for (int i = 0; i < TILESIZE * 11; i += TILESIZE)
 	{
-		idleRightAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
+		idleAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
 	}
-	idleRightAnim.loop = true;
-	idleRightAnim.speed = 0.1f;
+	idleAnim.loop = true;
+	idleAnim.speed = 0.1f;
 
 	for (int i = 0; i < TILESIZE * 12; i += TILESIZE)
 	{
-		runRightAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
+		runAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
 	}
-	runRightAnim.loop = true;
-	runRightAnim.speed = 0.1f;
+	runAnim.loop = true;
+	runAnim.speed = 0.1f;
 
-	fallRightAnim.PushBack({ 0, 0, TILESIZE, TILESIZE });
+	fallAnim.PushBack({ 0, 0, TILESIZE, TILESIZE });
 
-	jumpRightAnim.PushBack({ 0, 0, TILESIZE, TILESIZE });
+	jumpAnim.PushBack({ 0, 0, TILESIZE, TILESIZE });
 
 	for (int i = 0; i < TILESIZE * 7; i += TILESIZE)
 	{
-		deathRightAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
+		deathAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
 	}
-	deathRightAnim.speed = 0.1f;
+	deathAnim.loop = false;
+	deathAnim.speed = 0.1f;
 }
 
 // Destructor
@@ -64,18 +65,16 @@ bool Player::Start()
 	position.x = POSXINIT;
 	position.y = POXYINIT;
 	//Cargar texturas
-	idleRight = app->tex->Load("Assets/textures/Character/Idle (32x32).png");
-	fallRight = app->tex->Load("Assets/textures/Character/Fall.png");
-	deathRight = app->tex->Load("Assets/textures/Character/Hit (32x32).png");
-	runRight = app->tex->Load("Assets/textures/Character/Run (32x32).png");
-	jumpRight = app->tex->Load("Assets/textures/Character/Jump (32x32).png");
-	jump = app->audio->LoadFx("Assets/audio/fx/jump.wav");
+	idleTex = app->tex->Load("Assets/textures/Character/Idle (32x32).png");
+	fallTex = app->tex->Load("Assets/textures/Character/Fall.png");
+	deathTex = app->tex->Load("Assets/textures/Character/Hit (32x32).png");
+	runTex = app->tex->Load("Assets/textures/Character/Run (32x32).png");
+	jumpTex = app->tex->Load("Assets/textures/Character/Jump (32x32).png");
 
-	app->scene->musicList.add(&jump);
-	collider = app->collision->AddCollider({ (int)position.x, (int)position.y, TILESIZE, TILESIZE}, Collider::Type::PLAYER, this);
+	playerColl = app->collision->AddCollider({ (int)position.x, (int)position.y, TILESIZE, TILESIZE}, Collider::Type::PLAYER, this);
 
-	currentAnimation = &idleRightAnim;
-	currentTex = idleRight;
+	currentAnimation = &idleAnim;
+	currentTex = idleTex;
 	flip = false;
 	speed_y = 0.3f;
 	return true;
@@ -88,7 +87,7 @@ bool Player::PreUpdate()
 
 bool Player::Update(float dt)
 {
-	if (app->screen == game_scene1)
+	if (app->screen == game_scene1 && death == false)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		{
@@ -114,13 +113,13 @@ bool Player::Update(float dt)
 			if (god == false)
 			{
 				god = true;
-				collider->type = Collider::NONE;
+				playerColl->type = Collider::NONE;
 
 			}
 			else if (god == true)
 			{
 				god = false;
-				collider->type = Collider::PLAYER;
+				playerColl->type = Collider::PLAYER;
 			}
 
 		}
@@ -128,11 +127,10 @@ bool Player::Update(float dt)
 		{
 			if (god == false)
 
-				y_downCollision = false;
+			y_downCollision = false;
 			if (!isJumping) // Solo salta cuando no esté en el aire
 			{
 				isJumping = true;
-				app->audio->PlayFx(jump);
 			}
 		}
 		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
@@ -168,8 +166,8 @@ bool Player::Update(float dt)
 
 				if (y_downCollision == true)
 				{
-					currentTex = runRight;
-					currentAnimation = &runRightAnim;
+					currentTex = runTex;
+					currentAnimation = &runAnim;
 					flip = true;
 				}
 				else
@@ -179,16 +177,16 @@ bool Player::Update(float dt)
 					{
 						if (speed_x <= 0 && speed_xLastFrame < 0)
 						{
-							currentAnimation = &jumpRightAnim;
-							currentTex = jumpRight;
+							currentAnimation = &jumpAnim;
+							currentTex = jumpTex;
 						}
 					}
 					else if ((-3 + speed_y) >= 0)
 					{
 						if (speed_x <= 0 && speed_xLastFrame < 0)
 						{
-							currentAnimation = &fallRightAnim;
-							currentTex = fallRight;
+							currentAnimation = &fallAnim;
+							currentTex = fallTex;
 						}
 					}
 				}
@@ -212,8 +210,8 @@ bool Player::Update(float dt)
 
 				if (y_downCollision == true)
 				{
-					currentTex = runRight;
-					currentAnimation = &runRightAnim;
+					currentTex = runTex;
+					currentAnimation = &runAnim;
 					flip = false;
 				}
 				else
@@ -223,16 +221,16 @@ bool Player::Update(float dt)
 					{
 						if (speed_x >= 0 && speed_xLastFrame > 0)
 						{
-							currentTex = jumpRight;
-							currentAnimation = &jumpRightAnim;
+							currentTex = jumpTex;
+							currentAnimation = &jumpAnim;
 						}
 					}
 					else if ((-3 + speed_y) >= 0)
 					{
 						if (speed_x >= 0 && speed_xLastFrame > 0)
 						{
-							currentTex = fallRight;
-							currentAnimation = &fallRightAnim;
+							currentTex = fallTex;
+							currentAnimation = &fallAnim;
 						}
 					}
 				}
@@ -249,8 +247,8 @@ bool Player::Update(float dt)
 			{
 				if (speed_y == 0)
 				{
-					currentAnimation = &idleRightAnim;
-					currentTex = idleRight;
+					currentAnimation = &idleAnim;
+					currentTex = idleTex;
 					if (speed_xLastFrame > 0)
 					{
 						flip = false;
@@ -262,8 +260,8 @@ bool Player::Update(float dt)
 				}
 				else if ((-3 + speed_y) < 0)
 				{
-					currentAnimation = &jumpRightAnim;
-					currentTex = jumpRight;
+					currentAnimation = &jumpAnim;
+					currentTex = jumpTex;
 					if (speed_xLastFrame > 0)
 					{
 						flip = false;
@@ -275,8 +273,8 @@ bool Player::Update(float dt)
 				}
 				else if ((-3 + speed_y) >= 0)
 				{
-					currentTex = fallRight;
-					currentAnimation = &fallRightAnim;
+					currentTex = fallTex;
+					currentAnimation = &fallAnim;
 					if (speed_xLastFrame > 0)
 					{
 						flip = false;
@@ -309,21 +307,13 @@ bool Player::Update(float dt)
 		}
 		position.y += speed_y;
 
+
 		app->render->camera.x = ((position.x + TILESIZE / 2) - (app->render->camera.w / 2)) * -1;
 		app->render->camera.y = ((position.y + TILESIZE / 2) - (app->render->camera.h / 2)) * -1;
+		
 
-		currentAnimation->Update();
-		collider->SetPos(position.x, position.y);
-
-		SDL_Rect rect = currentAnimation->GetCurrentFrame();
-		if (flip == true)
-		{
-			app->render->DrawTextureFlip(currentTex, position.x, position.y, &rect);
-		}
-		else if (flip == false)
-		{
-			app->render->DrawTexture(currentTex, position.x, position.y, &rect);
-		}
+		
+		playerColl->SetPos(position.x, position.y);
 	}
 
 	return true;
@@ -331,6 +321,21 @@ bool Player::Update(float dt)
 
 bool Player::PostUpdate()
 {
+	if (position.x < 720 && position.y < 816)
+	{
+		win = true;
+		app->screen = game_win;
+	}
+	currentAnimation->Update();
+	SDL_Rect rect = currentAnimation->GetCurrentFrame();
+	if (flip == true)
+	{
+		app->render->DrawTextureFlip(currentTex, position.x, position.y, &rect);
+	}
+	else if (flip == false)
+	{
+		app->render->DrawTexture(currentTex, position.x, position.y, &rect);
+	}
 	return true;
 }
 
@@ -339,18 +344,13 @@ bool Player::CleanUp()
 	LOG("Unloading particles");
 
 	//Aqui deletamos cosas
-	app->tex->UnLoad(idleRight);
-	app->tex->UnLoad(idleLeft);
-	app->tex->UnLoad(fallRight);
-	app->tex->UnLoad(fallLeft);
-	app->tex->UnLoad(deathRight);
-	app->tex->UnLoad(deathLeft);
-	app->tex->UnLoad(runRight);
-	app->tex->UnLoad(runLeft);
-	app->tex->UnLoad(jumpRight);
-	app->tex->UnLoad(jumpLeft);
+	app->tex->UnLoad(idleTex);
+	app->tex->UnLoad(fallTex);
+	app->tex->UnLoad(deathTex);
+	app->tex->UnLoad(runTex);
+	app->tex->UnLoad(jumpTex);
 
-	app->collision->RemoveCollider(collider);
+	app->collision->RemoveCollider(playerColl);
 
 	return true;
 }
@@ -371,6 +371,7 @@ bool Player::StopMovementY(Collider* c1, Collider* c2)
 		}
 		isJumping = false;
 		position.y = c2->rect.y - TILESIZE + 1;
+		
 	}
 	else if (c1->rect.y  > c2->rect.y)
 	{
@@ -404,6 +405,31 @@ bool Player::Fall(Collider* c1, Collider* c2)
 	y_downCollision = false;
 	x_leftCollision = false;
 	x_rightCollision = false;
+	return true;
+}
+
+bool Player::Die(Collider* c1, Collider* c2)
+{
+	if (c1->rect.y + TILESIZE > c2->rect.y + c2->rect.w/2)
+	{
+		death = true;
+		currentAnimation = &deathAnim;
+		currentTex = deathTex;
+		if (speed_xLastFrame > 0)
+		{
+			flip = false;
+		}
+		else if (speed_xLastFrame < 0)
+		{
+			flip = true;
+		}
+		if (currentAnimation->HasFinished())
+		{
+			app->scene->start = true;
+			app->screen = game_death;
+		}
+	}
+	
 	return true;
 }
 

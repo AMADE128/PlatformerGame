@@ -36,35 +36,27 @@ public:
 
 	bool Fall(Collider* c1, Collider* c2) override;
 
+	bool Die(Collider* c1, Collider* c2) override;
+
 	// Called before quitting
 	bool CleanUp();
 	SDL_Texture* currentTex = nullptr;
 
-	SDL_Texture* idleRight = nullptr;
-	SDL_Texture* idleLeft = nullptr;
-	SDL_Texture* fallRight = nullptr;
-	SDL_Texture* fallLeft = nullptr;
-	SDL_Texture* runRight = nullptr;
-	SDL_Texture* runLeft = nullptr;
-	SDL_Texture* jumpRight = nullptr;
-	SDL_Texture* jumpLeft = nullptr;
-	SDL_Texture* deathRight = nullptr;
-	SDL_Texture* deathLeft = nullptr;
+	SDL_Texture* idleTex = nullptr;
+	SDL_Texture* fallTex = nullptr;
+	SDL_Texture* runTex = nullptr;
+	SDL_Texture* jumpTex = nullptr;
+	SDL_Texture* deathTex = nullptr;
 
 	bool flip;
 
 	Animation* currentAnimation = nullptr;
 
-	Animation idleRightAnim;
-	Animation idleLeftAnim;
-	Animation fallRightAnim;
-	Animation fallLeftAnim;
-	Animation runRightAnim;
-	Animation runLeftAnim;
-	Animation jumpRightAnim;
-	Animation jumpLeftAnim;
-	Animation deathRightAnim;
-	Animation deathLeftAnim;
+	Animation idleAnim;
+	Animation fallAnim;
+	Animation runAnim;
+	Animation jumpAnim;
+	Animation deathAnim;
 
 	fPoint position;
 
@@ -72,13 +64,14 @@ public:
 	float speed_y;
 	float speed_xLastFrame;
 
-	Collider* collider = nullptr;
-	Collider* cameraColl;
+	Collider* playerColl = nullptr;
 
 	bool stopMovementX;
 	bool stopMovementY;
 
 	bool god = false;
+	bool death = false;
+	bool win = false;
 	bool y_downCollision;
 	bool y_upCollision;
 	bool x_leftCollision;
@@ -88,8 +81,6 @@ public:
 
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&) const;
-
-	unsigned int jump = 0;
 
 };
 

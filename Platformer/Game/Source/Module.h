@@ -88,6 +88,11 @@ public:
 		return true;
 	}
 
+	virtual bool Die(Collider* c1, Collider* c2)
+	{
+		return true;
+	}
+
 public:
 
 	SString name;

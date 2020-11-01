@@ -49,7 +49,6 @@ public:
 		STOP,
 		STOP_Y,
 		FALL,
-		WIN,
 		NOTHING
 	};
 

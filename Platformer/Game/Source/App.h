@@ -21,7 +21,8 @@ class Player;
 class Collisions;
 
 enum game_screens {
-	game_menu = 0,
+	game_logo = 0,
+	game_menu,
 	game_scene1,
 	game_win,
 	game_death,
@@ -99,7 +100,7 @@ public:
 	Player* player;
 	Collisions* collision;
 
-	int screen = game_menu;
+	int screen = game_logo;
 
 private:
 
