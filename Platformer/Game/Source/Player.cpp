@@ -10,7 +10,7 @@
 
 #include "Collisions.h"
 
-#define TILESIZE 96
+#define TILESIZE 32
 
 Player::Player() : Module()
 {
