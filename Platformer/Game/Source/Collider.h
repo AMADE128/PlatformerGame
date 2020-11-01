@@ -15,7 +15,6 @@ struct Collider
 		PLAYER,
 		AIR,
 		SPIKE,
-		GOAL,
 
 
 		MAX

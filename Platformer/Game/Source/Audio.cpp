@@ -191,9 +191,12 @@ bool Audio::SetVolume(unsigned int id, int volume)
 bool Audio::UnloadFX(unsigned int id)
 {
 	bool ret = false;
+	if (fx[id - 1] != nullptr)
+	{
+		Mix_FreeChunk(fx[id - 1]);
+		fx[id - 1] = nullptr;
+	}
 	
-	Mix_FreeChunk(fx[id - 1]);
-	fx[id - 1] = NULL;
 
 	return ret;
 }
