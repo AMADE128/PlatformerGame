@@ -168,8 +168,7 @@ void App::PrepareUpdate()
 void App::FinishUpdate()
 {
 	// L02: DONE 1: This is a good place to call Load / Save methods
-	if (loadGameRequested == true) LoadGame(loadFile);
-	if (saveGameRequested == true) SaveGame();
+	
 }
 
 // Call modules before each loop iteration
@@ -190,6 +189,8 @@ bool App::PreUpdate()
 
 		ret = item->data->PreUpdate();
 	}
+	if (loadGameRequested == true) LoadGame(loadFile);
+	if (saveGameRequested == true) SaveGame();
 
 	return ret;
 }
@@ -326,9 +327,9 @@ bool App::LoadGame(pugi::xml_document& loadFile)
 		}
 	}
 
-	return ret;
-
 	loadGameRequested = false;
+
+	return ret;
 }
 
 // L02: TODO 7: Implement the xml save method for current state

@@ -92,10 +92,6 @@ bool Player::Start()
 	jumpRight = app->tex->Load("Assets/textures/Character/Jump (32x32).png");
 
 	collider = app->collision->AddCollider({ 100, 500, TILESIZE, TILESIZE}, Collider::Type::PLAYER, this);
-	uint x, y;
-	app->win->GetWindowSize(x, y);
-	SDL_Rect camera = { position.x, position.y, TILESIZE, TILESIZE };
-	cameraColl = app->collision->AddCollider(camera, Collider::Type::CAMERA, this);
 
 	currentAnimation = &idleRightAnim;
 	currentTex = idleRight;
