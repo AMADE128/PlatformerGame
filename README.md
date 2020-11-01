@@ -1,27 +1,26 @@
-# {Project Name}
+# IAN ADVENTURE
 
 ## Description
 
-{project description}
+Ian adventure is a 2D platformer, where you play as Ian a young traveler who is looking for the treasure of the flying islands. Will you have the hability to travel arround diferents worlds and surpass all the obstacles?
 
 ## Key Features
 
- - {Feature01}
- - {Feature02}
- - {Feature03}
- - {Feature04}
+ - Fluid 2D platforming
+ - Deadly spikes
+ - Infinite tries
  
 ## Controls
 
- - {ControlsScheme}
+ - WASD for movement
+ - SPACE for jump
 
 ## Developers
 
- - {Dev01} - {Role(s)}
- - {Dev02} - {Role(s)}
- - {Dev03} - {Role(s)}
- - {Dev04} - {Role(s)}
- - {Dev05} - {Role(s)}
+ - Himar Bravo González - Lead Programmer, Desing
+ - Pol Vázquez Porcar - Lead Artist, Programmer, Desing
+ - Marc Pavon Llop - Lead Designer, Programmer, Q&A
+
 
 ## License
 
