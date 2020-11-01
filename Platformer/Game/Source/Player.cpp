@@ -10,7 +10,9 @@
 
 #include "Collisions.h"
 
-#define TILESIZE 32
+#define TILESIZE 96
+#define POSXINIT 100
+#define POXYINIT 1000
 
 Player::Player() : Module()
 {
@@ -24,13 +26,6 @@ Player::Player() : Module()
 	idleRightAnim.loop = true;
 	idleRightAnim.speed = 0.1f;
 
-	for (int i = 0; i < TILESIZE * 11; i += TILESIZE)
-	{
-		idleLeftAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
-	}
-	idleLeftAnim.loop = true;
-	idleLeftAnim.speed = 0.1f;
-
 	for (int i = 0; i < TILESIZE * 12; i += TILESIZE)
 	{
 		runRightAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
@@ -38,32 +33,15 @@ Player::Player() : Module()
 	runRightAnim.loop = true;
 	runRightAnim.speed = 0.1f;
 
-	for (int i = 0; i < TILESIZE * 12; i += TILESIZE)
-	{
-		runLeftAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
-	}
-	runLeftAnim.loop = true;
-	runLeftAnim.speed = 0.1f;
-
 	fallRightAnim.PushBack({ 0, 0, TILESIZE, TILESIZE });
 
-	fallLeftAnim.PushBack({ 0, 0, TILESIZE, TILESIZE });
-
 	jumpRightAnim.PushBack({ 0, 0, TILESIZE, TILESIZE });
-
-	jumpLeftAnim.PushBack({ 0, 0, TILESIZE, TILESIZE });
 
 	for (int i = 0; i < TILESIZE * 7; i += TILESIZE)
 	{
 		deathRightAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
 	}
 	deathRightAnim.speed = 0.1f;
-
-	for (int i = 0; i < TILESIZE * 7; i += TILESIZE)
-	{
-		deathLeftAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
-	}
-	deathLeftAnim.speed = 0.1f;
 }
 
 // Destructor
@@ -82,8 +60,8 @@ bool Player::Start()
 {
 	LOG("Loading player textures");
 	
-	position.x = 100;
-	position.y = 500;
+	position.x = POSXINIT;
+	position.y = POXYINIT;
 	//Cargar texturas
 	idleRight = app->tex->Load("Assets/textures/Character/Idle (32x32).png");
 	fallRight = app->tex->Load("Assets/textures/Character/Fall.png");
@@ -91,7 +69,7 @@ bool Player::Start()
 	runRight = app->tex->Load("Assets/textures/Character/Run (32x32).png");
 	jumpRight = app->tex->Load("Assets/textures/Character/Jump (32x32).png");
 
-	collider = app->collision->AddCollider({ 100, 500, TILESIZE, TILESIZE}, Collider::Type::PLAYER, this);
+	collider = app->collision->AddCollider({ (int)position.x, (int)position.y, TILESIZE, TILESIZE}, Collider::Type::PLAYER, this);
 
 	currentAnimation = &idleRightAnim;
 	currentTex = idleRight;
@@ -109,17 +87,13 @@ bool Player::Update(float dt)
 {
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
-		position.x = 100;
-		position.y = 500;
-		app->render->camera.x = 0;
-		app->render->camera.y = -1152;
+		position.x = POSXINIT;
+		position.y = POXYINIT;
 	}
 	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 	{
-		position.x = 100;
-		position.y = 500;
-		app->render->camera.x = 0;
-		app->render->camera.y = -1152;
+		position.x = POSXINIT;
+		position.y = POXYINIT;
 
 	}
 	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
@@ -159,7 +133,7 @@ bool Player::Update(float dt)
 	{
 		if (god == true)
 		{
-			speed_y = -1;
+			speed_y = -3;
 			position.y += speed_y;
 		}
 	}
@@ -167,7 +141,7 @@ bool Player::Update(float dt)
 	{
 		if (god == true)
 		{
-			speed_y = 1;
+			speed_y = 3;
 			position.y += speed_y;
 		}
 	}
@@ -176,14 +150,14 @@ bool Player::Update(float dt)
 		if (god == true)
 		{
 			speed_xLastFrame = speed_x;
-			speed_x = -0.7f;
+			speed_x = -3;
 			position.x += speed_x;
 		}
 		else if (god == false && x_leftCollision == false)
 		{
 			x_rightCollision = false;
 			speed_xLastFrame = speed_x;
-			speed_x = -0.7f;
+			speed_x = -3;
 			position.x += speed_x;
 			
 			if (y_downCollision == true)
@@ -220,14 +194,14 @@ bool Player::Update(float dt)
 		if (god == true)
 		{
 			speed_xLastFrame = speed_x;
-			speed_x = 0.7f;
+			speed_x = 3;
 			position.x += speed_x;
 		}
 		else if (god == false && x_rightCollision == false)
 		{
 			x_leftCollision = false;
 			speed_xLastFrame = speed_x;
-			speed_x = 0.7f;
+			speed_x = 3;
 			position.x += speed_x;
 
 			if (y_downCollision == true)
@@ -316,7 +290,7 @@ bool Player::Update(float dt)
 		x_leftCollision = false;
 		x_rightCollision = false;
 		//speed_y = -0.5f;
-		position.y += -2.5f;
+		position.y += -7;
 	}
 
 	if (y_downCollision == true)
@@ -325,9 +299,12 @@ bool Player::Update(float dt)
 	}
 	else
 	{
-		speed_y += 0.05f;
+		speed_y += 0.15f;
 	}
 	position.y += speed_y;
+
+	app->render->camera.x = ((position.x + TILESIZE / 2) - (app->render->camera.w / 2)) * -1;
+	app->render->camera.y = ((position.y + TILESIZE / 2) - (app->render->camera.h / 2)) * -1;
 
 	currentAnimation->Update();
 	collider->SetPos(position.x, position.y);
@@ -386,7 +363,7 @@ bool Player::StopMovementY(Collider* c1, Collider* c2)
 			y_downCollision = true;
 		}
 		isJumping = false;
-		position.y = c2->rect.y - 31;
+		position.y = c2->rect.y - TILESIZE + 1;
 	}
 	else if (c1->rect.y  > c2->rect.y)
 	{

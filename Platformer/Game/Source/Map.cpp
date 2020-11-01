@@ -58,7 +58,7 @@ void Map::Draw()
 				int tileId = layer->Get(x, y);
 				cord = MapToWorld(x, y);
 				tileset = GetTilesetFromTileId(tileId);
-				if (tileId > 0 && layer->visible != 0)
+				if (tileId > 0)
 				{
 					// L04: TODO 9: Complete the draw function
 					app->render->DrawTexture(tileset->texture, cord.x, cord.y, &tileset->GetTileRect(tileId));
@@ -121,30 +121,49 @@ TileSet* Map::GetTilesetFromTileId(int id) const
 	ListItem<TileSet*>* item = data.tilesets.start;
 	TileSet* set = item->data;
 
-	if (id < 243)
+	if (id < 17)
 	{
 		set = item->data;
 	}
-	else if (id > 242 && id < 259)
+	else if (id > 16 && id < 259)
 	{
 		item = item->next;
 		set = item->data;
 	}
-	else if (id > 258 && id < 268)
+	else if (id == 259)
 	{
-		item = item->next;
-		item = item->next;
-		set = item->data;
-	}
-	else if (id == 268)
-	{
-		item = item->next;
 		item = item->next;
 		item = item->next;
 		set = item->data;
 	}
-	else if (id > 268)
+	else if (id > 259 && id < 269)
 	{
+		item = item->next;
+		item = item->next;
+		item = item->next;
+		set = item->data;
+	}
+	else if (id > 268 && id < 278)
+	{
+		item = item->next;
+		item = item->next;
+		item = item->next;
+		item = item->next;
+		set = item->data;
+	}
+	else if (id > 277 && id < 287)
+	{
+		item = item->next;
+		item = item->next;
+		item = item->next;
+		item = item->next;
+		item = item->next;
+		set = item->data;
+	}
+	else if (id > 286)
+	{
+		item = item->next;
+		item = item->next;
 		item = item->next;
 		item = item->next;
 		item = item->next;
