@@ -92,6 +92,10 @@ bool Player::Start()
 	jumpRight = app->tex->Load("Assets/textures/Character/Jump (32x32).png");
 
 	collider = app->collision->AddCollider({ 100, 500, TILESIZE, TILESIZE}, Collider::Type::PLAYER, this);
+	uint x, y;
+	app->win->GetWindowSize(x, y);
+	SDL_Rect camera = { position.x, position.y, TILESIZE, TILESIZE };
+	cameraColl = app->collision->AddCollider(camera, Collider::Type::CAMERA, this);
 
 	currentAnimation = &idleRightAnim;
 	currentTex = idleRight;
@@ -335,8 +339,6 @@ bool Player::Update(float dt)
 
 	currentAnimation->Update();
 	collider->SetPos(position.x, position.y);
-	app->render->camera.x = ((position.x + TILESIZE / 2) - app->render->camera.w / 2)*-1;
-	app->render->camera.y = ((position.y + TILESIZE / 2) - app->render->camera.h / 2)*-1;
 
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
 	if (flip == true)
@@ -444,5 +446,30 @@ bool Player::Fall(Collider* c1, Collider* c2)
 	y_downCollision = false;
 	x_leftCollision = false;
 	x_rightCollision = false;
+	return true;
+}
+
+bool Player::CameraMove(Collider* c1, Collider* c2)
+{
+	if (c1->rect.x + c1->rect.w > c2->rect.x + c2->rect.w)
+	{
+		cameraColl->rect.x += (c1->rect.x + c1->rect.w) - (c2->rect.x + c2->rect.w);
+		app->render->camera.x -= 3;
+	}
+	if (c1->rect.x < c2->rect.x)
+	{
+		cameraColl->rect.x -= c2->rect.x - c1->rect.x;
+		app->render->camera.x += 3;
+	}
+	if (c1->rect.y < c2->rect.y)
+	{
+		cameraColl->rect.y -= c2->rect.y - c1->rect.y;
+		app->render->camera.y += 5;
+	}
+	if (c1->rect.y + c1->rect.h > c2->rect.y + c2->rect.h)
+	{
+		cameraColl->rect.y += (c1->rect.y + c1->rect.h) - (c2->rect.y + c2->rect.h);
+		app->render->camera.y -= 3;
+	}
 	return true;
 }

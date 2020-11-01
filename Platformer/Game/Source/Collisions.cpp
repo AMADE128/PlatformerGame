@@ -21,6 +21,7 @@ Collisions::Collisions() : Module()
 	matrix[Collider::Type::PLAYER][Collider::Type::PLAYER] = NOTHING;
 	matrix[Collider::Type::PLAYER][Collider::Type::NONE] = NOTHING;
 	matrix[Collider::Type::PLAYER][Collider::Type::AIR] = FALL;
+	matrix[Collider::Type::PLAYER][Collider::Type::CAMERA] = CAMERA_MOVE;
 
 }
 
@@ -108,6 +109,9 @@ bool Collisions::PreUpdate()
 				if (matrix[c1->type][c2->type] == FALL && c1->listener)
 					c1->listener->Fall(c1, c2);
 
+				if (matrix[c1->type][c2->type] == CAMERA_MOVE && c1->listener)
+					c1->listener->CameraMove(c1, c2);
+
 			}
 		}
 	}
@@ -154,6 +158,10 @@ void Collisions::DebugDraw()
 		case Collider::Type::AIR: // blue
 			app->render->DrawRectangle(colliders[i]->rect, 255, 255, 255, alpha);
 			break;
+		case Collider::Type::CAMERA: // brown
+			app->render->DrawRectangle(colliders[i]->rect, 165, 42, 42, alpha);
+			break;
+			
 		}
 	}
 }
