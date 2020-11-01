@@ -176,3 +176,24 @@ bool Audio::PlayFx(unsigned int id, int repeat)
 
 	return ret;
 }
+
+bool Audio::SetVolume(unsigned int id, int volume)
+{
+	bool ret = false;
+	if (id > 0 && id <= fx.count() && fx[id - 1] != NULL)
+	{
+		Mix_VolumeChunk(fx[id - 1], volume);
+	}
+
+	return ret;
+}
+
+bool Audio::UnloadFX(unsigned int id)
+{
+	bool ret = false;
+	
+	Mix_FreeChunk(fx[id - 1]);
+	fx[id - 1] = NULL;
+
+	return ret;
+}

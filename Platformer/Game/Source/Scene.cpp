@@ -38,9 +38,11 @@ bool Scene::Start()
 	//app->map->Load("hello2.tmx");
 	app->map->Load("map1.tmx");
 	menu = app->tex->Load("Assets/textures/screens/Menu.png");
-	
-	// Load music
-	//app->audio->PlayMusic("Assets/audio/music/music_spy.ogg");
+
+	musicMenu = app->audio->LoadFx("Assets/audio/music/Intromusic.wav");
+	musicScene1 = app->audio->LoadFx("Assets/audio/music/Levelmusic.wav");
+	musicList.add(&musicMenu);
+	musicList.add(&musicScene1);
 
 	return true;
 }
@@ -54,19 +56,38 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	// Draw map
+	// Set VOLUME
+	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
+	{
+		if (volume < 128)
+		{
+			volume+= 128/32;
+		}
+	}
+	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
+	{
+		if (volume > 0)
+		{
+			volume-= 128/32;
+		}
+	}
+
+	//Draw Scenes
 	if (app->screen == game_scene1)
 	{
 		app->map->Draw();
+		app->audio->PlayFx(musicScene1);
 	}
 	else if (app->screen == game_menu)
 	{
+		app->audio->PlayFx(musicMenu);
 		app->render->DrawTexture(menu, 0, 0);
 		app->render->camera.x = 0;
 		app->render->camera.y = 0;
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		{
 			app->screen = game_scene1;
+			app->audio->UnloadFX(musicMenu);
 		}
 	}
 	
@@ -85,6 +106,12 @@ bool Scene::PostUpdate()
 
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
+
+	ListItem<unsigned int*>* item;
+	for (item = musicList.start; item != NULL; item = item->next)
+	{
+		app->audio->SetVolume(*item->data, volume);
+	}
 
 	return ret;
 }
