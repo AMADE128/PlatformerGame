@@ -27,4 +27,4 @@ Ian adventure is a 2D platformer, where you play as Ian a young traveler who is 
 
 This project is licensed under an unmodified MIT license, which is an OSI-certified license that allows static linking with closed source software. Check [LICENSE](LICENSE) for further details.
 
-{AdditionalLicenses}
+This asset pack can be used in free and commercial projects. You can modify the assets as you need. Credit is not necessary, but always appreciated.  You may not repackage, redistribute or resell the assets, no matter how much they are modified.
