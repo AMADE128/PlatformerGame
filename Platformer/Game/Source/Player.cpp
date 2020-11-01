@@ -111,21 +111,61 @@ bool Player::PreUpdate()
 
 bool Player::Update(float dt)
 {
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN && y_downCollision == true)
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	{
+		position.x = 100;
+		position.y = 500;
+		app->render->camera.x = 0;
+		app->render->camera.y = -1152;
+	}
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+	{
+		position.x = 100;
+		position.y = 500;
+		app->render->camera.x = 0;
+		app->render->camera.y = -1152;
+
+	}
+	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+	{
+		app->SaveGameRequest();
+	}
+	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+	{
+		app->LoadGameRequest();
+	}
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+	{
+		if (god == false)
+		{
+			god = true;
+			collider->type = Collider::NONE;
+
+		}
+		else if (god == true)
+		{
+			god = false;
+			collider->type = Collider::PLAYER;
+		}
+
+	}
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && y_downCollision == true)
+	{
+	  if (god == false)
+	
+		y_downCollision = false;
+		if (!isJumping) // Solo salta cuando no esté en el aire
+		{
+			isJumping = true;
+		}
+	}
+	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 	{
 		if (god == true)
 		{
+			speed_y = -1;
 			position.y += speed_y;
 		}
-		else if (god == false)
-		{
-			y_downCollision = false;
-			if (!isJumping) // Solo salta cuando no esté en el aire
-			{
-				isJumping = true;
-			}
-		}
-
 	}
 	else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
@@ -409,5 +449,23 @@ bool Player::CameraMove(Collider* c1, Collider* c2)
 		cameraColl->rect.y += (c1->rect.y + c1->rect.h) - (c2->rect.y + c2->rect.h);
 		app->render->camera.y -= 3;
 	}
+	return true;
+}
+
+bool Player::LoadState(pugi::xml_node& data)
+{
+	position.x = data.child("position").attribute("x").as_int();
+	position.y = data.child("position").attribute("y").as_int();
+
+	return true;
+}
+
+bool Player::SaveState(pugi::xml_node& data) const
+{
+	pugi::xml_node player = data.append_child("position");
+
+	player.append_attribute("x") = position.x;
+	player.append_attribute("y") = position.y;
+
 	return true;
 }

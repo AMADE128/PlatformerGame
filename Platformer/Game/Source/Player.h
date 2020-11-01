@@ -87,6 +87,9 @@ public:
 
 	bool isJumping;
 
+	bool LoadState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&) const;
+
 
 };
 
