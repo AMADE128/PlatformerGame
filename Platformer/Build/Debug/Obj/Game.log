@@ -1,6 +1,2 @@
-﻿  Collisions.cpp
-C:\Users\Tomas\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Animation.h(60,19): warning C4244:  'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
-C:\Users\Tomas\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Animation.h(62,30): warning C4244:  '=': conversión de 'float' a 'int'; posible pérdida de datos
-C:\Users\Tomas\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Animation.h(69,18): warning C4244:  '=': conversión de 'int' a 'float'; posible pérdida de datos
-C:\Users\Tomas\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Collisions.cpp(126,60): warning C4390:  ';': se encontró una instrucción controlada vacía; ¿es esa la intención?
-  Game.vcxproj -> C:\Users\Tomas\Documents\GitHub\PlatformerGame\Platformer\Build\Debug\Game.exe
+﻿  Scene.cpp
+  Game.vcxproj -> C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Build\Debug\Game.exe

@@ -7847,8 +7847,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="288"/>
+   <tile gid="288"/>
    <tile/>
    <tile/>
    <tile/>
@@ -10815,8 +10815,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="288"/>
-   <tile gid="288"/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>

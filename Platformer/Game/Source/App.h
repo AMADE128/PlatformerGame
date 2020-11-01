@@ -20,6 +20,12 @@ class Map;
 class Player;
 class Collisions;
 
+enum game_screens {
+	game_menu = 0,
+	game_scene1,
+	game_win,
+	game_death,
+};
 class App
 {
 public:
@@ -92,6 +98,8 @@ public:
 	Map* map;
 	Player* player;
 	Collisions* collision;
+
+	int screen = game_menu;
 
 private:
 

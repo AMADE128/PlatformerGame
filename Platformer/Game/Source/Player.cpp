@@ -85,238 +85,241 @@ bool Player::PreUpdate()
 
 bool Player::Update(float dt)
 {
-	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	if (app->screen == game_scene1)
 	{
-		position.x = POSXINIT;
-		position.y = POXYINIT;
-	}
-	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
-	{
-		position.x = POSXINIT;
-		position.y = POXYINIT;
-
-	}
-	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
-	{
-		app->SaveGameRequest();
-	}
-	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
-	{
-		app->LoadGameRequest();
-	}
-	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
-	{
-		if (god == false)
+		if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		{
-			god = true;
-			collider->type = Collider::NONE;
+			position.x = POSXINIT;
+			position.y = POXYINIT;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+		{
+			position.x = POSXINIT;
+			position.y = POXYINIT;
 
 		}
-		else if (god == true)
+		if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		{
-			god = false;
-			collider->type = Collider::PLAYER;
+			app->SaveGameRequest();
 		}
-
-	}
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && y_downCollision == true)
-	{
-	  if (god == false)
-	
-		y_downCollision = false;
-		if (!isJumping) // Solo salta cuando no esté en el aire
+		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		{
-			isJumping = true;
+			app->LoadGameRequest();
 		}
-	}
-	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-	{
-		if (god == true)
+		if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 		{
-			speed_y = -3;
-			position.y += speed_y;
-		}
-	}
-	else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-	{
-		if (god == true)
-		{
-			speed_y = 3;
-			position.y += speed_y;
-		}
-	}
-	else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && app->input->GetKey(SDL_SCANCODE_D) != KEY_REPEAT)
-	{
-		if (god == true)
-		{
-			speed_xLastFrame = speed_x;
-			speed_x = -3;
-			position.x += speed_x;
-		}
-		else if (god == false && x_leftCollision == false)
-		{
-			x_rightCollision = false;
-			speed_xLastFrame = speed_x;
-			speed_x = -3;
-			position.x += speed_x;
-			
-			if (y_downCollision == true)
+			if (god == false)
 			{
-				currentTex = runRight;
-				currentAnimation = &runRightAnim;
-				flip = true;
+				god = true;
+				collider->type = Collider::NONE;
+
 			}
-			else
+			else if (god == true)
 			{
-				flip = true;
-				if ((-3 + speed_y) < 0)
+				god = false;
+				collider->type = Collider::PLAYER;
+			}
+
+		}
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && y_downCollision == true)
+		{
+			if (god == false)
+
+				y_downCollision = false;
+			if (!isJumping) // Solo salta cuando no esté en el aire
+			{
+				isJumping = true;
+			}
+		}
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		{
+			if (god == true)
+			{
+				speed_y = -3;
+				position.y += speed_y;
+			}
+		}
+		else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		{
+			if (god == true)
+			{
+				speed_y = 3;
+				position.y += speed_y;
+			}
+		}
+		else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && app->input->GetKey(SDL_SCANCODE_D) != KEY_REPEAT)
+		{
+			if (god == true)
+			{
+				speed_xLastFrame = speed_x;
+				speed_x = -3;
+				position.x += speed_x;
+			}
+			else if (god == false && x_leftCollision == false)
+			{
+				x_rightCollision = false;
+				speed_xLastFrame = speed_x;
+				speed_x = -3;
+				position.x += speed_x;
+
+				if (y_downCollision == true)
 				{
-					if (speed_x <= 0 && speed_xLastFrame < 0)
+					currentTex = runRight;
+					currentAnimation = &runRightAnim;
+					flip = true;
+				}
+				else
+				{
+					flip = true;
+					if ((-3 + speed_y) < 0)
 					{
-						currentAnimation = &jumpRightAnim;
-						currentTex = jumpRight;
+						if (speed_x <= 0 && speed_xLastFrame < 0)
+						{
+							currentAnimation = &jumpRightAnim;
+							currentTex = jumpRight;
+						}
+					}
+					else if ((-3 + speed_y) >= 0)
+					{
+						if (speed_x <= 0 && speed_xLastFrame < 0)
+						{
+							currentAnimation = &fallRightAnim;
+							currentTex = fallRight;
+						}
+					}
+				}
+			}
+
+		}
+		else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && app->input->GetKey(SDL_SCANCODE_A) != KEY_REPEAT)
+		{
+			if (god == true)
+			{
+				speed_xLastFrame = speed_x;
+				speed_x = 3;
+				position.x += speed_x;
+			}
+			else if (god == false && x_rightCollision == false)
+			{
+				x_leftCollision = false;
+				speed_xLastFrame = speed_x;
+				speed_x = 3;
+				position.x += speed_x;
+
+				if (y_downCollision == true)
+				{
+					currentTex = runRight;
+					currentAnimation = &runRightAnim;
+					flip = false;
+				}
+				else
+				{
+					flip = false;
+					if ((-3 + speed_y) < 0)
+					{
+						if (speed_x >= 0 && speed_xLastFrame > 0)
+						{
+							currentTex = jumpRight;
+							currentAnimation = &jumpRightAnim;
+						}
+					}
+					else if ((-3 + speed_y) >= 0)
+					{
+						if (speed_x >= 0 && speed_xLastFrame > 0)
+						{
+							currentTex = fallRight;
+							currentAnimation = &fallRightAnim;
+						}
+					}
+				}
+			}
+
+		}
+		else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP || app->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
+		{
+			speed_x = 0;
+		}
+		else
+		{
+			if (speed_x == 0)
+			{
+				if (speed_y == 0)
+				{
+					currentAnimation = &idleRightAnim;
+					currentTex = idleRight;
+					if (speed_xLastFrame > 0)
+					{
+						flip = false;
+					}
+					else if (speed_xLastFrame < 0)
+					{
+						flip = true;
+					}
+				}
+				else if ((-3 + speed_y) < 0)
+				{
+					currentAnimation = &jumpRightAnim;
+					currentTex = jumpRight;
+					if (speed_xLastFrame > 0)
+					{
+						flip = false;
+					}
+					else if (speed_xLastFrame < 0)
+					{
+						flip = true;
 					}
 				}
 				else if ((-3 + speed_y) >= 0)
 				{
-					if (speed_x <= 0 && speed_xLastFrame < 0)
+					currentTex = fallRight;
+					currentAnimation = &fallRightAnim;
+					if (speed_xLastFrame > 0)
 					{
-						currentAnimation = &fallRightAnim;
-						currentTex = fallRight;
+						flip = false;
+					}
+					else if (speed_xLastFrame < 0)
+					{
+						flip = true;
 					}
 				}
 			}
+
 		}
 
-	}
-	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && app->input->GetKey(SDL_SCANCODE_A) != KEY_REPEAT)
-	{
-		if (god == true)
+		if (isJumping)
 		{
-			speed_xLastFrame = speed_x;
-			speed_x = 3;
-			position.x += speed_x;
-		}
-		else if (god == false && x_rightCollision == false)
-		{
+			y_downCollision = false;
 			x_leftCollision = false;
-			speed_xLastFrame = speed_x;
-			speed_x = 3;
-			position.x += speed_x;
-
-			if (y_downCollision == true)
-			{
-				currentTex = runRight;
-				currentAnimation = &runRightAnim;
-				flip = false;
-			}
-			else
-			{
-				flip = false;
-				if ((-3 + speed_y) < 0)
-				{
-					if (speed_x >= 0 && speed_xLastFrame > 0)
-					{
-						currentTex = jumpRight;
-						currentAnimation = &jumpRightAnim;
-					}
-				}
-				else if ((-3 + speed_y) >= 0)
-				{
-					if (speed_x >= 0 && speed_xLastFrame > 0)
-					{
-						currentTex = fallRight;
-						currentAnimation = &fallRightAnim;
-					}
-				}
-			}
+			x_rightCollision = false;
+			//speed_y = -0.5f;
+			position.y += -7;
 		}
-		
-	}
-	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP || app->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
-	{
-		speed_x = 0;
-	}
-	else
-	{
-		if (speed_x == 0)
+
+		if (y_downCollision == true)
 		{
-			if (speed_y == 0)
-			{
-				currentAnimation = &idleRightAnim;
-				currentTex = idleRight;
-				if (speed_xLastFrame > 0)
-				{
-					flip = false;
-				}
-				else if (speed_xLastFrame < 0)
-				{
-					flip = true;
-				}
-			}
-			else if ((-3 + speed_y) < 0)
-			{
-				currentAnimation = &jumpRightAnim;
-				currentTex = jumpRight;
-				if (speed_xLastFrame > 0)
-				{
-					flip = false;
-				}
-				else if (speed_xLastFrame < 0)
-				{
-					flip = true;
-				}
-			}
-			else if ((-3 + speed_y) >= 0)
-			{
-				currentTex = fallRight;
-				currentAnimation = &fallRightAnim;
-				if (speed_xLastFrame > 0)
-				{
-					flip = false;
-				}
-				else if (speed_xLastFrame < 0)
-				{
-					flip = true;
-				}
-			}
+			speed_y = 0;
 		}
-		
-	}
+		else
+		{
+			speed_y += 0.15f;
+		}
+		position.y += speed_y;
 
-	if (isJumping)
-	{
-		y_downCollision = false;
-		x_leftCollision = false;
-		x_rightCollision = false;
-		//speed_y = -0.5f;
-		position.y += -7;
-	}
+		app->render->camera.x = ((position.x + TILESIZE / 2) - (app->render->camera.w / 2)) * -1;
+		app->render->camera.y = ((position.y + TILESIZE / 2) - (app->render->camera.h / 2)) * -1;
 
-	if (y_downCollision == true)
-	{
-		speed_y = 0;
-	}
-	else
-	{
-		speed_y += 0.15f;
-	}
-	position.y += speed_y;
+		currentAnimation->Update();
+		collider->SetPos(position.x, position.y);
 
-	app->render->camera.x = ((position.x + TILESIZE / 2) - (app->render->camera.w / 2)) * -1;
-	app->render->camera.y = ((position.y + TILESIZE / 2) - (app->render->camera.h / 2)) * -1;
-
-	currentAnimation->Update();
-	collider->SetPos(position.x, position.y);
-
-	SDL_Rect rect = currentAnimation->GetCurrentFrame();
-	if (flip == true)
-	{
-		app->render->DrawTextureFlip(currentTex, position.x, position.y, &rect);
-	}
-	else if (flip == false)
-	{
-		app->render->DrawTexture(currentTex, position.x, position.y, &rect);
+		SDL_Rect rect = currentAnimation->GetCurrentFrame();
+		if (flip == true)
+		{
+			app->render->DrawTextureFlip(currentTex, position.x, position.y, &rect);
+		}
+		else if (flip == false)
+		{
+			app->render->DrawTexture(currentTex, position.x, position.y, &rect);
+		}
 	}
 
 	return true;

@@ -60,7 +60,7 @@ bool Collisions::Start()
 				int tileId = layer->Get(x, y);
 				cord = app->map->MapToWorld(x, y);
 				tileset = app->map->GetTilesetFromTileId(tileId);
-				if (tileId > 258 && tileId < 268)
+				if (tileId > 259 && tileId < 269)
 				{
 					coll = { cord.x, cord.y, tileset->GetTileRect(tileId).w, tileset->GetTileRect(tileId).h };
 					AddCollider(coll, Collider::Type::GROUND, this);
@@ -134,10 +134,13 @@ bool Collisions::PreUpdate()
 
 bool Collisions::Update(float dt)
 {
-	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
-		debug = !debug;
-	if (debug)
-		DebugDraw();
+	if (app->screen == game_scene1)
+	{
+		if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+			debug = !debug;
+		if (debug)
+			DebugDraw();
+	}
 	return true;
 }
 
