@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "Window.h"
 #include "Map.h"
+#include "Audio.h"
 
 #include "Collisions.h"
 
@@ -68,7 +69,9 @@ bool Player::Start()
 	deathRight = app->tex->Load("Assets/textures/Character/Hit (32x32).png");
 	runRight = app->tex->Load("Assets/textures/Character/Run (32x32).png");
 	jumpRight = app->tex->Load("Assets/textures/Character/Jump (32x32).png");
+	jump = app->audio->LoadFx("Assets/audio/fx/jump.wav");
 
+	app->scene->musicList.add(&jump);
 	collider = app->collision->AddCollider({ (int)position.x, (int)position.y, TILESIZE, TILESIZE}, Collider::Type::PLAYER, this);
 
 	currentAnimation = &idleRightAnim;
@@ -129,6 +132,7 @@ bool Player::Update(float dt)
 			if (!isJumping) // Solo salta cuando no esté en el aire
 			{
 				isJumping = true;
+				app->audio->PlayFx(jump);
 			}
 		}
 		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)

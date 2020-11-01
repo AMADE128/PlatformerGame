@@ -89,6 +89,7 @@ public:
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&) const;
 
+	unsigned int jump = 0;
 
 };
 
