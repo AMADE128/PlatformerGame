@@ -54,9 +54,6 @@ public:
 
 	bool flip;
 
-	bool LoadState(pugi::xml_node&);
-	bool SaveState(pugi::xml_node&) const;
-
 	Animation* currentAnimation = nullptr;
 
 	Animation idleRightAnim;
