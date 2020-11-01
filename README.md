@@ -8,7 +8,7 @@ Ian adventure is a 2D platformer, where you play as Ian a young traveler who is 
 
  - Fluid 2D platforming
  - Deadly spikes
- - Infinite tries
+ - Infinite attempts
  
 ## Controls
 
