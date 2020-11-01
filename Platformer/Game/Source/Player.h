@@ -35,7 +35,6 @@ public:
 	bool StopMovement(Collider* c1, Collider* c2) override;
 
 	bool Fall(Collider* c1, Collider* c2) override;
-	bool CameraMove(Collider* c1, Collider* c2) override;
 
 	// Called before quitting
 	bool CleanUp();

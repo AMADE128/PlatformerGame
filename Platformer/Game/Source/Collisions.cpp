@@ -21,7 +21,8 @@ Collisions::Collisions() : Module()
 	matrix[Collider::Type::PLAYER][Collider::Type::PLAYER] = NOTHING;
 	matrix[Collider::Type::PLAYER][Collider::Type::NONE] = NOTHING;
 	matrix[Collider::Type::PLAYER][Collider::Type::AIR] = FALL;
-	matrix[Collider::Type::PLAYER][Collider::Type::CAMERA] = CAMERA_MOVE;
+	matrix[Collider::Type::PLAYER][Collider::Type::SPIKE] = DIE;
+	matrix[Collider::Type::PLAYER][Collider::Type::GOAL] = WIN;
 
 }
 
@@ -64,10 +65,20 @@ bool Collisions::Start()
 					coll = { cord.x, cord.y, tileset->GetTileRect(tileId).w, tileset->GetTileRect(tileId).h };
 					AddCollider(coll, Collider::Type::GROUND, this);
 				}
-				if (tileId > 268)
+				if (tileId > 268 && tileId <277)
 				{
 					coll = { cord.x, cord.y, tileset->GetTileRect(tileId).w, tileset->GetTileRect(tileId).h };
 					AddCollider(coll, Collider::Type::WALL, this);
+				}
+				if (tileId > 277 && tileId < 287)
+				{
+					coll = { cord.x, cord.y, tileset->GetTileRect(tileId).w, tileset->GetTileRect(tileId).h };
+					AddCollider(coll, Collider::Type::GOAL, this);
+				}
+				if (tileId > 287)
+				{
+					coll = { cord.x, cord.y, tileset->GetTileRect(tileId).w, tileset->GetTileRect(tileId).h };
+					AddCollider(coll, Collider::Type::SPIKE, this);
 				}
 			}
 		}
@@ -108,10 +119,12 @@ bool Collisions::PreUpdate()
 
 				if (matrix[c1->type][c2->type] == FALL && c1->listener)
 					c1->listener->Fall(c1, c2);
+				
+				if (matrix[c1->type][c2->type] == DIE && c1->listener)
+					//c1->listener->FUNCIONAQUI(c1, c2);
 
-				if (matrix[c1->type][c2->type] == CAMERA_MOVE && c1->listener)
-					c1->listener->CameraMove(c1, c2);
-
+					if (matrix[c1->type][c2->type] == WIN && c1->listener);
+					//c1->listener->FUNCIONAQUI(c1, c2);
 			}
 		}
 	}
@@ -158,8 +171,11 @@ void Collisions::DebugDraw()
 		case Collider::Type::AIR: // blue
 			app->render->DrawRectangle(colliders[i]->rect, 255, 255, 255, alpha);
 			break;
-		case Collider::Type::CAMERA: // brown
-			app->render->DrawRectangle(colliders[i]->rect, 165, 42, 42, alpha);
+		case Collider::Type::SPIKE: // purple
+			app->render->DrawRectangle(colliders[i]->rect, 128, 0, 128, alpha);
+			break;
+		case Collider::Type::GOAL: // yellow
+			app->render->DrawRectangle(colliders[i]->rect, 255, 255, 0, alpha);
 			break;
 			
 		}

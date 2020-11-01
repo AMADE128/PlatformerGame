@@ -400,30 +400,7 @@ bool Player::Fall(Collider* c1, Collider* c2)
 	return true;
 }
 
-bool Player::CameraMove(Collider* c1, Collider* c2)
-{
-	if (c1->rect.x + c1->rect.w > c2->rect.x + c2->rect.w)
-	{
-		cameraColl->rect.x += (c1->rect.x + c1->rect.w) - (c2->rect.x + c2->rect.w);
-		app->render->camera.x -= 3;
-	}
-	if (c1->rect.x < c2->rect.x)
-	{
-		cameraColl->rect.x -= c2->rect.x - c1->rect.x;
-		app->render->camera.x += 3;
-	}
-	if (c1->rect.y < c2->rect.y)
-	{
-		cameraColl->rect.y -= c2->rect.y - c1->rect.y;
-		app->render->camera.y += 5;
-	}
-	if (c1->rect.y + c1->rect.h > c2->rect.y + c2->rect.h)
-	{
-		cameraColl->rect.y += (c1->rect.y + c1->rect.h) - (c2->rect.y + c2->rect.h);
-		app->render->camera.y -= 3;
-	}
-	return true;
-}
+
 
 bool Player::LoadState(pugi::xml_node& data)
 {

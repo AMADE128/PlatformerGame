@@ -14,7 +14,8 @@ struct Collider
 		WALL,
 		PLAYER,
 		AIR,
-		CAMERA,
+		SPIKE,
+		GOAL,
 
 
 		MAX

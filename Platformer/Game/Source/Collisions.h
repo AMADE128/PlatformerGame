@@ -49,7 +49,7 @@ public:
 		STOP,
 		STOP_Y,
 		FALL,
-		CAMERA_MOVE,
+		WIN,
 		NOTHING
 	};
 

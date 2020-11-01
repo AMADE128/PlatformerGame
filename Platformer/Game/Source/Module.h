@@ -88,11 +88,6 @@ public:
 		return true;
 	}
 
-	virtual bool CameraMove(Collider* c1, Collider* c2)
-	{
-		return true;
-	}
-
 public:
 
 	SString name;
