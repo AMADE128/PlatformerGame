@@ -14,6 +14,7 @@ Ian adventure is a 2D platformer, where you play as Ian a young traveler who is 
 
  - WASD for movement
  - SPACE for jump
+ - UP and DOWN arrow keys to adjust volume
 
 ## Developers
 
