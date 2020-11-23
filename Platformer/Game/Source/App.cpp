@@ -57,7 +57,7 @@ App::~App()
 		item = item->prev;
 	}
 
-	modules.clear();
+	modules.Clear();
 }
 
 void App::AddModule(Module* module)

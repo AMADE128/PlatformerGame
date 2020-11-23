@@ -204,7 +204,7 @@ bool Map::CleanUp()
 		RELEASE(item->data);
 		item = item->next;
 	}
-	data.tilesets.clear();
+	data.tilesets.Clear();
 
 	// L04: DONE 2: clean up all layer data
 	// Remove all layers
@@ -216,7 +216,7 @@ bool Map::CleanUp()
 		RELEASE(item2->data);
 		item2 = item2->next;
 	}
-	data.layers.clear();
+	data.layers.Clear();
 
 	// Clean up the pugui tree
 	mapFile.reset();

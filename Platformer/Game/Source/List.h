@@ -47,7 +47,7 @@ public:
 	// Destructor
 	~List()
 	{
-		clear();
+		Clear();
 	}
 
 	// Get Size
@@ -118,7 +118,7 @@ public:
 	}
 
 	// Destroy and free all mem
-	void clear()
+	void Clear()
 	{
 		ListItem<tdata>*   p_data;
 		ListItem<tdata>*   p_next;

@@ -65,11 +65,11 @@ bool Player::Start()
 	position.x = POSXINIT;
 	position.y = POXYINIT;
 	//Cargar texturas
-	idleTex = app->tex->Load("Assets/textures/Character/Idle (32x32).png");
-	fallTex = app->tex->Load("Assets/textures/Character/Fall.png");
-	deathTex = app->tex->Load("Assets/textures/Character/Hit (32x32).png");
-	runTex = app->tex->Load("Assets/textures/Character/Run (32x32).png");
-	jumpTex = app->tex->Load("Assets/textures/Character/Jump (32x32).png");
+	idleTex = app->tex->Load("Assets/Textures/Character/idle.png");
+	fallTex = app->tex->Load("Assets/Textures/Character/fall.png");
+	deathTex = app->tex->Load("Assets/Textures/Character/hit.png");
+	runTex = app->tex->Load("Assets/Textures/Character/run.png");
+	jumpTex = app->tex->Load("Assets/Textures/Character/jump.png");
 
 	playerColl = app->collision->AddCollider({ (int)position.x, (int)position.y, TILESIZE, TILESIZE}, Collider::Type::PLAYER, this);
 
@@ -423,9 +423,10 @@ bool Player::Die(Collider* c1, Collider* c2)
 		{
 			flip = true;
 		}
-		if (currentAnimation->HasFinished())
+		if (deathAnim.finish == true)
 		{
 			app->scene->start = true;
+			deathAnim.Reset();
 			app->screen = game_death;
 		}
 	}

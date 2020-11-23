@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-up" width="102" height="51" tilewidth="48" tileheight="48" infinite="0" nextlayerid="11" nextobjectid="1">
  <tileset firstgid="1" name="background" tilewidth="48" tileheight="48" tilecount="16" columns="4">
-  <image source="Purple.png" width="192" height="192"/>
+  <image source="purple.png" width="192" height="192"/>
  </tileset>
  <tileset firstgid="17" name="tileset" tilewidth="48" tileheight="48" tilecount="242" columns="22">
-  <image source="Terrain (16x16).png" width="1056" height="528"/>
+  <image source="terrain.png" width="1056" height="528"/>
  </tileset>
  <tileset firstgid="259" name="trap" tilewidth="48" tileheight="48" tilecount="1" columns="1">
-  <image source="Idle.png" width="48" height="48"/>
+  <image source="idle.png" width="48" height="48"/>
  </tileset>
  <tileset firstgid="260" name="ground" tilewidth="48" tileheight="48" tilecount="9" columns="3">
   <image source="colliders.png" width="144" height="144"/>

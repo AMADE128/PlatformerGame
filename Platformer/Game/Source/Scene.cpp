@@ -37,12 +37,12 @@ bool Scene::Start()
 {
 	// L03: DONE: Load map
 	app->map->Load("map1.tmx");
-	menu = app->tex->Load("Assets/textures/screens/Menu.png");
-	death = app->tex->Load("Assets/textures/screens/Lose.png");
-	logo = app->tex->Load("Assets/textures/screens/logoscreen.png");
-	win = app->tex->Load("Assets/textures/screens/Win.png");
+	menu = app->tex->Load("Assets/Textures/Screens/menu.png");
+	death = app->tex->Load("Assets/Textures/Screens/lose.png");
+	logo = app->tex->Load("Assets/Textures/Screens/logo_screen.png");
+	win = app->tex->Load("Assets/Textures/Screens/win.png");
 
-	musicMenu = app->audio->LoadFx("Assets/audio/music/Intromusic.wav");
+	musicMenu = app->audio->LoadFx("Assets/Audio/Music/intro_music.wav");
 	musicList.add(&musicMenu);
 
 	return true;
@@ -78,7 +78,7 @@ bool Scene::Update(float dt)
 	{
 		if (start == true)
 		{
-			musicScene1 = app->audio->LoadFx("Assets/audio/music/Levelmusic.wav");
+			musicScene1 = app->audio->LoadFx("Assets/Audio/Music/level_music.wav");
 			musicList.add(&musicScene1);
 			start = false;
 		}
@@ -123,7 +123,6 @@ bool Scene::Update(float dt)
 		app->player->currentAnimation = &app->player->idleAnim;
 		app->player->currentTex = app->player->idleTex;
 		app->player->flip = false;
-		app->player->deathAnim.Reset();
 		app->render->DrawTexture(death, 0, 0);
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		{

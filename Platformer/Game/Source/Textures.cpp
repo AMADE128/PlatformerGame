@@ -55,7 +55,7 @@ bool Textures::CleanUp()
 		SDL_DestroyTexture(item->data);
 	}
 
-	textures.clear();
+	textures.Clear();
 	IMG_Quit();
 	return true;
 }
