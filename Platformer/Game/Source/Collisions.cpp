@@ -75,7 +75,7 @@ bool Collisions::Start()
 				tileset = app->map->GetTilesetFromTileId(tileId);
 				if (tileId > 259 && tileId < 269)
 				{
-					coll = { cord.x, cord.y, tileset->GetTileRect(tileId).w, tileset->GetTileRect(tileId).h };
+					coll = { cord.x + 2, cord.y, tileset->GetTileRect(tileId).w - 5, tileset->GetTileRect(tileId).h };
 					AddCollider(coll, Collider::Type::GROUND, this);
 				}
 				if (tileId > 268 && tileId <277)

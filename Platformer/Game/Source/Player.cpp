@@ -71,7 +71,7 @@ bool Player::Start()
 	runTex = app->tex->Load("Assets/Textures/Character/run.png");
 	jumpTex = app->tex->Load("Assets/Textures/Character/jump.png");
 
-	playerColl = app->collision->AddCollider({ (int)position.x, (int)position.y, TILESIZE, TILESIZE}, Collider::Type::PLAYER, this);
+	playerColl = app->collision->AddCollider({ (int)position.x, (int)position.y, TILESIZE - 50, TILESIZE - 20}, Collider::Type::PLAYER, this);
 
 	currentAnimation = &idleAnim;
 	currentTex = idleTex;
@@ -313,7 +313,7 @@ bool Player::Update(float dt)
 		
 
 		
-		playerColl->SetPos(position.x, position.y);
+		playerColl->SetPos(position.x + 25, position.y + 20);
 	}
 
 	return true;
@@ -371,7 +371,6 @@ bool Player::StopMovementY(Collider* c1, Collider* c2)
 		}
 		isJumping = false;
 		position.y = c2->rect.y - TILESIZE + 1;
-		
 	}
 	else if (c1->rect.y  > c2->rect.y)
 	{
@@ -385,17 +384,17 @@ bool Player::StopMovementY(Collider* c1, Collider* c2)
 
 bool Player::StopMovement(Collider* c1, Collider* c2)
 {
-	if (c1->rect.x < c2->rect.x && (c1->rect.y + TILESIZE-3) > c2->rect.y)
+	if (c1->rect.x < c2->rect.x && (c1->rect.y + playerColl->rect.h - 3) > c2->rect.y)
 	{
 		x_rightCollision = true;
 		speed_x = 0.f;
-		position.x -= 0.1f;
+		//position.x -= 0.1f;
 	}
-	if (c1->rect.x > c2->rect.x && (c1->rect.y + TILESIZE-3) > c2->rect.y)
+	if (c1->rect.x > c2->rect.x && (c1->rect.y + playerColl->rect.h - 3) > c2->rect.y)
 	{
 		x_leftCollision = true;
 		speed_x = 0.f;
-		position.x += 0.1f;
+		//position.x += 0.1f;
 	}
 	return true;
 }
