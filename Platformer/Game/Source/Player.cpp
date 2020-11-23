@@ -87,7 +87,7 @@ bool Player::PreUpdate()
 
 bool Player::Update(float dt)
 {
-	if (app->screen == game_scene1 && death == false)
+	if (death == false)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		{

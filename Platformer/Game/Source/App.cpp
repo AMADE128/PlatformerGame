@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "Player.h"
 #include "Collisions.h"
+#include "SceneMenu.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -29,6 +30,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	map = new Map();
 	player = new Player();
 	collision = new Collisions();
+	sceneMenu = new SceneMenu();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -36,6 +38,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(tex);
 	AddModule(audio);
+	AddModule(sceneMenu);
 	AddModule(scene);
 	AddModule(map);
 	AddModule(player);

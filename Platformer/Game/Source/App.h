@@ -19,6 +19,7 @@ class Scene;
 class Map;
 class Player;
 class Collisions;
+class SceneMenu;
 
 enum game_screens {
 	game_logo = 0,
@@ -96,6 +97,7 @@ public:
 	Textures* tex;
 	Audio* audio;
 	Scene* scene;
+	SceneMenu* sceneMenu;
 	Map* map;
 	Player* player;
 	Collisions* collision;
