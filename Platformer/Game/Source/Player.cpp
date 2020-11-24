@@ -73,7 +73,7 @@ bool Player::Start()
 	jumpTex = app->tex->Load("Assets/Textures/Character/jump.png");
 
 	playerColl = app->collision->AddCollider({ (int)position.x, (int)position.y, TILESIZE - 50, TILESIZE - 20}, Collider::Type::PLAYER, this);
-	cameraColl = app->collision->AddCollider({ (int)position.x - 100, (int)position.y - 100, app->render->camera.w/3, app->render->camera.h / 3 }, Collider::Type::CAMERA, this);
+	cameraColl = app->collision->AddCollider({ (int)position.x - 100, (int)position.y - 100, app->render->camera.w/4, app->render->camera.h / 3 + 20 }, Collider::Type::CAMERA, this);
 
 	currentAnimation = &idleAnim;
 	currentTex = idleTex;
@@ -309,11 +309,8 @@ bool Player::Update(float dt)
 		}
 		position.y += speed_y;
 
-
-		app->render->camera.x = ((position.x + TILESIZE / 2) - (app->render->camera.w / 2)) * -1;
-		app->render->camera.y = ((position.y + TILESIZE / 2) - (app->render->camera.h / 2)) * -1;
-		
-
+		app->render->camera.x = ((cameraColl->rect.x + cameraColl->rect.w/3) - (app->render->camera.w / 2)) * -1;
+		app->render->camera.y = ((cameraColl->rect.y + cameraColl->rect.h / 3) - (app->render->camera.h / 3)) * -1;
 		
 		playerColl->SetPos(position.x + 25, position.y + 20);
 	}

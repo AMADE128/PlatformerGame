@@ -88,11 +88,13 @@ bool Scene::Update(float dt)
 		app->player->death = false;
 		app->player->position.x = 720;
 		app->player->position.y = 1584;
-		app->render->camera.x = 0;
-		app->render->camera.y = 0;
 		app->player->currentAnimation = &app->player->idleAnim;
 		app->player->currentTex = app->player->idleTex;
 		app->player->flip = false;
+		app->player->cameraColl->rect.x = app->player->position.x - 100;
+		app->player->cameraColl->rect.y = app->player->position.y - 100;
+		app->render->camera.x = 0;
+		app->render->camera.y = 0;
 		app->render->DrawTexture(death, 0, 0);
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		{
@@ -106,6 +108,8 @@ bool Scene::Update(float dt)
 		app->player->position.x = 720;
 		app->player->position.y = 1584;
 		app->render->DrawTexture(win, 0, 0);
+		app->player->cameraColl->rect.x = app->player->position.x - 100;
+		app->player->cameraColl->rect.y = app->player->position.y - 100;
 		app->render->camera.x = 0;
 		app->render->camera.y = 0;
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
