@@ -93,6 +93,11 @@ public:
 		return true;
 	}
 
+	virtual bool CameraScroll(Collider* c1, Collider* c2)
+	{
+		return true;
+	}
+
 public:
 
 	SString name;

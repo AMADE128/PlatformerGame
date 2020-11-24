@@ -37,6 +37,7 @@ public:
 	bool Fall(Collider* c1, Collider* c2) override;
 
 	bool Die(Collider* c1, Collider* c2) override;
+	bool CameraScroll(Collider* c1, Collider* c2) override;
 
 	// Called before quitting
 	bool CleanUp();
@@ -65,6 +66,7 @@ public:
 	float speed_xLastFrame;
 
 	Collider* playerColl = nullptr;
+	Collider* cameraColl = nullptr;
 
 	bool stopMovementX;
 	bool stopMovementY;

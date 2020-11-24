@@ -15,7 +15,7 @@ struct Collider
 		PLAYER,
 		AIR,
 		SPIKE,
-
+		CAMERA,
 
 		MAX
 	};

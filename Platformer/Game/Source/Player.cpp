@@ -8,6 +8,7 @@
 #include "Window.h"
 #include "Map.h"
 #include "Audio.h"
+#include "SceneMenu.h"
 
 #include "Collisions.h"
 
@@ -72,6 +73,7 @@ bool Player::Start()
 	jumpTex = app->tex->Load("Assets/Textures/Character/jump.png");
 
 	playerColl = app->collision->AddCollider({ (int)position.x, (int)position.y, TILESIZE - 50, TILESIZE - 20}, Collider::Type::PLAYER, this);
+	cameraColl = app->collision->AddCollider({ (int)position.x - 100, (int)position.y - 100, app->render->camera.w/3, app->render->camera.h / 3 }, Collider::Type::CAMERA, this);
 
 	currentAnimation = &idleAnim;
 	currentTex = idleTex;
@@ -87,7 +89,7 @@ bool Player::PreUpdate()
 
 bool Player::Update(float dt)
 {
-	if (death == false)
+	if (death == false && app->screen == game_scene1)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		{
@@ -424,12 +426,34 @@ bool Player::Die(Collider* c1, Collider* c2)
 		}
 		if (deathAnim.finish == true)
 		{
-			app->scene->start = true;
+			app->sceneMenu->startScene1 = true;
 			deathAnim.Reset();
 			app->screen = game_death;
 		}
 	}
 	
+	return true;
+}
+
+bool Player::CameraScroll(Collider* c1, Collider* c2)
+{
+	if (c1->rect.x < c2->rect.x)
+	{
+		c2->rect.x -= 3;
+	}
+	if ((c1->rect.x + c1->rect.w) > (c2->rect.x + c2->rect.w))
+	{
+		c2->rect.x += 3;
+	}
+	if (c1->rect.y < c2->rect.y)
+	{
+		c2->rect.y -= speed_y;
+	}
+	if ((c1->rect.y + c1->rect.h) > (c2->rect.y + c2->rect.h))
+	{
+		c2->rect.y += speed_y;
+	}
+
 	return true;
 }
 

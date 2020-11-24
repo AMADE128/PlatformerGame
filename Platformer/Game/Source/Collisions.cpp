@@ -22,6 +22,15 @@ Collisions::Collisions() : Module()
 	matrix[Collider::Type::PLAYER][Collider::Type::NONE] = NOTHING;
 	matrix[Collider::Type::PLAYER][Collider::Type::AIR] = FALL;
 	matrix[Collider::Type::PLAYER][Collider::Type::SPIKE] = DIE;
+	matrix[Collider::Type::PLAYER][Collider::Type::CAMERA] = CAMERA_SCROLL;
+
+	matrix[Collider::Type::CAMERA][Collider::Type::WALL] = NOTHING;
+	matrix[Collider::Type::CAMERA][Collider::Type::GROUND] = NOTHING;
+	matrix[Collider::Type::CAMERA][Collider::Type::PLAYER] = NOTHING;
+	matrix[Collider::Type::CAMERA][Collider::Type::NONE] = NOTHING;
+	matrix[Collider::Type::CAMERA][Collider::Type::AIR] = NOTHING;
+	matrix[Collider::Type::CAMERA][Collider::Type::SPIKE] = NOTHING;
+	matrix[Collider::Type::CAMERA][Collider::Type::CAMERA] = NOTHING;
 
 	matrix[Collider::Type::NONE][Collider::Type::WALL] = NOTHING;
 	matrix[Collider::Type::NONE][Collider::Type::GROUND] = NOTHING;
@@ -29,6 +38,7 @@ Collisions::Collisions() : Module()
 	matrix[Collider::Type::NONE][Collider::Type::NONE] = NOTHING;
 	matrix[Collider::Type::NONE][Collider::Type::AIR] = NOTHING;
 	matrix[Collider::Type::NONE][Collider::Type::SPIKE] = NOTHING;
+	matrix[Collider::Type::NONE][Collider::Type::CAMERA] = NOTHING;
 
 	matrix[Collider::Type::AIR][Collider::Type::WALL] = NOTHING;
 	matrix[Collider::Type::AIR][Collider::Type::GROUND] = NOTHING;
@@ -36,6 +46,7 @@ Collisions::Collisions() : Module()
 	matrix[Collider::Type::AIR][Collider::Type::NONE] = NOTHING;
 	matrix[Collider::Type::AIR][Collider::Type::AIR] = NOTHING;
 	matrix[Collider::Type::AIR][Collider::Type::SPIKE] = NOTHING;
+	matrix[Collider::Type::AIR][Collider::Type::CAMERA] = NOTHING;
 
 }
 
@@ -130,6 +141,9 @@ bool Collisions::PreUpdate()
 				
 				if (matrix[c1->type][c2->type] == DIE && c1->listener)
 					c1->listener->Die(c1, c2);
+
+				if (matrix[c1->type][c2->type] == CAMERA_SCROLL && c1->listener)
+					c1->listener->CameraScroll(c1, c2);
 			}
 		}
 	}
@@ -181,6 +195,9 @@ void Collisions::DebugDraw()
 			break;
 		case Collider::Type::SPIKE: // purple
 			app->render->DrawRectangle(colliders[i]->rect, 128, 0, 128, alpha);
+			break;
+		case Collider::Type::CAMERA: // purple
+			app->render->DrawRectangle(colliders[i]->rect, 200, 40, 128, alpha);
 			break;
 			
 		}

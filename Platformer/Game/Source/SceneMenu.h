@@ -33,9 +33,9 @@ public:
 	bool CleanUp();
 
 	List<unsigned int*>	musicList;
-	bool start;
+	bool startScene1;
+	bool startMenu;
 
-private:
 	SDL_Texture* img;
 	SDL_Texture* menu;
 	SDL_Texture* death;
@@ -46,6 +46,7 @@ private:
 	unsigned int musicScene1;
 	unsigned int musicDeath;
 	int volume = 1;
+private:
 };
 
 #endif // __SCENE_H__

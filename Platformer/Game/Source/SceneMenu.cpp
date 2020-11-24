@@ -38,12 +38,7 @@ bool SceneMenu::Start()
 	// L03: DONE: Load map
 	app->map->Load("map1.tmx");
 	menu = app->tex->Load("Assets/Textures/Screens/menu.png");
-	death = app->tex->Load("Assets/Textures/Screens/lose.png");
 	logo = app->tex->Load("Assets/Textures/Screens/logo_screen.png");
-	win = app->tex->Load("Assets/Textures/Screens/win.png");
-
-	musicMenu = app->audio->LoadFx("Assets/Audio/Music/intro_music.wav");
-	musicList.add(&musicMenu);
 
 	return true;
 }
@@ -73,28 +68,23 @@ bool SceneMenu::Update(float dt)
 		}
 	}
 
-	//Draw Scenes
-	if (app->screen == game_scene1)
-	{
-		if (start == true)
-		{
-			musicScene1 = app->audio->LoadFx("Assets/Audio/Music/level_music.wav");
-			musicList.add(&musicScene1);
-			start = false;
-		}
-		app->map->Draw();
-		app->audio->PlayFx(musicScene1);
-	}
-	else if (app->screen == game_logo)
+	if (app->screen == game_logo)
 	{
 		app->render->DrawTexture(logo, 0, 0);
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		{
+			startMenu = true;
 			app->screen = game_menu;
 		}
 	}
 	else if (app->screen == game_menu)
 	{
+		if (startMenu == true)
+		{
+			musicMenu = app->audio->LoadFx("Assets/Audio/Music/intro_music.wav");
+			musicList.add(&musicMenu);
+			startMenu = false;
+		}
 		app->player->currentAnimation = &app->player->idleAnim;
 		app->player->currentTex = app->player->idleTex;
 		app->player->flip = false;
@@ -107,41 +97,8 @@ bool SceneMenu::Update(float dt)
 		app->render->camera.y = 0;
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		{
-			start = true;
+			startScene1 = true;
 			app->screen = game_scene1;
-			app->audio->UnloadFX(musicMenu);
-		}
-	}
-	else if (app->screen == game_death)
-	{
-		app->audio->UnloadFX(musicScene1);
-		app->player->death = false;
-		app->player->position.x = 720;
-		app->player->position.y = 1584;
-		app->render->camera.x = 0;
-		app->render->camera.y = 0;
-		app->player->currentAnimation = &app->player->idleAnim;
-		app->player->currentTex = app->player->idleTex;
-		app->player->flip = false;
-		app->render->DrawTexture(death, 0, 0);
-		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-		{
-			app->screen = game_scene1;
-			start = true;
-		}
-	}
-	else if (app->screen == game_win)
-	{
-		app->audio->UnloadFX(musicScene1);
-		app->player->position.x = 720;
-		app->player->position.y = 1584;
-		app->render->DrawTexture(win, 0, 0);
-		app->render->camera.x = 0;
-		app->render->camera.y = 0;
-		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-		{
-			app->screen = game_menu;
-			start = true;
 		}
 	}
 
@@ -174,9 +131,8 @@ bool SceneMenu::PostUpdate()
 bool SceneMenu::CleanUp()
 {
 	LOG("Freeing scene");
-	app->tex->UnLoad(img);
 	app->tex->UnLoad(menu);
-	app->tex->UnLoad(death);
+	app->tex->UnLoad(logo);
 
 	return true;
 }
