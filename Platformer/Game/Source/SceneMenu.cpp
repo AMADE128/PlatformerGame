@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "Collisions.h"
 #include "Player.h"
+#include "FadeToBlack.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -73,6 +74,7 @@ bool SceneMenu::Update(float dt)
 		app->render->DrawTexture(logo, 0, 0);
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		{
+			app->fadeToBlack->Fade(120);
 			startMenu = true;
 			app->screen = game_menu;
 		}
@@ -97,6 +99,7 @@ bool SceneMenu::Update(float dt)
 		app->render->camera.y = 0;
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		{
+			app->fadeToBlack->Fade(120);
 			startScene1 = true;
 			app->screen = game_scene1;
 		}

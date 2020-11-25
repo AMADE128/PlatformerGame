@@ -20,6 +20,7 @@ class Map;
 class Player;
 class Collisions;
 class SceneMenu;
+class FadeToBlack;
 
 enum game_screens {
 	game_logo = 0,
@@ -101,6 +102,7 @@ public:
 	Map* map;
 	Player* player;
 	Collisions* collision;
+	FadeToBlack* fadeToBlack;
 
 	int screen = game_logo;
 

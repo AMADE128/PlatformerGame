@@ -91,6 +91,7 @@
   <ItemGroup>
     <ClCompile Include="Source\Collider.cpp" />
     <ClCompile Include="Source\Collisions.cpp" />
+    <ClCompile Include="Source\FadeToBlack.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\App.cpp" />
     <ClCompile Include="Source\Audio.cpp" />
@@ -104,6 +105,7 @@
     <ClCompile Include="Source\Window.cpp" />
     <ClInclude Include="Source\Collider.h" />
     <ClInclude Include="Source\Collisions.h" />
+    <ClInclude Include="Source\FadeToBlack.h" />
     <ClInclude Include="Source\Map.h" />
     <ClInclude Include="Source\Player.h" />
     <ClInclude Include="Source\Scene.h" />
