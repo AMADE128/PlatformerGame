@@ -26,14 +26,14 @@ Player::Player() : Module()
 		idleAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
 	}
 	idleAnim.loop = true;
-	idleAnim.speed = 0.1f;
+	idleAnim.speed = 0.2f;
 
 	for (int i = 0; i < TILESIZE * 12; i += TILESIZE)
 	{
 		runAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
 	}
 	runAnim.loop = true;
-	runAnim.speed = 0.1f;
+	runAnim.speed = 0.2f;
 
 	fallAnim.PushBack({ 0, 0, TILESIZE, TILESIZE });
 
@@ -44,7 +44,14 @@ Player::Player() : Module()
 		deathAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
 	}
 	deathAnim.loop = false;
-	deathAnim.speed = 0.1f;
+	deathAnim.speed = 0.2f;
+
+	for (int i = 0; i < TILESIZE * 6; i += TILESIZE)
+	{
+		doubleJumpAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
+	}
+	doubleJumpAnim.loop = false;
+	doubleJumpAnim.speed = 0.2f;
 }
 
 // Destructor
@@ -71,9 +78,10 @@ bool Player::Start()
 	deathTex = app->tex->Load("Assets/Textures/Character/hit.png");
 	runTex = app->tex->Load("Assets/Textures/Character/run.png");
 	jumpTex = app->tex->Load("Assets/Textures/Character/jump.png");
+	doubleJumpTex = app->tex->Load("Assets/Textures/Character/double_jump.png");
 
 	playerColl = app->collision->AddCollider({ (int)position.x, (int)position.y, TILESIZE - 50, TILESIZE - 20}, Collider::Type::PLAYER, this);
-	cameraColl = app->collision->AddCollider({ (int)position.x - 100, (int)position.y - 100, app->render->camera.w/4, app->render->camera.h / 3 + 20 }, Collider::Type::CAMERA, this);
+	cameraColl = app->collision->AddCollider({ (int)position.x - 100, (int)position.y - 100, app->render->camera.w/4, app->render->camera.h / 3 + 20}, Collider::Type::CAMERA, this);
 
 	currentAnimation = &idleAnim;
 	currentTex = idleTex;
@@ -125,31 +133,29 @@ bool Player::Update(float dt)
 			}
 
 		}
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isJumping)
+		{
+			if (!secondJump)
+			{
+				secondJump = true;
+			}
+		}
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && y_downCollision == true)
 		{
-			if (god == false)
-
-			y_downCollision = false;
 			if (!isJumping) // Solo salta cuando no esté en el aire
 			{
 				isJumping = true;
 			}
 		}
-		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && god == true)
 		{
-			if (god == true)
-			{
-				speed_y = -3;
-				position.y += speed_y;
-			}
+			speed_y = -3;
+			position.y += speed_y;
 		}
-		else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+		else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && god == true)
 		{
-			if (god == true)
-			{
-				speed_y = 3;
-				position.y += speed_y;
-			}
+			speed_y = 3;
+			position.y += speed_y;
 		}
 		else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && app->input->GetKey(SDL_SCANCODE_D) != KEY_REPEAT)
 		{
@@ -179,16 +185,32 @@ bool Player::Update(float dt)
 					{
 						if (speed_x <= 0 && speed_xLastFrame < 0)
 						{
-							currentAnimation = &jumpAnim;
-							currentTex = jumpTex;
+							if (secondJump && doubleJumpAnim.finish == false)
+							{
+								currentAnimation = &doubleJumpAnim;
+								currentTex = doubleJumpTex;
+							}
+							if (doubleJumpAnim.finish == true || !secondJump)
+							{
+								currentAnimation = &jumpAnim;
+								currentTex = jumpTex;
+							}
 						}
 					}
 					else if ((-3 + speed_y) >= 0)
 					{
 						if (speed_x <= 0 && speed_xLastFrame < 0)
 						{
-							currentAnimation = &fallAnim;
-							currentTex = fallTex;
+							if (secondJump && doubleJumpAnim.finish == false)
+							{
+								currentAnimation = &doubleJumpAnim;
+								currentTex = doubleJumpTex;
+							}
+							if (doubleJumpAnim.finish == true || !secondJump)
+							{
+								currentAnimation = &fallAnim;
+								currentTex = fallTex;
+							}
 						}
 					}
 				}
@@ -223,16 +245,32 @@ bool Player::Update(float dt)
 					{
 						if (speed_x >= 0 && speed_xLastFrame > 0)
 						{
-							currentTex = jumpTex;
-							currentAnimation = &jumpAnim;
+							if (secondJump && doubleJumpAnim.finish == false)
+							{
+								currentAnimation = &doubleJumpAnim;
+								currentTex = doubleJumpTex;
+							}
+							if (doubleJumpAnim.finish == true || !secondJump)
+							{
+								currentAnimation = &jumpAnim;
+								currentTex = jumpTex;
+							}
 						}
 					}
 					else if ((-3 + speed_y) >= 0)
 					{
 						if (speed_x >= 0 && speed_xLastFrame > 0)
 						{
-							currentTex = fallTex;
-							currentAnimation = &fallAnim;
+							if (secondJump && doubleJumpAnim.finish == false)
+							{
+								currentAnimation = &doubleJumpAnim;
+								currentTex = doubleJumpTex;
+							}
+							if (doubleJumpAnim.finish == true || !secondJump)
+							{
+								currentAnimation = &fallAnim;
+								currentTex = fallTex;
+							}
 						}
 					}
 				}
@@ -262,8 +300,16 @@ bool Player::Update(float dt)
 				}
 				else if ((-3 + speed_y) < 0)
 				{
-					currentAnimation = &jumpAnim;
-					currentTex = jumpTex;
+					if (secondJump && doubleJumpAnim.finish == false)
+					{
+						currentAnimation = &doubleJumpAnim;
+						currentTex = doubleJumpTex;
+					}
+					if (doubleJumpAnim.finish == true || !secondJump)
+					{
+						currentAnimation = &jumpAnim;
+						currentTex = jumpTex;
+					}
 					if (speed_xLastFrame > 0)
 					{
 						flip = false;
@@ -275,8 +321,16 @@ bool Player::Update(float dt)
 				}
 				else if ((-3 + speed_y) >= 0)
 				{
-					currentTex = fallTex;
-					currentAnimation = &fallAnim;
+					if (secondJump && doubleJumpAnim.finish == false)
+					{
+						currentAnimation = &doubleJumpAnim;
+						currentTex = doubleJumpTex;
+					}
+					if (doubleJumpAnim.finish == true || !secondJump)
+					{
+						currentAnimation = &fallAnim;
+						currentTex = fallTex;
+					}
 					if (speed_xLastFrame > 0)
 					{
 						flip = false;
@@ -292,11 +346,15 @@ bool Player::Update(float dt)
 
 		if (isJumping)
 		{
-			y_downCollision = false;
 			x_leftCollision = false;
 			x_rightCollision = false;
-			//speed_y = -0.5f;
-			position.y += -7;
+			position.y += -6;
+		}
+		if (secondJump)
+		{
+			x_leftCollision = false;
+			x_rightCollision = false;
+			position.y += -3;
 		}
 
 		if (y_downCollision == true)
@@ -310,7 +368,7 @@ bool Player::Update(float dt)
 		position.y += speed_y;
 
 		app->render->camera.x = ((cameraColl->rect.x + cameraColl->rect.w/3) - (app->render->camera.w / 2)) * -1;
-		app->render->camera.y = ((cameraColl->rect.y + cameraColl->rect.h / 3) - (app->render->camera.h / 3)) * -1;
+		app->render->camera.y = ((cameraColl->rect.y + cameraColl->rect.h / 3) - (app->render->camera.h / 2.5)) * -1;
 		
 		playerColl->SetPos(position.x + 25, position.y + 20);
 	}
@@ -369,6 +427,8 @@ bool Player::StopMovementY(Collider* c1, Collider* c2)
 			y_downCollision = true;
 		}
 		isJumping = false;
+		secondJump = false;
+		doubleJumpAnim.Reset();
 		position.y = c2->rect.y - TILESIZE + 1;
 	}
 	else if (c1->rect.y  > c2->rect.y)
@@ -387,13 +447,11 @@ bool Player::StopMovement(Collider* c1, Collider* c2)
 	{
 		x_rightCollision = true;
 		speed_x = 0.f;
-		//position.x -= 0.1f;
 	}
 	if (c1->rect.x > c2->rect.x && (c1->rect.y + playerColl->rect.h - 3) > c2->rect.y)
 	{
 		x_leftCollision = true;
 		speed_x = 0.f;
-		//position.x += 0.1f;
 	}
 	return true;
 }
@@ -444,11 +502,25 @@ bool Player::CameraScroll(Collider* c1, Collider* c2)
 	}
 	if (c1->rect.y < c2->rect.y)
 	{
-		c2->rect.y -= speed_y;
+		if (god == true)
+		{
+			c2->rect.y -= 3;
+		}
+		else
+		{
+			c2->rect.y -= speed_y;
+		}
 	}
 	if ((c1->rect.y + c1->rect.h) > (c2->rect.y + c2->rect.h))
 	{
-		c2->rect.y += speed_y;
+		if (god == true)
+		{
+			c2->rect.y += 3;
+		}
+		else
+		{
+			c2->rect.y += speed_y;
+		}
 	}
 
 	return true;

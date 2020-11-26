@@ -44,6 +44,7 @@ public:
 	SDL_Texture* currentTex = nullptr;
 
 	SDL_Texture* idleTex = nullptr;
+	SDL_Texture* doubleJumpTex = nullptr;
 	SDL_Texture* fallTex = nullptr;
 	SDL_Texture* runTex = nullptr;
 	SDL_Texture* jumpTex = nullptr;
@@ -58,6 +59,7 @@ public:
 	Animation runAnim;
 	Animation jumpAnim;
 	Animation deathAnim;
+	Animation doubleJumpAnim;
 
 	fPoint position;
 
@@ -80,6 +82,7 @@ public:
 	bool x_rightCollision;
 
 	bool isJumping;
+	bool secondJump;
 
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&) const;

@@ -38,7 +38,7 @@ Collisions::Collisions() : Module()
 	matrix[Collider::Type::NONE][Collider::Type::NONE] = NOTHING;
 	matrix[Collider::Type::NONE][Collider::Type::AIR] = NOTHING;
 	matrix[Collider::Type::NONE][Collider::Type::SPIKE] = NOTHING;
-	matrix[Collider::Type::NONE][Collider::Type::CAMERA] = NOTHING;
+	matrix[Collider::Type::NONE][Collider::Type::CAMERA] = CAMERA_SCROLL;
 
 	matrix[Collider::Type::AIR][Collider::Type::WALL] = NOTHING;
 	matrix[Collider::Type::AIR][Collider::Type::GROUND] = NOTHING;
@@ -96,7 +96,7 @@ bool Collisions::Start()
 				}
 				if (tileId > 287)
 				{
-					coll = { cord.x, cord.y, tileset->GetTileRect(tileId).w, tileset->GetTileRect(tileId).h };
+					coll = { cord.x, cord.y + 25, tileset->GetTileRect(tileId).w, tileset->GetTileRect(tileId).h/2 };
 					AddCollider(coll, Collider::Type::SPIKE, this);
 				}
 			}
