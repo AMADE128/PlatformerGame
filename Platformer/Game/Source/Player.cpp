@@ -137,6 +137,7 @@ bool Player::Update(float dt)
 		{
 			if (!secondJump)
 			{
+				speed_y = 2;
 				secondJump = true;
 			}
 		}
