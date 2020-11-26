@@ -131,6 +131,10 @@ private:
 	uint32 prevLastSecFrameCount = 0;
 	float dt = 0.0f;
 
+	float secondsSinceStartup;
+	float fpsMseconds;
+	float fpsCounter;
+	float fps = 0.f;
 
 	uint frames;
 

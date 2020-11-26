@@ -174,12 +174,27 @@ pugi::xml_node App::LoadConfig(pugi::xml_document& configFile) const
 // ---------------------------------------------
 void App::PrepareUpdate()
 {
+	secondsSinceStartup = startupTime.ReadSec();
+	fpsMseconds = startupTime.ReadSec();
 }
 
 // ---------------------------------------------
 void App::FinishUpdate()
 {
-
+	uint32 lastFrameMs = 0;
+	uint32 framesOnLastUpdate = 0;
+	float averageFps = frameCount / secondsSinceStartup;
+	frameCount++;
+	fpsCounter++;
+	if (fpsMseconds >= 1)
+	{
+		fps = fpsCounter;
+		fpsCounter = 0;
+		fpsMseconds = 0;
+	}
+	SString title("Platformer Game: FPS: %.2f Av.FPS: %.2f Last Frame Ms: %02u Time since startup: %.3f Frame Count: %I64u ",fps,
+		averageFps, lastFrameMs, secondsSinceStartup, frameCount);
+	app->win->SetTitle(title.GetString());
 }
 
 // Call modules before each loop iteration
@@ -245,15 +260,6 @@ bool App::PostUpdate()
 
 		ret = item->data->PostUpdate();
 	}
-
-	float averageFps = 0.0f;
-	float secondsSinceStartup = 0.0f;
-	uint32 lastFrameMs = 0;
-	uint32 framesOnLastUpdate = 0;
-
-	SString title("Platformer Game: Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %I64u ",
-		averageFps, lastFrameMs, framesOnLastUpdate, dt, secondsSinceStartup, frameCount);
-	app->win->SetTitle(title.GetString());
 
 	return ret;
 }

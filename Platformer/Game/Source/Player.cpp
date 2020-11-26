@@ -355,7 +355,7 @@ bool Player::Update(float dt)
 		{
 			x_leftCollision = false;
 			x_rightCollision = false;
-			position.y += -3;
+			position.y += -2;
 		}
 
 		if (y_downCollision == true)

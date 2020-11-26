@@ -1,31 +1,10 @@
-﻿  Scene.cpp
-C:\Users\POL\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Animation.h(60,19): warning C4244: 'initializing': conversion from 'const float' to 'int', possible loss of data
-C:\Users\POL\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Animation.h(62,30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\POL\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Animation.h(69,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-Source\Scene.cpp(95,61): warning C4244: '=': conversion from 'TYPE' to 'int', possible loss of data
-          with
-          [
-              TYPE=float
-          ]
-Source\Scene.cpp(96,61): warning C4244: '=': conversion from 'TYPE' to 'int', possible loss of data
-          with
-          [
-              TYPE=float
-          ]
-Source\Scene.cpp(113,61): warning C4244: '=': conversion from 'TYPE' to 'int', possible loss of data
-          with
-          [
-              TYPE=float
-          ]
-Source\Scene.cpp(114,61): warning C4244: '=': conversion from 'TYPE' to 'int', possible loss of data
-          with
-          [
-              TYPE=float
-          ]
-  Generating code
-  2 of 502 functions ( 0.4%) were compiled, the rest were copied from previous compilation.
+﻿  App.cpp
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Animation.h(60,19): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Animation.h(62,30): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Animation.h(69,18): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+  Generando código
+  4 of 471 functions ( 0.8%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    24 functions had inline decision re-evaluated but remain unchanged
-  Finished generating code
-pugixml.obj : warning LNK4020: a type record in 'c:\users\pol\documents\github\platformergame\platformer\build\release\obj\vc142.pdb' is corrupted; some symbols and types may not be accessible from the debugger
-  Game.vcxproj -> C:\Users\POL\Documents\GitHub\PlatformerGame\Platformer\Build\Release\Game.exe
+    1 functions had inline decision re-evaluated but remain unchanged
+  Generación de código finalizada
+  Game.vcxproj -> C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Build\Release\Game.exe
