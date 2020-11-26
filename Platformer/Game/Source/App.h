@@ -3,6 +3,8 @@
 
 #include "Module.h"
 #include "List.h"
+#include "PerfTimer.h"
+#include "Timer.h"
 
 #include "PugiXml/src/pugixml.hpp"
 
@@ -107,7 +109,6 @@ public:
 	int screen = game_logo;
 
 private:
-
 	int argc;
 	char** args;
 	SString title;
@@ -115,13 +116,24 @@ private:
 
 	List<Module *> modules;
 
-	// L01: DONE 2: Create new variables from pugui namespace
+
 	// NOTE: Redesigned LoadConfig() to avoid storing this variables
 	pugi::xml_document loadFile;
 	pugi::xml_node load;
 
+	PerfTimer ptimer;
+	uint64 frameCount = 0;
+
+	Timer startupTime;
+	Timer frameTime;
+	Timer lastSecFrameTime;
+	uint32 lastSecFrameCount = 0;
+	uint32 prevLastSecFrameCount = 0;
+	float dt = 0.0f;
+
+
 	uint frames;
-	float dt;
+
 
 	mutable bool saveGameRequested;
 	bool loadGameRequested;

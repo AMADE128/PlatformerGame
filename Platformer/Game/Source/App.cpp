@@ -10,6 +10,7 @@
 #include "Collisions.h"
 #include "SceneMenu.h"
 #include "FadeToBlack.h"
+#include "PerfTimer.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -20,7 +21,7 @@
 // Constructor
 App::App(int argc, char* args[]) : argc(argc), args(args)
 {
-	frames = 0;
+	PERF_START(ptimer);
 
 	win = new Window();
 	input = new Input();
@@ -49,6 +50,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 
 	// Render last to swap buffer
 	AddModule(render);
+
+	PERF_PEEK(ptimer);
 }
 
 // Destructor
@@ -75,6 +78,7 @@ void App::AddModule(Module* module)
 // Called before render is available
 bool App::Awake()
 {
+	PERF_START(ptimer);
 	pugi::xml_document configFile;
 	pugi::xml_node config;
 	pugi::xml_node configApp;
@@ -109,6 +113,8 @@ bool App::Awake()
 			item = item->next;
 		}
 	}
+
+	PERF_PEEK(ptimer);
 
 	return ret;
 }
@@ -173,8 +179,7 @@ void App::PrepareUpdate()
 // ---------------------------------------------
 void App::FinishUpdate()
 {
-	// L02: DONE 1: This is a good place to call Load / Save methods
-	
+
 }
 
 // Call modules before each loop iteration
@@ -240,6 +245,15 @@ bool App::PostUpdate()
 
 		ret = item->data->PostUpdate();
 	}
+
+	float averageFps = 0.0f;
+	float secondsSinceStartup = 0.0f;
+	uint32 lastFrameMs = 0;
+	uint32 framesOnLastUpdate = 0;
+
+	SString title("Platformer Game: Av.FPS: %.2f Last Frame Ms: %02u Last sec frames: %i Last dt: %.3f Time since startup: %.3f Frame Count: %I64u ",
+		averageFps, lastFrameMs, framesOnLastUpdate, dt, secondsSinceStartup, frameCount);
+	app->win->SetTitle(title.GetString());
 
 	return ret;
 }

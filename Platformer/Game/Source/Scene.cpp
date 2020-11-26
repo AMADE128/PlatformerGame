@@ -124,9 +124,6 @@ bool Scene::Update(float dt)
 	}
 	
 	// L03: DONE 7: Set the window title with map/tileset info
-	SString title("Platformer Game");
-
-	app->win->SetTitle(title.GetString());
 
 	return true;
 }
