@@ -23,6 +23,7 @@ class Player;
 class Collisions;
 class SceneMenu;
 class FadeToBlack;
+class Fonts;
 
 enum game_screens {
 	game_logo = 0,
@@ -105,6 +106,7 @@ public:
 	Player* player;
 	Collisions* collision;
 	FadeToBlack* fadeToBlack;
+	Fonts* fonts;
 
 	int screen = game_logo;
 	const int frameRate = 60;

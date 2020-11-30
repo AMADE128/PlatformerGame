@@ -119,3 +119,5 @@ void Textures::GetSize(const SDL_Texture* texture, uint& width, uint& height) co
 {
 	SDL_QueryTexture((SDL_Texture*)texture, NULL, NULL, (int*) &width, (int*) &height);
 }
+
+

@@ -11,6 +11,7 @@
 #include "SceneMenu.h"
 #include "FadeToBlack.h"
 #include "PerfTimer.h"
+#include "Fonts.h"
 
 #include "Defs.h"
 #include "Log.h"

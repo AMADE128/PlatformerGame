@@ -374,6 +374,8 @@ bool Player::Update(float dt)
 		playerColl->SetPos(position.x + 25, position.y + 20);
 	}
 
+
+
 	return true;
 }
 
