@@ -49,8 +49,11 @@ public:
 	SDL_Texture* runTex = nullptr;
 	SDL_Texture* jumpTex = nullptr;
 	SDL_Texture* deathTex = nullptr;
+	SDL_Texture* lifesTex = nullptr;
 
 	bool flip;
+
+	int lifes = 3;
 
 	Animation* currentAnimation = nullptr;
 
@@ -63,9 +66,9 @@ public:
 
 	fPoint position;
 
-	float speed_x;
-	float speed_y;
-	float speed_xLastFrame;
+	float speedX;
+	float speedY;
+	float speedXLastFrame;
 
 	Collider* playerColl = nullptr;
 	Collider* cameraColl = nullptr;
@@ -76,10 +79,10 @@ public:
 	bool god = false;
 	bool death = false;
 	bool win = false;
-	bool y_downCollision;
-	bool y_upCollision;
-	bool x_leftCollision;
-	bool x_rightCollision;
+	bool yDownCollision;
+	bool yUpCollision;
+	bool xLeftCollision;
+	bool xRightCollision;
 
 	bool isJumping;
 	bool secondJump;
