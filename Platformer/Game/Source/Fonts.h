@@ -1,5 +1,5 @@
-#ifndef __MODULE_FONTS_H__
-#define __MODULE_FONTS_H__
+#ifndef __FONTS_H__
+#define __FONTS_H__
 
 #include "Module.h"
 #include "Defs.h"
@@ -57,4 +57,4 @@ private:
 };
 
 
-#endif // __ModuleFonts_H__
+#endif // __Fonts_H__

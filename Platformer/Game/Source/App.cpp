@@ -35,6 +35,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	collision = new Collisions();
 	sceneMenu = new SceneMenu();
 	fadeToBlack = new FadeToBlack();
+	//fonts = new Fonts();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -48,6 +49,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(player);
 	AddModule(collision);
 	AddModule(fadeToBlack);
+	//AddModule(fonts);
 
 	// Render last to swap buffer
 	AddModule(render);
@@ -222,7 +224,13 @@ bool App::PreUpdate()
 
 		ret = item->data->PreUpdate();
 	}
-	if (loadGameRequested == true) LoadGame(loadFile);
+	if (loadGameRequested == true)
+	{
+		LoadGame(loadFile);
+		app->player->playerColl->SetPos(app->player->position.x + 25, app->player->position.y + 20);
+		app->player->cameraColl->rect.x = app->player->playerColl->rect.x - 100;
+		app->player->cameraColl->rect.y = app->player->playerColl->rect.y - 100;
+	}
 	if (saveGameRequested == true) SaveGame();
 
 	return ret;

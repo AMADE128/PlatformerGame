@@ -102,6 +102,7 @@ bool Scene::Update(float dt)
 			app->fadeToBlack->Fade(120);
 			app->screen = game_scene1;
 			app->sceneMenu->startScene1 = true;
+			app->player->lifes = 3;
 		}
 	}
 	else if (app->screen == game_win)

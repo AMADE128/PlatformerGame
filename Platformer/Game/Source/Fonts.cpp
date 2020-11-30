@@ -22,8 +22,6 @@ Fonts::~Fonts()
 
 bool Fonts::Start()
 {
-
-
 	return true;
 }
 // Load new texture from file path
