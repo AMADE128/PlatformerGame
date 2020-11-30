@@ -96,6 +96,7 @@ bool App::Awake()
 		// L01: DONE 4: Read the title from the config file
 		title.Create(configApp.child("title").child_value());
 		organization.Create(configApp.child("organization").child_value());
+
 	}
 
 	if (ret == true)
@@ -176,6 +177,7 @@ pugi::xml_node App::LoadConfig(pugi::xml_document& configFile) const
 void App::PrepareUpdate()
 {
 	secondsSinceStartup = startupTime.ReadSec();
+	fpsPreUpdate = SDL_GetTicks();
 }
 
 // ---------------------------------------------
@@ -186,16 +188,19 @@ void App::FinishUpdate()
 	frameCount++;
 	float averageFps = frameCount / secondsSinceStartup;
 	fpsCounter++;
-	float fpsMsecondsAfter = SDL_GetTicks() - fpsMseconds;
+	float fpsMsecondsAfter = SDL_GetTicks() - fpsPreUpdate;
 	if (fpsMseconds < SDL_GetTicks() - 1000)
 	{
 		fpsMseconds = SDL_GetTicks();
 		fps = fpsCounter;
 		fpsCounter = 0;
 	}
-	SString title("Platformer Game: FPS: %.2f Av.FPS: %.2f Last Frame Ms: %02u Time since startup: %.3f Frame Count: %I64u ",fps,
-		averageFps, lastFrameMs, secondsSinceStartup, frameCount);
+	SString title("Platformer Game: FPS: %.2f Av.FPS: %.2f Last Frame Ms: %.2f Time since startup: %.3f Frame Count: %I64u ",fps,
+		averageFps, fpsMsecondsAfter, secondsSinceStartup, frameCount);
 	app->win->SetTitle(title.GetString());
+
+	
+	if(fpsMsecondsAfter < screenTicks) SDL_Delay(screenTicks - fpsMsecondsAfter);
 }
 
 // Call modules before each loop iteration

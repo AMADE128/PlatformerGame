@@ -107,6 +107,8 @@ public:
 	FadeToBlack* fadeToBlack;
 
 	int screen = game_logo;
+	const int frameRate = 60;
+    const int screenTicks = 1000 / frameRate;
 
 private:
 	int argc;
@@ -135,6 +137,7 @@ private:
 	float fpsMseconds;
 	float fpsCounter;
 	float fps = 0.f;
+	float fpsPreUpdate;
 
 	uint frames;
 
