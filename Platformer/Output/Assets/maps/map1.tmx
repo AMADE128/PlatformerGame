@@ -12195,13 +12195,13 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="288"/>
+   <tile gid="288"/>
+   <tile gid="288"/>
+   <tile gid="288"/>
+   <tile gid="288"/>
+   <tile gid="288"/>
+   <tile gid="288"/>
    <tile/>
    <tile/>
    <tile/>
@@ -14267,21 +14267,21 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="288"/>
+   <tile gid="288"/>
+   <tile gid="288"/>
+   <tile gid="288"/>
+   <tile gid="288"/>
+   <tile gid="288"/>
+   <tile gid="288"/>
+   <tile gid="288"/>
+   <tile gid="288"/>
+   <tile gid="288"/>
+   <tile gid="288"/>
+   <tile gid="288"/>
+   <tile gid="288"/>
+   <tile gid="288"/>
+   <tile gid="288"/>
    <tile/>
    <tile/>
    <tile/>
@@ -15639,7 +15639,7 @@
    <tile/>
   </data>
  </layer>
- <layer id="10" name="wall" width="102" height="51">
+ <layer id="10" name="wall" width="102" height="51" visible="0">
   <data>
    <tile/>
    <tile/>
@@ -17401,13 +17401,13 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="288"/>
-   <tile gid="288"/>
-   <tile gid="288"/>
-   <tile gid="288"/>
-   <tile gid="288"/>
-   <tile gid="288"/>
-   <tile gid="288"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile/>
    <tile/>
    <tile/>
@@ -19473,21 +19473,21 @@
    <tile/>
    <tile/>
    <tile gid="274"/>
-   <tile gid="288"/>
-   <tile gid="288"/>
-   <tile gid="288"/>
-   <tile gid="288"/>
-   <tile gid="288"/>
-   <tile gid="288"/>
-   <tile gid="288"/>
-   <tile gid="288"/>
-   <tile gid="288"/>
-   <tile gid="288"/>
-   <tile gid="288"/>
-   <tile gid="288"/>
-   <tile gid="288"/>
-   <tile gid="288"/>
-   <tile gid="288"/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
+   <tile/>
    <tile gid="272"/>
    <tile/>
    <tile/>
