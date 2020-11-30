@@ -122,6 +122,7 @@ bool App::Awake()
 // Called before the first frame
 bool App::Start()
 {
+	fpsMseconds = SDL_GetTicks();
 	bool ret = true;
 	ListItem<Module*>* item;
 	item = modules.start;
@@ -175,7 +176,6 @@ pugi::xml_node App::LoadConfig(pugi::xml_document& configFile) const
 void App::PrepareUpdate()
 {
 	secondsSinceStartup = startupTime.ReadSec();
-	fpsMseconds = startupTime.ReadSec();
 }
 
 // ---------------------------------------------
@@ -183,14 +183,15 @@ void App::FinishUpdate()
 {
 	uint32 lastFrameMs = 0;
 	uint32 framesOnLastUpdate = 0;
-	float averageFps = frameCount / secondsSinceStartup;
 	frameCount++;
+	float averageFps = frameCount / secondsSinceStartup;
 	fpsCounter++;
-	if (fpsMseconds >= 1)
+	float fpsMsecondsAfter = SDL_GetTicks() - fpsMseconds;
+	if (fpsMseconds < SDL_GetTicks() - 1000)
 	{
+		fpsMseconds = SDL_GetTicks();
 		fps = fpsCounter;
 		fpsCounter = 0;
-		fpsMseconds = 0;
 	}
 	SString title("Platformer Game: FPS: %.2f Av.FPS: %.2f Last Frame Ms: %02u Time since startup: %.3f Frame Count: %I64u ",fps,
 		averageFps, lastFrameMs, secondsSinceStartup, frameCount);
