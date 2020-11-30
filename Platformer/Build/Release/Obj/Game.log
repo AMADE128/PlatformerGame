@@ -1,15 +1,24 @@
 ﻿  App.cpp
-C:\Users\POL\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Animation.h(60,19): warning C4244: 'initializing': conversion from 'const float' to 'int', possible loss of data
-C:\Users\POL\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Animation.h(62,30): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-C:\Users\POL\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Animation.h(69,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-Source\App.cpp(126,28): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
-Source\App.cpp(180,29): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
-Source\App.cpp(194,29): warning C4244: '=': conversion from 'Uint32' to 'float', possible loss of data
-Source\App.cpp(203,59): warning C4244: 'argument': conversion from 'float' to 'Uint32', possible loss of data
-  Generating code
-  2 of 503 functions ( 0.4%) were compiled, the rest were copied from previous compilation.
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Animation.h(60,19): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Animation.h(62,30): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
+C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Animation.h(69,18): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
+Source\App.cpp(129,28): warning C4244: '=': conversión de 'Uint32' a 'float'; posible pérdida de datos
+Source\App.cpp(183,29): warning C4244: '=': conversión de 'Uint32' a 'float'; posible pérdida de datos
+Source\App.cpp(197,29): warning C4244: '=': conversión de 'Uint32' a 'float'; posible pérdida de datos
+Source\App.cpp(206,59): warning C4244: 'argumento': conversión de 'float' a 'Uint32'; posible pérdida de datos
+Source\App.cpp(230,89): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
+Source\App.cpp(230,89): warning C4244:         with
+Source\App.cpp(230,89): warning C4244:         [
+Source\App.cpp(230,89): warning C4244:             TYPE=float
+Source\App.cpp(230,89): warning C4244:         ]
+Source\App.cpp(230,59): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
+Source\App.cpp(230,59): warning C4244:         with
+Source\App.cpp(230,59): warning C4244:         [
+Source\App.cpp(230,59): warning C4244:             TYPE=float
+Source\App.cpp(230,59): warning C4244:         ]
+  Generando código
+  5 of 471 functions ( 1.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    2 functions had inline decision re-evaluated but remain unchanged
-  Finished generating code
-pugixml.obj : warning LNK4020: a type record in 'c:\users\pol\documents\github\platformergame\platformer\build\release\obj\vc142.pdb' is corrupted; some symbols and types may not be accessible from the debugger
-  Game.vcxproj -> C:\Users\POL\Documents\GitHub\PlatformerGame\Platformer\Build\Release\Game.exe
+    3 functions had inline decision re-evaluated but remain unchanged
+  Generación de código finalizada
+  Game.vcxproj -> C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Build\Release\Game.exe

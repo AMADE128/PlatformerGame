@@ -26,14 +26,14 @@ Player::Player() : Module()
 		idleAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
 	}
 	idleAnim.loop = true;
-	idleAnim.speed = 0.2f;
+	idleAnim.speed = 0.25f;
 
 	for (int i = 0; i < TILESIZE * 12; i += TILESIZE)
 	{
 		runAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
 	}
 	runAnim.loop = true;
-	runAnim.speed = 0.2f;
+	runAnim.speed = 0.25f;
 
 	fallAnim.PushBack({ 0, 0, TILESIZE, TILESIZE });
 
@@ -44,14 +44,14 @@ Player::Player() : Module()
 		deathAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
 	}
 	deathAnim.loop = false;
-	deathAnim.speed = 0.2f;
+	deathAnim.speed = 0.25f;
 
 	for (int i = 0; i < TILESIZE * 6; i += TILESIZE)
 	{
 		doubleJumpAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
 	}
 	doubleJumpAnim.loop = false;
-	doubleJumpAnim.speed = 0.2f;
+	doubleJumpAnim.speed = 0.25f;
 }
 
 // Destructor
@@ -104,6 +104,9 @@ bool Player::Update(float dt)
 		{
 			position.x = POSXINIT;
 			position.y = POXYINIT;
+			playerColl->SetPos(position.x + 25, position.y + 20);
+			cameraColl->rect.x = position.x - 100;
+			cameraColl->rect.y = position.y - 100;
 		}
 		if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 		{
@@ -151,12 +154,12 @@ bool Player::Update(float dt)
 		}
 		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && god == true)
 		{
-			speedY = -3;
+			speedY = -4;
 			position.y += speedY;
 		}
 		else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && god == true)
 		{
-			speedY = 3;
+			speedY = 4;
 			position.y += speedY;
 		}
 		else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && app->input->GetKey(SDL_SCANCODE_D) != KEY_REPEAT)
@@ -164,14 +167,14 @@ bool Player::Update(float dt)
 			if (god == true)
 			{
 				speedXLastFrame = speedX;
-				speedX = -3;
+				speedX = -4;
 				position.x += speedX;
 			}
 			else if (god == false && xLeftCollision == false)
 			{
 				xRightCollision = false;
 				speedXLastFrame = speedX;
-				speedX = -3;
+				speedX = -4;
 				position.x += speedX;
 
 				if (yDownCollision == true)
@@ -224,14 +227,14 @@ bool Player::Update(float dt)
 			if (god == true)
 			{
 				speedXLastFrame = speedX;
-				speedX = 3;
+				speedX = 4;
 				position.x += speedX;
 			}
 			else if (god == false && xRightCollision == false)
 			{
 				xLeftCollision = false;
 				speedXLastFrame = speedX;
-				speedX = 3;
+				speedX = 4;
 				position.x += speedX;
 
 				if (yDownCollision == true)
@@ -350,7 +353,7 @@ bool Player::Update(float dt)
 		{
 			xLeftCollision = false;
 			xRightCollision = false;
-			position.y += -6;
+			position.y += -7;
 		}
 		if (secondJump)
 		{
@@ -365,7 +368,7 @@ bool Player::Update(float dt)
 		}
 		else
 		{
-			speedY += 0.15f;
+			speedY += 0.2f;
 		}
 		position.y += speedY;
 
@@ -497,10 +500,23 @@ bool Player::Die(Collider* c1, Collider* c2)
 		}
 		if (deathAnim.finish == true)
 		{
-			app->sceneMenu->startScene1 = true;
-			deathAnim.Reset();
-			app->screen = game_death;
-			lifes--;
+			if (lifes <= 0)
+			{
+				app->sceneMenu->startScene1 = true;
+				deathAnim.Reset();
+				app->screen = game_death;
+			}
+			else
+			{
+				death = false;
+				position.x = POSXINIT;
+				position.y = POXYINIT;
+				playerColl->SetPos(position.x + 25, position.y + 20);
+				cameraColl->rect.x = position.x - 100;
+				cameraColl->rect.y = position.y - 100;
+				lifes--;
+				deathAnim.Reset();
+			}
 		}
 	}
 	
@@ -511,17 +527,17 @@ bool Player::CameraScroll(Collider* c1, Collider* c2)
 {
 	if (c1->rect.x < c2->rect.x)
 	{
-		c2->rect.x -= 3;
+		c2->rect.x -= 4;
 	}
 	if ((c1->rect.x + c1->rect.w) > (c2->rect.x + c2->rect.w))
 	{
-		c2->rect.x += 3;
+		c2->rect.x += 4;
 	}
 	if (c1->rect.y < c2->rect.y)
 	{
 		if (god == true)
 		{
-			c2->rect.y -= 3;
+			c2->rect.y -= 4;
 		}
 		else
 		{
