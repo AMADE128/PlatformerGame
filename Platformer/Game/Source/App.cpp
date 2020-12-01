@@ -44,8 +44,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(tex);
 	AddModule(audio);
 	AddModule(map);
-	AddModule(sceneMenu);
 	AddModule(scene);
+	AddModule(sceneMenu);
 	AddModule(player);
 	AddModule(collision);
 	AddModule(fadeToBlack);
@@ -213,6 +213,9 @@ bool App::PreUpdate()
 	ListItem<Module*>* item;
 	item = modules.start;
 	Module* pModule = NULL;
+
+	dt = dtTimer.ReadSec();
+	dtTimer.Start();
 
 	for(item = modules.start; item != NULL && ret == true; item = item->next)
 	{

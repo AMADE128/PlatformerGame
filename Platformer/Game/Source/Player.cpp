@@ -37,6 +37,8 @@ Player::Player() : Module()
 	runAnim.speed = 0.25f;
 
 	fallAnim.PushBack({ 0, 0, TILESIZE, TILESIZE });
+	fallAnim.loop = true;
+	fallAnim.speed = 0.25f;
 
 	jumpAnim.PushBack({ 0, 0, TILESIZE, TILESIZE });
 
@@ -132,6 +134,7 @@ bool Player::PreUpdate()
 
 bool Player::Update(float dt)
 {
+	dt *= 5;
 	if (death == false && app->screen == game_scene1 && appear == false)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
@@ -177,11 +180,11 @@ bool Player::Update(float dt)
 		{
 			if (!secondJump)
 			{
-				speedY = 2;
+				speedY = 20*dt;
 				secondJump = true;
 			}
 		}
-		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && yDownCollision == true)
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && yDownCollision == true && god == false)
 		{
 			if (!isJumping) // Solo salta cuando no esté en el aire
 			{
@@ -190,12 +193,12 @@ bool Player::Update(float dt)
 		}
 		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && god == true)
 		{
-			speedY = -4;
+			speedY = -40*dt;
 			position.y += speedY;
 		}
 		else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && god == true)
 		{
-			speedY = 4;
+			speedY = 40*dt;
 			position.y += speedY;
 		}
 		else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && app->input->GetKey(SDL_SCANCODE_D) != KEY_REPEAT)
@@ -203,14 +206,14 @@ bool Player::Update(float dt)
 			if (god == true)
 			{
 				speedXLastFrame = speedX;
-				speedX = -4;
+				speedX = -40*dt;
 				position.x += speedX;
 			}
 			else if (god == false && xLeftCollision == false)
 			{
 				xRightCollision = false;
 				speedXLastFrame = speedX;
-				speedX = -4;
+				speedX = -40*dt;
 				position.x += speedX;
 
 				if (yDownCollision == true)
@@ -222,7 +225,7 @@ bool Player::Update(float dt)
 				else
 				{
 					flip = true;
-					if ((-3 + speedY) < 0)
+					if ((-30*dt + speedY) < 0)
 					{
 						if (speedX <= 0 && speedXLastFrame < 0)
 						{
@@ -238,7 +241,7 @@ bool Player::Update(float dt)
 							}
 						}
 					}
-					else if ((-3 + speedY) >= 0)
+					else if ((-30*dt + speedY) >= 0)
 					{
 						if (speedX <= 0 && speedXLastFrame < 0)
 						{
@@ -263,14 +266,14 @@ bool Player::Update(float dt)
 			if (god == true)
 			{
 				speedXLastFrame = speedX;
-				speedX = 4;
+				speedX = 40*dt;
 				position.x += speedX;
 			}
 			else if (god == false && xRightCollision == false)
 			{
 				xLeftCollision = false;
 				speedXLastFrame = speedX;
-				speedX = 4;
+				speedX = 40*dt;
 				position.x += speedX;
 
 				if (yDownCollision == true)
@@ -282,7 +285,7 @@ bool Player::Update(float dt)
 				else
 				{
 					flip = false;
-					if ((-3 + speedY) < 0)
+					if ((-30*dt + speedY) < 0)
 					{
 						if (speedX >= 0 && speedXLastFrame > 0)
 						{
@@ -298,7 +301,7 @@ bool Player::Update(float dt)
 							}
 						}
 					}
-					else if ((-3 + speedY) >= 0)
+					else if ((-30*dt + speedY) >= 0)
 					{
 						if (speedX >= 0 && speedXLastFrame > 0)
 						{
@@ -339,7 +342,7 @@ bool Player::Update(float dt)
 						flip = true;
 					}
 				}
-				else if ((-3 + speedY) < 0)
+				else if ((-30*dt + speedY) < 0)
 				{
 					if (secondJump && doubleJumpAnim.finish == false)
 					{
@@ -360,7 +363,7 @@ bool Player::Update(float dt)
 						flip = true;
 					}
 				}
-				else if ((-3 + speedY) >= 0)
+				else if ((-30*dt + speedY) >= 0)
 				{
 					if (secondJump && doubleJumpAnim.finish == false)
 					{
@@ -389,13 +392,13 @@ bool Player::Update(float dt)
 		{
 			xLeftCollision = false;
 			xRightCollision = false;
-			position.y += -7;
+			position.y += -70*dt;
 		}
 		if (secondJump)
 		{
 			xLeftCollision = false;
 			xRightCollision = false;
-			position.y += -2;
+			position.y += -20*dt;
 		}
 
 		if (yDownCollision == true)
@@ -404,7 +407,7 @@ bool Player::Update(float dt)
 		}
 		else
 		{
-			speedY += 0.2f;
+			speedY += 2.0f*dt;
 		}
 		position.y += speedY;
 
@@ -435,7 +438,7 @@ bool Player::PostUpdate()
 	if (position.x < 720 && position.y < 816)
 	{
 		win = true;
-		app->screen = game_win;
+		app->fadeToBlack->Fade(game_win, 80);
 	}
 	currentAnimation->Update();
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
@@ -579,33 +582,19 @@ bool Player::CameraScroll(Collider* c1, Collider* c2)
 {
 	if (c1->rect.x < c2->rect.x)
 	{
-		c2->rect.x -= 4;
+		c2->rect.x -= c2->rect.x - c1->rect.x;
 	}
 	if ((c1->rect.x + c1->rect.w) > (c2->rect.x + c2->rect.w))
 	{
-		c2->rect.x += 4;
+		c2->rect.x += (c1->rect.x + c1->rect.w) - (c2->rect.x + c2->rect.w);
 	}
 	if (c1->rect.y < c2->rect.y)
 	{
-		if (god == true)
-		{
-			c2->rect.y -= 4;
-		}
-		else
-		{
-			c2->rect.y -= speedY;
-		}
+		c2->rect.y -= c2->rect.y - c1->rect.y;
 	}
 	if ((c1->rect.y + c1->rect.h) > (c2->rect.y + c2->rect.h))
 	{
-		if (god == true)
-		{
-			c2->rect.y += 4;
-		}
-		else
-		{
-			c2->rect.y += speedY;
-		}
+		c2->rect.y += (c1->rect.y + c1->rect.h) - (c2->rect.y + c2->rect.h);
 	}
 
 	return true;
