@@ -24,6 +24,7 @@ Collisions::Collisions() : Module()
 	matrix[Collider::Type::PLAYER][Collider::Type::SPIKE] = DIE;
 	matrix[Collider::Type::PLAYER][Collider::Type::CAMERA] = CAMERA_SCROLL;
 	matrix[Collider::Type::PLAYER][Collider::Type::CHECKPOINT] = CHECK;
+	matrix[Collider::Type::PLAYER][Collider::Type::APPLE] = COLLECT;
 
 	matrix[Collider::Type::CAMERA][Collider::Type::WALL] = NOTHING;
 	matrix[Collider::Type::CAMERA][Collider::Type::GROUND] = NOTHING;
@@ -33,6 +34,7 @@ Collisions::Collisions() : Module()
 	matrix[Collider::Type::CAMERA][Collider::Type::SPIKE] = NOTHING;
 	matrix[Collider::Type::CAMERA][Collider::Type::CAMERA] = NOTHING;
 	matrix[Collider::Type::CAMERA][Collider::Type::CHECKPOINT] = NOTHING;
+	matrix[Collider::Type::CAMERA][Collider::Type::APPLE] = NOTHING;
 
 	matrix[Collider::Type::NONE][Collider::Type::WALL] = NOTHING;
 	matrix[Collider::Type::NONE][Collider::Type::GROUND] = NOTHING;
@@ -42,6 +44,7 @@ Collisions::Collisions() : Module()
 	matrix[Collider::Type::NONE][Collider::Type::SPIKE] = NOTHING;
 	matrix[Collider::Type::NONE][Collider::Type::CAMERA] = CAMERA_SCROLL;
 	matrix[Collider::Type::NONE][Collider::Type::CHECKPOINT] = NOTHING;
+	matrix[Collider::Type::NONE][Collider::Type::APPLE] = NOTHING;
 
 	matrix[Collider::Type::AIR][Collider::Type::WALL] = NOTHING;
 	matrix[Collider::Type::AIR][Collider::Type::GROUND] = NOTHING;
@@ -51,6 +54,7 @@ Collisions::Collisions() : Module()
 	matrix[Collider::Type::AIR][Collider::Type::SPIKE] = NOTHING;
 	matrix[Collider::Type::AIR][Collider::Type::CAMERA] = NOTHING;
 	matrix[Collider::Type::AIR][Collider::Type::CHECKPOINT] = NOTHING;
+	matrix[Collider::Type::AIR][Collider::Type::APPLE] = NOTHING;
 
 	matrix[Collider::Type::CHECKPOINT][Collider::Type::WALL] = NOTHING;
 	matrix[Collider::Type::CHECKPOINT][Collider::Type::GROUND] = NOTHING;
@@ -60,6 +64,17 @@ Collisions::Collisions() : Module()
 	matrix[Collider::Type::CHECKPOINT][Collider::Type::SPIKE] = NOTHING;
 	matrix[Collider::Type::CHECKPOINT][Collider::Type::CAMERA] = NOTHING;
 	matrix[Collider::Type::CHECKPOINT][Collider::Type::CHECKPOINT] = NOTHING;
+	matrix[Collider::Type::CHECKPOINT][Collider::Type::APPLE] = NOTHING;
+
+	matrix[Collider::Type::APPLE][Collider::Type::WALL] = NOTHING;
+	matrix[Collider::Type::APPLE][Collider::Type::GROUND] = NOTHING;
+	matrix[Collider::Type::APPLE][Collider::Type::PLAYER] = NOTHING;
+	matrix[Collider::Type::APPLE][Collider::Type::NONE] = NOTHING;
+	matrix[Collider::Type::APPLE][Collider::Type::AIR] = NOTHING;
+	matrix[Collider::Type::APPLE][Collider::Type::SPIKE] = NOTHING;
+	matrix[Collider::Type::APPLE][Collider::Type::CAMERA] = NOTHING;
+	matrix[Collider::Type::APPLE][Collider::Type::CHECKPOINT] = NOTHING;
+	matrix[Collider::Type::APPLE][Collider::Type::APPLE] = NOTHING;
 
 }
 
@@ -160,6 +175,9 @@ bool Collisions::PreUpdate()
 
 				if (matrix[c1->type][c2->type] == CHECK && c1->listener)
 					c1->listener->CheckPoint(c1, c2);
+
+				if (matrix[c1->type][c2->type] == COLLECT && c1->listener)
+					c1->listener->CollectApple(c1, c2);
 			}
 		}
 	}
@@ -217,6 +235,9 @@ void Collisions::DebugDraw()
 			break;
 		case Collider::Type::CHECKPOINT: // purple
 			app->render->DrawRectangle(colliders[i]->rect, 100, 40, 128, alpha);
+			break;
+		case Collider::Type::APPLE: // pink
+			app->render->DrawRectangle(colliders[i]->rect, 255, 192, 203, alpha);
 			break;
 			
 		}

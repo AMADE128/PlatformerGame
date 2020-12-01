@@ -17,6 +17,7 @@ struct Collider
 		SPIKE,
 		CAMERA,
 		CHECKPOINT,
+		APPLE,
 
 		MAX
 	};

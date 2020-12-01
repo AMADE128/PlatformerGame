@@ -100,7 +100,11 @@ bool Player::Start()
 
 	playerColl = app->collision->AddCollider({ (int)position.x, (int)position.y, TILESIZE - 50, TILESIZE - 20}, Collider::Type::PLAYER, this);
 	cameraColl = app->collision->AddCollider({ (int)position.x - 100, (int)position.y - 100, app->render->camera.w/4, app->render->camera.h / 3 + 20}, Collider::Type::CAMERA, this);
+	
 	app->scene->checkPointColl = app->collision->AddCollider({ 3860, 1360, 20, 128 }, Collider::Type::CHECKPOINT, app->player);
+	app->scene->appleColl = app->collision->AddCollider({ 4124, 924, 48, 48 }, Collider::Type::APPLE, app->player);
+	app->scene->appleColl = app->collision->AddCollider({ 2568, 1368, 48, 48 }, Collider::Type::APPLE, app->player);
+	app->scene->appleColl = app->collision->AddCollider({ 1392, 552, 48, 48 }, Collider::Type::APPLE, app->player);
 
 	currentAnimation = &idleAnim;
 	currentTex = idleTex;

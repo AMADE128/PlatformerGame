@@ -33,6 +33,14 @@ Scene::Scene() : Module()
 	checkPointTouchAnim.loop = false;
 	checkPointTouchAnim.speed = 0.4f;
 
+	for (int i = 0; i < 96 * 17; i += 96)
+	{
+		appleAnim.PushBack({ i, 0, 96, 96 });
+	}
+	appleAnim.loop = true;
+	appleAnim.speed = 0.4f;
+
+
 	checkPointStartAnim.PushBack({ 0, 0, 192, 192 });
 	checkPointStartAnim.loop = false;
 }
@@ -61,6 +69,7 @@ bool Scene::Start()
 	checkPointIdleTex = app->tex->Load("Assets/Textures/Items/Checkpoint/checkpoint_idle.png");
 	checkPointStartTex = app->tex->Load("Assets/Textures/Items/Checkpoint/checkpoint_start.png");
 	checkPointTouchTex = app->tex->Load("Assets/Textures/Items/Checkpoint/checkpoint_touch.png");
+	appleTex = app->tex->Load("Assets/Textures/Items/Fruits/apple.png");
 	currentAnimation = &checkPointIdleAnim;
 	currentTex = checkPointStartTex;
 
@@ -188,6 +197,13 @@ bool Scene::PostUpdate()
 	currentAnimation->Update();
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
 	app->render->DrawTexture(currentTex, 3800, 1296, &rect);
+	currentAnimation = &appleAnim;
+	currentAnimation->Update();
+	currentTex = appleTex;
+	SDL_Rect rect2 = currentAnimation->GetCurrentFrame();
+	app->render->DrawTexture(currentTex, 4100, 900, &rect2);
+	app->render->DrawTexture(currentTex, 2544, 1344, &rect2);
+	app->render->DrawTexture(currentTex, 1368, 528, &rect2);
 
 	return ret;
 }
