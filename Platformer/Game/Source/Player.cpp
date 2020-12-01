@@ -52,6 +52,20 @@ Player::Player() : Module()
 	}
 	doubleJumpAnim.loop = false;
 	doubleJumpAnim.speed = 0.25f;
+
+	for (int i = 0; i < TILESIZE * 7; i += TILESIZE)
+	{
+		appeAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
+	}
+	appeAnim.loop = false;
+	appeAnim.speed = 0.25f;
+
+	for (int i = 0; i < TILESIZE * 7; i += TILESIZE)
+	{
+		desAppeAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
+	}
+	desAppeAnim.loop = false;
+	desAppeAnim.speed = 0.25f;
 }
 
 // Destructor
@@ -80,6 +94,8 @@ bool Player::Start()
 	jumpTex = app->tex->Load("Assets/Textures/Character/jump.png");
 	doubleJumpTex = app->tex->Load("Assets/Textures/Character/double_jump.png");
 	lifesTex = app->tex->Load("Assets/Textures/Character/life.png");
+	appeTex = app->tex->Load("Assets/Textures/Character/appearing.png");
+	desAppeTex = app->tex->Load("Assets/Textures/Character/desappearing.png");
 
 	playerColl = app->collision->AddCollider({ (int)position.x, (int)position.y, TILESIZE - 50, TILESIZE - 20}, Collider::Type::PLAYER, this);
 	cameraColl = app->collision->AddCollider({ (int)position.x - 100, (int)position.y - 100, app->render->camera.w/4, app->render->camera.h / 3 + 20}, Collider::Type::CAMERA, this);
@@ -94,12 +110,24 @@ bool Player::Start()
 
 bool Player::PreUpdate()
 {
+	if (appear == true)
+	{
+		app->render->camera.x = ((cameraColl->rect.x + cameraColl->rect.w / 3) - (app->render->camera.w / 2)) * -1;
+		app->render->camera.y = ((cameraColl->rect.y + cameraColl->rect.h / 3) - (app->render->camera.h / 2.5)) * -1;
+		currentAnimation = &appeAnim;
+		currentTex = appeTex;
+		if (appeAnim.finish == true)
+		{
+			appear = false;
+			appeAnim.Reset();
+		}
+	}
 	return true;
 }
 
 bool Player::Update(float dt)
 {
-	if (death == false && app->screen == game_scene1)
+	if (death == false && app->screen == game_scene1 && appear == false)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		{
@@ -108,6 +136,7 @@ bool Player::Update(float dt)
 			playerColl->SetPos(position.x + 25, position.y + 20);
 			cameraColl->rect.x = position.x - 100;
 			cameraColl->rect.y = position.y - 100;
+			appear = true;
 		}
 		if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 		{
@@ -122,6 +151,7 @@ bool Player::Update(float dt)
 		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		{
 			app->LoadGameRequest();
+			appear = true;
 		}
 		if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
 		{
@@ -373,11 +403,6 @@ bool Player::Update(float dt)
 		}
 		position.y += speedY;
 
-		app->render->camera.x = ((cameraColl->rect.x + cameraColl->rect.w/3) - (app->render->camera.w / 2)) * -1;
-		app->render->camera.y = ((cameraColl->rect.y + cameraColl->rect.h / 3) - (app->render->camera.h / 2.5)) * -1;
-		
-		playerColl->SetPos(position.x + 25, position.y + 20);
-
 		if (lifes >= 1)
 		{
 			app->render->DrawTexture(lifesTex, (app->render->camera.x - 20) * -1, (app->render->camera.y - 15) * -1, NULL);
@@ -391,6 +416,10 @@ bool Player::Update(float dt)
 		{
 			app->render->DrawTexture(lifesTex, (app->render->camera.x - 180) * -1, (app->render->camera.y - 15) * -1, NULL);
 		}
+
+		playerColl->SetPos(position.x + 25, position.y + 20);
+		app->render->camera.x = ((cameraColl->rect.x + cameraColl->rect.w / 3) - (app->render->camera.w / 2)) * -1;
+		app->render->camera.y = ((cameraColl->rect.y + cameraColl->rect.h / 3) - (app->render->camera.h / 2.5)) * -1;
 	}
 
 	return true;
@@ -413,6 +442,8 @@ bool Player::PostUpdate()
 	{
 		app->render->DrawTexture(currentTex, position.x, position.y, &rect);
 	}
+
+	
 	return true;
 }
 
@@ -504,6 +535,11 @@ bool Player::Die(Collider* c1, Collider* c2)
 			if (lifes <= 1)
 			{
 				deathAnim.Reset();
+				playerColl->SetPos(position.x + 25, position.y + 20);
+				cameraColl->rect.x = position.x - 100;
+				cameraColl->rect.y = position.y - 100;
+				speedX = 0;
+				speedY = 0;
 				app->sceneMenu->startScene1 = true;
 				app->screen = game_death;
 			}
@@ -522,6 +558,9 @@ bool Player::Die(Collider* c1, Collider* c2)
 				playerColl->SetPos(position.x + 25, position.y + 20);
 				cameraColl->rect.x = position.x - 100;
 				cameraColl->rect.y = position.y - 100;
+				speedX = 0;
+				speedY = 0;
+				appear = true;
 				lifes--;
 				death = false;
 			}

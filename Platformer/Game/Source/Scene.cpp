@@ -141,10 +141,12 @@ bool Scene::Update(float dt)
 		app->render->DrawTexture(death, 0, 0);
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		{
+			app->player->appear = true;
 			app->fadeToBlack->Fade(120);
 			app->screen = game_scene1;
 			app->sceneMenu->startScene1 = true;
-			app->player->lifes = 3;
+			app->player->lifes = 4;
+			
 		}
 	}
 	else if (app->screen == game_win)

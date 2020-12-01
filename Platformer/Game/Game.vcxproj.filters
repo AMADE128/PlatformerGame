@@ -25,6 +25,7 @@
     <ClCompile Include="Source\FadeToBlack.cpp" />
     <ClCompile Include="Source\PerfTimer.cpp" />
     <ClCompile Include="Source\Timer.cpp" />
+    <ClCompile Include="Source\Fonts.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -69,6 +70,8 @@
     <ClInclude Include="Source\FadeToBlack.h" />
     <ClInclude Include="Source\PerfTimer.h" />
     <ClInclude Include="Source\Timer.h" />
+    <ClInclude Include="Source\Animation.h" />
+    <ClInclude Include="Source\Fonts.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

@@ -35,7 +35,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	collision = new Collisions();
 	sceneMenu = new SceneMenu();
 	fadeToBlack = new FadeToBlack();
-	//fonts = new Fonts();
+	fonts = new Fonts();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -43,13 +43,13 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(input);
 	AddModule(tex);
 	AddModule(audio);
+	AddModule(map);
 	AddModule(sceneMenu);
 	AddModule(scene);
-	AddModule(map);
 	AddModule(player);
 	AddModule(collision);
 	AddModule(fadeToBlack);
-	//AddModule(fonts);
+	AddModule(fonts);
 
 	// Render last to swap buffer
 	AddModule(render);

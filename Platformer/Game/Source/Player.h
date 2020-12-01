@@ -51,6 +51,8 @@ public:
 	SDL_Texture* jumpTex = nullptr;
 	SDL_Texture* deathTex = nullptr;
 	SDL_Texture* lifesTex = nullptr;
+	SDL_Texture* appeTex = nullptr;
+	SDL_Texture* desAppeTex = nullptr;
 
 	bool flip;
 
@@ -64,6 +66,8 @@ public:
 	Animation jumpAnim;
 	Animation deathAnim;
 	Animation doubleJumpAnim;
+	Animation appeAnim;
+	Animation desAppeAnim;
 
 	fPoint position;
 
@@ -79,6 +83,7 @@ public:
 
 	bool god = false;
 	bool death = false;
+	bool appear = false;
 	bool win = false;
 	bool yDownCollision;
 	bool yUpCollision;

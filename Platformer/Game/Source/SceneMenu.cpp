@@ -99,6 +99,7 @@ bool SceneMenu::Update(float dt)
 		app->render->camera.y = 0;
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		{
+			app->player->appear = true;
 			app->fadeToBlack->Fade(120);
 			startScene1 = true;
 			app->screen = game_scene1;
