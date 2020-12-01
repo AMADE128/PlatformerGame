@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "SDL\include\SDL_rect.h"
+#include "App.h"
 
 class FadeToBlack : public Module
 {
@@ -28,7 +29,7 @@ public:
 	// Called from another module
 	// Starts the fade process which has two steps, fade_out and fade_in
 	// After the first step, the modules should be switched
-	bool Fade(float frames = 60);
+	bool Fade(game_screens screen, float frames = 60);
 
 private:
 
@@ -47,8 +48,7 @@ private:
 	SDL_Rect screenRect;
 
 	// The modules that should be switched after the first step
-	Module* moduleToEnable = nullptr;
-	Module* moduleToDisable = nullptr;
+	game_screens screenTo;
 };
 
 #endif //__MODULEFADETOBLACK_H__

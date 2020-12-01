@@ -142,8 +142,7 @@ bool Scene::Update(float dt)
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		{
 			app->player->appear = true;
-			app->fadeToBlack->Fade(120);
-			app->screen = game_scene1;
+			app->fadeToBlack->Fade(game_scene1, 80);
 			app->sceneMenu->startScene1 = true;
 			app->player->lifes = 4;
 			
@@ -161,9 +160,8 @@ bool Scene::Update(float dt)
 		app->render->camera.y = 0;
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		{
-			app->fadeToBlack->Fade(120);
+			app->fadeToBlack->Fade(game_menu, 80);
 			app->sceneMenu->startMenu = true;
-			app->screen = game_menu;
 			app->sceneMenu->startScene1 = true;
 		}
 	}

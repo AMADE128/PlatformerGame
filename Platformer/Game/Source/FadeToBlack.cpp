@@ -33,7 +33,7 @@ bool FadeToBlack::Update(float dt)
 		++frameCount;
 		if (frameCount >= maxFadeFrames)
 		{
-
+			app->screen = screenTo;
 			currentStep = FadeStep::FROM_BLACK;
 		}
 	}
@@ -63,7 +63,7 @@ bool FadeToBlack::PostUpdate()
 	return true;
 }
 
-bool FadeToBlack::Fade(float frames)
+bool FadeToBlack::Fade(game_screens screen, float frames)
 {
 	bool ret = false;
 
@@ -73,6 +73,7 @@ bool FadeToBlack::Fade(float frames)
 		currentStep = FadeStep::TO_BLACK;
 		frameCount = 0;
 		maxFadeFrames = frames;
+		screenTo = screen;
 
 		ret = true;
 	}

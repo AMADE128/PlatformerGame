@@ -74,9 +74,8 @@ bool SceneMenu::Update(float dt)
 		app->render->DrawTexture(logo, 0, 0);
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		{
-			app->fadeToBlack->Fade(120);
+			app->fadeToBlack->Fade(game_menu, 80);
 			startMenu = true;
-			app->screen = game_menu;
 		}
 	}
 	else if (app->screen == game_menu)
@@ -100,13 +99,10 @@ bool SceneMenu::Update(float dt)
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		{
 			app->player->appear = true;
-			app->fadeToBlack->Fade(120);
 			startScene1 = true;
-			app->screen = game_scene1;
+			app->fadeToBlack->Fade(game_scene1, 80);
 		}
 	}
-
-	// L03: DONE 7: Set the window title with map/tileset info
 
 	return true;
 }

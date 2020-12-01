@@ -9,6 +9,7 @@
 #include "Map.h"
 #include "Audio.h"
 #include "SceneMenu.h"
+#include "FadeToBlack.h"
 
 #include "Collisions.h"
 
@@ -541,7 +542,7 @@ bool Player::Die(Collider* c1, Collider* c2)
 				speedX = 0;
 				speedY = 0;
 				app->sceneMenu->startScene1 = true;
-				app->screen = game_death;
+				app->fadeToBlack->Fade(game_death, 80);
 			}
 			else
 			{
