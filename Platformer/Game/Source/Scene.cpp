@@ -10,6 +10,7 @@
 #include "Player.h"
 #include "SceneMenu.h"
 #include "FadeToBlack.h"
+#include "Animation.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -17,6 +18,23 @@
 Scene::Scene() : Module()
 {
 	name.Create("scene");
+
+	for (int i = 0; i < 192 * 10; i += 192)
+	{
+		checkPointIdleAnim.PushBack({ i, 0, 192, 192 });
+	}
+	checkPointIdleAnim.loop = true;
+	checkPointIdleAnim.speed = 0.4f;
+
+	for (int i = 0; i < 192 * 26; i += 192)
+	{
+		checkPointTouchAnim.PushBack({ i, 0, 192, 192 });
+	}
+	checkPointTouchAnim.loop = false;
+	checkPointTouchAnim.speed = 0.4f;
+
+	checkPointStartAnim.PushBack({ 0, 0, 192, 192 });
+	checkPointStartAnim.loop = false;
 }
 
 // Destructor
@@ -29,8 +47,6 @@ bool Scene::Awake()
 	LOG("Loading Scene");
 	bool ret = true;
 
-
-
 	return ret;
 }
 
@@ -41,6 +57,12 @@ bool Scene::Start()
 	app->map->Load("map1.tmx");
 	death = app->tex->Load("Assets/Textures/Screens/lose.png");
 	win = app->tex->Load("Assets/Textures/Screens/win.png");
+
+	checkPointIdleTex = app->tex->Load("Assets/Textures/Items/Checkpoint/checkpoint_idle.png");
+	checkPointStartTex = app->tex->Load("Assets/Textures/Items/Checkpoint/checkpoint_start.png");
+	checkPointTouchTex = app->tex->Load("Assets/Textures/Items/Checkpoint/checkpoint_touch.png");
+	currentAnimation = &checkPointIdleAnim;
+	currentTex = checkPointStartTex;
 
 	return true;
 }
@@ -82,10 +104,30 @@ bool Scene::Update(float dt)
 		}
 		app->map->Draw();
 		app->audio->PlayFx(musicScene1);
+		if (savePoint == true)
+		{
+			if (checkPointTouchAnim.finish == false)
+			{
+				currentAnimation = &checkPointTouchAnim;
+				currentTex = checkPointTouchTex;
+			}
+			else if(checkPointTouchAnim.finish == true)
+			{
+				currentAnimation = &checkPointIdleAnim;
+				currentTex = checkPointIdleTex;
+			}
+		}
+		else
+		{
+			currentAnimation = &checkPointStartAnim;
+			currentTex = checkPointStartTex;
+		}
 	}
 	else if (app->screen == game_death)
 	{
 		app->audio->UnloadFX(musicScene1);
+		savePoint = false;
+		checkPointTouchAnim.Reset();
 		app->player->death = false;
 		app->player->position.x = 720;
 		app->player->position.y = 1584;
@@ -142,6 +184,10 @@ bool Scene::PostUpdate()
 	{
 		app->audio->SetVolume(*item->data, volume);
 	}
+
+	currentAnimation->Update();
+	SDL_Rect rect = currentAnimation->GetCurrentFrame();
+	app->render->DrawTexture(currentTex, 3800, 1296, &rect);
 
 	return ret;
 }

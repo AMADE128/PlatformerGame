@@ -50,7 +50,8 @@ public:
 		STOP_Y,
 		FALL,
 		NOTHING,
-		CAMERA_SCROLL
+		CAMERA_SCROLL,
+		CHECK
 	};
 
 	// All existing colliders in the scene

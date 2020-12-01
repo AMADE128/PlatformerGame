@@ -83,6 +83,7 @@ bool Player::Start()
 
 	playerColl = app->collision->AddCollider({ (int)position.x, (int)position.y, TILESIZE - 50, TILESIZE - 20}, Collider::Type::PLAYER, this);
 	cameraColl = app->collision->AddCollider({ (int)position.x - 100, (int)position.y - 100, app->render->camera.w/4, app->render->camera.h / 3 + 20}, Collider::Type::CAMERA, this);
+	app->scene->checkPointColl = app->collision->AddCollider({ 3860, 1360, 20, 128 }, Collider::Type::CHECKPOINT, app->player);
 
 	currentAnimation = &idleAnim;
 	currentTex = idleTex;
@@ -500,22 +501,29 @@ bool Player::Die(Collider* c1, Collider* c2)
 		}
 		if (deathAnim.finish == true)
 		{
-			if (lifes <= 0)
+			if (lifes <= 1)
 			{
-				app->sceneMenu->startScene1 = true;
 				deathAnim.Reset();
+				app->sceneMenu->startScene1 = true;
 				app->screen = game_death;
 			}
 			else
 			{
-				death = false;
-				position.x = POSXINIT;
-				position.y = POXYINIT;
+				if (app->scene->savePoint == true)
+				{
+					app->LoadGameRequest();
+				}
+				else
+				{
+					position.x = POSXINIT;
+					position.y = POXYINIT;
+				}
+				deathAnim.Reset();
 				playerColl->SetPos(position.x + 25, position.y + 20);
 				cameraColl->rect.x = position.x - 100;
 				cameraColl->rect.y = position.y - 100;
 				lifes--;
-				deathAnim.Reset();
+				death = false;
 			}
 		}
 	}
@@ -548,7 +556,7 @@ bool Player::CameraScroll(Collider* c1, Collider* c2)
 	{
 		if (god == true)
 		{
-			c2->rect.y += 3;
+			c2->rect.y += 4;
 		}
 		else
 		{
@@ -559,7 +567,13 @@ bool Player::CameraScroll(Collider* c1, Collider* c2)
 	return true;
 }
 
+bool Player::CheckPoint(Collider* c1, Collider* c2)
+{
+	app->scene->savePoint = true;
+	app->SaveGameRequest();
 
+	return true;
+}
 
 bool Player::LoadState(pugi::xml_node& data)
 {

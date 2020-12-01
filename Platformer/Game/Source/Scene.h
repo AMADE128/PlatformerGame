@@ -2,8 +2,10 @@
 #define __SCENE_H__
 
 #include "Module.h"
+#include "Animation.h"
 
 struct SDL_Texture;
+struct Collider;
 
 class Scene : public Module
 {
@@ -33,11 +35,22 @@ public:
 	bool CleanUp();
 
 	List<unsigned int*>	musicList;
+	bool savePoint = false;
+	Collider* checkPointColl = nullptr;
 
 private:
 	SDL_Texture* img;
 	SDL_Texture* death;
 	SDL_Texture* win;
+
+	SDL_Texture* checkPointIdleTex = nullptr;
+	SDL_Texture* checkPointStartTex = nullptr;
+	SDL_Texture* checkPointTouchTex = nullptr;
+	SDL_Texture* currentTex = nullptr;
+	Animation* currentAnimation = nullptr;
+	Animation checkPointIdleAnim;
+	Animation checkPointStartAnim;
+	Animation checkPointTouchAnim;
 
 	unsigned int musicScene1;
 	unsigned int musicDeath;

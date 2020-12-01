@@ -23,6 +23,7 @@ Collisions::Collisions() : Module()
 	matrix[Collider::Type::PLAYER][Collider::Type::AIR] = FALL;
 	matrix[Collider::Type::PLAYER][Collider::Type::SPIKE] = DIE;
 	matrix[Collider::Type::PLAYER][Collider::Type::CAMERA] = CAMERA_SCROLL;
+	matrix[Collider::Type::PLAYER][Collider::Type::CHECKPOINT] = CHECK;
 
 	matrix[Collider::Type::CAMERA][Collider::Type::WALL] = NOTHING;
 	matrix[Collider::Type::CAMERA][Collider::Type::GROUND] = NOTHING;
@@ -31,6 +32,7 @@ Collisions::Collisions() : Module()
 	matrix[Collider::Type::CAMERA][Collider::Type::AIR] = NOTHING;
 	matrix[Collider::Type::CAMERA][Collider::Type::SPIKE] = NOTHING;
 	matrix[Collider::Type::CAMERA][Collider::Type::CAMERA] = NOTHING;
+	matrix[Collider::Type::CAMERA][Collider::Type::CHECKPOINT] = NOTHING;
 
 	matrix[Collider::Type::NONE][Collider::Type::WALL] = NOTHING;
 	matrix[Collider::Type::NONE][Collider::Type::GROUND] = NOTHING;
@@ -39,6 +41,7 @@ Collisions::Collisions() : Module()
 	matrix[Collider::Type::NONE][Collider::Type::AIR] = NOTHING;
 	matrix[Collider::Type::NONE][Collider::Type::SPIKE] = NOTHING;
 	matrix[Collider::Type::NONE][Collider::Type::CAMERA] = CAMERA_SCROLL;
+	matrix[Collider::Type::NONE][Collider::Type::CHECKPOINT] = NOTHING;
 
 	matrix[Collider::Type::AIR][Collider::Type::WALL] = NOTHING;
 	matrix[Collider::Type::AIR][Collider::Type::GROUND] = NOTHING;
@@ -47,6 +50,16 @@ Collisions::Collisions() : Module()
 	matrix[Collider::Type::AIR][Collider::Type::AIR] = NOTHING;
 	matrix[Collider::Type::AIR][Collider::Type::SPIKE] = NOTHING;
 	matrix[Collider::Type::AIR][Collider::Type::CAMERA] = NOTHING;
+	matrix[Collider::Type::AIR][Collider::Type::CHECKPOINT] = NOTHING;
+
+	matrix[Collider::Type::CHECKPOINT][Collider::Type::WALL] = NOTHING;
+	matrix[Collider::Type::CHECKPOINT][Collider::Type::GROUND] = NOTHING;
+	matrix[Collider::Type::CHECKPOINT][Collider::Type::PLAYER] = NOTHING;
+	matrix[Collider::Type::CHECKPOINT][Collider::Type::NONE] = NOTHING;
+	matrix[Collider::Type::CHECKPOINT][Collider::Type::AIR] = NOTHING;
+	matrix[Collider::Type::CHECKPOINT][Collider::Type::SPIKE] = NOTHING;
+	matrix[Collider::Type::CHECKPOINT][Collider::Type::CAMERA] = NOTHING;
+	matrix[Collider::Type::CHECKPOINT][Collider::Type::CHECKPOINT] = NOTHING;
 
 }
 
@@ -144,6 +157,9 @@ bool Collisions::PreUpdate()
 
 				if (matrix[c1->type][c2->type] == CAMERA_SCROLL && c1->listener)
 					c1->listener->CameraScroll(c1, c2);
+
+				if (matrix[c1->type][c2->type] == CHECK && c1->listener)
+					c1->listener->CheckPoint(c1, c2);
 			}
 		}
 	}
@@ -198,6 +214,9 @@ void Collisions::DebugDraw()
 			break;
 		case Collider::Type::CAMERA: // purple
 			app->render->DrawRectangle(colliders[i]->rect, 200, 40, 128, alpha);
+			break;
+		case Collider::Type::CHECKPOINT: // purple
+			app->render->DrawRectangle(colliders[i]->rect, 100, 40, 128, alpha);
 			break;
 			
 		}

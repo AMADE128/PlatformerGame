@@ -98,6 +98,11 @@ public:
 		return true;
 	}
 
+	virtual bool CheckPoint(Collider* c1, Collider* c2)
+	{
+		return true;
+	}
+
 public:
 
 	SString name;

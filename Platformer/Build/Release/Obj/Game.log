@@ -1,24 +1,98 @@
-﻿  App.cpp
+﻿  Player.cpp
 C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Animation.h(60,19): warning C4244: 'inicializando': conversión de 'const float' a 'int'; posible pérdida de datos
 C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Animation.h(62,30): warning C4244: '=': conversión de 'float' a 'int'; posible pérdida de datos
 C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Game\Source\Animation.h(69,18): warning C4244: '=': conversión de 'int' a 'float'; posible pérdida de datos
-Source\App.cpp(129,28): warning C4244: '=': conversión de 'Uint32' a 'float'; posible pérdida de datos
-Source\App.cpp(183,29): warning C4244: '=': conversión de 'Uint32' a 'float'; posible pérdida de datos
-Source\App.cpp(197,29): warning C4244: '=': conversión de 'Uint32' a 'float'; posible pérdida de datos
-Source\App.cpp(206,59): warning C4244: 'argumento': conversión de 'float' a 'Uint32'; posible pérdida de datos
-Source\App.cpp(230,89): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
-Source\App.cpp(230,89): warning C4244:         with
-Source\App.cpp(230,89): warning C4244:         [
-Source\App.cpp(230,89): warning C4244:             TYPE=float
-Source\App.cpp(230,89): warning C4244:         ]
-Source\App.cpp(230,59): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
-Source\App.cpp(230,59): warning C4244:         with
-Source\App.cpp(230,59): warning C4244:         [
-Source\App.cpp(230,59): warning C4244:             TYPE=float
-Source\App.cpp(230,59): warning C4244:         ]
+Source\Player.cpp(108,51): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
+Source\Player.cpp(108,51): warning C4244:         with
+Source\Player.cpp(108,51): warning C4244:         [
+Source\Player.cpp(108,51): warning C4244:             TYPE=float
+Source\Player.cpp(108,51): warning C4244:         ]
+Source\Player.cpp(108,34): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
+Source\Player.cpp(108,34): warning C4244:         with
+Source\Player.cpp(108,34): warning C4244:         [
+Source\Player.cpp(108,34): warning C4244:             TYPE=float
+Source\Player.cpp(108,34): warning C4244:         ]
+Source\Player.cpp(109,36): warning C4244: '=': conversión de 'TYPE' a 'int'; posible pérdida de datos
+Source\Player.cpp(109,36): warning C4244:         with
+Source\Player.cpp(109,36): warning C4244:         [
+Source\Player.cpp(109,36): warning C4244:             TYPE=float
+Source\Player.cpp(109,36): warning C4244:         ]
+Source\Player.cpp(110,36): warning C4244: '=': conversión de 'TYPE' a 'int'; posible pérdida de datos
+Source\Player.cpp(110,36): warning C4244:         with
+Source\Player.cpp(110,36): warning C4244:         [
+Source\Player.cpp(110,36): warning C4244:             TYPE=float
+Source\Player.cpp(110,36): warning C4244:         ]
+Source\Player.cpp(377,107): warning C4244: '=': conversión de 'double' a 'int'; posible pérdida de datos
+Source\Player.cpp(379,50): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
+Source\Player.cpp(379,50): warning C4244:         with
+Source\Player.cpp(379,50): warning C4244:         [
+Source\Player.cpp(379,50): warning C4244:             TYPE=float
+Source\Player.cpp(379,50): warning C4244:         ]
+Source\Player.cpp(379,33): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
+Source\Player.cpp(379,33): warning C4244:         with
+Source\Player.cpp(379,33): warning C4244:         [
+Source\Player.cpp(379,33): warning C4244:             TYPE=float
+Source\Player.cpp(379,33): warning C4244:         ]
+Source\Player.cpp(410,64): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
+Source\Player.cpp(410,64): warning C4244:         with
+Source\Player.cpp(410,64): warning C4244:         [
+Source\Player.cpp(410,64): warning C4244:             TYPE=float
+Source\Player.cpp(410,64): warning C4244:         ]
+Source\Player.cpp(410,52): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
+Source\Player.cpp(410,52): warning C4244:         with
+Source\Player.cpp(410,52): warning C4244:         [
+Source\Player.cpp(410,52): warning C4244:             TYPE=float
+Source\Player.cpp(410,52): warning C4244:         ]
+Source\Player.cpp(414,60): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
+Source\Player.cpp(414,60): warning C4244:         with
+Source\Player.cpp(414,60): warning C4244:         [
+Source\Player.cpp(414,60): warning C4244:             TYPE=float
+Source\Player.cpp(414,60): warning C4244:         ]
+Source\Player.cpp(414,48): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
+Source\Player.cpp(414,48): warning C4244:         with
+Source\Player.cpp(414,48): warning C4244:         [
+Source\Player.cpp(414,48): warning C4244:             TYPE=float
+Source\Player.cpp(414,48): warning C4244:         ]
+Source\Player.cpp(452,38): warning C4244: '=': conversión de 'int' a 'TYPE'; posible pérdida de datos
+Source\Player.cpp(452,38): warning C4244:         with
+Source\Player.cpp(452,38): warning C4244:         [
+Source\Player.cpp(452,38): warning C4244:             TYPE=float
+Source\Player.cpp(452,38): warning C4244:         ]
+Source\Player.cpp(522,52): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
+Source\Player.cpp(522,52): warning C4244:         with
+Source\Player.cpp(522,52): warning C4244:         [
+Source\Player.cpp(522,52): warning C4244:             TYPE=float
+Source\Player.cpp(522,52): warning C4244:         ]
+Source\Player.cpp(522,35): warning C4244: 'argumento': conversión de 'TYPE' a 'int'; posible pérdida de datos
+Source\Player.cpp(522,35): warning C4244:         with
+Source\Player.cpp(522,35): warning C4244:         [
+Source\Player.cpp(522,35): warning C4244:             TYPE=float
+Source\Player.cpp(522,35): warning C4244:         ]
+Source\Player.cpp(523,37): warning C4244: '=': conversión de 'TYPE' a 'int'; posible pérdida de datos
+Source\Player.cpp(523,37): warning C4244:         with
+Source\Player.cpp(523,37): warning C4244:         [
+Source\Player.cpp(523,37): warning C4244:             TYPE=float
+Source\Player.cpp(523,37): warning C4244:         ]
+Source\Player.cpp(524,37): warning C4244: '=': conversión de 'TYPE' a 'int'; posible pérdida de datos
+Source\Player.cpp(524,37): warning C4244:         with
+Source\Player.cpp(524,37): warning C4244:         [
+Source\Player.cpp(524,37): warning C4244:             TYPE=float
+Source\Player.cpp(524,37): warning C4244:         ]
+Source\Player.cpp(552,24): warning C4244: '-=': conversión de 'float' a 'int'; posible pérdida de datos
+Source\Player.cpp(563,24): warning C4244: '+=': conversión de 'float' a 'int'; posible pérdida de datos
+Source\Player.cpp(580,59): warning C4244: '=': conversión de 'int' a 'TYPE'; posible pérdida de datos
+Source\Player.cpp(580,59): warning C4244:         with
+Source\Player.cpp(580,59): warning C4244:         [
+Source\Player.cpp(580,59): warning C4244:             TYPE=float
+Source\Player.cpp(580,59): warning C4244:         ]
+Source\Player.cpp(581,59): warning C4244: '=': conversión de 'int' a 'TYPE'; posible pérdida de datos
+Source\Player.cpp(581,59): warning C4244:         with
+Source\Player.cpp(581,59): warning C4244:         [
+Source\Player.cpp(581,59): warning C4244:             TYPE=float
+Source\Player.cpp(581,59): warning C4244:         ]
   Generando código
-  5 of 471 functions ( 1.1%) were compiled, the rest were copied from previous compilation.
+  1 of 473 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    3 functions had inline decision re-evaluated but remain unchanged
+    1 functions had inline decision re-evaluated but remain unchanged
   Generación de código finalizada
   Game.vcxproj -> C:\Users\Himar\Documents\GitHub\PlatformerGame\Platformer\Build\Release\Game.exe

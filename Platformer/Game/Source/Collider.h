@@ -16,6 +16,7 @@ struct Collider
 		AIR,
 		SPIKE,
 		CAMERA,
+		CHECKPOINT,
 
 		MAX
 	};

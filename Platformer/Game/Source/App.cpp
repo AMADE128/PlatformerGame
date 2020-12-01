@@ -230,6 +230,7 @@ bool App::PreUpdate()
 		app->player->playerColl->SetPos(app->player->position.x + 25, app->player->position.y + 20);
 		app->player->cameraColl->rect.x = app->player->playerColl->rect.x - 100;
 		app->player->cameraColl->rect.y = app->player->playerColl->rect.y - 100;
+		app->player->death = false;
 	}
 	if (saveGameRequested == true) SaveGame();
 
