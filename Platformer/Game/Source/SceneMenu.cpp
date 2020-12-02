@@ -90,17 +90,15 @@ bool SceneMenu::Update(float dt)
 		app->player->currentTex = app->player->idleTex;
 		app->player->flip = false;
 		app->player->deathAnim.Reset();
-		app->player->position.x = 720;
-		app->player->position.y = 1584;
 		app->audio->PlayFx(musicMenu);
 		app->render->DrawTexture(menu, 0, 0);
 		app->render->camera.x = 0;
 		app->render->camera.y = 0;
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		{
+			app->fadeToBlack->Fade(game_scene1, 80);
 			app->player->appear = true;
 			startScene1 = true;
-			app->fadeToBlack->Fade(game_scene1, 80);
 		}
 	}
 

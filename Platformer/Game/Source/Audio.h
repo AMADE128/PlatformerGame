@@ -35,7 +35,7 @@ public:
 
 	bool SetVolume(unsigned int id, int volume);
 
-	List<Mix_Chunk*>	fx;
+	List<Mix_Chunk*>fx;
 private:
 
 	_Mix_Music* music;

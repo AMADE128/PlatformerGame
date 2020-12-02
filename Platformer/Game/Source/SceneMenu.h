@@ -43,7 +43,6 @@ public:
 	SDL_Texture* win;
 
 	unsigned int musicMenu;
-	unsigned int musicScene1;
 	unsigned int musicDeath;
 	int volume = 1;
 private:

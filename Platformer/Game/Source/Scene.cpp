@@ -118,6 +118,10 @@ bool Scene::Update(float dt)
 		{
 			musicScene1 = app->audio->LoadFx("Assets/Audio/Music/level_music.wav");
 			musicList.add(&musicScene1);
+			app->player->position.x = 720;
+			app->player->position.y = 1584;
+			app->player->cameraColl->rect.x = app->player->position.x - 100;
+			app->player->cameraColl->rect.y = app->player->position.y - 100;
 			app->sceneMenu->startScene1 = false;
 		}
 		app->map->Draw();
@@ -168,19 +172,18 @@ bool Scene::Update(float dt)
 	}
 	else if (app->screen == game_win)
 	{
-		app->audio->UnloadFX(musicScene1);
 		app->player->position.x = 720;
 		app->player->position.y = 1584;
-		app->render->DrawTexture(win, 0, 0);
-		app->player->cameraColl->rect.x = app->player->position.x - 100;
-		app->player->cameraColl->rect.y = app->player->position.y - 100;
 		app->render->camera.x = 0;
 		app->render->camera.y = 0;
+		app->render->DrawTexture(win, 0, 0);
+		app->audio->UnloadFX(musicScene1);
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		{
+			app->player->appear = true;
 			app->fadeToBlack->Fade(game_menu, 80);
 			app->sceneMenu->startMenu = true;
-			app->sceneMenu->startScene1 = true;
+			app->player->lifes = 4;
 		}
 	}
 	

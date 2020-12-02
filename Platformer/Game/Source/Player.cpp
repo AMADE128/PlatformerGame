@@ -438,6 +438,11 @@ bool Player::PostUpdate()
 	if (position.x < 720 && position.y < 816)
 	{
 		win = true;
+		playerColl->SetPos(position.x + 25, position.y + 20);
+		cameraColl->rect.x = position.x - 100;
+		cameraColl->rect.y = position.y - 100;
+		speedX = 0;
+		speedY = 0;
 		app->fadeToBlack->Fade(game_win, 80);
 	}
 	currentAnimation->Update();
@@ -548,7 +553,6 @@ bool Player::Die(Collider* c1, Collider* c2)
 				cameraColl->rect.y = position.y - 100;
 				speedX = 0;
 				speedY = 0;
-				app->sceneMenu->startScene1 = true;
 				app->fadeToBlack->Fade(game_death, 80);
 			}
 			else
