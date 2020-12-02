@@ -134,7 +134,7 @@ bool Player::PreUpdate()
 
 bool Player::Update(float dt)
 {
-	dt *= 5;
+	dt *= 6;
 	if (death == false && app->screen == game_scene1 && appear == false)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
@@ -193,12 +193,12 @@ bool Player::Update(float dt)
 		}
 		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && god == true)
 		{
-			speedY = -40*dt;
+			speedY = -80*dt;
 			position.y += speedY;
 		}
 		else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && god == true)
 		{
-			speedY = 40*dt;
+			speedY = 80*dt;
 			position.y += speedY;
 		}
 		else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && app->input->GetKey(SDL_SCANCODE_D) != KEY_REPEAT)
@@ -206,14 +206,14 @@ bool Player::Update(float dt)
 			if (god == true)
 			{
 				speedXLastFrame = speedX;
-				speedX = -40*dt;
+				speedX = -80*dt;
 				position.x += speedX;
 			}
 			else if (god == false && xLeftCollision == false)
 			{
 				xRightCollision = false;
 				speedXLastFrame = speedX;
-				speedX = -40*dt;
+				speedX = -60*dt;
 				position.x += speedX;
 
 				if (yDownCollision == true)
@@ -266,14 +266,14 @@ bool Player::Update(float dt)
 			if (god == true)
 			{
 				speedXLastFrame = speedX;
-				speedX = 40*dt;
+				speedX = 80*dt;
 				position.x += speedX;
 			}
 			else if (god == false && xRightCollision == false)
 			{
 				xLeftCollision = false;
 				speedXLastFrame = speedX;
-				speedX = 40*dt;
+				speedX = 60*dt;
 				position.x += speedX;
 
 				if (yDownCollision == true)
@@ -392,13 +392,13 @@ bool Player::Update(float dt)
 		{
 			xLeftCollision = false;
 			xRightCollision = false;
-			position.y += -70*dt;
+			position.y += -100*dt;
 		}
 		if (secondJump)
 		{
 			xLeftCollision = false;
 			xRightCollision = false;
-			position.y += -20*dt;
+			position.y += -40*dt;
 		}
 
 		if (yDownCollision == true)
@@ -407,7 +407,7 @@ bool Player::Update(float dt)
 		}
 		else
 		{
-			speedY += 2.0f*dt;
+			speedY += 5.0f*dt;
 		}
 		position.y += speedY;
 

@@ -8,12 +8,12 @@
 	<scene />
 	<scene />
 	<player>
-		<position x="3852" y="1393" />
+		<position x="3853.19995" y="1393" />
 	</player>
 	<collisions />
 	<:anonymous />
 	<:anonymous />
 	<renderer>
-		<camera x="-3243" y="-1111" />
+		<camera x="-3237" y="-1054" />
 	</renderer>
 </game_state>
