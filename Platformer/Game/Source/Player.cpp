@@ -69,6 +69,7 @@ Player::Player() : Module()
 	}
 	desAppeAnim.loop = false;
 	desAppeAnim.speed = 0.25f;
+
 }
 
 // Destructor
@@ -99,6 +100,7 @@ bool Player::Start()
 	lifesTex = app->tex->Load("Assets/Textures/Character/life.png");
 	appeTex = app->tex->Load("Assets/Textures/Character/appearing.png");
 	desAppeTex = app->tex->Load("Assets/Textures/Character/desappearing.png");
+	appleTexure = app->tex->Load("Assets/Textures/Items/Fruits/apple.png");
 
 
 
@@ -426,6 +428,8 @@ bool Player::Update(float dt)
 		{
 			app->render->DrawTexture(lifesTex, (app->render->camera.x - 180) * -1, (app->render->camera.y - 15) * -1, NULL);
 		}
+		
+		app->render->DrawTexture(appleTexure, (app->render->camera.x - 1200) * -1, (app->render->camera.y - 0) * -1, NULL);
 
 		playerColl->SetPos(position.x + 25, position.y + 20);
 		app->render->camera.x = ((cameraColl->rect.x + cameraColl->rect.w / 3) - (app->render->camera.w / 2)) * -1;
@@ -455,7 +459,7 @@ bool Player::PostUpdate()
 	}
 	else if (flip == false)
 	{
-		app->render->DrawTexture(currentTex, position.x, position.y, &rect);
+		app->render->DrawTexture(currentTex, position.x, position.y, &rect); 
 	}
 
 	

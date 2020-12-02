@@ -44,6 +44,7 @@ public:
 	unsigned int pointFx;
 	unsigned int damageFx;
 	unsigned int checkpointFx;
+	int appleCollected;
 
 private:
 	SDL_Texture* img;

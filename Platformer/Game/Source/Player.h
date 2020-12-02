@@ -54,6 +54,7 @@ public:
 	SDL_Texture* lifesTex = nullptr;
 	SDL_Texture* appeTex = nullptr;
 	SDL_Texture* desAppeTex = nullptr;
+	SDL_Texture* appleTexure = nullptr;
 
 	bool flip;
 

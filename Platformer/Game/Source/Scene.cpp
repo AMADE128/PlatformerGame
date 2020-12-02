@@ -230,6 +230,7 @@ bool Scene::PostUpdate()
 	}
 	else if (appleCollectAnim.finish != true && appleColl1->isCollected == true)
 	{
+		appleCollected++;
 		currentAnimation = &appleCollectAnim;
 		currentAnimation->Update();
 		currentTex = appleCollectTex;
@@ -245,6 +246,7 @@ bool Scene::PostUpdate()
 	}
 	if (appleColl2->isCollected == false && appleColl2->dead == false)
 	{
+		appleCollected++;
 		currentAnimation = &appleAnim;
 		currentAnimation->Update();
 		currentTex = appleTex;
@@ -268,6 +270,7 @@ bool Scene::PostUpdate()
 	}
 	if (appleColl3->isCollected == false && appleColl3->dead == false)
 	{
+		appleCollected++;
 		currentAnimation = &appleAnim;
 		currentAnimation->Update();
 		currentTex = appleTex;
