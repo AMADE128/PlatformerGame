@@ -82,7 +82,7 @@ bool SceneMenu::Update(float dt)
 	{
 		if (startMenu == true)
 		{
-			musicMenu = app->audio->LoadFx("Assets/Audio/Music/intro_music.wav");
+			musicMenu = app->audio->LoadFx("Assets/Audio/SceneMusic/intro_music.wav");
 			musicList.add(&musicMenu);
 			startMenu = false;
 		}

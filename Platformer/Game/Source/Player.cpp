@@ -100,6 +100,8 @@ bool Player::Start()
 	appeTex = app->tex->Load("Assets/Textures/Character/appearing.png");
 	desAppeTex = app->tex->Load("Assets/Textures/Character/desappearing.png");
 
+
+
 	playerColl = app->collision->AddCollider({ (int)position.x, (int)position.y, TILESIZE - 50, TILESIZE - 20}, Collider::Type::PLAYER, this);
 	cameraColl = app->collision->AddCollider({ (int)position.x - 100, (int)position.y - 100, app->render->camera.w/4, app->render->camera.h / 3 + 20}, Collider::Type::CAMERA, this);
 	
@@ -614,7 +616,9 @@ bool Player::CollectApple(Collider* c1, Collider* c2)
 bool Player::CheckPoint(Collider* c1, Collider* c2)
 {
 	app->scene->savePoint = true;
+	app->audio->PlayFx(app->scene->checkpointFx);
 	app->SaveGameRequest();
+
 
 	return true;
 }

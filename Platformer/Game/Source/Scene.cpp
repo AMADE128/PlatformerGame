@@ -79,6 +79,16 @@ bool Scene::Start()
 	appleTex = app->tex->Load("Assets/Textures/Items/Fruits/apple.png");
 	appleCollectTex = app->tex->Load("Assets/Textures/Items/Fruits/collect.png");
 
+	checkpointFx = app->audio->LoadFx("Assets/Audio/MyscMusic/checkpoint.wav");
+	jumpFx = app->audio->LoadFx("Assets/Audio/MyscMusic/jump.wav");
+	pointFx = app->audio->LoadFx("Assets/Audio/MyscMusic/points.wav");
+	damageFx = app->audio->LoadFx("Assets/Audio/MyscMusic/damage.wav");
+
+	app->scene->musicList.add(&jumpFx);
+	app->scene->musicList.add(&pointFx);
+	app->scene->musicList.add(&damageFx);
+	app->scene->musicList.add(&checkpointFx);
+
 	currentAnimation = &checkPointIdleAnim;
 	currentTex = checkPointStartTex;
 
@@ -116,7 +126,7 @@ bool Scene::Update(float dt)
 		app->audio->UnloadFX(app->sceneMenu->musicMenu);
 		if (app->sceneMenu->startScene1 == true)
 		{
-			musicScene1 = app->audio->LoadFx("Assets/Audio/Music/level_music.wav");
+			musicScene1 = app->audio->LoadFx("Assets/Audio/SceneMusic/level_music.wav");
 			musicList.add(&musicScene1);
 			app->player->position.x = 720;
 			app->player->position.y = 1584;

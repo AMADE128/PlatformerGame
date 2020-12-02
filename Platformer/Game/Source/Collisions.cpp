@@ -5,6 +5,7 @@
 #include "Input.h"
 #include "Player.h"
 #include "Map.h"
+#include "Audio.h"
 
 #include "SDL/include/SDL_Scancode.h"
 

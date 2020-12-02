@@ -40,6 +40,10 @@ public:
 	Collider* appleColl1 = nullptr;
 	Collider* appleColl2 = nullptr;
 	Collider* appleColl3 = nullptr;
+	unsigned int jumpFx;
+	unsigned int pointFx;
+	unsigned int damageFx;
+	unsigned int checkpointFx;
 
 private:
 	SDL_Texture* img;
