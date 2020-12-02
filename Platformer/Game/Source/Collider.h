@@ -33,6 +33,8 @@ struct Collider
 	SDL_Rect rect;
 	Type type;
 	Module* listener = nullptr;
+	bool isCollected;
+	bool dead;
 };
 
 

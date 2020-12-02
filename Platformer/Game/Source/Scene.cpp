@@ -40,6 +40,13 @@ Scene::Scene() : Module()
 	appleAnim.loop = true;
 	appleAnim.speed = 0.4f;
 
+	for (int i = 0; i < 96 * 6; i += 96)
+	{
+		appleCollectAnim.PushBack({ i, 0, 96, 96 });
+	}
+	appleCollectAnim.loop = false;
+	appleCollectAnim.speed = 0.4f;
+
 
 	checkPointStartAnim.PushBack({ 0, 0, 192, 192 });
 	checkPointStartAnim.loop = false;
@@ -70,6 +77,8 @@ bool Scene::Start()
 	checkPointStartTex = app->tex->Load("Assets/Textures/Items/Checkpoint/checkpoint_start.png");
 	checkPointTouchTex = app->tex->Load("Assets/Textures/Items/Checkpoint/checkpoint_touch.png");
 	appleTex = app->tex->Load("Assets/Textures/Items/Fruits/apple.png");
+	appleCollectTex = app->tex->Load("Assets/Textures/Items/Fruits/collect.png");
+
 	currentAnimation = &checkPointIdleAnim;
 	currentTex = checkPointStartTex;
 
@@ -195,15 +204,78 @@ bool Scene::PostUpdate()
 	}
 
 	currentAnimation->Update();
-	SDL_Rect rect = currentAnimation->GetCurrentFrame();
-	app->render->DrawTexture(currentTex, 3800, 1296, &rect);
-	currentAnimation = &appleAnim;
-	currentAnimation->Update();
-	currentTex = appleTex;
-	SDL_Rect rect2 = currentAnimation->GetCurrentFrame();
-	app->render->DrawTexture(currentTex, 4100, 900, &rect2);
-	app->render->DrawTexture(currentTex, 2544, 1344, &rect2);
-	app->render->DrawTexture(currentTex, 1368, 528, &rect2);
+	SDL_Rect checkPointRect = currentAnimation->GetCurrentFrame();
+	app->render->DrawTexture(currentTex, 3800, 1296, &checkPointRect);
+	
+	if (appleColl1->isCollected == false && appleColl1->dead == false)
+	{
+		currentAnimation = &appleAnim;
+		currentAnimation->Update();
+		currentTex = appleTex;
+		SDL_Rect appleRect = currentAnimation->GetCurrentFrame();
+		app->render->DrawTexture(currentTex, 4100, 900, &appleRect);
+	}
+	else if (appleCollectAnim.finish != true && appleColl1->isCollected == true)
+	{
+		currentAnimation = &appleCollectAnim;
+		currentAnimation->Update();
+		currentTex = appleCollectTex;
+		SDL_Rect appleRect = currentAnimation->GetCurrentFrame();
+		app->render->DrawTexture(currentTex, 4100, 900, &appleRect);
+		if (appleCollectAnim.finish == true)
+		{
+			app->collision->RemoveCollider(appleColl1);
+			appleColl1->dead = true;
+			appleColl1->isCollected = false;
+			appleCollectAnim.Reset();
+		}
+	}
+	if (appleColl2->isCollected == false && appleColl2->dead == false)
+	{
+		currentAnimation = &appleAnim;
+		currentAnimation->Update();
+		currentTex = appleTex;
+		SDL_Rect appleRect = currentAnimation->GetCurrentFrame();
+		app->render->DrawTexture(currentTex, 2544, 1344, &appleRect);
+	}
+	else if (appleCollectAnim.finish != true && appleColl2->isCollected == true)
+	{
+		currentAnimation = &appleCollectAnim;
+		currentAnimation->Update();
+		currentTex = appleCollectTex;
+		SDL_Rect appleRect = currentAnimation->GetCurrentFrame();
+		app->render->DrawTexture(currentTex, 2544, 1344, &appleRect);
+		if (appleCollectAnim.finish == true)
+		{
+			app->collision->RemoveCollider(appleColl2);
+			appleColl2->dead = true;
+			appleColl2->isCollected = false;
+			appleCollectAnim.Reset();
+		}
+	}
+	if (appleColl3->isCollected == false && appleColl3->dead == false)
+	{
+		currentAnimation = &appleAnim;
+		currentAnimation->Update();
+		currentTex = appleTex;
+		SDL_Rect appleRect = currentAnimation->GetCurrentFrame();
+		app->render->DrawTexture(currentTex, 1368, 528, &appleRect);
+	}
+	else if (appleCollectAnim.finish != true && appleColl3->isCollected == true)
+	{
+		currentAnimation = &appleCollectAnim;
+		currentAnimation->Update();
+		currentTex = appleCollectTex;
+		SDL_Rect appleRect = currentAnimation->GetCurrentFrame();
+		app->render->DrawTexture(currentTex, 1368, 528, &appleRect);
+		if (appleCollectAnim.finish == true)
+		{
+			app->collision->RemoveCollider(appleColl3);
+			appleColl3->dead = true;
+			appleColl3->isCollected = false;
+			appleCollectAnim.Reset();
+		}
+	}
 
 	return ret;
 }

@@ -99,18 +99,18 @@ Source\Player.cpp(568,37): warning C4244: '=': conversion from 'TYPE' to 'int', 
           [
               TYPE=float
           ]
-Source\Player.cpp(613,59): warning C4244: '=': conversion from 'int' to 'TYPE', possible loss of data
+Source\Player.cpp(620,59): warning C4244: '=': conversion from 'int' to 'TYPE', possible loss of data
           with
           [
               TYPE=float
           ]
-Source\Player.cpp(614,59): warning C4244: '=': conversion from 'int' to 'TYPE', possible loss of data
+Source\Player.cpp(621,59): warning C4244: '=': conversion from 'int' to 'TYPE', possible loss of data
           with
           [
               TYPE=float
           ]
   Generating code
-  1 of 512 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+  1 of 513 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     1 functions had inline decision re-evaluated but remain unchanged
   Finished generating code

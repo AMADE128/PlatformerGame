@@ -37,7 +37,9 @@ public:
 	List<unsigned int*>	musicList;
 	bool savePoint = false;
 	Collider* checkPointColl = nullptr;
-	Collider* appleColl = nullptr;
+	Collider* appleColl1 = nullptr;
+	Collider* appleColl2 = nullptr;
+	Collider* appleColl3 = nullptr;
 
 private:
 	SDL_Texture* img;
@@ -48,13 +50,14 @@ private:
 	SDL_Texture* checkPointStartTex = nullptr;
 	SDL_Texture* checkPointTouchTex = nullptr;
 	SDL_Texture* appleTex = nullptr;
+	SDL_Texture* appleCollectTex = nullptr;
 	SDL_Texture* currentTex = nullptr;
 	Animation* currentAnimation = nullptr;
 	Animation checkPointIdleAnim;
 	Animation checkPointStartAnim;
 	Animation checkPointTouchAnim;
 	Animation appleAnim;
-	Animation appleCollected;
+	Animation appleCollectAnim;
 
 	unsigned int musicScene1;
 	unsigned int musicDeath;

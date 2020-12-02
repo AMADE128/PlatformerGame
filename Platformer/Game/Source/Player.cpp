@@ -104,9 +104,9 @@ bool Player::Start()
 	cameraColl = app->collision->AddCollider({ (int)position.x - 100, (int)position.y - 100, app->render->camera.w/4, app->render->camera.h / 3 + 20}, Collider::Type::CAMERA, this);
 	
 	app->scene->checkPointColl = app->collision->AddCollider({ 3860, 1360, 20, 128 }, Collider::Type::CHECKPOINT, app->player);
-	app->scene->appleColl = app->collision->AddCollider({ 4124, 924, 48, 48 }, Collider::Type::APPLE, app->player);
-	app->scene->appleColl = app->collision->AddCollider({ 2568, 1368, 48, 48 }, Collider::Type::APPLE, app->player);
-	app->scene->appleColl = app->collision->AddCollider({ 1392, 552, 48, 48 }, Collider::Type::APPLE, app->player);
+	app->scene->appleColl1 = app->collision->AddCollider({ 4124, 924, 48, 48 }, Collider::Type::APPLE, app->player);
+	app->scene->appleColl2 = app->collision->AddCollider({ 2568, 1368, 48, 48 }, Collider::Type::APPLE, app->player);
+	app->scene->appleColl3 = app->collision->AddCollider({ 1392, 552, 48, 48 }, Collider::Type::APPLE, app->player);
 
 	currentAnimation = &idleAnim;
 	currentTex = idleTex;
@@ -152,7 +152,7 @@ bool Player::Update(float dt)
 			position.y = POXYINIT;
 
 		}
-		if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+		if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN && !isJumping)
 		{
 			app->SaveGameRequest();
 		}
@@ -161,7 +161,7 @@ bool Player::Update(float dt)
 			app->LoadGameRequest();
 			appear = true;
 		}
-		if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+		if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && yDownCollision == true)
 		{
 			if (god == false)
 			{
@@ -596,6 +596,13 @@ bool Player::CameraScroll(Collider* c1, Collider* c2)
 	{
 		c2->rect.y += (c1->rect.y + c1->rect.h) - (c2->rect.y + c2->rect.h);
 	}
+
+	return true;
+}
+
+bool Player::CollectApple(Collider* c1, Collider* c2)
+{
+	c2->isCollected = true;
 
 	return true;
 }
