@@ -40,6 +40,7 @@ public:
 	bool CameraScroll(Collider* c1, Collider* c2) override;
 	bool CheckPoint(Collider* c1, Collider* c2) override;
 	bool CollectApple(Collider* c1, Collider* c2) override;
+	bool CollectPineapple(Collider* c1, Collider* c2) override;
 
 	// Called before quitting
 	bool CleanUp();

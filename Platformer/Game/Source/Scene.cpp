@@ -40,6 +40,13 @@ Scene::Scene() : Module()
 	appleAnim.loop = true;
 	appleAnim.speed = 0.4f;
 
+	for (int i = 0; i < 96 * 17; i += 96)
+	{
+		pineappleAnim.PushBack({ i, 0, 96, 96 });
+	}
+	pineappleAnim.loop = true;
+	pineappleAnim.speed = 0.4f;
+
 
 	checkPointStartAnim.PushBack({ 0, 0, 192, 192 });
 	checkPointStartAnim.loop = false;
@@ -70,6 +77,7 @@ bool Scene::Start()
 	checkPointStartTex = app->tex->Load("Assets/Textures/Items/Checkpoint/checkpoint_start.png");
 	checkPointTouchTex = app->tex->Load("Assets/Textures/Items/Checkpoint/checkpoint_touch.png");
 	appleTex = app->tex->Load("Assets/Textures/Items/Fruits/apple.png");
+	pineappleTex = app->tex->Load("Assets/Textures/Items/Fruits/pineapple.png");
 
 	checkpointFx = app->audio->LoadFx("Assets/Audio/MyscMusic/checkpoint.wav");
 	jumpFx = app->audio->LoadFx("Assets/Audio/MyscMusic/jump.wav");
@@ -250,6 +258,15 @@ bool Scene::PostUpdate()
 		currentTex = appleTex;
 		SDL_Rect appleRect5 = currentAnimation->GetCurrentFrame();
 		app->render->DrawTexture(currentTex, 1368, 528, &appleRect5);
+	}
+	currentAnimation->Update();
+
+	if (pineappleColl1->isCollected == false)
+	{
+		currentAnimation = &pineappleAnim;
+		currentTex = pineappleTex;
+		SDL_Rect pineappleRect1 = currentAnimation->GetCurrentFrame();
+		app->render->DrawTexture(currentTex, 4300, 500, &pineappleRect1);
 	}
 	currentAnimation->Update();
 

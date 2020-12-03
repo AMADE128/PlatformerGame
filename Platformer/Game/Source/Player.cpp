@@ -115,7 +115,7 @@ bool Player::Start()
 	app->scene->appleColl4 = app->collision->AddCollider({ 4200, 800, 48, 48 }, Collider::Type::APPLE, this);
 	app->scene->appleColl1 = app->collision->AddCollider({ 2568, 1368, 48, 48 }, Collider::Type::APPLE, this);
 	app->scene->appleColl5 = app->collision->AddCollider({ 1392, 552, 48, 48 }, Collider::Type::APPLE, this);
-	app->scene->extraLife = app->collision->AddCollider({ 4324, 500, 48, 48 }, Collider::Type::PINEAPPLE, this);
+	app->scene->pineappleColl1 = app->collision->AddCollider({ 4324, 524, 48, 48 }, Collider::Type::PINEAPPLE, this);
 	
 
 
@@ -633,6 +633,21 @@ bool Player::CollectApple(Collider* c1, Collider* c2)
 	app->collision->RemoveCollider(c2);
 	app->moduleParticles->AddParticle(app->moduleParticles->fruitGet, c2->rect.x, c2->rect.y);
 	appleCounter += 1;
+
+	return true;
+}
+
+bool Player::CollectPineapple(Collider* c1, Collider* c2)
+{
+	c2->isCollected = true;
+	app->collision->RemoveCollider(c2);
+	app->moduleParticles->AddParticle(app->moduleParticles->fruitGet, c2->rect.x, c2->rect.y);
+	if (app->player->lifes < 3 && app->player->lifes > 0)
+	{
+		app->player->lifes++;
+	}
+
+	appleCounter += 2;
 
 	return true;
 }

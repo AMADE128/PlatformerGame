@@ -197,7 +197,7 @@ bool Collisions::PreUpdate()
 					c1->listener->CollectApple(c1, c2);
 
 				if (matrix[c1->type][c2->type] == EXTRALIFE && c1->listener)
-					c1->listener->CollectApple(c1, c2);
+					c1->listener->CollectPineapple(c1, c2);
 			}
 		}
 	}

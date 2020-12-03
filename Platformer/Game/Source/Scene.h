@@ -42,7 +42,7 @@ public:
 	Collider* appleColl3 = nullptr;
 	Collider* appleColl4 = nullptr;
 	Collider* appleColl5 = nullptr;
-	Collider* extraLife = nullptr;
+	Collider* pineappleColl1 = nullptr;
 
 	unsigned int jumpFx;
 	unsigned int pointFx;
@@ -58,12 +58,14 @@ private:
 	SDL_Texture* checkPointStartTex = nullptr;
 	SDL_Texture* checkPointTouchTex = nullptr;
 	SDL_Texture* appleTex = nullptr;
+	SDL_Texture* pineappleTex = nullptr;
 	SDL_Texture* currentTex = nullptr;
 	Animation* currentAnimation = nullptr;
 	Animation checkPointIdleAnim;
 	Animation checkPointStartAnim;
 	Animation checkPointTouchAnim;
 	Animation appleAnim;
+	Animation pineappleAnim;
 
 	unsigned int musicScene1;
 	unsigned int musicDeath;
