@@ -8,13 +8,22 @@
 	<scene />
 	<scene />
 	<player>
+<<<<<<< Updated upstream
 		<position x="3849.76074" y="1363.93018" />
+=======
+		<position x="3846.95947" y="1393" />
+>>>>>>> Stashed changes
 	</player>
+	<:anonymous />
 	<:anonymous />
 	<collisions />
 	<:anonymous />
 	<:anonymous />
 	<renderer>
+<<<<<<< Updated upstream
 		<camera x="-3181" y="-1111" />
+=======
+		<camera x="-3055" y="-1042" />
+>>>>>>> Stashed changes
 	</renderer>
 </game_state>

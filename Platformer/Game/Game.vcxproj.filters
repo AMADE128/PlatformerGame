@@ -33,6 +33,10 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="Source\ModuleParticles.cpp" />
+    <ClCompile Include="Source\Enemy.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ModuleEnemies.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -89,6 +93,10 @@
     <ClInclude Include="Source\PQueue.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Enemy.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\ModuleEnemies.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
