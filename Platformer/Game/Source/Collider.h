@@ -34,7 +34,7 @@ struct Collider
 	Type type;
 	Module* listener = nullptr;
 	bool pendingToDelete = false;
-	bool isCollected;
+	bool isCollected = false;
 	bool dead;
 };
 

@@ -106,7 +106,7 @@ bool ModuleParticles::PostUpdate()
 	{
 		Particle* particle = particles[i];
 
-		if (particle == &fruitGet)
+		if (particle != nullptr && particle->position == fruitGet.position && particle->isAlive)
 		{
 			app->render->DrawTexture(fruitGetTex, particle->position.x, particle->position.y, &(particle->anim.GetCurrentFrame()));
 		}
