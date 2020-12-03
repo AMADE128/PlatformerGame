@@ -24,7 +24,7 @@ ModuleParticles::ModuleParticles() : Module()
 	}
 	fruitGet.anim.loop = false;
 	fruitGet.anim.speed = 0.4f;
-	fruitGet.lifetime = 50;
+	fruitGet.lifetime = 25;
 	fruitGet.speed = { 0, 0 };
 }
 
@@ -92,6 +92,7 @@ bool ModuleParticles::Update(float dt)
 		{
 			delete particle;
 			particles[i] = nullptr;
+			app->collision->RemoveCollider(particle[i].collider);
 		}
 	}
 
@@ -106,9 +107,9 @@ bool ModuleParticles::PostUpdate()
 	{
 		Particle* particle = particles[i];
 
-		if (particle == &fruitGet)
+		if (particle != nullptr/* && particle->position.x == fruitGet.position.x && particle->isAlive*/)
 		{
-			app->render->DrawTexture(fruitGetTex, particle->position.x, particle->position.y, &(particle->anim.GetCurrentFrame()));
+			app->render->DrawTexture(fruitGetTex, particle->position.x - 24, particle->position.y - 24, &(particle->anim.GetCurrentFrame()));
 		}
 
 	}
