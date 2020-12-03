@@ -11,6 +11,7 @@
 #include "SceneMenu.h"
 #include "FadeToBlack.h"
 #include "ModuleParticles.h"
+#include "Fonts.h"
 
 #include "Collisions.h"
 
@@ -463,7 +464,9 @@ bool Player::PostUpdate()
 		app->render->DrawTexture(currentTex, position.x, position.y, &rect); 
 	}
 
-	
+	sprintf_s(scoreText, 10, "%d", appleCounter);
+	app->fonts->BlitText((app->render->camera.x - 300) * -1, (app->render->camera.y - 15) * -1, scoreFont, scoreText);
+
 	return true;
 }
 
@@ -616,6 +619,7 @@ bool Player::CollectApple(Collider* c1, Collider* c2)
 	c2->isCollected = true;
 	app->collision->RemoveCollider(c2);
 	app->moduleParticles->AddParticle(app->moduleParticles->fruitGet, c2->rect.x, c2->rect.y);
+	appleCounter += 1;
 
 	return true;
 }

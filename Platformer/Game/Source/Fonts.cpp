@@ -22,7 +22,12 @@ Fonts::~Fonts()
 
 bool Fonts::Start()
 {
-	return true;
+	bool ret = true;
+
+	char num_font[] = { "0123456789" };
+	app->player->scoreFont = app->fonts->Load("Assets/Textures/Items/Fonts/font_white.png", num_font, 1);
+
+	return ret;
 }
 // Load new texture from file path
 int Fonts::Load(const char* texture_path, const char* characters, uint rows)
@@ -135,7 +140,7 @@ void Fonts::BlitText(int x, int y, int font_id, const char* text) const
 		spriteRect.x = spriteRect.w * (charIndex % font->columns);
 		spriteRect.y = spriteRect.h * (charIndex / font->columns);
 
-		app->render->DrawTexture(font->texture, x, y, &spriteRect, 0.0f);
+		app->render->DrawTexture(font->texture, x, y, &spriteRect);
 
 		// Advance the position where we blit the next character
 		x += spriteRect.w;

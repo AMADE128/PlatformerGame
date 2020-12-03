@@ -214,7 +214,6 @@ bool Scene::PostUpdate()
 	
 	if (appleColl1->isCollected == false)
 	{
-		appleCollected++;
 		currentAnimation = &appleAnim;
 		currentTex = appleTex;
 		SDL_Rect appleRect1 = currentAnimation->GetCurrentFrame();
@@ -222,7 +221,6 @@ bool Scene::PostUpdate()
 	}
 	if (appleColl2->isCollected == false)
 	{
-		appleCollected++;
 		currentAnimation = &appleAnim;
 		currentTex = appleTex;
 		SDL_Rect appleRect2 = currentAnimation->GetCurrentFrame();
@@ -230,7 +228,6 @@ bool Scene::PostUpdate()
 	}
 	if (appleColl3->isCollected == false)
 	{
-		appleCollected++;
 		currentAnimation = &appleAnim;
 		currentTex = appleTex;
 		SDL_Rect appleRect3 = currentAnimation->GetCurrentFrame();

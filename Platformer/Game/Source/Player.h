@@ -87,6 +87,11 @@ public:
 	bool death = false;
 	bool appear = false;
 	bool win = false;
+
+	int appleCounter = 0;
+	int scoreFont = -1;
+	char scoreText[10] = { "\0" };
+
 	bool yDownCollision;
 	bool yUpCollision;
 	bool xLeftCollision;
