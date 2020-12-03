@@ -40,6 +40,9 @@ public:
 	Collider* appleColl1 = nullptr;
 	Collider* appleColl2 = nullptr;
 	Collider* appleColl3 = nullptr;
+	Collider* appleColl4 = nullptr;
+	Collider* appleColl5 = nullptr;
+	Collider* extraLife = nullptr;
 
 	unsigned int jumpFx;
 	unsigned int pointFx;

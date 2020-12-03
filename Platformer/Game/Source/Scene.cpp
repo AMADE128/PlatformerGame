@@ -217,23 +217,39 @@ bool Scene::PostUpdate()
 		currentAnimation = &appleAnim;
 		currentTex = appleTex;
 		SDL_Rect appleRect1 = currentAnimation->GetCurrentFrame();
-		app->render->DrawTexture(currentTex, 4100, 900, &appleRect1);
+		app->render->DrawTexture(currentTex, 2544, 1344, &appleRect1);
 	}
-
 
 	if (appleColl2->isCollected == false)
 	{
 		currentAnimation = &appleAnim;
 		currentTex = appleTex;
 		SDL_Rect appleRect2 = currentAnimation->GetCurrentFrame();
-		app->render->DrawTexture(currentTex, 2544, 1344, &appleRect2);
+		app->render->DrawTexture(currentTex, 3776, 900, &appleRect2);
 	}
+
 	if (appleColl3->isCollected == false)
 	{
 		currentAnimation = &appleAnim;
 		currentTex = appleTex;
 		SDL_Rect appleRect3 = currentAnimation->GetCurrentFrame();
-		app->render->DrawTexture(currentTex, 1368, 528, &appleRect3);
+		app->render->DrawTexture(currentTex, 3976, 836, &appleRect3);
+	}
+
+	if (appleColl4->isCollected == false)
+	{
+		currentAnimation = &appleAnim;
+		currentTex = appleTex;
+		SDL_Rect appleRect4 = currentAnimation->GetCurrentFrame();
+		app->render->DrawTexture(currentTex, 4176, 776, &appleRect4);
+	}
+
+	if (appleColl5->isCollected == false)
+	{
+		currentAnimation = &appleAnim;
+		currentTex = appleTex;
+		SDL_Rect appleRect5 = currentAnimation->GetCurrentFrame();
+		app->render->DrawTexture(currentTex, 1368, 528, &appleRect5);
 	}
 	currentAnimation->Update();
 

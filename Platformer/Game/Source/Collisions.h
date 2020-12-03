@@ -52,7 +52,8 @@ public:
 		NOTHING,
 		CAMERA_SCROLL,
 		CHECK,
-		COLLECT
+		COLLECT,
+		EXTRALIFE,
 	};
 
 	// All existing colliders in the scene

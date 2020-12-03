@@ -18,6 +18,7 @@ struct Collider
 		CAMERA,
 		CHECKPOINT,
 		APPLE,
+		PINEAPPLE,
 
 		MAX
 	};

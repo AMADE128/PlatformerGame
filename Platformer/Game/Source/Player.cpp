@@ -110,9 +110,12 @@ bool Player::Start()
 	cameraColl = app->collision->AddCollider({ (int)position.x - 100, (int)position.y - 100, app->render->camera.w/4, app->render->camera.h / 3 + 20}, Collider::Type::CAMERA, this);
 	
 	app->scene->checkPointColl = app->collision->AddCollider({ 3860, 1360, 20, 128 }, Collider::Type::CHECKPOINT, app->player);
-	app->scene->appleColl1 = app->collision->AddCollider({ 4124, 924, 48, 48 }, Collider::Type::APPLE, this);
-	app->scene->appleColl2 = app->collision->AddCollider({ 2568, 1368, 48, 48 }, Collider::Type::APPLE, this);
-	app->scene->appleColl3 = app->collision->AddCollider({ 1392, 552, 48, 48 }, Collider::Type::APPLE, this);
+	app->scene->appleColl2 = app->collision->AddCollider({ 3800, 924, 48, 48 }, Collider::Type::APPLE, this);
+	app->scene->appleColl3 = app->collision->AddCollider({ 4000, 850, 48, 48 }, Collider::Type::APPLE, this);
+	app->scene->appleColl4 = app->collision->AddCollider({ 4200, 800, 48, 48 }, Collider::Type::APPLE, this);
+	app->scene->appleColl1 = app->collision->AddCollider({ 2568, 1368, 48, 48 }, Collider::Type::APPLE, this);
+	app->scene->appleColl5 = app->collision->AddCollider({ 1392, 552, 48, 48 }, Collider::Type::APPLE, this);
+	app->scene->extraLife = app->collision->AddCollider({ 4324, 500, 48, 48 }, Collider::Type::PINEAPPLE, this);
 	
 
 
