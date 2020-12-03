@@ -25,7 +25,7 @@ bool Fonts::Start()
 	bool ret = true;
 
 	char num_font[] = { "0123456789" };
-	app->player->scoreFont = app->fonts->Load("Assets/Textures/Items/Fonts/font_white.png", num_font, 1);
+	app->player->scoreFont = app->fonts->Load("Assets/Textures/Items/Fonts/font_white", num_font, 1);
 
 	return ret;
 }
