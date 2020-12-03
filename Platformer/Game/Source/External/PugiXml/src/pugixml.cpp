@@ -11244,7 +11244,7 @@ namespace pugi
         return 0;
     }
 
-    PUGI__FN xpath_variable* xpath_variable_set::add(const char_t* name, xpath_value_type type)
+    PUGI__FN xpath_variable* xpath_variable_set::Add(const char_t* name, xpath_value_type type)
     {
         const size_t hash_size = sizeof(_data) / sizeof(_data[0]);
         size_t hash = impl::hash_string(name) % hash_size;
@@ -11270,25 +11270,25 @@ namespace pugi
 
     PUGI__FN bool xpath_variable_set::set(const char_t* name, bool value)
     {
-        xpath_variable* var = add(name, xpath_type_boolean);
+        xpath_variable* var = Add(name, xpath_type_boolean);
         return var ? var->set(value) : false;
     }
 
     PUGI__FN bool xpath_variable_set::set(const char_t* name, double value)
     {
-        xpath_variable* var = add(name, xpath_type_number);
+        xpath_variable* var = Add(name, xpath_type_number);
         return var ? var->set(value) : false;
     }
 
     PUGI__FN bool xpath_variable_set::set(const char_t* name, const char_t* value)
     {
-        xpath_variable* var = add(name, xpath_type_string);
+        xpath_variable* var = Add(name, xpath_type_string);
         return var ? var->set(value) : false;
     }
 
     PUGI__FN bool xpath_variable_set::set(const char_t* name, const xpath_node_set& value)
     {
-        xpath_variable* var = add(name, xpath_type_node_set);
+        xpath_variable* var = Add(name, xpath_type_node_set);
         return var ? var->set(value) : false;
     }
 

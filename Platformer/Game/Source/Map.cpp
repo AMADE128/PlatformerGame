@@ -6,9 +6,11 @@
 #include "Collisions.h"
 #include "Scene.h"
 
+#include "Point.h"
 #include "Defs.h"
 #include "Log.h"
 #include "Collider.h"
+#include "Player.h"
 
 #include <math.h>
 
@@ -20,6 +22,20 @@ Map::Map() : Module(), mapLoaded(false)
 // Destructor
 Map::~Map()
 {}
+
+int Properties::GetProperty(const char* value, int defaultValue) const
+{
+	ListItem<Property*>* item = list.start;
+
+	while (item)
+	{
+		if (item->data->name == value)
+			return item->data->value;
+		item = item->next;
+	}
+
+	return defaultValue;
+}
 
 // Called before render is available
 bool Map::Awake(pugi::xml_node& config)
@@ -34,7 +50,164 @@ bool Map::Awake(pugi::xml_node& config)
 
 bool Map::Start()
 {
+	tileX = app->tex->Load("Assets/Maps/x.png");
+
 	return true;
+}
+
+void Map::ResetPath(iPoint start)
+{
+	frontier.Clear();
+	visited.Clear();
+	breadcrumbs.Clear();
+
+	frontier.Push(start, 0);
+	visited.Add(start);
+	breadcrumbs.Add(start);
+
+	memset(costSoFar, 0, sizeof(uint) * COST_MAP_SIZE * COST_MAP_SIZE);
+}
+
+void Map::DrawPath()
+{
+	iPoint point;
+
+	// Draw visited
+	ListItem<iPoint>* item = visited.start;
+
+	while (item)
+	{
+		point = item->data;
+		TileSet* tileset = GetTilesetFromTileId(26);
+
+		SDL_Rect rec = tileset->GetTileRect(26);
+		iPoint pos = MapToWorld(point.x, point.y);
+
+		app->render->DrawTexture(tileset->texture, pos.x, pos.y, &rec);
+
+		item = item->next;
+	}
+
+	// Draw frontier
+	for (uint i = 0; i < frontier.Count(); ++i)
+	{
+		point = *(frontier.Peek(i));
+		TileSet* tileset = GetTilesetFromTileId(25);
+
+		SDL_Rect rec = tileset->GetTileRect(25);
+		iPoint pos = MapToWorld(point.x, point.y);
+
+		app->render->DrawTexture(tileset->texture, pos.x, pos.y, &rec);
+	}
+
+	// Draw path
+	for (uint i = 0; i < path.Count(); ++i)
+	{
+		iPoint pos = MapToWorld(path[i].x, path[i].y);
+		app->render->DrawTexture(tileX, pos.x, pos.y);
+	}
+}
+
+int Map::MovementCost(int x, int y) const
+{
+	int ret = -1;
+
+	if ((x >= 0) && (x < data.width) && (y >= 0) && (y < data.height))
+	{
+		int id = data.layers.start->next->data->Get(x, y);
+
+		if (id == 0) ret = 3;
+		else ret = 0;
+	}
+
+	return ret;
+}
+
+
+void Map::ComputePath(int x, int y)
+{
+	path.Clear();
+	iPoint goal = WorldToMap(x, y);
+
+	uint i = breadcrumbs.Count();
+	uint j = visited.Find(goal);
+
+	path.PushBack(goal);
+
+	while (breadcrumbs.Find(breadcrumbs[j]) != -1)
+	{
+		if (visited[i] != breadcrumbs[j])
+		{
+			i--;
+		}
+		else if (visited[i] == breadcrumbs[j])
+		{
+			j = i;
+			path.PushBack(visited[j]);
+		}
+	}
+
+
+	// L11: TODO 2: Follow the breadcrumps to goal back to the origin
+	// add each step into "path" dyn array (it will then draw automatically)
+}
+
+
+bool Map::IsWalkable(int x, int y) const
+{
+	// L10: TODO 3: return true only if x and y are within map limits
+	// and the tile is walkable (tile id 0 in the navigation layer)
+
+	MapLayer* layer = data.layers.start->data;
+	int tileId = layer->Get(x, y);
+
+	if (x > 0 && x < 1000 && y > 0 && y < 1000 && tileId == 0) 	return true;
+
+	else return false;
+
+}
+
+
+void Map::PropagateDijkstra()
+{
+
+	TileDestiny.x = app->player->position.x;
+	TileDestiny.y = app->player->position.y;
+
+	iPoint curr;
+	curr = frontier.GetLast()->data;
+	if (frontier.Pop(curr) && curr != TileDestiny)
+	{
+		iPoint neighbors[4];
+		neighbors[0].Create(curr.x + 1, curr.y + 0);
+		neighbors[1].Create(curr.x + 0, curr.y + 1);
+		neighbors[2].Create(curr.x - 1, curr.y + 0);
+		neighbors[3].Create(curr.x + 0, curr.y - 1);
+
+		for (uint i = 0; i < 4; i++)
+		{
+			if (MovementCost(neighbors[i].x, neighbors[i].y) > 0)
+			{
+				if (visited.Find(neighbors[i]) == -1)
+				{
+					frontier.Push(neighbors[i], MovementCost(neighbors[i].x, neighbors[i].y));
+					visited.Add(neighbors[i]);
+					costSoFar[i][0] = MovementCost(neighbors[i].x, neighbors[i].y);
+					breadcrumbs.Add(curr);
+
+				}
+			}
+		}
+	}
+	else
+	{
+		breadcrumbs.Add(curr);
+		ComputePath(app->player->position.x, app->player->position.y);
+		app->map->ResetPath(app->map->TileDestiny);
+	}
+	// L11: TODO 3: Taking BFS as a reference, implement the Dijkstra algorithm
+	// use the 2 dimensional array "costSoFar" to track the accumulated costs
+	// on each cell (is already reset to 0 automatically)
 }
 
 // Draw the map (all requried layers)
@@ -256,7 +429,7 @@ bool Map::Load(const char* filename)
 
 		if (ret == true) ret = LoadTilesetImage(tileset, set);
 
-		data.tilesets.add(set);
+		data.tilesets.Add(set);
 	}
 
 	// L04: DONE 4: Iterate all layers and load each of them
@@ -269,7 +442,7 @@ bool Map::Load(const char* filename)
 		ret = LoadLayer(layer, lay);
 
 		if (ret == true)
-			data.layers.add(lay);
+			data.layers.Add(lay);
 	}
     
     if(ret == true)

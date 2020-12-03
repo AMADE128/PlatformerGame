@@ -76,10 +76,10 @@ bool Scene::Start()
 	pointFx = app->audio->LoadFx("Assets/Audio/MyscMusic/points.wav");
 	damageFx = app->audio->LoadFx("Assets/Audio/MyscMusic/damage.wav");
 
-	app->scene->musicList.add(&jumpFx);
-	app->scene->musicList.add(&pointFx);
-	app->scene->musicList.add(&damageFx);
-	app->scene->musicList.add(&checkpointFx);
+	app->scene->musicList.Add(&jumpFx);
+	app->scene->musicList.Add(&pointFx);
+	app->scene->musicList.Add(&damageFx);
+	app->scene->musicList.Add(&checkpointFx);
 
 	currentAnimation = &checkPointIdleAnim;
 	currentTex = checkPointStartTex;
@@ -119,7 +119,7 @@ bool Scene::Update(float dt)
 		if (app->sceneMenu->startScene1 == true)
 		{
 			musicScene1 = app->audio->LoadFx("Assets/Audio/SceneMusic/level_music.wav");
-			musicList.add(&musicScene1);
+			musicList.Add(&musicScene1);
 			app->player->position.x = 720;
 			app->player->position.y = 1584;
 			app->player->cameraColl->rect.x = app->player->position.x - 100;

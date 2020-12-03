@@ -4,8 +4,12 @@
 #include "Module.h"
 #include "List.h"
 #include "Point.h"
+#include "PQueue.h"
+#include "DynArray.h"
 
 #include "PugiXml\src\pugixml.hpp"
+
+#define COST_MAP_SIZE	100
 
 // L03: DONE 2: Create a struct to hold information for a TileSet
 // Ignore Terrain Types and Tile Types for now, but we want the image!
@@ -41,6 +45,34 @@ enum MapTypes
 };
 
 // L04: DONE 1: Create a struct for the map layer
+
+struct Properties
+{
+	struct Property
+	{
+		SString name;
+		int value;
+	};
+
+	~Properties()
+	{
+		ListItem<Property*>* item;
+		item = list.start;
+
+		while (item != NULL)
+		{
+			RELEASE(item->data);
+			item = item->next;
+		}
+
+		list.Clear();
+	}
+
+	// L06: DONE 7: Method to ask for the value of a custom property
+	int GetProperty(const char* name, int default_value = 0) const;
+
+	List<Property*> list;
+};
 struct MapLayer
 {
 	SString	name;
@@ -103,6 +135,8 @@ public:
     // Load new map
     bool Load(const char* path);
 
+	int GetProperty(const char* name, int default_value = 0) const;
+
 	// L04: DONE 8: Create a method that translates x,y coordinates from map positions to world positions
 	iPoint MapToWorld(int x, int y) const;
 
@@ -110,6 +144,15 @@ public:
 	iPoint WorldToMap(int x, int y) const;
 
 	TileSet* GetTilesetFromTileId(int id) const;
+
+	void ResetPath(iPoint start);
+	void DrawPath();
+	bool IsWalkable(int x, int y) const;
+
+	int MovementCost(int x, int y) const;
+	void ComputePath(int x, int y);
+
+	void PropagateDijkstra();
 
 private:
 
@@ -131,6 +174,18 @@ private:
     pugi::xml_document mapFile;
     SString folder;
     bool mapLoaded;
+
+	PQueue<iPoint> frontier;
+	List<iPoint> visited;
+
+	// L11: Additional variables
+	List<iPoint> breadcrumbs;
+	uint costSoFar[COST_MAP_SIZE][COST_MAP_SIZE];
+	DynArray<iPoint> path;
+	iPoint TileDestiny;
+
+	SDL_Texture* tileX = nullptr;
 };
+
 
 #endif // __MAP_H__

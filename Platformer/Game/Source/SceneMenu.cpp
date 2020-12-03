@@ -83,7 +83,7 @@ bool SceneMenu::Update(float dt)
 		if (startMenu == true)
 		{
 			musicMenu = app->audio->LoadFx("Assets/Audio/SceneMusic/intro_music.wav");
-			musicList.add(&musicMenu);
+			musicList.Add(&musicMenu);
 			startMenu = false;
 		}
 		app->player->currentAnimation = &app->player->idleAnim;
