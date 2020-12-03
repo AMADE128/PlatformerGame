@@ -219,6 +219,8 @@ bool Scene::PostUpdate()
 		SDL_Rect appleRect1 = currentAnimation->GetCurrentFrame();
 		app->render->DrawTexture(currentTex, 4100, 900, &appleRect1);
 	}
+
+
 	if (appleColl2->isCollected == false)
 	{
 		currentAnimation = &appleAnim;

@@ -40,6 +40,7 @@ public:
 	Collider* appleColl1 = nullptr;
 	Collider* appleColl2 = nullptr;
 	Collider* appleColl3 = nullptr;
+
 	unsigned int jumpFx;
 	unsigned int pointFx;
 	unsigned int damageFx;

@@ -110,9 +110,11 @@ bool Player::Start()
 	cameraColl = app->collision->AddCollider({ (int)position.x - 100, (int)position.y - 100, app->render->camera.w/4, app->render->camera.h / 3 + 20}, Collider::Type::CAMERA, this);
 	
 	app->scene->checkPointColl = app->collision->AddCollider({ 3860, 1360, 20, 128 }, Collider::Type::CHECKPOINT, app->player);
-	app->scene->appleColl1 = app->collision->AddCollider({ 4124, 924, 48, 48 }, Collider::Type::APPLE, app->player);
-	app->scene->appleColl2 = app->collision->AddCollider({ 2568, 1368, 48, 48 }, Collider::Type::APPLE, app->player);
-	app->scene->appleColl3 = app->collision->AddCollider({ 1392, 552, 48, 48 }, Collider::Type::APPLE, app->player);
+	app->scene->appleColl1 = app->collision->AddCollider({ 4124, 924, 48, 48 }, Collider::Type::APPLE, this);
+	app->scene->appleColl2 = app->collision->AddCollider({ 2568, 1368, 48, 48 }, Collider::Type::APPLE, this);
+	app->scene->appleColl3 = app->collision->AddCollider({ 1392, 552, 48, 48 }, Collider::Type::APPLE, this);
+	
+
 
 	currentAnimation = &idleAnim;
 	currentTex = idleTex;
@@ -465,9 +467,15 @@ bool Player::PostUpdate()
 		}
 
 		app->render->DrawTexture(appleTexure, (app->render->camera.x - 1200) * -1, (app->render->camera.y - 0) * -1, NULL);
-
 		sprintf_s(scoreText, 10, "%d", appleCounter);
-		app->fonts->BlitText((app->render->camera.x - 1185) * -1, (app->render->camera.y - 17) * -1, scoreFont, scoreText);
+		if(appleCounter < 10)
+		{
+			app->fonts->BlitText((app->render->camera.x - 1185) * -1, (app->render->camera.y - 17) * -1, scoreFont, scoreText);
+		}
+		else if (appleCounter > 10)
+		{
+			app->fonts->BlitText((app->render->camera.x - 1145) * -1, (app->render->camera.y - 17) * -1, scoreFont, scoreText);
+		}
 	}
 	return true;
 }
