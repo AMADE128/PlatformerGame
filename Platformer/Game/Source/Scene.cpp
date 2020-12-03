@@ -40,13 +40,6 @@ Scene::Scene() : Module()
 	appleAnim.loop = true;
 	appleAnim.speed = 0.4f;
 
-	for (int i = 0; i < 96 * 6; i += 96)
-	{
-		appleCollectAnim.PushBack({ i, 0, 96, 96 });
-	}
-	appleCollectAnim.loop = false;
-	appleCollectAnim.speed = 0.4f;
-
 
 	checkPointStartAnim.PushBack({ 0, 0, 192, 192 });
 	checkPointStartAnim.loop = false;
@@ -77,7 +70,6 @@ bool Scene::Start()
 	checkPointStartTex = app->tex->Load("Assets/Textures/Items/Checkpoint/checkpoint_start.png");
 	checkPointTouchTex = app->tex->Load("Assets/Textures/Items/Checkpoint/checkpoint_touch.png");
 	appleTex = app->tex->Load("Assets/Textures/Items/Fruits/apple.png");
-	appleCollectTex = app->tex->Load("Assets/Textures/Items/Fruits/collect.png");
 
 	checkpointFx = app->audio->LoadFx("Assets/Audio/MyscMusic/checkpoint.wav");
 	jumpFx = app->audio->LoadFx("Assets/Audio/MyscMusic/jump.wav");
@@ -220,78 +212,31 @@ bool Scene::PostUpdate()
 	SDL_Rect checkPointRect = currentAnimation->GetCurrentFrame();
 	app->render->DrawTexture(currentTex, 3800, 1296, &checkPointRect);
 	
-	if (appleColl1->isCollected == false && appleColl1->dead == false)
-	{
-		currentAnimation = &appleAnim;
-		currentAnimation->Update();
-		currentTex = appleTex;
-		SDL_Rect appleRect = currentAnimation->GetCurrentFrame();
-		app->render->DrawTexture(currentTex, 4100, 900, &appleRect);
-	}
-	else if (appleCollectAnim.finish != true && appleColl1->isCollected == true)
-	{
-		appleCollected++;
-		currentAnimation = &appleCollectAnim;
-		currentAnimation->Update();
-		currentTex = appleCollectTex;
-		SDL_Rect appleRect = currentAnimation->GetCurrentFrame();
-		app->render->DrawTexture(currentTex, 4100, 900, &appleRect);
-		if (appleCollectAnim.finish == true)
-		{
-			app->collision->RemoveCollider(appleColl1);
-			appleColl1->dead = true;
-			appleColl1->isCollected = false;
-			appleCollectAnim.Reset();
-		}
-	}
-	if (appleColl2->isCollected == false && appleColl2->dead == false)
+	if (appleColl1->isCollected == false)
 	{
 		appleCollected++;
 		currentAnimation = &appleAnim;
-		currentAnimation->Update();
 		currentTex = appleTex;
-		SDL_Rect appleRect = currentAnimation->GetCurrentFrame();
-		app->render->DrawTexture(currentTex, 2544, 1344, &appleRect);
+		SDL_Rect appleRect1 = currentAnimation->GetCurrentFrame();
+		app->render->DrawTexture(currentTex, 4100, 900, &appleRect1);
 	}
-	else if (appleCollectAnim.finish != true && appleColl2->isCollected == true)
-	{
-		currentAnimation = &appleCollectAnim;
-		currentAnimation->Update();
-		currentTex = appleCollectTex;
-		SDL_Rect appleRect = currentAnimation->GetCurrentFrame();
-		app->render->DrawTexture(currentTex, 2544, 1344, &appleRect);
-		if (appleCollectAnim.finish == true)
-		{
-			app->collision->RemoveCollider(appleColl2);
-			appleColl2->dead = true;
-			appleColl2->isCollected = false;
-			appleCollectAnim.Reset();
-		}
-	}
-	if (appleColl3->isCollected == false && appleColl3->dead == false)
+	if (appleColl2->isCollected == false)
 	{
 		appleCollected++;
 		currentAnimation = &appleAnim;
-		currentAnimation->Update();
 		currentTex = appleTex;
-		SDL_Rect appleRect = currentAnimation->GetCurrentFrame();
-		app->render->DrawTexture(currentTex, 1368, 528, &appleRect);
+		SDL_Rect appleRect2 = currentAnimation->GetCurrentFrame();
+		app->render->DrawTexture(currentTex, 2544, 1344, &appleRect2);
 	}
-	else if (appleCollectAnim.finish != true && appleColl3->isCollected == true)
+	if (appleColl3->isCollected == false)
 	{
-		currentAnimation = &appleCollectAnim;
-		currentAnimation->Update();
-		currentTex = appleCollectTex;
-		SDL_Rect appleRect = currentAnimation->GetCurrentFrame();
-		app->render->DrawTexture(currentTex, 1368, 528, &appleRect);
-		if (appleCollectAnim.finish == true)
-		{
-			app->collision->RemoveCollider(appleColl3);
-			appleColl3->dead = true;
-			appleColl3->isCollected = false;
-			appleCollectAnim.Reset();
-		}
+		appleCollected++;
+		currentAnimation = &appleAnim;
+		currentTex = appleTex;
+		SDL_Rect appleRect3 = currentAnimation->GetCurrentFrame();
+		app->render->DrawTexture(currentTex, 1368, 528, &appleRect3);
 	}
+	currentAnimation->Update();
 
 	return ret;
 }

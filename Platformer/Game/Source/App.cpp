@@ -12,6 +12,7 @@
 #include "FadeToBlack.h"
 #include "PerfTimer.h"
 #include "Fonts.h"
+#include "ModuleParticles.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -36,6 +37,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	sceneMenu = new SceneMenu();
 	fadeToBlack = new FadeToBlack();
 	fonts = new Fonts();
+	moduleParticles = new ModuleParticles();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -47,6 +49,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(sceneMenu);
 	AddModule(scene);
 	AddModule(player);
+	AddModule(moduleParticles);
 	AddModule(collision);
 	AddModule(fadeToBlack);
 	AddModule(fonts);

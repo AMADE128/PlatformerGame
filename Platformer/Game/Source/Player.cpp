@@ -10,6 +10,7 @@
 #include "Audio.h"
 #include "SceneMenu.h"
 #include "FadeToBlack.h"
+#include "ModuleParticles.h"
 
 #include "Collisions.h"
 
@@ -613,6 +614,8 @@ bool Player::CameraScroll(Collider* c1, Collider* c2)
 bool Player::CollectApple(Collider* c1, Collider* c2)
 {
 	c2->isCollected = true;
+	app->collision->RemoveCollider(c2);
+	app->moduleParticles->AddParticle(app->moduleParticles->fruitGet, c2->rect.x, c2->rect.y);
 
 	return true;
 }
