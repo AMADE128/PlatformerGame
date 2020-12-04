@@ -34,7 +34,6 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	List<unsigned int*>	musicList;
 	bool savePoint = false;
 	Collider* checkPointColl = nullptr;
 	Collider* appleColl1 = nullptr;
@@ -50,17 +49,16 @@ public:
 	unsigned int checkpointFx;
 
 private:
-	SDL_Texture* img;
-	SDL_Texture* death;
-	SDL_Texture* win;
 
 	SDL_Texture* checkPointIdleTex = nullptr;
 	SDL_Texture* checkPointStartTex = nullptr;
 	SDL_Texture* checkPointTouchTex = nullptr;
 	SDL_Texture* appleTex = nullptr;
 	SDL_Texture* pineappleTex = nullptr;
+
 	SDL_Texture* currentTex = nullptr;
 	Animation* currentAnimation = nullptr;
+
 	Animation checkPointIdleAnim;
 	Animation checkPointStartAnim;
 	Animation checkPointTouchAnim;
@@ -68,8 +66,6 @@ private:
 	Animation pineappleAnim;
 
 	unsigned int musicScene1;
-	unsigned int musicDeath;
-	int volume = 1;
 };
 
 #endif // __SCENE_H__

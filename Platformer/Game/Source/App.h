@@ -26,14 +26,10 @@ class FadeToBlack;
 class Fonts;
 class ModuleParticles;
 class ModuleEnemies;
+class SceneIntro;
+class SceneLoose;
+class SceneWin;
 
-enum game_screens {
-	game_logo = 0,
-	game_menu,
-	game_scene1,
-	game_win,
-	game_death,
-};
 class App
 {
 public:
@@ -111,10 +107,15 @@ public:
 	Fonts* fonts;
 	ModuleParticles* moduleParticles;
 	ModuleEnemies* moduleEnemies;
+	SceneIntro* sceneIntro;
+	SceneLoose* sceneLoose;
+	SceneWin* sceneWin;
 
-	int screen = game_logo;
 	const int frameRate = 60;
     const int screenTicks = 1000 / frameRate;
+
+	List<unsigned int*>	musicList;
+	int volume = 1;
 
 private:
 	int argc;

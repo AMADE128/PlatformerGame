@@ -4,6 +4,11 @@
 #include "Render.h"
 #include "Window.h"
 #include "Log.h"
+#include "Map.h"
+#include "Collisions.h"
+#include "Player.h"
+#include "Fonts.h"
+#include "ModuleParticles.h"
 
 #include "SDL/include/SDL_render.h"
 
@@ -33,8 +38,17 @@ bool FadeToBlack::Update(float dt)
 		++frameCount;
 		if (frameCount >= maxFadeFrames)
 		{
-			app->screen = screenTo;
 			currentStep = FadeStep::FROM_BLACK;
+			if (moduleToDisable->active == true)
+			{
+
+				moduleToDisable->CleanUp();
+			}
+			if (moduleToEnable->active == false)
+			{
+				moduleToEnable->Init();
+				moduleToEnable->Start();
+			}
 		}
 	}
 	else
@@ -63,9 +77,24 @@ bool FadeToBlack::PostUpdate()
 	return true;
 }
 
-bool FadeToBlack::Fade(game_screens screen, float frames)
+bool FadeToBlack::Fade(Module* toDisable, Module* toEnable, float frames)
 {
 	bool ret = false;
+
+	/*if (toDisable != (Module*)app->sceneWin && toDisable != (Module*)app->sceneLoose && toDisable != (Module*)app->sceneIntro)
+	{
+		lastLevel = toDisable;
+	}*/
+
+	/*if (lastLevel == (Module*)app->sceneLevel2 && toDisable == (Module*)app->sceneLoose)
+	{
+		toEnable = lastLevel;
+	}
+
+	if (lastLevel == (Module*)app->sceneLevel2 && toDisable == (Module*)app->sceneWin)
+	{
+		toEnable = (Module*)app->sceneMenu;
+	}*/
 
 	// If we are already in a fade process, ignore this call
 	if (currentStep == FadeStep::NONE)
@@ -73,7 +102,9 @@ bool FadeToBlack::Fade(game_screens screen, float frames)
 		currentStep = FadeStep::TO_BLACK;
 		frameCount = 0;
 		maxFadeFrames = frames;
-		screenTo = screen;
+
+		moduleToDisable = toDisable;
+		moduleToEnable = toEnable;
 
 		ret = true;
 	}

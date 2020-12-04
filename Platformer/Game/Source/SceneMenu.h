@@ -32,19 +32,10 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	List<unsigned int*>	musicList;
-	bool startScene1;
-	bool startMenu;
-
-	SDL_Texture* img;
 	SDL_Texture* menu;
-	SDL_Texture* death;
-	SDL_Texture* logo;
-	SDL_Texture* win;
 
 	unsigned int musicMenu;
-	unsigned int musicDeath;
-	int volume = 1;
+
 private:
 };
 

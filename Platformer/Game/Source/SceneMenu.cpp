@@ -37,9 +37,9 @@ bool SceneMenu::Awake()
 bool SceneMenu::Start()
 {
 	// L03: DONE: Load map
-	app->map->Load("map1.tmx");
 	menu = app->tex->Load("Assets/Textures/Screens/menu.png");
-	logo = app->tex->Load("Assets/Textures/Screens/logo_screen.png");
+	musicMenu = app->audio->LoadFx("Assets/Audio/SceneMusic/intro_music.wav");
+	app->musicList.Add(&musicMenu);
 
 	return true;
 }
@@ -53,53 +53,11 @@ bool SceneMenu::PreUpdate()
 // Called each loop iteration
 bool SceneMenu::Update(float dt)
 {
-	// Set VOLUME
-	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
+	app->render->DrawTexture(menu, 0, 0);
+	app->audio->PlayFx(musicMenu);
+	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
-		if (volume < 128)
-		{
-			volume += 128 / 32;
-		}
-	}
-	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
-	{
-		if (volume > 0)
-		{
-			volume -= 128 / 32;
-		}
-	}
-
-	if (app->screen == game_logo)
-	{
-		app->render->DrawTexture(logo, 0, 0);
-		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-		{
-			app->fadeToBlack->Fade(game_menu, 80);
-			startMenu = true;
-		}
-	}
-	else if (app->screen == game_menu)
-	{
-		if (startMenu == true)
-		{
-			musicMenu = app->audio->LoadFx("Assets/Audio/SceneMusic/intro_music.wav");
-			musicList.Add(&musicMenu);
-			startMenu = false;
-		}
-		app->player->currentAnimation = &app->player->idleAnim;
-		app->player->currentTex = app->player->idleTex;
-		app->player->flip = false;
-		app->player->deathAnim.Reset();
-		app->audio->PlayFx(musicMenu);
-		app->render->DrawTexture(menu, 0, 0);
-		app->render->camera.x = 0;
-		app->render->camera.y = 0;
-		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-		{
-			app->fadeToBlack->Fade(game_scene1, 80);
-			app->player->appear = true;
-			startScene1 = true;
-		}
+		app->fadeToBlack->Fade(this, (Module*)app->scene, 80);
 	}
 
 	return true;
@@ -110,15 +68,6 @@ bool SceneMenu::PostUpdate()
 {
 	bool ret = true;
 
-	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
-
-	ListItem<unsigned int*>* item;
-	for (item = musicList.start; item != NULL; item = item->next)
-	{
-		app->audio->SetVolume(*item->data, volume);
-	}
-
 	return ret;
 }
 
@@ -127,7 +76,9 @@ bool SceneMenu::CleanUp()
 {
 	LOG("Freeing scene");
 	app->tex->UnLoad(menu);
-	app->tex->UnLoad(logo);
+	app->audio->UnloadFX(musicMenu);
+
+	active = false;
 
 	return true;
 }

@@ -146,7 +146,7 @@ bool Player::PreUpdate()
 bool Player::Update(float dt)
 {
 	dt *= 6;
-	if (death == false && app->screen == game_scene1 && appear == false)
+	if (death == false && appear == false)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		{
@@ -433,53 +433,51 @@ bool Player::Update(float dt)
 
 bool Player::PostUpdate()
 {
-	if(app->screen == game_scene1)
+	if (position.x < 720 && position.y < 816)
 	{
-		if (position.x < 720 && position.y < 816)
-		{
-			win = true;
-			playerColl->SetPos(position.x + 25, position.y + 20);
-			cameraColl->rect.x = position.x - 100;
-			cameraColl->rect.y = position.y - 100;
-			speedX = 0;
-			speedY = 0;
-			app->fadeToBlack->Fade(game_win, 80);
-		}
-		currentAnimation->Update();
-		SDL_Rect rect = currentAnimation->GetCurrentFrame();
-		if (flip == true)
-		{
-			app->render->DrawTextureFlip(currentTex, position.x, position.y, &rect);
-		}
-		else if (flip == false)
-		{
-			app->render->DrawTexture(currentTex, position.x, position.y, &rect);
-		}
-		if (lifes >= 1)
-		{
-			app->render->DrawTexture(lifesTex, (app->render->camera.x - 20) * -1, (app->render->camera.y - 15) * -1, NULL);
-
-		}
-		if (lifes >= 2)
-		{
-			app->render->DrawTexture(lifesTex, (app->render->camera.x - 100) * -1, (app->render->camera.y - 15) * -1, NULL);
-		}
-		if (lifes >= 3)
-		{
-			app->render->DrawTexture(lifesTex, (app->render->camera.x - 180) * -1, (app->render->camera.y - 15) * -1, NULL);
-		}
-
-		app->render->DrawTexture(appleTexure, (app->render->camera.x - 1200) * -1, (app->render->camera.y - 0) * -1, NULL);
-		sprintf_s(scoreText, 10, "%d", appleCounter);
-		if(appleCounter < 10)
-		{
-			app->fonts->BlitText((app->render->camera.x - 1185) * -1, (app->render->camera.y - 17) * -1, scoreFont, scoreText);
-		}
-		else if (appleCounter > 10)
-		{
-			app->fonts->BlitText((app->render->camera.x - 1145) * -1, (app->render->camera.y - 17) * -1, scoreFont, scoreText);
-		}
+		win = true;
+		playerColl->SetPos(position.x + 25, position.y + 20);
+		cameraColl->rect.x = position.x - 100;
+		cameraColl->rect.y = position.y - 100;
+		speedX = 0;
+		speedY = 0;
+		//app->fadeToBlack->Fade(, 80);
 	}
+	currentAnimation->Update();
+	SDL_Rect rect = currentAnimation->GetCurrentFrame();
+	if (flip == true)
+	{
+		app->render->DrawTextureFlip(currentTex, position.x, position.y, &rect);
+	}
+	else if (flip == false)
+	{
+		app->render->DrawTexture(currentTex, position.x, position.y, &rect);
+	}
+	if (lifes >= 1)
+	{
+		app->render->DrawTexture(lifesTex, (app->render->camera.x - 20) * -1, (app->render->camera.y - 15) * -1, NULL);
+
+	}
+	if (lifes >= 2)
+	{
+		app->render->DrawTexture(lifesTex, (app->render->camera.x - 100) * -1, (app->render->camera.y - 15) * -1, NULL);
+	}
+	if (lifes >= 3)
+	{
+		app->render->DrawTexture(lifesTex, (app->render->camera.x - 180) * -1, (app->render->camera.y - 15) * -1, NULL);
+	}
+
+	app->render->DrawTexture(appleTexure, (app->render->camera.x - 1200) * -1, (app->render->camera.y - 0) * -1, NULL);
+	sprintf_s(scoreText, 10, "%d", appleCounter);
+	if(appleCounter < 10)
+	{
+		app->fonts->BlitText((app->render->camera.x - 1185) * -1, (app->render->camera.y - 17) * -1, scoreFont, scoreText);
+	}
+	else if (appleCounter > 10)
+	{
+		app->fonts->BlitText((app->render->camera.x - 1145) * -1, (app->render->camera.y - 17) * -1, scoreFont, scoreText);
+	}
+
 	return true;
 }
 
@@ -576,7 +574,7 @@ bool Player::Die(Collider* c1, Collider* c2)
 				cameraColl->rect.y = position.y - 100;
 				speedX = 0;
 				speedY = 0;
-				app->fadeToBlack->Fade(game_death, 80);
+				//app->fadeToBlack->Fade(game_death, 80);
 			}
 			else
 			{
@@ -629,10 +627,10 @@ bool Player::CameraScroll(Collider* c1, Collider* c2)
 
 bool Player::CollectApple(Collider* c1, Collider* c2)
 {
-	c2->isCollected = true;
-	app->collision->RemoveCollider(c2);
-	app->moduleParticles->AddParticle(app->moduleParticles->fruitGet, c2->rect.x, c2->rect.y);
 	appleCounter += 1;
+	c2->isCollected = true;
+	app->moduleParticles->AddParticle(app->moduleParticles->fruitGet, c2->rect.x, c2->rect.y);
+	app->collision->RemoveCollider(c2);
 
 	return true;
 }
@@ -640,14 +638,13 @@ bool Player::CollectApple(Collider* c1, Collider* c2)
 bool Player::CollectPineapple(Collider* c1, Collider* c2)
 {
 	c2->isCollected = true;
-	app->collision->RemoveCollider(c2);
+	appleCounter += 2;
 	app->moduleParticles->AddParticle(app->moduleParticles->fruitGet, c2->rect.x, c2->rect.y);
 	if (app->player->lifes < 3 && app->player->lifes > 0)
 	{
 		app->player->lifes++;
 	}
-
-	appleCounter += 2;
+	app->collision->RemoveCollider(c2);
 
 	return true;
 }

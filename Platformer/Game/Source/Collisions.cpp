@@ -207,13 +207,10 @@ bool Collisions::PreUpdate()
 
 bool Collisions::Update(float dt)
 {
-	if (app->screen == game_scene1)
-	{
-		if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
-			debug = !debug;
-		if (debug)
-			DebugDraw();
-	}
+	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
+		debug = !debug;
+	if (debug)
+		DebugDraw();
 	return true;
 }
 

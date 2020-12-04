@@ -11,6 +11,8 @@
 #include "SceneMenu.h"
 #include "FadeToBlack.h"
 #include "Animation.h"
+#include "Fonts.h"
+#include "ModuleParticles.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -70,8 +72,6 @@ bool Scene::Start()
 {
 	// L03: DONE: Load map
 	app->map->Load("map1.tmx");
-	death = app->tex->Load("Assets/Textures/Screens/lose.png");
-	win = app->tex->Load("Assets/Textures/Screens/win.png");
 
 	checkPointIdleTex = app->tex->Load("Assets/Textures/Items/Checkpoint/checkpoint_idle.png");
 	checkPointStartTex = app->tex->Load("Assets/Textures/Items/Checkpoint/checkpoint_start.png");
@@ -79,18 +79,29 @@ bool Scene::Start()
 	appleTex = app->tex->Load("Assets/Textures/Items/Fruits/apple.png");
 	pineappleTex = app->tex->Load("Assets/Textures/Items/Fruits/pineapple.png");
 
-	checkpointFx = app->audio->LoadFx("Assets/Audio/MyscMusic/checkpoint.wav");
+	/*checkpointFx = app->audio->LoadFx("Assets/Audio/MyscMusic/checkpoint.wav");
 	jumpFx = app->audio->LoadFx("Assets/Audio/MyscMusic/jump.wav");
 	pointFx = app->audio->LoadFx("Assets/Audio/MyscMusic/points.wav");
-	damageFx = app->audio->LoadFx("Assets/Audio/MyscMusic/damage.wav");
+	damageFx = app->audio->LoadFx("Assets/Audio/MyscMusic/damage.wav");*/
 
-	app->scene->musicList.Add(&jumpFx);
-	app->scene->musicList.Add(&pointFx);
-	app->scene->musicList.Add(&damageFx);
-	app->scene->musicList.Add(&checkpointFx);
+	/*app->musicList.Add(&jumpFx);
+	app->musicList.Add(&pointFx);
+	app->musicList.Add(&damageFx);
+	app->musicList.Add(&checkpointFx);*/
 
 	currentAnimation = &checkPointIdleAnim;
 	currentTex = checkPointStartTex;
+
+	app->player->Init();
+	app->player->Start();
+	app->collision->Init();
+	app->collision->Start();
+	app->fonts->Init();
+	app->fonts->Start();
+	app->map->Init();
+	app->map->Start();
+	app->moduleParticles->Init();
+	app->moduleParticles->Start();
 
 	return true;
 }
@@ -104,100 +115,28 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	// Set VOLUME
-	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
-	{
-		if (volume < 128)
-		{
-			volume+= 128/32;
-		}
-	}
-	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
-	{
-		if (volume > 0)
-		{
-			volume-= 128/32;
-		}
-	}
-
 	//Draw Scenes
-	if (app->screen == game_scene1)
+
+	app->map->Draw();
+	app->audio->PlayFx(musicScene1);
+	if (savePoint == true)
 	{
-		app->audio->UnloadFX(app->sceneMenu->musicMenu);
-		if (app->sceneMenu->startScene1 == true)
+		if (checkPointTouchAnim.finish == false)
 		{
-			musicScene1 = app->audio->LoadFx("Assets/Audio/SceneMusic/level_music.wav");
-			musicList.Add(&musicScene1);
-			app->player->position.x = 720;
-			app->player->position.y = 1584;
-			app->player->cameraColl->rect.x = app->player->position.x - 100;
-			app->player->cameraColl->rect.y = app->player->position.y - 100;
-			app->sceneMenu->startScene1 = false;
+			currentAnimation = &checkPointTouchAnim;
+			currentTex = checkPointTouchTex;
 		}
-		app->map->Draw();
-		app->audio->PlayFx(musicScene1);
-		if (savePoint == true)
+		else if(checkPointTouchAnim.finish == true)
 		{
-			if (checkPointTouchAnim.finish == false)
-			{
-				currentAnimation = &checkPointTouchAnim;
-				currentTex = checkPointTouchTex;
-			}
-			else if(checkPointTouchAnim.finish == true)
-			{
-				currentAnimation = &checkPointIdleAnim;
-				currentTex = checkPointIdleTex;
-			}
-		}
-		else
-		{
-			currentAnimation = &checkPointStartAnim;
-			currentTex = checkPointStartTex;
+			currentAnimation = &checkPointIdleAnim;
+			currentTex = checkPointIdleTex;
 		}
 	}
-	else if (app->screen == game_death)
+	else
 	{
-		app->audio->UnloadFX(musicScene1);
-		savePoint = false;
-		checkPointTouchAnim.Reset();
-		app->player->death = false;
-		app->player->position.x = 720;
-		app->player->position.y = 1584;
-		app->player->currentAnimation = &app->player->idleAnim;
-		app->player->currentTex = app->player->idleTex;
-		app->player->flip = false;
-		app->player->cameraColl->rect.x = app->player->position.x - 100;
-		app->player->cameraColl->rect.y = app->player->position.y - 100;
-		app->render->camera.x = 0;
-		app->render->camera.y = 0;
-		app->render->DrawTexture(death, 0, 0);
-		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-		{
-			app->player->appear = true;
-			app->fadeToBlack->Fade(game_scene1, 80);
-			app->sceneMenu->startScene1 = true;
-			app->player->lifes = 4;
-			
-		}
+		currentAnimation = &checkPointStartAnim;
+		currentTex = checkPointStartTex;
 	}
-	else if (app->screen == game_win)
-	{
-		app->player->position.x = 720;
-		app->player->position.y = 1584;
-		app->render->camera.x = 0;
-		app->render->camera.y = 0;
-		app->render->DrawTexture(win, 0, 0);
-		app->audio->UnloadFX(musicScene1);
-		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-		{
-			app->player->appear = true;
-			app->fadeToBlack->Fade(game_menu, 80);
-			app->sceneMenu->startMenu = true;
-			app->player->lifes = 4;
-		}
-	}
-	
-	// L03: DONE 7: Set the window title with map/tileset info
 
 	return true;
 }
@@ -207,68 +146,49 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
-	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
-
-	ListItem<unsigned int*>* item;
-	for (item = musicList.start; item != NULL; item = item->next)
-	{
-		app->audio->SetVolume(*item->data, volume);
-	}
-
 	currentAnimation->Update();
 	SDL_Rect checkPointRect = currentAnimation->GetCurrentFrame();
 	app->render->DrawTexture(currentTex, 3800, 1296, &checkPointRect);
 	
-	if (appleColl1->isCollected == false)
+	Animation* apple = &appleAnim;
+	apple->Update();
+	if (appleColl1->isCollected != true)
 	{
-		currentAnimation = &appleAnim;
-		currentTex = appleTex;
-		SDL_Rect appleRect1 = currentAnimation->GetCurrentFrame();
-		app->render->DrawTexture(currentTex, 2544, 1344, &appleRect1);
+		SDL_Rect appleRect = apple->GetCurrentFrame();
+		app->render->DrawTexture(appleTex, 2544, 1344, &appleRect);
 	}
 
-	if (appleColl2->isCollected == false)
+	if (appleColl2->isCollected != true)
 	{
-		currentAnimation = &appleAnim;
-		currentTex = appleTex;
-		SDL_Rect appleRect2 = currentAnimation->GetCurrentFrame();
-		app->render->DrawTexture(currentTex, 3776, 900, &appleRect2);
+		SDL_Rect appleRect = apple->GetCurrentFrame();
+		app->render->DrawTexture(appleTex, 3776, 900, &appleRect);
 	}
 
 	if (appleColl3->isCollected == false)
 	{
-		currentAnimation = &appleAnim;
-		currentTex = appleTex;
-		SDL_Rect appleRect3 = currentAnimation->GetCurrentFrame();
-		app->render->DrawTexture(currentTex, 3976, 836, &appleRect3);
+		SDL_Rect appleRect = apple->GetCurrentFrame();
+		app->render->DrawTexture(appleTex, 3976, 836, &appleRect);
 	}
 
 	if (appleColl4->isCollected == false)
 	{
-		currentAnimation = &appleAnim;
-		currentTex = appleTex;
-		SDL_Rect appleRect4 = currentAnimation->GetCurrentFrame();
-		app->render->DrawTexture(currentTex, 4176, 776, &appleRect4);
+		SDL_Rect appleRect = apple->GetCurrentFrame();
+		app->render->DrawTexture(appleTex, 4176, 776, &appleRect);
 	}
 
 	if (appleColl5->isCollected == false)
 	{
-		currentAnimation = &appleAnim;
-		currentTex = appleTex;
-		SDL_Rect appleRect5 = currentAnimation->GetCurrentFrame();
-		app->render->DrawTexture(currentTex, 1368, 528, &appleRect5);
+		SDL_Rect appleRect = apple->GetCurrentFrame();
+		app->render->DrawTexture(appleTex, 1368, 528, &appleRect);
 	}
-	currentAnimation->Update();
 
+	Animation* pineapple = &pineappleAnim;
+	pineapple->Update();
 	if (pineappleColl1->isCollected == false)
 	{
-		currentAnimation = &pineappleAnim;
-		currentTex = pineappleTex;
-		SDL_Rect pineappleRect1 = currentAnimation->GetCurrentFrame();
-		app->render->DrawTexture(currentTex, 4300, 500, &pineappleRect1);
+		SDL_Rect pineappleRect1 = pineapple->GetCurrentFrame();
+		app->render->DrawTexture(pineappleTex, 4300, 500, &pineappleRect1);
 	}
-	currentAnimation->Update();
 
 	return ret;
 }
@@ -277,8 +197,6 @@ bool Scene::PostUpdate()
 bool Scene::CleanUp()
 {
 	LOG("Freeing scene");
-	app->tex->UnLoad(death);
-	app->tex->UnLoad(win);
 
 	return true;
 }

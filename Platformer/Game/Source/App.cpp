@@ -14,6 +14,9 @@
 #include "Fonts.h"
 #include "ModuleParticles.h"
 #include "ModuleEnemies.h"
+#include "SceneIntro.h"
+#include "SceneLoose.h"
+#include "SceneWin.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -40,6 +43,9 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	fonts = new Fonts();
 	moduleParticles = new ModuleParticles();
 	moduleEnemies = new ModuleEnemies();
+	sceneIntro = new SceneIntro();
+	sceneLoose = new SceneLoose();
+	sceneWin = new SceneWin();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -48,14 +54,28 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(tex);
 	AddModule(audio);
 	AddModule(map);
+	AddModule(sceneIntro);
 	AddModule(sceneMenu);
 	AddModule(scene);
 	AddModule(player);
+	AddModule(sceneLoose);
+	AddModule(sceneWin);
 	AddModule(moduleParticles);
 	AddModule(moduleEnemies);
 	AddModule(collision);
 	AddModule(fadeToBlack);
 	AddModule(fonts);
+
+	sceneMenu->active = false;
+	scene->active = false;
+	sceneLoose->active = false;
+	sceneWin->active = false;
+	player->active = false;
+	map->active = false;
+	moduleParticles->active = false;
+	moduleEnemies->active = false;
+	collision->active = false;
+	fonts->active = false;
 
 	// Render last to swap buffer
 	AddModule(render);
@@ -139,7 +159,10 @@ bool App::Start()
 
 	while(item != NULL && ret == true)
 	{
-		ret = item->data->Start();
+		if (item->data->active == true)
+		{
+			ret = item->data->Start();
+		}
 		item = item->next;
 	}
 
@@ -275,6 +298,22 @@ bool App::PostUpdate()
 	ListItem<Module*>* item;
 	Module* pModule = NULL;
 
+	// Set VOLUME
+	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
+	{
+		if (volume < 128)
+		{
+			volume += 128 / 32;
+		}
+	}
+	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
+	{
+		if (volume > 0)
+		{
+			volume -= 128 / 32;
+		}
+	}
+
 	for(item = modules.start; item != NULL && ret == true; item = item->next)
 	{
 		pModule = item->data;
@@ -284,6 +323,15 @@ bool App::PostUpdate()
 		}
 
 		ret = item->data->PostUpdate();
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		ret = false;
+
+	ListItem<unsigned int*>* itemMusic;
+	for (itemMusic = musicList.start; itemMusic != NULL; itemMusic = itemMusic->next)
+	{
+		app->audio->SetVolume(*itemMusic->data, volume);
 	}
 
 	return ret;

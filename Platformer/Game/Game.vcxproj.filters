@@ -37,6 +37,9 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="Source\ModuleEnemies.cpp" />
+    <ClCompile Include="Source\SceneIntro.cpp" />
+    <ClCompile Include="Source\SceneWin.cpp" />
+    <ClCompile Include="Source\SceneLoose.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -97,6 +100,9 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\ModuleEnemies.h" />
+    <ClInclude Include="Source\SceneIntro.h" />
+    <ClInclude Include="Source\SceneWin.h" />
+    <ClInclude Include="Source\SceneLoose.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
