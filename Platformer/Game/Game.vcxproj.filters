@@ -37,6 +37,8 @@
       <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="Source\ModuleEnemies.cpp" />
+    <ClCompile Include="Source\EnemyBird.cpp" />
+    <ClCompile Include="Source\EnemyBunny.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -97,6 +99,8 @@
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Source\ModuleEnemies.h" />
+    <ClInclude Include="Source\EnemyBird.h" />
+    <ClInclude Include="Source\EnemyBunny.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
