@@ -105,8 +105,11 @@ bool Player::Start()
 
 	playerColl = app->collision->AddCollider({ (int)position.x, (int)position.y, TILESIZE - 50, TILESIZE - 20}, Collider::Type::PLAYER, this);
 	cameraColl = app->collision->AddCollider({ (int)position.x - 100, (int)position.y - 100, app->render->camera.w/4, app->render->camera.h / 3 + 20}, Collider::Type::CAMERA, this);
+	app->render->camera.x = ((cameraColl->rect.x + cameraColl->rect.w / 3) - (app->render->camera.w / 2)) * -1;
+	app->render->camera.y = ((cameraColl->rect.y + cameraColl->rect.h / 3) - (app->render->camera.h / 2.5)) * -1;
 
 	currentAnimation = &idleAnim;
+	death = false;
 	currentTex = idleTex;
 	flip = false;
 	speedY = 0.3f;
@@ -556,7 +559,7 @@ bool Player::Die(Collider* c1, Collider* c2)
 				cameraColl->rect.y = position.y - 100;
 				speedX = 0;
 				speedY = 0;
-				//app->fadeToBlack->Fade(game_death, 80);
+				app->fadeToBlack->Fade(app->scene, (Module*)app->sceneLoose, 80);
 			}
 			else
 			{

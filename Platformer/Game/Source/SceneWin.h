@@ -35,6 +35,8 @@ public:
 	SDL_Texture* win;
 
 private:
+
+	unsigned int winMusic;
 };
 
 #endif // __SCENE_H__

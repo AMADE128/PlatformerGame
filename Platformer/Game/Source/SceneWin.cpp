@@ -46,6 +46,9 @@ bool SceneWin::Start()
 	app->moduleParticles->active = false;
 	app->fonts->active = false;
 	app->map->active = false;
+	winMusic = app->audio->LoadFx("Assets/Audio/SceneMusic/win_music.wav");
+	app->musicList.Add(&winMusic);
+	app->audio->PlayFx(winMusic);
 
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
@@ -86,6 +89,7 @@ bool SceneWin::CleanUp()
 
 	LOG("Freeing scene");
 	app->tex->UnLoad(win);
+	app->audio->UnloadFX(winMusic);
 
 	active = false;
 

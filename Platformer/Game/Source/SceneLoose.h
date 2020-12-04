@@ -35,6 +35,8 @@ public:
 	SDL_Texture* loose;
 
 private:
+
+	unsigned int loseMusic;
 };
 
 #endif // __SCENE_H__
