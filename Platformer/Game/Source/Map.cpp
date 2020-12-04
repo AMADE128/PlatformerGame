@@ -50,7 +50,6 @@ bool Map::Awake(pugi::xml_node& config)
 
 bool Map::Start()
 {
-	tileX = app->tex->Load("Assets/Maps/x.png");
 
 	return true;
 }
@@ -104,7 +103,6 @@ void Map::DrawPath()
 	for (uint i = 0; i < path.Count(); ++i)
 	{
 		iPoint pos = MapToWorld(path[i].x, path[i].y);
-		app->render->DrawTexture(tileX, pos.x, pos.y);
 	}
 }
 

@@ -183,8 +183,6 @@ private:
 	uint costSoFar[COST_MAP_SIZE][COST_MAP_SIZE];
 	DynArray<iPoint> path;
 	iPoint TileDestiny;
-
-	SDL_Texture* tileX = nullptr;
 };
 
 

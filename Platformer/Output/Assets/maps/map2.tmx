@@ -21,7 +21,6 @@
  <tileset firstgid="287" name="death" tilewidth="48" tileheight="48" tilecount="9" columns="3">
   <image source="death.png" width="144" height="144"/>
  </tileset>
- <tileset firstgid="296" source="traps.tsx"/>
  <layer id="7" name="background" width="117" height="62">
   <data>
    <tile gid="12"/>

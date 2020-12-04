@@ -112,8 +112,6 @@ bool SceneLvl2::Start()
 	app->player->Start();
 	app->collision->Init();
 	app->collision->Start();
-	app->fonts->Init();
-	app->fonts->Start();
 	app->map->Init();
 	app->map->Start();
 	app->moduleParticles->Init();
@@ -161,7 +159,7 @@ bool SceneLvl2::PostUpdate()
 {
 	bool ret = true;
 
-	if (app->player->position.x < 99999 && app->player->position.y < 99999)                      // Poner las coords bien cuando vaya
+	if (app->player->position.x < 0 && app->player->position.y < 0)                      // Poner las coords bien cuando vaya
 	{
 		app->fadeToBlack->Fade(app->sceneLvl2, (Module*)app->sceneWin, 80);
 	}
