@@ -82,6 +82,11 @@ bool Scene::Start()
 	musicScene1 = app->audio->LoadFx("Assets/Audio/SceneMusic/level_music.wav");
 	app->musicList.Add(&musicScene1);
 	app->audio->PlayFx(musicScene1);
+
+	checkpointMusic = app->audio->LoadFx("Assets/Audio/MyscMusic/checkpoint.wav");
+	app->musicList.Add(&checkpointMusic);
+
+
 	/*checkpointFx = app->audio->LoadFx("Assets/Audio/MyscMusic/checkpoint.wav");
 	jumpFx = app->audio->LoadFx("Assets/Audio/MyscMusic/jump.wav");
 	pointFx = app->audio->LoadFx("Assets/Audio/MyscMusic/points.wav");
@@ -156,6 +161,11 @@ bool Scene::Update(float dt)
 		currentAnimation = &checkPointStartAnim;
 		currentTex = checkPointStartTex;
 	}
+	if (savePoint == true && checkpointFX == false)
+	{
+		checkpointFX = true;
+		app->audio->PlayFx(checkpointMusic);
+	}
 
 	return true;
 }
@@ -225,6 +235,7 @@ bool Scene::CleanUp()
 	app->tex->UnLoad(pineappleTex);
 
 	app->audio->UnloadFX(musicScene1);
+	app->audio->UnloadFX(checkpointMusic);
 
 	app->player->CleanUp();
 	app->collision->CleanUp();

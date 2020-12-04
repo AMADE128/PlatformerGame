@@ -60,6 +60,10 @@ public:
 
 	int lifes = 3;
 
+	unsigned int damageMusic;
+	unsigned int jumpsMusic;
+	unsigned int pointsMusic;
+
 	Animation* currentAnimation = nullptr;
 
 	Animation idleAnim;

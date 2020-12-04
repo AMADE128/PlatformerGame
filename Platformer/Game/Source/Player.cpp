@@ -103,6 +103,15 @@ bool Player::Start()
 	appeTex = app->tex->Load("Assets/Textures/Character/appearing.png");
 	desAppeTex = app->tex->Load("Assets/Textures/Character/desappearing.png");
 
+	damageMusic = app->audio->LoadFx("Assets/Audio/MyscMusic/damage.wav");
+	app->musicList.Add(&damageMusic);
+
+	jumpsMusic = app->audio->LoadFx("Assets/Audio/MyscMusic/jumps.wav");
+	app->musicList.Add(&jumpsMusic);
+
+	pointsMusic = app->audio->LoadFx("Assets/Audio/MyscMusic/points.wav");
+	app->musicList.Add(&pointsMusic);
+
 	playerColl = app->collision->AddCollider({ (int)position.x, (int)position.y, TILESIZE - 50, TILESIZE - 20}, Collider::Type::PLAYER, this);
 	cameraColl = app->collision->AddCollider({ (int)position.x - 100, (int)position.y - 100, app->render->camera.w/4, app->render->camera.h / 3 + 20}, Collider::Type::CAMERA, this);
 	app->render->camera.x = ((cameraColl->rect.x + cameraColl->rect.w / 3) - (app->render->camera.w / 2)) * -1;
@@ -181,6 +190,7 @@ bool Player::Update(float dt)
 		{
 			if (!secondJump)
 			{
+				app->audio->PlayFx(jumpsMusic);
 				speedY = 20*dt;
 				secondJump = true;
 			}
@@ -189,6 +199,7 @@ bool Player::Update(float dt)
 		{
 			if (!isJumping) // Solo salta cuando no esté en el aire
 			{
+				app->audio->PlayFx(jumpsMusic);
 				isJumping = true;
 			}
 		}
@@ -479,6 +490,10 @@ bool Player::CleanUp()
 	app->collision->RemoveCollider(playerColl);
 	app->collision->RemoveCollider(cameraColl);
 
+	app->audio->UnloadFX(jumpsMusic);
+	app->audio->UnloadFX(damageMusic);
+	app->audio->UnloadFX(pointsMusic);
+
 	return true;
 }
 
@@ -538,6 +553,7 @@ bool Player::Die(Collider* c1, Collider* c2)
 {
 	if (c1->rect.y + TILESIZE > c2->rect.y + c2->rect.w/2)
 	{
+		app->audio->PlayFx(damageMusic);
 		death = true;
 		currentAnimation = &deathAnim;
 		currentTex = deathTex;
@@ -612,6 +628,7 @@ bool Player::CameraScroll(Collider* c1, Collider* c2)
 
 bool Player::CollectApple(Collider* c1, Collider* c2)
 {
+	app->audio->PlayFx(pointsMusic);
 	appleCounter += 1;
 	c1->isCollected = true;
 	app->moduleParticles->AddParticle(app->moduleParticles->fruitGet, c1->rect.x, c1->rect.y);
@@ -622,6 +639,7 @@ bool Player::CollectApple(Collider* c1, Collider* c2)
 
 bool Player::CollectPineapple(Collider* c1, Collider* c2)
 {
+	app->audio->PlayFx(pointsMusic);
 	c1->isCollected = true;
 	appleCounter += 2;
 	app->moduleParticles->AddParticle(app->moduleParticles->fruitGet, c1->rect.x, c1->rect.y);

@@ -87,7 +87,7 @@ bool SceneLoose::PostUpdate()
 bool SceneLoose::CleanUp()
 {
 	LOG("Freeing scene");
-	app->audio->UnloadFX(loseMusic);
+	//app->audio->UnloadFX(loseMusic);
 	app->tex->UnLoad(loose);
 
 	active = false; 

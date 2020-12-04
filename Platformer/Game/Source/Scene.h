@@ -35,6 +35,7 @@ public:
 	bool CleanUp();
 
 	bool savePoint = false;
+	bool checkpointFX = false;
 	Collider* checkPointColl = nullptr;
 	Collider* appleColl1 = nullptr;
 	Collider* appleColl2 = nullptr;
@@ -67,6 +68,8 @@ private:
 	Animation pineappleAnim;
 
 	unsigned int musicScene1;
+	unsigned int checkpointMusic;
+
 };
 
 #endif // __SCENE_H__
