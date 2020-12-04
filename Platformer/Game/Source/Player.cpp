@@ -420,10 +420,6 @@ bool Player::Update(float dt)
 
 bool Player::PostUpdate()
 {
-	if (position.x < 720 && position.y < 816)
-	{
-		app->fadeToBlack->Fade(app->scene, (Module*)app->sceneWin, 80);
-	}
 	currentAnimation->Update();
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
 	if (flip == true)

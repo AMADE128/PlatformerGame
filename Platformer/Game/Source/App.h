@@ -24,6 +24,7 @@ class Collisions;
 class SceneMenu;
 class FadeToBlack;
 class Fonts;
+class SceneLvl2;
 class ModuleParticles;
 class ModuleEnemies;
 class SceneIntro;
@@ -99,6 +100,7 @@ public:
 	Textures* tex;
 	Audio* audio;
 	Scene* scene;
+	SceneLvl2* sceneLvl2;
 	SceneMenu* sceneMenu;
 	Map* map;
 	Player* player;

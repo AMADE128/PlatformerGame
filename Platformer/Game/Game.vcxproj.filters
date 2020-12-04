@@ -40,6 +40,9 @@
     <ClCompile Include="Source\SceneIntro.cpp" />
     <ClCompile Include="Source\SceneWin.cpp" />
     <ClCompile Include="Source\SceneLoose.cpp" />
+    <ClCompile Include="Source\EnemyBird.cpp" />
+    <ClCompile Include="Source\EnemyBunny.cpp" />
+    <ClCompile Include="Source\SceneLvl2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -103,6 +106,9 @@
     <ClInclude Include="Source\SceneIntro.h" />
     <ClInclude Include="Source\SceneWin.h" />
     <ClInclude Include="Source\SceneLoose.h" />
+    <ClInclude Include="Source\EnemyBird.h" />
+    <ClInclude Include="Source\EnemyBunny.h" />
+    <ClInclude Include="Source\SceneLvl2.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

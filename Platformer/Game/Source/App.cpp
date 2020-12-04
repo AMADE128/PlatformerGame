@@ -5,6 +5,7 @@
 #include "Textures.h"
 #include "Audio.h"
 #include "Scene.h"
+#include "SceneLvl2.h"
 #include "Map.h"
 #include "Player.h"
 #include "Collisions.h"
@@ -46,6 +47,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	sceneIntro = new SceneIntro();
 	sceneLoose = new SceneLoose();
 	sceneWin = new SceneWin();
+	sceneLvl2 = new SceneLvl2();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -57,6 +59,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(sceneIntro);
 	AddModule(sceneMenu);
 	AddModule(scene);
+	AddModule(sceneLvl2);
 	AddModule(player);
 	AddModule(sceneLoose);
 	AddModule(sceneWin);
@@ -66,6 +69,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(fadeToBlack);
 	AddModule(fonts);
 
+	sceneLvl2->active = false;
 	sceneMenu->active = false;
 	scene->active = false;
 	sceneLoose->active = false;

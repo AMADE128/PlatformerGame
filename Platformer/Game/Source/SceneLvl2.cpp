@@ -4,7 +4,7 @@
 #include "Audio.h"
 #include "Render.h"
 #include "Window.h"
-#include "Scene.h"
+#include "SceneLvl2.h"
 #include "Map.h"
 #include "Collisions.h"
 #include "Player.h"
@@ -17,7 +17,7 @@
 #include "Defs.h"
 #include "Log.h"
 
-Scene::Scene() : Module()
+SceneLvl2::SceneLvl2() : Module()
 {
 	name.Create("scene");
 
@@ -55,11 +55,11 @@ Scene::Scene() : Module()
 }
 
 // Destructor
-Scene::~Scene()
+SceneLvl2::~SceneLvl2()
 {}
 
 // Called before render is available
-bool Scene::Awake()
+bool SceneLvl2::Awake()
 {
 	LOG("Loading Scene");
 	bool ret = true;
@@ -68,16 +68,17 @@ bool Scene::Awake()
 }
 
 // Called before the first frame
-bool Scene::Start()
+bool SceneLvl2::Start()
 {
 	// L03: DONE: Load map
-	app->map->Load("map1.tmx");
+	app->map->Load("map2.tmx");
 
 	checkPointIdleTex = app->tex->Load("Assets/Textures/Items/Checkpoint/checkpoint_idle.png");
 	checkPointStartTex = app->tex->Load("Assets/Textures/Items/Checkpoint/checkpoint_start.png");
 	checkPointTouchTex = app->tex->Load("Assets/Textures/Items/Checkpoint/checkpoint_touch.png");
 	appleTex = app->tex->Load("Assets/Textures/Items/Fruits/apple.png");
 	pineappleTex = app->tex->Load("Assets/Textures/Items/Fruits/pineapple.png");
+
 
 	musicScene1 = app->audio->LoadFx("Assets/Audio/SceneMusic/level_music.wav");
 	app->musicList.Add(&musicScene1);
@@ -97,14 +98,13 @@ bool Scene::Start()
 
 	checkPointColl = app->collision->AddCollider({ 3860, 1360, 20, 128 }, Collider::Type::CHECKPOINT, app->player);
 	appleColl2 = app->collision->AddCollider({ 3800, 924, 48, 48 }, Collider::Type::APPLE, app->player);
-	appleColl3 = app->collision->AddCollider({ 4000, 850, 48, 48 }, Collider::Type::APPLE, app->player);
+	appleColl3 = app->collision->AddCollider({ 4000, 850, 48, 48 }, Collider::Type::APPLE, app->player);           //      TODOOOOOO
 	appleColl4 = app->collision->AddCollider({ 4200, 800, 48, 48 }, Collider::Type::APPLE, app->player);
 	appleColl5 = app->collision->AddCollider({ 1392, 552, 48, 48 }, Collider::Type::APPLE, app->player);
-	pineappleColl1 = app->collision->AddCollider({ 4324, 524, 48, 48 }, Collider::Type::PINEAPPLE, app->player);
+    pineappleColl1 = app->collision->AddCollider({ 4324, 524, 48, 48 }, Collider::Type::PINEAPPLE, app->player);
 	appleColl1 = app->collision->AddCollider({ 2568, 1368, 48, 48 }, Collider::Type::APPLE, app->player);
 
 	savePoint = false;
-	app->player->appleCounter = 0;
 	app->player->lifes = 3;
 	checkPointTouchAnim.Reset();
 
@@ -123,19 +123,15 @@ bool Scene::Start()
 }
 
 // Called each loop iteration
-bool Scene::PreUpdate()
+bool SceneLvl2::PreUpdate()
 {
 	return true;
 }
 
 // Called each loop iteration
-bool Scene::Update(float dt)
+bool SceneLvl2::Update(float dt)
 {
 	//Draw Scenes
-	if (app->player->position.x < 720 && app->player->position.y < 816)
-	{
-		app->fadeToBlack->Fade(app->scene, (Module*)app->sceneLvl2, 80);
-	}
 
 	app->map->Draw();
 	if (savePoint == true)
@@ -145,7 +141,7 @@ bool Scene::Update(float dt)
 			currentAnimation = &checkPointTouchAnim;
 			currentTex = checkPointTouchTex;
 		}
-		else if(checkPointTouchAnim.finish == true)
+		else if (checkPointTouchAnim.finish == true)
 		{
 			currentAnimation = &checkPointIdleAnim;
 			currentTex = checkPointIdleTex;
@@ -161,44 +157,49 @@ bool Scene::Update(float dt)
 }
 
 // Called each loop iteration
-bool Scene::PostUpdate()
+bool SceneLvl2::PostUpdate()
 {
 	bool ret = true;
 
+	if (app->player->position.x < 99999 && app->player->position.y < 99999)                      // Poner las coords bien cuando vaya
+	{
+		app->fadeToBlack->Fade(app->sceneLvl2, (Module*)app->sceneWin, 80);
+	}
+
 	currentAnimation->Update();
 	SDL_Rect checkPointRect = currentAnimation->GetCurrentFrame();
-	app->render->DrawTexture(currentTex, 3800, 1296, &checkPointRect);
-	
+	app->render->DrawTexture(currentTex, 3800, 1296, &checkPointRect);                         // Poner las coords bien cuando vaya
+
 	Animation* apple = &appleAnim;
 	apple->Update();
 	if (appleColl1->isCollected != true)
 	{
 		SDL_Rect appleRect = apple->GetCurrentFrame();
-		app->render->DrawTexture(appleTex, 2544, 1344, &appleRect);
+		app->render->DrawTexture(appleTex, 2544, 1344, &appleRect);                             // Poner las coords bien cuando vaya
 	}
 
 	if (appleColl2->isCollected != true)
 	{
 		SDL_Rect appleRect = apple->GetCurrentFrame();
-		app->render->DrawTexture(appleTex, 3776, 900, &appleRect);
+		app->render->DrawTexture(appleTex, 3776, 900, &appleRect);                             // Poner las coords bien cuando vaya
 	}
 
 	if (appleColl3->isCollected == false)
 	{
-		SDL_Rect appleRect = apple->GetCurrentFrame();
+		SDL_Rect appleRect = apple->GetCurrentFrame();                                    // Poner las coords bien cuando vaya
 		app->render->DrawTexture(appleTex, 3976, 836, &appleRect);
 	}
 
 	if (appleColl4->isCollected == false)
 	{
 		SDL_Rect appleRect = apple->GetCurrentFrame();
-		app->render->DrawTexture(appleTex, 4176, 776, &appleRect);
+		app->render->DrawTexture(appleTex, 4176, 776, &appleRect);                               // Poner las coords bien cuando vaya
 	}
 
 	if (appleColl5->isCollected == false)
 	{
 		SDL_Rect appleRect = apple->GetCurrentFrame();
-		app->render->DrawTexture(appleTex, 1368, 528, &appleRect);
+		app->render->DrawTexture(appleTex, 1368, 528, &appleRect);                     // Poner las coords bien cuando vaya
 	}
 
 	Animation* pineapple = &pineappleAnim;
@@ -206,14 +207,14 @@ bool Scene::PostUpdate()
 	if (pineappleColl1->isCollected == false)
 	{
 		SDL_Rect pineappleRect1 = pineapple->GetCurrentFrame();
-		app->render->DrawTexture(pineappleTex, 4300, 500, &pineappleRect1);
+		app->render->DrawTexture(pineappleTex, 4300, 500, &pineappleRect1);              // Poner las coords bien cuando vaya
 	}
 
 	return ret;
 }
 
 // Called before quitting
-bool Scene::CleanUp()
+bool SceneLvl2::CleanUp()
 {
 	if (!active) return true;
 
