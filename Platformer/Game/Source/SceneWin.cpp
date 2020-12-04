@@ -9,6 +9,8 @@
 #include "Collisions.h"
 #include "Player.h"
 #include "FadeToBlack.h"
+#include "ModuleParticles.h"
+#include "Fonts.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -39,6 +41,15 @@ bool SceneWin::Start()
 	// L03: DONE: Load map
 	win = app->tex->Load("Assets/Textures/Screens/win.png");
 
+	app->player->active = false;
+	app->collision->active = false;
+	app->moduleParticles->active = false;
+	app->fonts->active = false;
+	app->map->active = false;
+
+	app->render->camera.x = 0;
+	app->render->camera.y = 0;
+
 	return true;
 }
 
@@ -54,7 +65,7 @@ bool SceneWin::Update(float dt)
 	app->render->DrawTexture(win, 0, 0);
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
-		//app->fadeToBlack->Fade(game_menu, 80);
+		app->fadeToBlack->Fade(this, (Module*)app->sceneMenu, 80);
 	}
 
 	return true;
@@ -71,8 +82,12 @@ bool SceneWin::PostUpdate()
 // Called before quitting
 bool SceneWin::CleanUp()
 {
+	if (!active) return true;
+
 	LOG("Freeing scene");
 	app->tex->UnLoad(win);
+
+	active = false;
 
 	return true;
 }

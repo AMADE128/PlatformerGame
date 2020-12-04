@@ -20,7 +20,7 @@ void EnemyBird::Update()
 
 bool EnemyBird::Cleanup()
 {
-
+	return true;
 }
 
 bool EnemyBird::Fall(Collider* c1, Collider* c2)

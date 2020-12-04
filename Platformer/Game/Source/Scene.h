@@ -43,6 +43,8 @@ public:
 	Collider* appleColl5 = nullptr;
 	Collider* pineappleColl1 = nullptr;
 
+	SDL_Texture* appleTex = nullptr;
+
 	unsigned int jumpFx;
 	unsigned int pointFx;
 	unsigned int damageFx;
@@ -53,7 +55,6 @@ private:
 	SDL_Texture* checkPointIdleTex = nullptr;
 	SDL_Texture* checkPointStartTex = nullptr;
 	SDL_Texture* checkPointTouchTex = nullptr;
-	SDL_Texture* appleTex = nullptr;
 	SDL_Texture* pineappleTex = nullptr;
 
 	SDL_Texture* currentTex = nullptr;

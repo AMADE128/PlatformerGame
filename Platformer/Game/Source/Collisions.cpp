@@ -24,9 +24,9 @@ Collisions::Collisions() : Module()
 	matrix[Collider::Type::PLAYER][Collider::Type::AIR] = FALL;
 	matrix[Collider::Type::PLAYER][Collider::Type::SPIKE] = DIE;
 	matrix[Collider::Type::PLAYER][Collider::Type::CAMERA] = CAMERA_SCROLL;
-	matrix[Collider::Type::PLAYER][Collider::Type::CHECKPOINT] = CHECK;
-	matrix[Collider::Type::PLAYER][Collider::Type::APPLE] = COLLECT;
-	matrix[Collider::Type::PLAYER][Collider::Type::PINEAPPLE] = EXTRALIFE;
+	matrix[Collider::Type::PLAYER][Collider::Type::CHECKPOINT] = NOTHING;
+	matrix[Collider::Type::PLAYER][Collider::Type::APPLE] = NOTHING;
+	matrix[Collider::Type::PLAYER][Collider::Type::PINEAPPLE] = NOTHING;
 
 	matrix[Collider::Type::CAMERA][Collider::Type::WALL] = NOTHING;
 	matrix[Collider::Type::CAMERA][Collider::Type::GROUND] = NOTHING;
@@ -63,7 +63,7 @@ Collisions::Collisions() : Module()
 
 	matrix[Collider::Type::CHECKPOINT][Collider::Type::WALL] = NOTHING;
 	matrix[Collider::Type::CHECKPOINT][Collider::Type::GROUND] = NOTHING;
-	matrix[Collider::Type::CHECKPOINT][Collider::Type::PLAYER] = NOTHING;
+	matrix[Collider::Type::CHECKPOINT][Collider::Type::PLAYER] = CHECK;
 	matrix[Collider::Type::CHECKPOINT][Collider::Type::NONE] = NOTHING;
 	matrix[Collider::Type::CHECKPOINT][Collider::Type::AIR] = NOTHING;
 	matrix[Collider::Type::CHECKPOINT][Collider::Type::SPIKE] = NOTHING;
@@ -74,7 +74,7 @@ Collisions::Collisions() : Module()
 
 	matrix[Collider::Type::APPLE][Collider::Type::WALL] = NOTHING;
 	matrix[Collider::Type::APPLE][Collider::Type::GROUND] = NOTHING;
-	matrix[Collider::Type::APPLE][Collider::Type::PLAYER] = NOTHING;
+	matrix[Collider::Type::APPLE][Collider::Type::PLAYER] = COLLECT;
 	matrix[Collider::Type::APPLE][Collider::Type::NONE] = NOTHING;
 	matrix[Collider::Type::APPLE][Collider::Type::AIR] = NOTHING;
 	matrix[Collider::Type::APPLE][Collider::Type::SPIKE] = NOTHING;
@@ -85,7 +85,7 @@ Collisions::Collisions() : Module()
 
 	matrix[Collider::Type::PINEAPPLE][Collider::Type::WALL] = NOTHING;
 	matrix[Collider::Type::PINEAPPLE][Collider::Type::GROUND] = NOTHING;
-	matrix[Collider::Type::PINEAPPLE][Collider::Type::PLAYER] = NOTHING;
+	matrix[Collider::Type::PINEAPPLE][Collider::Type::PLAYER] = EXTRALIFE;
 	matrix[Collider::Type::PINEAPPLE][Collider::Type::NONE] = NOTHING;
 	matrix[Collider::Type::PINEAPPLE][Collider::Type::AIR] = NOTHING;
 	matrix[Collider::Type::PINEAPPLE][Collider::Type::SPIKE] = NOTHING;

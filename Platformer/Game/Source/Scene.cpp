@@ -79,6 +79,9 @@ bool Scene::Start()
 	appleTex = app->tex->Load("Assets/Textures/Items/Fruits/apple.png");
 	pineappleTex = app->tex->Load("Assets/Textures/Items/Fruits/pineapple.png");
 
+	musicScene1 = app->audio->LoadFx("Assets/Audio/SceneMusic/level_music.wav");
+	app->musicList.Add(&musicScene1);
+	app->audio->PlayFx(musicScene1);
 	/*checkpointFx = app->audio->LoadFx("Assets/Audio/MyscMusic/checkpoint.wav");
 	jumpFx = app->audio->LoadFx("Assets/Audio/MyscMusic/jump.wav");
 	pointFx = app->audio->LoadFx("Assets/Audio/MyscMusic/points.wav");
@@ -91,6 +94,19 @@ bool Scene::Start()
 
 	currentAnimation = &checkPointIdleAnim;
 	currentTex = checkPointStartTex;
+
+	app->scene->checkPointColl = app->collision->AddCollider({ 3860, 1360, 20, 128 }, Collider::Type::CHECKPOINT, app->player);
+	app->scene->appleColl2 = app->collision->AddCollider({ 3800, 924, 48, 48 }, Collider::Type::APPLE, app->player);
+	app->scene->appleColl3 = app->collision->AddCollider({ 4000, 850, 48, 48 }, Collider::Type::APPLE, app->player);
+	app->scene->appleColl4 = app->collision->AddCollider({ 4200, 800, 48, 48 }, Collider::Type::APPLE, app->player);
+	app->scene->appleColl5 = app->collision->AddCollider({ 1392, 552, 48, 48 }, Collider::Type::APPLE, app->player);
+	app->scene->pineappleColl1 = app->collision->AddCollider({ 4324, 524, 48, 48 }, Collider::Type::PINEAPPLE, app->player);
+	app->scene->appleColl1 = app->collision->AddCollider({ 2568, 1368, 48, 48 }, Collider::Type::APPLE, app->player);
+
+	savePoint = false;
+	app->player->appleCounter = 0;
+	app->player->lifes = 3;
+	checkPointTouchAnim.Reset();
 
 	app->player->Init();
 	app->player->Start();
@@ -118,7 +134,6 @@ bool Scene::Update(float dt)
 	//Draw Scenes
 
 	app->map->Draw();
-	app->audio->PlayFx(musicScene1);
 	if (savePoint == true)
 	{
 		if (checkPointTouchAnim.finish == false)
@@ -196,7 +211,23 @@ bool Scene::PostUpdate()
 // Called before quitting
 bool Scene::CleanUp()
 {
+	if (!active) return true;
+
 	LOG("Freeing scene");
+	app->tex->UnLoad(checkPointIdleTex);
+	app->tex->UnLoad(checkPointStartTex);
+	app->tex->UnLoad(checkPointTouchTex);
+	app->tex->UnLoad(appleTex);
+	app->tex->UnLoad(pineappleTex);
+
+	app->audio->UnloadFX(musicScene1);
+
+	app->player->CleanUp();
+	app->collision->CleanUp();
+	app->moduleParticles->CleanUp();
+	app->map->CleanUp();
+
+	active = false;
 
 	return true;
 }

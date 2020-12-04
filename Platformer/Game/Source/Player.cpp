@@ -102,22 +102,9 @@ bool Player::Start()
 	lifesTex = app->tex->Load("Assets/Textures/Character/life.png");
 	appeTex = app->tex->Load("Assets/Textures/Character/appearing.png");
 	desAppeTex = app->tex->Load("Assets/Textures/Character/desappearing.png");
-	appleTexure = app->tex->Load("Assets/Textures/Items/Fruits/apple.png");
-
-
 
 	playerColl = app->collision->AddCollider({ (int)position.x, (int)position.y, TILESIZE - 50, TILESIZE - 20}, Collider::Type::PLAYER, this);
 	cameraColl = app->collision->AddCollider({ (int)position.x - 100, (int)position.y - 100, app->render->camera.w/4, app->render->camera.h / 3 + 20}, Collider::Type::CAMERA, this);
-	
-	app->scene->checkPointColl = app->collision->AddCollider({ 3860, 1360, 20, 128 }, Collider::Type::CHECKPOINT, app->player);
-	app->scene->appleColl2 = app->collision->AddCollider({ 3800, 924, 48, 48 }, Collider::Type::APPLE, this);
-	app->scene->appleColl3 = app->collision->AddCollider({ 4000, 850, 48, 48 }, Collider::Type::APPLE, this);
-	app->scene->appleColl4 = app->collision->AddCollider({ 4200, 800, 48, 48 }, Collider::Type::APPLE, this);
-	app->scene->appleColl1 = app->collision->AddCollider({ 2568, 1368, 48, 48 }, Collider::Type::APPLE, this);
-	app->scene->appleColl5 = app->collision->AddCollider({ 1392, 552, 48, 48 }, Collider::Type::APPLE, this);
-	app->scene->pineappleColl1 = app->collision->AddCollider({ 4324, 524, 48, 48 }, Collider::Type::PINEAPPLE, this);
-	
-
 
 	currentAnimation = &idleAnim;
 	currentTex = idleTex;
@@ -435,13 +422,7 @@ bool Player::PostUpdate()
 {
 	if (position.x < 720 && position.y < 816)
 	{
-		win = true;
-		playerColl->SetPos(position.x + 25, position.y + 20);
-		cameraColl->rect.x = position.x - 100;
-		cameraColl->rect.y = position.y - 100;
-		speedX = 0;
-		speedY = 0;
-		//app->fadeToBlack->Fade(, 80);
+		app->fadeToBlack->Fade(app->scene, (Module*)app->sceneWin, 80);
 	}
 	currentAnimation->Update();
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
@@ -467,7 +448,7 @@ bool Player::PostUpdate()
 		app->render->DrawTexture(lifesTex, (app->render->camera.x - 180) * -1, (app->render->camera.y - 15) * -1, NULL);
 	}
 
-	app->render->DrawTexture(appleTexure, (app->render->camera.x - 1200) * -1, (app->render->camera.y - 0) * -1, NULL);
+	app->render->DrawTexture(app->scene->appleTex, (app->render->camera.x - 1200) * -1, (app->render->camera.y - 0) * -1, NULL);
 	sprintf_s(scoreText, 10, "%d", appleCounter);
 	if(appleCounter < 10)
 	{
@@ -483,7 +464,7 @@ bool Player::PostUpdate()
 
 bool Player::CleanUp()
 {
-	LOG("Unloading particles");
+	LOG("Unloading player");
 
 	//Aqui deletamos cosas
 	app->tex->UnLoad(idleTex);
@@ -491,8 +472,13 @@ bool Player::CleanUp()
 	app->tex->UnLoad(deathTex);
 	app->tex->UnLoad(runTex);
 	app->tex->UnLoad(jumpTex);
+	app->tex->UnLoad(doubleJumpTex);
+	app->tex->UnLoad(lifesTex);
+	app->tex->UnLoad(appeTex);
+	app->tex->UnLoad(desAppeTex);
 
 	app->collision->RemoveCollider(playerColl);
+	app->collision->RemoveCollider(cameraColl);
 
 	return true;
 }
@@ -628,23 +614,23 @@ bool Player::CameraScroll(Collider* c1, Collider* c2)
 bool Player::CollectApple(Collider* c1, Collider* c2)
 {
 	appleCounter += 1;
-	c2->isCollected = true;
-	app->moduleParticles->AddParticle(app->moduleParticles->fruitGet, c2->rect.x, c2->rect.y);
-	app->collision->RemoveCollider(c2);
+	c1->isCollected = true;
+	app->moduleParticles->AddParticle(app->moduleParticles->fruitGet, c1->rect.x, c1->rect.y);
+	app->collision->RemoveCollider(c1);
 
 	return true;
 }
 
 bool Player::CollectPineapple(Collider* c1, Collider* c2)
 {
-	c2->isCollected = true;
+	c1->isCollected = true;
 	appleCounter += 2;
-	app->moduleParticles->AddParticle(app->moduleParticles->fruitGet, c2->rect.x, c2->rect.y);
+	app->moduleParticles->AddParticle(app->moduleParticles->fruitGet, c1->rect.x, c1->rect.y);
 	if (app->player->lifes < 3 && app->player->lifes > 0)
 	{
 		app->player->lifes++;
 	}
-	app->collision->RemoveCollider(c2);
+	app->collision->RemoveCollider(c1);
 
 	return true;
 }

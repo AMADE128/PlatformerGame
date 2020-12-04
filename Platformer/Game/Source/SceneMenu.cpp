@@ -40,6 +40,7 @@ bool SceneMenu::Start()
 	menu = app->tex->Load("Assets/Textures/Screens/menu.png");
 	musicMenu = app->audio->LoadFx("Assets/Audio/SceneMusic/intro_music.wav");
 	app->musicList.Add(&musicMenu);
+	app->audio->PlayFx(musicMenu);
 
 	return true;
 }
@@ -54,7 +55,6 @@ bool SceneMenu::PreUpdate()
 bool SceneMenu::Update(float dt)
 {
 	app->render->DrawTexture(menu, 0, 0);
-	app->audio->PlayFx(musicMenu);
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
 		app->fadeToBlack->Fade(this, (Module*)app->scene, 80);
@@ -74,9 +74,12 @@ bool SceneMenu::PostUpdate()
 // Called before quitting
 bool SceneMenu::CleanUp()
 {
+	if (!active) return true;
+
 	LOG("Freeing scene");
 	app->tex->UnLoad(menu);
 	app->audio->UnloadFX(musicMenu);
+	app->musicList.Clear();
 
 	active = false;
 

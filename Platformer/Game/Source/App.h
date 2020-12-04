@@ -115,7 +115,7 @@ public:
     const int screenTicks = 1000 / frameRate;
 
 	List<unsigned int*>	musicList;
-	int volume = 1;
+	int volume = 64;
 
 private:
 	int argc;

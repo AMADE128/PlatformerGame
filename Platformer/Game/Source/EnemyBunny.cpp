@@ -20,7 +20,7 @@ void EnemyBunny::Update()
 
 bool EnemyBunny::Cleanup()
 {
-
+	return true;
 }
 
 bool EnemyBunny::Fall(Collider* c1, Collider* c2)
