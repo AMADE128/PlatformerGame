@@ -98,10 +98,16 @@ void Fonts::UnLoad(int font_id)
 
 bool Fonts::CleanUp()
 {
+	if (!active)
+		return true;
+
 	for (int i = 0; i < MAX_FONTS; i++)
 	{
 		UnLoad(i);
 	}
+
+	active = false;
+
 	return true;
 }
 

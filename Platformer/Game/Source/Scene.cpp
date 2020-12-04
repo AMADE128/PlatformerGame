@@ -234,6 +234,7 @@ bool Scene::CleanUp()
 	app->tex->UnLoad(appleTex);
 	app->tex->UnLoad(pineappleTex);
 
+	app->musicList.Clear();
 	app->audio->UnloadFX(musicScene1);
 	app->audio->UnloadFX(checkpointMusic);
 

@@ -40,11 +40,11 @@ bool SceneLoose::Start()
 {
 	// L03: DONE: Load map
 
-	app->player->active = false;
+	/*app->player->active = false;
 	app->collision->active = false;
 	app->moduleParticles->active = false;
 	app->fonts->active = false;
-	app->map->active = false;
+	app->map->active = false;*/
 
 	loose = app->tex->Load("Assets/Textures/Screens/lose.png");
 	loseMusic = app->audio->LoadFx("Assets/Audio/SceneMusic/lose_music.wav");
@@ -86,8 +86,10 @@ bool SceneLoose::PostUpdate()
 // Called before quitting
 bool SceneLoose::CleanUp()
 {
+	if (!active) return true;
 	LOG("Freeing scene");
-	//app->audio->UnloadFX(loseMusic);
+	app->audio->UnloadFX(loseMusic);
+	app->musicList.Clear();
 	app->tex->UnLoad(loose);
 
 	active = false; 

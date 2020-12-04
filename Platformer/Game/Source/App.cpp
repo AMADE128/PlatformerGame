@@ -302,6 +302,9 @@ bool App::PostUpdate()
 	ListItem<Module*>* item;
 	Module* pModule = NULL;
 
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		ret = false;
+
 	// Set VOLUME
 	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
 	{
@@ -328,9 +331,6 @@ bool App::PostUpdate()
 
 		ret = item->data->PostUpdate();
 	}
-
-	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-		ret = false;
 
 	ListItem<unsigned int*>* itemMusic;
 	for (itemMusic = musicList.start; itemMusic != NULL; itemMusic = itemMusic->next)

@@ -41,11 +41,6 @@ bool SceneWin::Start()
 	// L03: DONE: Load map
 	win = app->tex->Load("Assets/Textures/Screens/win.png");
 
-	app->player->active = false;
-	app->collision->active = false;
-	app->moduleParticles->active = false;
-	app->fonts->active = false;
-	app->map->active = false;
 	winMusic = app->audio->LoadFx("Assets/Audio/SceneMusic/win_music.wav");
 	app->musicList.Add(&winMusic);
 	app->audio->PlayFx(winMusic);
@@ -89,6 +84,8 @@ bool SceneWin::CleanUp()
 
 	LOG("Freeing scene");
 	app->tex->UnLoad(win);
+
+	app->musicList.Clear();
 	app->audio->UnloadFX(winMusic);
 
 	active = false;

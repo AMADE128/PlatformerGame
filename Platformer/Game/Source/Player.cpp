@@ -102,6 +102,7 @@ bool Player::Start()
 	lifesTex = app->tex->Load("Assets/Textures/Character/life.png");
 	appeTex = app->tex->Load("Assets/Textures/Character/appearing.png");
 	desAppeTex = app->tex->Load("Assets/Textures/Character/desappearing.png");
+	appleTex = app->tex->Load("Assets/Textures/Items/Fruits/apple.png");
 
 	damageMusic = app->audio->LoadFx("Assets/Audio/MyscMusic/damage.wav");
 	app->musicList.Add(&damageMusic);
@@ -119,6 +120,7 @@ bool Player::Start()
 
 	currentAnimation = &idleAnim;
 	death = false;
+	appear = true;
 	currentTex = idleTex;
 	flip = false;
 	speedY = 0.3f;
@@ -458,7 +460,7 @@ bool Player::PostUpdate()
 		app->render->DrawTexture(lifesTex, (app->render->camera.x - 180) * -1, (app->render->camera.y - 15) * -1, NULL);
 	}
 
-	app->render->DrawTexture(app->scene->appleTex, (app->render->camera.x - 1200) * -1, (app->render->camera.y - 0) * -1, NULL);
+	app->render->DrawTexture(appleTex, (app->render->camera.x - 1200) * -1, (app->render->camera.y - 0) * -1, NULL);
 	sprintf_s(scoreText, 10, "%d", appleCounter);
 	if(appleCounter < 10)
 	{
@@ -474,6 +476,11 @@ bool Player::PostUpdate()
 
 bool Player::CleanUp()
 {
+	if (!active)
+	{
+		return true;
+	}
+
 	LOG("Unloading player");
 
 	//Aqui deletamos cosas
@@ -486,6 +493,7 @@ bool Player::CleanUp()
 	app->tex->UnLoad(lifesTex);
 	app->tex->UnLoad(appeTex);
 	app->tex->UnLoad(desAppeTex);
+	app->tex->UnLoad(appleTex);
 
 	app->collision->RemoveCollider(playerColl);
 	app->collision->RemoveCollider(cameraColl);
@@ -493,6 +501,8 @@ bool Player::CleanUp()
 	app->audio->UnloadFX(jumpsMusic);
 	app->audio->UnloadFX(damageMusic);
 	app->audio->UnloadFX(pointsMusic);
+
+	active = false;
 
 	return true;
 }

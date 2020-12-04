@@ -44,6 +44,10 @@ bool ModuleParticles::Start()
 
 bool ModuleParticles::CleanUp()
 {
+	if (!active)
+	{
+		return true;
+	}
 	LOG("Unloading particles");
 
 	// Delete all remaining active particles on application exit 
@@ -56,6 +60,8 @@ bool ModuleParticles::CleanUp()
 		}
 	}
 	app->tex->UnLoad(fruitGetTex);
+
+	active = false;
 
 	return true;
 }

@@ -267,6 +267,10 @@ void Collisions::DebugDraw()
 // Called before quitting
 bool Collisions::CleanUp()
 {
+	if (!active)
+	{
+		return true;
+	}
 	LOG("Freeing all colliders");
 
 	for (uint i = 0; i < MAX_COLLIDERS; ++i)
@@ -277,6 +281,8 @@ bool Collisions::CleanUp()
 			colliders[i] = nullptr;
 		}
 	}
+
+	active = false;
 
 	return true;
 }

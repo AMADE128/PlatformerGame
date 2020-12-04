@@ -223,6 +223,7 @@ bool SceneLvl2::CleanUp()
 	app->tex->UnLoad(appleTex);
 	app->tex->UnLoad(pineappleTex);
 
+	app->musicList.Clear();
 	app->audio->UnloadFX(musicScene1);
 
 	app->player->CleanUp();

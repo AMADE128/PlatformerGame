@@ -363,6 +363,8 @@ SDL_Rect TileSet::GetTileRect(int id) const
 // Called before quitting
 bool Map::CleanUp()
 {
+	if (!active)
+		return true;
     LOG("Unloading map");
 
     // L03: DONE 2: Make sure you clean up any memory allocated from tilesets/map
@@ -391,6 +393,8 @@ bool Map::CleanUp()
 
 	// Clean up the pugui tree
 	mapFile.reset();
+
+	active = false;
 
     return true;
 }
