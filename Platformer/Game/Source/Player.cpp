@@ -147,11 +147,11 @@ bool Player::Update(float dt)
 {
 	dt *= 6;
 	idleAnim.speed = 4.0f * dt;
-	runAnim.speed = 5 * dt;
+	runAnim.speed = 5.0f * dt;
 	deathAnim.speed = 4.0f * dt;
 	doubleJumpAnim.speed = 4.0f * dt;
-	desAppeAnim.speed = 5 * dt;
-	appeAnim.speed = 5 * dt;
+	desAppeAnim.speed = 4.0f * dt;
+	appeAnim.speed = 4.0f * dt;
 	if (death == false && appear == false)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
@@ -597,7 +597,14 @@ bool Player::Die(Collider* c1, Collider* c2)
 				cameraColl->rect.y = position.y - 100;
 				speedX = 0;
 				speedY = 0;
-				app->fadeToBlack->Fade(app->scene, (Module*)app->sceneLoose, 80);
+				if (app->scene->active == true)
+				{
+					app->fadeToBlack->Fade(app->scene, (Module*)app->sceneLoose, 80);
+				}
+				else if (app->sceneLvl2->active == true)
+				{
+					app->fadeToBlack->Fade(app->sceneLvl2, (Module*)app->sceneLoose, 80);
+				}
 			}
 			else
 			{

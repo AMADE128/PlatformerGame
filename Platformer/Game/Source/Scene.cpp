@@ -86,17 +86,6 @@ bool Scene::Start()
 	checkpointMusic = app->audio->LoadFx("Assets/Audio/MyscMusic/checkpoint.wav");
 	app->musicList.Add(&checkpointMusic);
 
-
-	/*checkpointFx = app->audio->LoadFx("Assets/Audio/MyscMusic/checkpoint.wav");
-	jumpFx = app->audio->LoadFx("Assets/Audio/MyscMusic/jump.wav");
-	pointFx = app->audio->LoadFx("Assets/Audio/MyscMusic/points.wav");
-	damageFx = app->audio->LoadFx("Assets/Audio/MyscMusic/damage.wav");*/
-
-	/*app->musicList.Add(&jumpFx);
-	app->musicList.Add(&pointFx);
-	app->musicList.Add(&damageFx);
-	app->musicList.Add(&checkpointFx);*/
-
 	currentAnimation = &checkPointIdleAnim;
 	currentTex = checkPointStartTex;
 

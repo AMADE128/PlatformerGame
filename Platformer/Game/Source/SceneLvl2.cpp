@@ -83,15 +83,9 @@ bool SceneLvl2::Start()
 	musicScene1 = app->audio->LoadFx("Assets/Audio/SceneMusic/level_music.wav");
 	app->musicList.Add(&musicScene1);
 	app->audio->PlayFx(musicScene1);
-	/*checkpointFx = app->audio->LoadFx("Assets/Audio/MyscMusic/checkpoint.wav");
-	jumpFx = app->audio->LoadFx("Assets/Audio/MyscMusic/jump.wav");
-	pointFx = app->audio->LoadFx("Assets/Audio/MyscMusic/points.wav");
-	damageFx = app->audio->LoadFx("Assets/Audio/MyscMusic/damage.wav");*/
 
-	/*app->musicList.Add(&jumpFx);
-	app->musicList.Add(&pointFx);
-	app->musicList.Add(&damageFx);
-	app->musicList.Add(&checkpointFx);*/
+	checkpointMusic = app->audio->LoadFx("Assets/Audio/MyscMusic/checkpoint.wav");
+	app->musicList.Add(&checkpointMusic);
 
 	currentAnimation = &checkPointIdleAnim;
 	currentTex = checkPointStartTex;
@@ -130,8 +124,12 @@ bool SceneLvl2::PreUpdate()
 // Called each loop iteration
 bool SceneLvl2::Update(float dt)
 {
-	//Draw Scenes
+	if (app->player->position.x < 0 && app->player->position.y < 0)
+	{
+		app->fadeToBlack->Fade(app->sceneLvl2, (Module*)app->sceneWin, 1600 * dt);
+	}
 
+	//Draw Scenes
 	app->map->Draw();
 	if (savePoint == true)
 	{
@@ -159,11 +157,6 @@ bool SceneLvl2::Update(float dt)
 bool SceneLvl2::PostUpdate()
 {
 	bool ret = true;
-
-	if (app->player->position.x < 0 && app->player->position.y < 0)                      
-	{
-		app->fadeToBlack->Fade(app->sceneLvl2, (Module*)app->sceneWin, 80);
-	}
 
 	currentAnimation->Update();
 	SDL_Rect checkPointRect = currentAnimation->GetCurrentFrame();
@@ -232,6 +225,7 @@ bool SceneLvl2::CleanUp()
 
 	app->musicList.Clear();
 	app->audio->UnloadFX(musicScene1);
+	app->audio->UnloadFX(checkpointMusic);
 
 	app->player->CleanUp();
 	app->collision->CleanUp();

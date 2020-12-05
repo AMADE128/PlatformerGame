@@ -69,6 +69,7 @@ private:
 	Animation pineappleAnim;
 
 	unsigned int musicScene1;
+	unsigned int checkpointMusic;
 };
 
 #endif // __SCENE_H__
