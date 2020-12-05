@@ -12,6 +12,7 @@
 #include "FadeToBlack.h"
 #include "ModuleParticles.h"
 #include "Fonts.h"
+#include "SceneLvl2.h"
 
 #include "Collisions.h"
 
@@ -466,7 +467,7 @@ bool Player::PostUpdate()
 	{
 		app->fonts->BlitText((app->render->camera.x - 1185) * -1, (app->render->camera.y - 17) * -1, scoreFont, scoreText);
 	}
-	else if (appleCounter > 10)
+	else if (appleCounter >= 10)
 	{
 		app->fonts->BlitText((app->render->camera.x - 1145) * -1, (app->render->camera.y - 17) * -1, scoreFont, scoreText);
 	}
@@ -665,6 +666,7 @@ bool Player::CollectPineapple(Collider* c1, Collider* c2)
 bool Player::CheckPoint(Collider* c1, Collider* c2)
 {
 	app->scene->savePoint = true;
+	app->sceneLvl2->savePoint = true;
 	app->audio->PlayFx(app->scene->checkpointFx);
 	app->SaveGameRequest();
 

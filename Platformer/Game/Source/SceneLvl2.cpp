@@ -96,13 +96,14 @@ bool SceneLvl2::Start()
 	currentAnimation = &checkPointIdleAnim;
 	currentTex = checkPointStartTex;
 
-	checkPointColl = app->collision->AddCollider({ 3860, 1360, 20, 128 }, Collider::Type::CHECKPOINT, app->player);
-	appleColl2 = app->collision->AddCollider({ 3800, 924, 48, 48 }, Collider::Type::APPLE, app->player);
-	appleColl3 = app->collision->AddCollider({ 4000, 850, 48, 48 }, Collider::Type::APPLE, app->player);           //      TODOOOOOO
-	appleColl4 = app->collision->AddCollider({ 4200, 800, 48, 48 }, Collider::Type::APPLE, app->player);
-	appleColl5 = app->collision->AddCollider({ 1392, 552, 48, 48 }, Collider::Type::APPLE, app->player);
-    pineappleColl1 = app->collision->AddCollider({ 4324, 524, 48, 48 }, Collider::Type::PINEAPPLE, app->player);
-	appleColl1 = app->collision->AddCollider({ 2568, 1368, 48, 48 }, Collider::Type::APPLE, app->player);
+	checkPointColl = app->collision->AddCollider({ 3204, 1888, 20, 128 }, Collider::Type::CHECKPOINT, app->player);
+	appleColl2 = app->collision->AddCollider({ 2328, 1944, 48, 48 }, Collider::Type::APPLE, app->player);
+	appleColl3 = app->collision->AddCollider({ 3408, 1488, 48, 48 }, Collider::Type::APPLE, app->player);           
+	appleColl4 = app->collision->AddCollider({ 2400, 1296, 48, 48 }, Collider::Type::APPLE, app->player);
+	appleColl5 = app->collision->AddCollider({ 2400, 816, 48, 48 }, Collider::Type::APPLE, app->player);
+    pineappleColl1 = app->collision->AddCollider({ 3120, 576, 48, 48 }, Collider::Type::PINEAPPLE, app->player);
+	appleColl1 = app->collision->AddCollider({ 1128, 2040, 48, 48 }, Collider::Type::APPLE, app->player);
+	appleColl6 = app->collision->AddCollider({ 3408, 2112, 48 }, Collider::Type::APPLE, app->player);
 
 	savePoint = false;
 	app->player->lifes = 3;
@@ -159,45 +160,51 @@ bool SceneLvl2::PostUpdate()
 {
 	bool ret = true;
 
-	if (app->player->position.x < 0 && app->player->position.y < 0)                      // Poner las coords bien cuando vaya
+	if (app->player->position.x < 0 && app->player->position.y < 0)                      
 	{
 		app->fadeToBlack->Fade(app->sceneLvl2, (Module*)app->sceneWin, 80);
 	}
 
 	currentAnimation->Update();
 	SDL_Rect checkPointRect = currentAnimation->GetCurrentFrame();
-	app->render->DrawTexture(currentTex, 3800, 1296, &checkPointRect);                         // Poner las coords bien cuando vaya
+	app->render->DrawTexture(currentTex, 3144, 1824, &checkPointRect);                     
 
 	Animation* apple = &appleAnim;
 	apple->Update();
 	if (appleColl1->isCollected != true)
 	{
 		SDL_Rect appleRect = apple->GetCurrentFrame();
-		app->render->DrawTexture(appleTex, 2544, 1344, &appleRect);                             // Poner las coords bien cuando vaya
+		app->render->DrawTexture(appleTex, 1104, 2016, &appleRect);                     
 	}
 
 	if (appleColl2->isCollected != true)
 	{
 		SDL_Rect appleRect = apple->GetCurrentFrame();
-		app->render->DrawTexture(appleTex, 3776, 900, &appleRect);                             // Poner las coords bien cuando vaya
+		app->render->DrawTexture(appleTex, 2304, 1920, &appleRect);               
 	}
 
 	if (appleColl3->isCollected == false)
 	{
-		SDL_Rect appleRect = apple->GetCurrentFrame();                                    // Poner las coords bien cuando vaya
-		app->render->DrawTexture(appleTex, 3976, 836, &appleRect);
+		SDL_Rect appleRect = apple->GetCurrentFrame();   
+		app->render->DrawTexture(appleTex, 3384, 1464, &appleRect);
 	}
 
 	if (appleColl4->isCollected == false)
 	{
 		SDL_Rect appleRect = apple->GetCurrentFrame();
-		app->render->DrawTexture(appleTex, 4176, 776, &appleRect);                               // Poner las coords bien cuando vaya
+		app->render->DrawTexture(appleTex, 2386, 1272, &appleRect);             
 	}
 
 	if (appleColl5->isCollected == false)
 	{
 		SDL_Rect appleRect = apple->GetCurrentFrame();
-		app->render->DrawTexture(appleTex, 1368, 528, &appleRect);                     // Poner las coords bien cuando vaya
+		app->render->DrawTexture(appleTex, 2386, 792, &appleRect);  
+	}
+
+	if (appleColl6->isCollected == false)
+	{
+		SDL_Rect appleRect = apple->GetCurrentFrame();
+		app->render->DrawTexture(appleTex, 3384, 2088, &appleRect);
 	}
 
 	Animation* pineapple = &pineappleAnim;
@@ -205,7 +212,7 @@ bool SceneLvl2::PostUpdate()
 	if (pineappleColl1->isCollected == false)
 	{
 		SDL_Rect pineappleRect1 = pineapple->GetCurrentFrame();
-		app->render->DrawTexture(pineappleTex, 4300, 500, &pineappleRect1);              // Poner las coords bien cuando vaya
+		app->render->DrawTexture(pineappleTex, 3094, 552, &pineappleRect1);
 	}
 
 	return ret;

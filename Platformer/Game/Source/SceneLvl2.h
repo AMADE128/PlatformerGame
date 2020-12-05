@@ -35,12 +35,14 @@ public:
 	bool CleanUp();
 
 	bool savePoint = false;
+	bool checkpointFX = false;
 	Collider* checkPointColl = nullptr;
 	Collider* appleColl1 = nullptr;
 	Collider* appleColl2 = nullptr;
 	Collider* appleColl3 = nullptr;
 	Collider* appleColl4 = nullptr;
 	Collider* appleColl5 = nullptr;
+	Collider* appleColl6 = nullptr;
 	Collider* pineappleColl1 = nullptr;
 
 	SDL_Texture* appleTex = nullptr;
