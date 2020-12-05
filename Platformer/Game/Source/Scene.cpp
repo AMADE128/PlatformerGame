@@ -116,7 +116,8 @@ bool Scene::Start()
 	app->moduleEnemies->Init();
 	app->moduleEnemies->Start();
 
-	app->moduleEnemies->AddEnemy(EnemyType::BUNNY, 3860, 1360);
+	app->moduleEnemies->AddEnemy(EnemyType::BUNNY, 5088/2, 2880/2);
+	app->moduleEnemies->AddEnemy(EnemyType::BUNNY, 5568/2, 1440/2);
 
 	app->player->lvl = 1;
 

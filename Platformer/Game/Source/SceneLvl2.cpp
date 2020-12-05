@@ -13,6 +13,7 @@
 #include "Animation.h"
 #include "Fonts.h"
 #include "ModuleParticles.h"
+#include "ModuleEnemies.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -111,6 +112,11 @@ bool SceneLvl2::Start()
 	app->map->Start();
 	app->moduleParticles->Init();
 	app->moduleParticles->Start();
+
+	app->moduleEnemies->AddEnemy(EnemyType::BUNNY, 5952/2, 4032/2);
+	app->moduleEnemies->AddEnemy(EnemyType::BUNNY, 7872/2, 3072/2);
+	app->moduleEnemies->AddEnemy(EnemyType::BIRD, 5568/2, 2592/2);
+	app->moduleEnemies->AddEnemy(EnemyType::BIRD, 5472/2, 1152/2);
 
 	app->player->lvl = 2;
 	

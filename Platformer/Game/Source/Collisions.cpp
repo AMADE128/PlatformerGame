@@ -23,7 +23,7 @@ Collisions::Collisions() : Module()
 		matrix[Collider::Type::PLAYER][Collider::Type::PLAYER] = NOTHING;
 		matrix[Collider::Type::PLAYER][Collider::Type::NONE] = NOTHING;
 		matrix[Collider::Type::PLAYER][Collider::Type::AIR] = FALL;
-		matrix[Collider::Type::PLAYER][Collider::Type::SPIKE] = NOTHING;
+		matrix[Collider::Type::PLAYER][Collider::Type::SPIKE] = DIE;
 		matrix[Collider::Type::PLAYER][Collider::Type::CAMERA] = CAMERA_SCROLL;
 		matrix[Collider::Type::PLAYER][Collider::Type::CHECKPOINT] = NOTHING;
 		matrix[Collider::Type::PLAYER][Collider::Type::APPLE] = NOTHING;
