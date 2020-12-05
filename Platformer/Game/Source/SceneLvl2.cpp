@@ -112,6 +112,15 @@ bool SceneLvl2::Start()
 	app->moduleParticles->Init();
 	app->moduleParticles->Start();
 
+	app->player->lvl = 2;
+	
+	if (app->player->saveGame == true)
+	{
+		app->LoadGameRequest();
+	}
+
+	app->player->saveGame = false;
+
 	return true;
 }
 

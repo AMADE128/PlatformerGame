@@ -104,11 +104,13 @@ bool Player::Start()
 	{
 		position.x = 720;
 		position.y = 1584;
+		app->SaveGameRequest();
 	}
 	else if (app->sceneLvl2->active == true)
 	{
 		position.x = 620;
 		position.y = 2256;
+		app->SaveGameRequest();
 	}
 	//Cargar texturas
 	idleTex = app->tex->Load("Assets/Textures/Character/idle.png");
@@ -194,7 +196,24 @@ bool Player::Update(float dt)
 		}
 		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		{
-			app->LoadGameRequest();
+			if (lvl == 2)
+			{
+				if (app->scene->active == true)
+				{
+					saveGame = true;
+					app->fadeToBlack->Fade(app->scene, (Module*)app->sceneLvl2, 80);
+				}
+				app->LoadGameRequest();
+			}
+			else if (lvl == 1)
+			{
+				if (app->sceneLvl2->active == true)
+				{
+					saveGame = true;
+					app->fadeToBlack->Fade(app->sceneLvl2, (Module*)app->scene, 80);
+				}
+				app->LoadGameRequest();
+			}
 			appear = true;
 		}
 		if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && yDownCollision == true)
@@ -753,6 +772,8 @@ bool Player::LoadState(pugi::xml_node& data)
 	position.x = data.child("position").attribute("x").as_int();
 	position.y = data.child("position").attribute("y").as_int();
 
+	lvl = data.child("level").attribute("lvl").as_int();
+
 	return true;
 }
 
@@ -762,6 +783,10 @@ bool Player::SaveState(pugi::xml_node& data) const
 
 	player.append_attribute("x") = position.x;
 	player.append_attribute("y") = position.y;
+
+	player = data.append_child("level");
+
+	player.append_attribute("lvl") = lvl;
 
 	return true;
 }

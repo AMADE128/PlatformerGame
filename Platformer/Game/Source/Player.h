@@ -110,6 +110,8 @@ public:
 	bool LoadState(pugi::xml_node&);
 	bool SaveState(pugi::xml_node&) const;
 
+	unsigned int lvl;
+	bool saveGame = false;
 };
 
 #endif // __PLAYER_H__
