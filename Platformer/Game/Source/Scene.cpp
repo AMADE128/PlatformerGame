@@ -116,6 +116,15 @@ bool Scene::Start()
 	app->moduleEnemies->Init();
 	app->moduleEnemies->Start();
 
+	app->player->lvl = 1;
+
+	if (app->player->saveGame == true)
+	{
+		app->LoadGameRequest();
+	}
+
+	app->player->saveGame = false;
+
 	return true;
 }
 
