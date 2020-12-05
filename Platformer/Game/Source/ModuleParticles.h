@@ -55,7 +55,9 @@ public:
 public:
 	// Particles spritesheet loaded into an SDL Texture
 	SDL_Texture* fruitGetTex = nullptr;
+	SDL_Texture* leafTex = nullptr;
 	Particle fruitGet;
+	Particle leaf;
 
 	Path path;
 

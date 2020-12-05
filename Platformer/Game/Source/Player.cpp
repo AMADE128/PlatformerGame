@@ -13,6 +13,7 @@
 #include "ModuleParticles.h"
 #include "Fonts.h"
 #include "SceneLvl2.h"
+#include "ModuleParticles.h"
 
 #include "Collisions.h"
 
@@ -218,6 +219,16 @@ bool Player::Update(float dt)
 				app->audio->PlayFx(jumpsMusic);
 				isJumping = true;
 			}
+		}
+		if (app->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && flip == true) 
+		{
+			app->moduleParticles->AddParticle(app->moduleParticles->leaf, position.x - 30, position.y, Collider::Type::LEAF);
+			//app->audio->PlayFx(leafFx); we need to put shoot fx!
+		}
+		if (app->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && flip == false)
+		{
+			app->moduleParticles->AddParticle(app->moduleParticles->leaf, position.x - 30, position.y, Collider::Type::LEAF);
+			//app->audio->PlayFx(leafFx); we need to put shoot fx!
 		}
 		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && god == true)
 		{

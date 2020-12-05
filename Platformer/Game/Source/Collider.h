@@ -20,6 +20,7 @@ struct Collider
 		APPLE,
 		PINEAPPLE,
 		ENEMY,
+		LEAF,
 
 		MAX
 	};

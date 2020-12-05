@@ -26,6 +26,15 @@ ModuleParticles::ModuleParticles() : Module()
 	fruitGet.anim.speed = 0.4f;
 	fruitGet.lifetime = 25;
 	fruitGet.speed = { 0, 0 };
+
+	for (int i = 0; i < 16; i += 16)
+	{
+		leaf.anim.PushBack({ i, 0, 16, 16 });
+	}
+	leaf.anim.loop = true;
+	leaf.anim.speed = 0.4f;
+	leaf.speed.x = 10;
+
 }
 
 ModuleParticles::~ModuleParticles()
@@ -38,6 +47,7 @@ bool ModuleParticles::Start()
 	LOG("Loading particles");
 
 	fruitGetTex = app->tex->Load("Assets/Textures/Items/Fruits/collect.png");
+	leafTex = app->tex->Load("Assets/Textures/Drone/leaf.png");
 
 	return true;
 }
@@ -60,7 +70,7 @@ bool ModuleParticles::CleanUp()
 		}
 	}
 	app->tex->UnLoad(fruitGetTex);
-
+	app->tex->UnLoad(leafTex);
 	active = false;
 
 	return true;
@@ -113,9 +123,13 @@ bool ModuleParticles::PostUpdate()
 	{
 		Particle* particle = particles[i];
 
-		if (particle != nullptr/* && particle->position.x == fruitGet.position.x && particle->isAlive*/)
+		if (particle != nullptr && particle->anim.frames[0].x == fruitGet.anim.frames[0].x && particle->anim.frames[0].x != leaf.anim.frames[0].x && particle->isAlive)
 		{
 			app->render->DrawTexture(fruitGetTex, particle->position.x - 24, particle->position.y - 24, &(particle->anim.GetCurrentFrame()));
+		}
+		else if (particle != nullptr && particle->anim.frames[0].x == leaf.anim.frames[0].x && particle->anim.frames[0].x != fruitGet.anim.frames[0].x && particle->isAlive)
+		{
+			app->render->DrawTexture(leafTex, particle->position.x, particle->position.y + 10, &(particle->anim.GetCurrentFrame()));
 		}
 
 	}
