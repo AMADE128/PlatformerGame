@@ -56,6 +56,7 @@ public:
 	SDL_Texture* appeTex = nullptr;
 	SDL_Texture* desAppeTex = nullptr;
 	SDL_Texture* appleTex = nullptr;
+	SDL_Texture* dronTex = nullptr;
 
 	bool flip;
 
@@ -75,6 +76,7 @@ public:
 	Animation doubleJumpAnim;
 	Animation appeAnim;
 	Animation desAppeAnim;
+	Animation dronAnim;
 
 	fPoint position;
 

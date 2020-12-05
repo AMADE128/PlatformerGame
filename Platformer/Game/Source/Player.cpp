@@ -71,6 +71,13 @@ Player::Player() : Module()
 	desAppeAnim.loop = false;
 	desAppeAnim.speed = 5.0f;
 
+	for (int i = 0; i < 30 * 6; i += 30)
+	{
+		dronAnim.PushBack({ i, 0, 30, 38 });
+	}
+	dronAnim.loop = true;
+	dronAnim.speed = 0.4f;
+
 }
 
 // Destructor
@@ -102,6 +109,7 @@ bool Player::Start()
 	appeTex = app->tex->Load("Assets/Textures/Character/appearing.png");
 	desAppeTex = app->tex->Load("Assets/Textures/Character/desappearing.png");
 	appleTex = app->tex->Load("Assets/Textures/Items/Fruits/apple.png");
+	dronTex = app->tex->Load("Assets/Textures/Drone/flying.png");
 
 	damageMusic = app->audio->LoadFx("Assets/Audio/MyscMusic/damage.wav");
 	app->musicList.Add(&damageMusic);
@@ -152,6 +160,7 @@ bool Player::Update(float dt)
 	doubleJumpAnim.speed = 4.0f * dt;
 	desAppeAnim.speed = 4.0f * dt;
 	appeAnim.speed = 4.0f * dt;
+	dronAnim.speed = 4.0f * dt;
 	if (death == false && appear == false)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
@@ -448,6 +457,21 @@ bool Player::Update(float dt)
 
 bool Player::PostUpdate()
 {
+	if (flip == false) 
+	{
+		Animation* dron = &dronAnim;
+		dron->Update();
+		SDL_Rect dronRect = dron->GetCurrentFrame();
+		app->render->DrawTextureFlip(dronTex, position.x - 30, position.y, &dronRect);
+	}
+	else if (flip == true)
+	{
+		Animation* dron = &dronAnim;
+		dron->Update();
+		SDL_Rect dronRect = dron->GetCurrentFrame();
+		app->render->DrawTexture(dronTex, position.x - 30, position.y, &dronRect);
+	}
+
 	currentAnimation->Update();
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
 	if (flip == true)
@@ -506,6 +530,7 @@ bool Player::CleanUp()
 	app->tex->UnLoad(appeTex);
 	app->tex->UnLoad(desAppeTex);
 	app->tex->UnLoad(appleTex);
+	app->tex->UnLoad(dronTex);
 
 	app->collision->RemoveCollider(playerColl);
 	app->collision->RemoveCollider(cameraColl);
