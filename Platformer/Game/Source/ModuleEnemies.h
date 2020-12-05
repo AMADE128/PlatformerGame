@@ -5,6 +5,7 @@
 
 #define MAX_ENEMIES 100
 #define TILESIZE 96
+#define SPAWN_MARGIN 50
 
 enum class EnemyType
 {

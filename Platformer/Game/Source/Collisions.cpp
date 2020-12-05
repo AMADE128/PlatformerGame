@@ -23,7 +23,7 @@ Collisions::Collisions() : Module()
 		matrix[Collider::Type::PLAYER][Collider::Type::PLAYER] = NOTHING;
 		matrix[Collider::Type::PLAYER][Collider::Type::NONE] = NOTHING;
 		matrix[Collider::Type::PLAYER][Collider::Type::AIR] = FALL;
-		matrix[Collider::Type::PLAYER][Collider::Type::SPIKE] = DIE;
+		matrix[Collider::Type::PLAYER][Collider::Type::SPIKE] = NOTHING;
 		matrix[Collider::Type::PLAYER][Collider::Type::CAMERA] = CAMERA_SCROLL;
 		matrix[Collider::Type::PLAYER][Collider::Type::CHECKPOINT] = NOTHING;
 		matrix[Collider::Type::PLAYER][Collider::Type::APPLE] = NOTHING;
@@ -151,7 +151,7 @@ Collisions::Collisions() : Module()
 
 		matrix[Collider::Type::ENEMY][Collider::Type::WALL] = STOP;
 		matrix[Collider::Type::ENEMY][Collider::Type::GROUND] = STOP_Y;
-		matrix[Collider::Type::ENEMY][Collider::Type::PLAYER] = DIE;
+		matrix[Collider::Type::ENEMY][Collider::Type::PLAYER] = NOTHING;
 		matrix[Collider::Type::ENEMY][Collider::Type::NONE] = NOTHING;
 		matrix[Collider::Type::ENEMY][Collider::Type::AIR] = NOTHING;
 		matrix[Collider::Type::ENEMY][Collider::Type::SPIKE] = NOTHING;
@@ -346,6 +346,9 @@ void Collisions::DebugDraw()
 			break;
 		case Collider::Type::LEAF: // brown
 			app->render->DrawRectangle(colliders[i]->rect, 165, 42, 42, alpha);
+			break;
+		case Collider::Type::ENEMY: // brown
+			app->render->DrawRectangle(colliders[i]->rect, 100, 42, 42, alpha);
 			break;
 			
 		}

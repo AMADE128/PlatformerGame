@@ -19,8 +19,6 @@
 
 #include "SDL/include/SDL.h"
 
-#define SPAWN_MARGIN 50
-
 
 ModuleEnemies::ModuleEnemies() : Module()
 {
@@ -131,14 +129,8 @@ void ModuleEnemies::EnemiesSpawn()
 	{
 		if (spawnQueue[i].type != EnemyType::NO_TYPE)
 		{
-			// Spawn a new enemy if the screen has reached a spawn position
-			if (spawnQueue[i].x * app->win->GetScale() < app->render->camera.x + (app->render->camera.w * app->win->GetScale()) + SPAWN_MARGIN)
-			{
-				LOG("Spawning enemy at %d", spawnQueue[i].x * app->win->GetScale());
-
-				SpawnEnemy(spawnQueue[i]);
-				spawnQueue[i].type = EnemyType::NO_TYPE; // Removing the newly spawned enemy from the queue
-			}
+			SpawnEnemy(spawnQueue[i]);
+			spawnQueue[i].type = EnemyType::NO_TYPE;
 		}
 	}
 }

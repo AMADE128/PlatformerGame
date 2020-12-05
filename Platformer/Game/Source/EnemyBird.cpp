@@ -10,7 +10,7 @@
 
 EnemyBird::EnemyBird(int x, int y) : Enemy(x, y)
 {
-	for (int i = 0; i < TILESIZE * 11; i += TILESIZE)
+	for (int i = 0; i < TILESIZE * 9; i += TILESIZE)
 	{
 		idle.PushBack({ i, 0, TILESIZE, TILESIZE });
 	}
@@ -24,7 +24,7 @@ EnemyBird::EnemyBird(int x, int y) : Enemy(x, y)
 	hit.loop = false;
 	hit.speed = 0.25f;
 
-
+	path.PushBack({ 1, 0 }, 1000, &idle);
 
 	collider = app->collision->AddCollider({ (position.x) + 14, position.y, 32 * 4 - 15, 32 * 4 - 15 }, Collider::Type::ENEMY, (Module*)app->moduleEnemies);
 }
@@ -35,6 +35,8 @@ void EnemyBird::Update()
 	{
 		currentAnim->Update();
 	}
+
+	Enemy::Update();
 }
 
 bool EnemyBird::Cleanup()

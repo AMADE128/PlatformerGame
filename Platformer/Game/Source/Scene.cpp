@@ -116,6 +116,8 @@ bool Scene::Start()
 	app->moduleEnemies->Init();
 	app->moduleEnemies->Start();
 
+	app->moduleEnemies->AddEnemy(EnemyType::BIRD, 3860, 1360);
+
 	app->player->lvl = 1;
 
 	if (app->player->saveGame == true)
@@ -137,6 +139,11 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	dt *= 6;
+	checkPointIdleAnim.speed = 4.0f * dt;
+	checkPointTouchAnim.speed = 4.0f * dt;
+	appleAnim.speed = 4.0f * dt;
+	pineappleAnim.speed = 4.0f * dt;
 	//Draw Scenes
 	if (app->player->position.x < 720 && app->player->position.y < 816 && app->player->god == false)
 	{
