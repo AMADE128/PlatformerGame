@@ -14,6 +14,9 @@
 #include "Fonts.h"
 #include "SceneLvl2.h"
 #include "ModuleParticles.h"
+#include "SceneIntro.h"
+#include "SceneWin.h"
+#include "SceneLoose.h"
 
 #include "Collisions.h"
 
@@ -97,8 +100,16 @@ bool Player::Start()
 {
 	LOG("Loading player textures");
 	
-	position.x = POSXINIT;
-	position.y = POXYINIT;
+	if (app->scene->active == true)
+	{
+		position.x = 720;
+		position.y = 1584;
+	}
+	else if (app->sceneLvl2->active == true)
+	{
+		position.x = 620;
+		position.y = 2256;
+	}
 	//Cargar texturas
 	idleTex = app->tex->Load("Assets/Textures/Character/idle.png");
 	fallTex = app->tex->Load("Assets/Textures/Character/fall.png");
@@ -112,14 +123,14 @@ bool Player::Start()
 	appleTex = app->tex->Load("Assets/Textures/Items/Fruits/apple.png");
 	dronTex = app->tex->Load("Assets/Textures/Drone/flying.png");
 
-	damageMusic = app->audio->LoadFx("Assets/Audio/MyscMusic/damage.wav");
-	app->musicList.Add(&damageMusic);
-
-	jumpsMusic = app->audio->LoadFx("Assets/Audio/MyscMusic/jumps.wav");
-	app->musicList.Add(&jumpsMusic);
-
-	pointsMusic = app->audio->LoadFx("Assets/Audio/MyscMusic/points.wav");
-	app->musicList.Add(&pointsMusic);
+	hitFx = app->audio->LoadFx("Assets/Audio/MyscMusic/damage.wav");
+	app->musicList.Add(&hitFx);
+	jumpFx = app->audio->LoadFx("Assets/Audio/MyscMusic/jumps.wav");
+	app->musicList.Add(&jumpFx);
+	pointFx = app->audio->LoadFx("Assets/Audio/MyscMusic/points.wav");
+	app->musicList.Add(&pointFx);
+	leafFx = app->audio->LoadFx("Assets/Audio/MyscMusic/leaf_shot.wav");
+	app->musicList.Add(&leafFx);
 
 	playerColl = app->collision->AddCollider({ (int)position.x, (int)position.y, TILESIZE - 50, TILESIZE - 20}, Collider::Type::PLAYER, this);
 	cameraColl = app->collision->AddCollider({ (int)position.x - 100, (int)position.y - 100, app->render->camera.w/4, app->render->camera.h / 3 + 20}, Collider::Type::CAMERA, this);
@@ -164,20 +175,18 @@ bool Player::Update(float dt)
 	dronAnim.speed = 4.0f * dt;
 	if (death == false && appear == false)
 	{
-		if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-		{
-			position.x = POSXINIT;
-			position.y = POXYINIT;
-			playerColl->SetPos(position.x + 25, position.y + 20);
-			cameraColl->rect.x = position.x - 100;
-			cameraColl->rect.y = position.y - 100;
-			appear = true;
-		}
 		if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
 		{
-			position.x = POSXINIT;
-			position.y = POXYINIT;
-
+			if (app->scene->active == true)
+			{
+				position.x = 720;
+				position.y = 1584;
+			}
+			else if (app->sceneLvl2->active == true)
+			{
+				position.x = 620;
+				position.y = 2256;
+			}
 		}
 		if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN && !isJumping)
 		{
@@ -207,7 +216,7 @@ bool Player::Update(float dt)
 		{
 			if (!secondJump)
 			{
-				app->audio->PlayFx(jumpsMusic);
+				app->audio->PlayFx(jumpFx);
 				speedY = 20*dt;
 				secondJump = true;
 			}
@@ -216,19 +225,21 @@ bool Player::Update(float dt)
 		{
 			if (!isJumping) // Solo salta cuando no esté en el aire
 			{
-				app->audio->PlayFx(jumpsMusic);
+				app->audio->PlayFx(jumpFx);
 				isJumping = true;
 			}
 		}
 		if (app->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && flip == true) 
 		{
+			app->moduleParticles->leaf.speed.x = -10;
 			app->moduleParticles->AddParticle(app->moduleParticles->leaf, position.x - 30, position.y, Collider::Type::LEAF);
-			//app->audio->PlayFx(leafFx); we need to put shoot fx!
+			app->audio->PlayFx(leafFx);
 		}
 		if (app->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && flip == false)
 		{
+			app->moduleParticles->leaf.speed.x = 10;
 			app->moduleParticles->AddParticle(app->moduleParticles->leaf, position.x - 30, position.y, Collider::Type::LEAF);
-			//app->audio->PlayFx(leafFx); we need to put shoot fx!
+			app->audio->PlayFx(leafFx);
 		}
 		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && god == true)
 		{
@@ -546,9 +557,9 @@ bool Player::CleanUp()
 	app->collision->RemoveCollider(playerColl);
 	app->collision->RemoveCollider(cameraColl);
 
-	app->audio->UnloadFX(jumpsMusic);
-	app->audio->UnloadFX(damageMusic);
-	app->audio->UnloadFX(pointsMusic);
+	app->audio->UnloadFX(jumpFx);
+	app->audio->UnloadFX(hitFx);
+	app->audio->UnloadFX(pointFx);
 
 	active = false;
 
@@ -611,7 +622,7 @@ bool Player::Die(Collider* c1, Collider* c2)
 {
 	if (c1->rect.y + TILESIZE > c2->rect.y + c2->rect.w/2)
 	{
-		app->audio->PlayFx(damageMusic);
+		app->audio->PlayFx(hitFx);
 		death = true;
 		currentAnimation = &deathAnim;
 		currentTex = deathTex;
@@ -644,21 +655,30 @@ bool Player::Die(Collider* c1, Collider* c2)
 			}
 			else
 			{
+				speedX = 0;
+				speedY = 0;
+				isJumping = false;
 				if (app->scene->savePoint == true)
 				{
 					app->LoadGameRequest();
 				}
 				else
 				{
-					position.x = POSXINIT;
-					position.y = POXYINIT;
+					if (app->scene->active == true)
+					{
+						position.x = 720;
+						position.y = 1584;
+					}
+					else if (app->sceneLvl2->active == true)
+					{
+						position.x = 620;
+						position.y = 2256;
+					}
 				}
 				deathAnim.Reset();
 				playerColl->SetPos(position.x + 25, position.y + 20);
 				cameraColl->rect.x = position.x - 100;
 				cameraColl->rect.y = position.y - 100;
-				speedX = 0;
-				speedY = 0;
 				appear = true;
 				lifes--;
 				death = false;
@@ -693,7 +713,7 @@ bool Player::CameraScroll(Collider* c1, Collider* c2)
 
 bool Player::CollectApple(Collider* c1, Collider* c2)
 {
-	app->audio->PlayFx(pointsMusic);
+	app->audio->PlayFx(pointFx);
 	appleCounter += 1;
 	c1->isCollected = true;
 	app->moduleParticles->AddParticle(app->moduleParticles->fruitGet, c1->rect.x, c1->rect.y);
@@ -704,7 +724,7 @@ bool Player::CollectApple(Collider* c1, Collider* c2)
 
 bool Player::CollectPineapple(Collider* c1, Collider* c2)
 {
-	app->audio->PlayFx(pointsMusic);
+	app->audio->PlayFx(pointFx);
 	c1->isCollected = true;
 	appleCounter += 2;
 	app->moduleParticles->AddParticle(app->moduleParticles->fruitGet, c1->rect.x, c1->rect.y);

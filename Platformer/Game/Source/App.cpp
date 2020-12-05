@@ -246,6 +246,7 @@ bool App::PreUpdate()
 	ListItem<Module*>* item;
 	item = modules.start;
 	Module* pModule = NULL;
+	screenTicks = 1000 / frameRate;
 
 	dt = dtTimer.ReadSec();
 	dtTimer.Start();
@@ -280,6 +281,61 @@ bool App::DoUpdate()
 	ListItem<Module*>* item;
 	item = modules.start;
 	Module* pModule = NULL;
+
+	if (input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	{
+		if (sceneIntro->active == true)
+		{
+			fadeToBlack->Fade(sceneIntro, (Module*)scene, 1600 * dt / 6);
+		}
+		else if (sceneMenu->active == true)
+		{
+			fadeToBlack->Fade(app->sceneMenu, (Module*)scene, 1600 * dt / 6);
+		}
+		else if (scene->active == true)
+		{
+			fadeToBlack->Fade(app->scene, (Module*)scene, 1600 * dt / 6);
+		}
+		else if (sceneLvl2->active == true)
+		{
+			fadeToBlack->Fade(app->sceneLvl2, (Module*)scene, 1600 * dt / 6);
+		}
+		else if (sceneWin->active == true)
+		{
+			fadeToBlack->Fade(app->sceneWin, (Module*)scene, 1600 * dt / 6);
+		}
+		else if (sceneLoose->active == true)
+		{
+			fadeToBlack->Fade(sceneLoose, (Module*)scene, 1600 * dt / 6);
+		}
+	}
+	if (input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	{
+		if (sceneIntro->active == true)
+		{
+			fadeToBlack->Fade(sceneIntro, (Module*)sceneLvl2, 1600 * dt / 6);
+		}
+		else if (sceneMenu->active == true)
+		{
+			fadeToBlack->Fade(app->sceneMenu, (Module*)sceneLvl2, 1600 * dt / 6);
+		}
+		else if (scene->active == true)
+		{
+			fadeToBlack->Fade(app->scene, (Module*)sceneLvl2, 1600 * dt / 6);
+		}
+		else if (sceneLvl2->active == true)
+		{
+			fadeToBlack->Fade(app->sceneLvl2, (Module*)sceneLvl2, 1600 * dt / 6);
+		}
+		else if (sceneWin->active == true)
+		{
+			fadeToBlack->Fade(app->sceneWin, (Module*)sceneLvl2, 1600 * dt / 6);
+		}
+		else if (sceneLoose->active == true)
+		{
+			fadeToBlack->Fade(sceneLoose, (Module*)sceneLvl2, 1600 * dt / 6);
+		}
+	}
 
 	for(item = modules.start; item != NULL && ret == true; item = item->next)
 	{
@@ -318,6 +374,17 @@ bool App::PostUpdate()
 		if (volume > 0)
 		{
 			volume -= 128 / 32;
+		}
+	}
+	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
+	{
+		if (frameRate == 30)
+		{
+			frameRate = 60;
+		}
+		else if (frameRate == 60)
+		{
+			frameRate = 30;
 		}
 	}
 

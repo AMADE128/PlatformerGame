@@ -41,7 +41,7 @@ public:
 	bool CleanUp() override;
 
 	// Called when a particle collider hits another collider
-	bool OnCollision(Collider* c1, Collider* c2) override;
+	bool Die(Collider* c1, Collider* c2) override;
 
 	// Creates a new particle and adds it to the array
 	// Param particle	- A template particle from which the new particle will be created
@@ -56,6 +56,7 @@ public:
 	// Particles spritesheet loaded into an SDL Texture
 	SDL_Texture* fruitGetTex = nullptr;
 	SDL_Texture* leafTex = nullptr;
+
 	Particle fruitGet;
 	Particle leaf;
 

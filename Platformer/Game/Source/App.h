@@ -113,9 +113,9 @@ public:
 	SceneLoose* sceneLoose;
 	SceneWin* sceneWin;
 
-	const int frameRate = 60;
+	int frameRate = 60;
 	float fps = 0.f;
-    const int screenTicks = 1000 / frameRate;
+    int screenTicks;
 
 	List<unsigned int*>	musicList;
 	int volume = 64;

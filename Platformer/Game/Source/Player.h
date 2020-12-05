@@ -62,9 +62,10 @@ public:
 
 	int lifes = 3;
 
-	unsigned int damageMusic;
-	unsigned int jumpsMusic;
-	unsigned int pointsMusic;
+	unsigned int hitFx;
+	unsigned int jumpFx;
+	unsigned int pointFx;
+	unsigned int leafFx;
 
 	Animation* currentAnimation = nullptr;
 

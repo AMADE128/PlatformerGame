@@ -124,7 +124,7 @@ bool SceneLvl2::PreUpdate()
 // Called each loop iteration
 bool SceneLvl2::Update(float dt)
 {
-	if (app->player->position.x < 0 && app->player->position.y < 0)
+	if (app->player->position.x > 4704 && app->player->position.y > 2256)
 	{
 		app->fadeToBlack->Fade(app->sceneLvl2, (Module*)app->sceneWin, 1600 * dt);
 	}
