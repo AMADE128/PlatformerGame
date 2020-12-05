@@ -40,12 +40,6 @@ bool SceneLoose::Start()
 {
 	// L03: DONE: Load map
 
-	/*app->player->active = false;
-	app->collision->active = false;
-	app->moduleParticles->active = false;
-	app->fonts->active = false;
-	app->map->active = false;*/
-
 	loose = app->tex->Load("Assets/Textures/Screens/lose.png");
 	loseMusic = app->audio->LoadFx("Assets/Audio/SceneMusic/lose_music.wav");
 	app->musicList.Add(&loseMusic);

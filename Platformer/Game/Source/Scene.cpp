@@ -82,7 +82,7 @@ bool Scene::Start()
 
 	musicScene1 = app->audio->LoadFx("Assets/Audio/SceneMusic/level_music.wav");
 	app->musicList.Add(&musicScene1);
-	app->audio->PlayFx(musicScene1);
+	app->audio->PlayFx(musicScene1, -1);
 
 	checkpointMusic = app->audio->LoadFx("Assets/Audio/MyscMusic/checkpoint.wav");
 	app->musicList.Add(&checkpointMusic);

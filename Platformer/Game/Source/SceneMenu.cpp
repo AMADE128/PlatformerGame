@@ -40,7 +40,7 @@ bool SceneMenu::Start()
 	menu = app->tex->Load("Assets/Textures/Screens/menu.png");
 	musicMenu = app->audio->LoadFx("Assets/Audio/SceneMusic/intro_music.wav");
 	app->musicList.Add(&musicMenu);
-	app->audio->PlayFx(musicMenu);
+	app->audio->PlayFx(musicMenu, -1);
 
 	return true;
 }

@@ -58,7 +58,8 @@ public:
 	SDL_Texture* leafTex = nullptr;
 
 	Particle fruitGet;
-	Particle leaf;
+	Particle rightLeaf;
+	Particle leftLeaf;
 
 	Path path;
 

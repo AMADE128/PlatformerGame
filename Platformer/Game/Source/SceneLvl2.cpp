@@ -82,7 +82,7 @@ bool SceneLvl2::Start()
 
 	musicScene1 = app->audio->LoadFx("Assets/Audio/SceneMusic/level_music.wav");
 	app->musicList.Add(&musicScene1);
-	app->audio->PlayFx(musicScene1);
+	app->audio->PlayFx(musicScene1, -1);
 
 	checkpointMusic = app->audio->LoadFx("Assets/Audio/MyscMusic/checkpoint.wav");
 	app->musicList.Add(&checkpointMusic);
@@ -148,6 +148,11 @@ bool SceneLvl2::Update(float dt)
 	{
 		currentAnimation = &checkPointStartAnim;
 		currentTex = checkPointStartTex;
+	}
+	if (savePoint == true && checkpointFX == false)
+	{
+		checkpointFX = true;
+		app->audio->PlayFx(checkpointMusic);
 	}
 
 	return true;

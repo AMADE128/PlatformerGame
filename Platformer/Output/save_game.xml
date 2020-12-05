@@ -10,7 +10,7 @@
 	<scene />
 	<scene />
 	<player>
-		<position x="3194" y="1921" />
+		<position x="3198.3999" y="1921" />
 	</player>
 	<scene />
 	<scene />
@@ -20,6 +20,6 @@
 	<:anonymous />
 	<:anonymous />
 	<renderer>
-		<camera x="-2585" y="-1609" />
+		<camera x="-2584" y="-1639" />
 	</renderer>
 </game_state>

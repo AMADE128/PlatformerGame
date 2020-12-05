@@ -27,8 +27,15 @@ ModuleParticles::ModuleParticles() : Module()
 	fruitGet.lifetime = 25;
 	fruitGet.speed = { 0, 0 };
 
-	leaf.anim.PushBack({ 0, 0, 16, 16 });
-	leaf.anim.speed = 0;
+	rightLeaf.anim.PushBack({ 0, 0, 32, 32 });
+	rightLeaf.anim.speed = 0;
+	rightLeaf.speed.x = 15;
+	rightLeaf.lifetime = 40;
+
+	leftLeaf.anim.PushBack({ 0, 0, 32, 32 });
+	leftLeaf.anim.speed = 0;
+	leftLeaf.speed.x = -15;
+	leftLeaf.lifetime = 40;
 
 }
 
@@ -78,6 +85,7 @@ bool ModuleParticles::Die(Collider* c1, Collider* c2)
 		// Always destroy particles that collide
 		if (particles[i] != nullptr && particles[i]->collider == c1)
 		{
+			app->collision->RemoveCollider(particles[i]->collider);
 			delete particles[i];
 			particles[i] = nullptr;
 			break;
@@ -100,9 +108,9 @@ bool ModuleParticles::Update(float dt)
 		// Call particle Update. If it has reached its lifetime, destroy it
 		if (particle->Update() == false)
 		{
+			app->collision->RemoveCollider(particles[i]->collider);
 			delete particle;
 			particles[i] = nullptr;
-			app->collision->RemoveCollider(particle->collider);
 		}
 	}
 
@@ -121,7 +129,7 @@ bool ModuleParticles::PostUpdate()
 		{
 			app->render->DrawTexture(fruitGetTex, particle->position.x - 24, particle->position.y - 24, &(particle->anim.GetCurrentFrame()));
 		}
-		if (particle != nullptr && particle->speed.x == leaf.speed.x && particle->speed.x != fruitGet.speed.x)
+		if (particle != nullptr && (particle->speed.x == rightLeaf.speed.x || particle->speed.x == leftLeaf.speed.x) && particle->speed.x != fruitGet.speed.x)
 		{
 			app->render->DrawTexture(leafTex, particle->position.x, particle->position.y + 10, &(particle->anim.GetCurrentFrame()));
 		}

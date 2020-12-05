@@ -75,9 +75,9 @@ Player::Player() : Module()
 	desAppeAnim.loop = false;
 	desAppeAnim.speed = 5.0f;
 
-	for (int i = 0; i < 30 * 6; i += 30)
+	for (int i = 0; i < 60 * 6; i += 60)
 	{
-		dronAnim.PushBack({ i, 0, 30, 38 });
+		dronAnim.PushBack({ i, 0, 60, 76 });
 	}
 	dronAnim.loop = true;
 	dronAnim.speed = 0.4f;
@@ -181,11 +181,21 @@ bool Player::Update(float dt)
 			{
 				position.x = 720;
 				position.y = 1584;
+				playerColl->SetPos(position.x + 25, position.y + 20);
+				cameraColl->rect.x = position.x - 100;
+				cameraColl->rect.y = position.y - 100;
+				speedX = 0;
+				speedY = 0;
 			}
 			else if (app->sceneLvl2->active == true)
 			{
 				position.x = 620;
 				position.y = 2256;
+				playerColl->SetPos(position.x + 25, position.y + 20);
+				cameraColl->rect.x = position.x - 100;
+				cameraColl->rect.y = position.y - 100;
+				speedX = 0;
+				speedY = 0;
 			}
 		}
 		if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN && !isJumping)
@@ -231,14 +241,12 @@ bool Player::Update(float dt)
 		}
 		if (app->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && flip == true) 
 		{
-			app->moduleParticles->leaf.speed.x = -10;
-			app->moduleParticles->AddParticle(app->moduleParticles->leaf, position.x - 30, position.y, Collider::Type::LEAF);
+			app->moduleParticles->AddParticle(app->moduleParticles->leftLeaf, position.x - 30, position.y, Collider::Type::LEAF);
 			app->audio->PlayFx(leafFx);
 		}
 		if (app->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && flip == false)
 		{
-			app->moduleParticles->leaf.speed.x = 10;
-			app->moduleParticles->AddParticle(app->moduleParticles->leaf, position.x - 30, position.y, Collider::Type::LEAF);
+			app->moduleParticles->AddParticle(app->moduleParticles->rightLeaf, position.x - 30, position.y, Collider::Type::LEAF);
 			app->audio->PlayFx(leafFx);
 		}
 		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && god == true)
@@ -463,7 +471,7 @@ bool Player::Update(float dt)
 			}
 			else
 			{
-				speedY += 5.0f * dt;
+				speedY += 4.0f * dt;
 			}
 		}
 		position.y += speedY;
@@ -484,14 +492,14 @@ bool Player::PostUpdate()
 		Animation* dron = &dronAnim;
 		dron->Update();
 		SDL_Rect dronRect = dron->GetCurrentFrame();
-		app->render->DrawTextureFlip(dronTex, position.x - 30, position.y, &dronRect);
+		app->render->DrawTextureFlip(dronTex, position.x - 50, position.y - 10, &dronRect);
 	}
 	else if (flip == true)
 	{
 		Animation* dron = &dronAnim;
 		dron->Update();
 		SDL_Rect dronRect = dron->GetCurrentFrame();
-		app->render->DrawTexture(dronTex, position.x - 30, position.y, &dronRect);
+		app->render->DrawTexture(dronTex, position.x - 50, position.y - 10, &dronRect);
 	}
 
 	currentAnimation->Update();
@@ -622,7 +630,6 @@ bool Player::Die(Collider* c1, Collider* c2)
 {
 	if (c1->rect.y + TILESIZE > c2->rect.y + c2->rect.w/2)
 	{
-		app->audio->PlayFx(hitFx);
 		death = true;
 		currentAnimation = &deathAnim;
 		currentTex = deathTex;
@@ -646,11 +653,11 @@ bool Player::Die(Collider* c1, Collider* c2)
 				speedY = 0;
 				if (app->scene->active == true)
 				{
-					app->fadeToBlack->Fade(app->scene, (Module*)app->sceneLoose, 80);
+					app->fadeToBlack->Fade(app->scene, (Module*)app->sceneLoose, 10);
 				}
 				else if (app->sceneLvl2->active == true)
 				{
-					app->fadeToBlack->Fade(app->sceneLvl2, (Module*)app->sceneLoose, 80);
+					app->fadeToBlack->Fade(app->sceneLvl2, (Module*)app->sceneLoose, 10);
 				}
 			}
 			else
@@ -684,6 +691,7 @@ bool Player::Die(Collider* c1, Collider* c2)
 				death = false;
 			}
 		}
+		app->audio->PlayFx(hitFx);
 	}
 	
 	return true;
