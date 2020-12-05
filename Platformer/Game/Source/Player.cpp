@@ -30,18 +30,16 @@ Player::Player() : Module()
 		idleAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
 	}
 	idleAnim.loop = true;
-	idleAnim.speed = 0.25f;
+	idleAnim.speed = 5.0f;
 
 	for (int i = 0; i < TILESIZE * 12; i += TILESIZE)
 	{
 		runAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
 	}
 	runAnim.loop = true;
-	runAnim.speed = 0.25f;
+	runAnim.speed = 5.0f;
 
 	fallAnim.PushBack({ 0, 0, TILESIZE, TILESIZE });
-	fallAnim.loop = true;
-	fallAnim.speed = 0.25f;
 
 	jumpAnim.PushBack({ 0, 0, TILESIZE, TILESIZE });
 
@@ -50,28 +48,28 @@ Player::Player() : Module()
 		deathAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
 	}
 	deathAnim.loop = false;
-	deathAnim.speed = 0.25f;
+	deathAnim.speed = 5.0f;
 
 	for (int i = 0; i < TILESIZE * 6; i += TILESIZE)
 	{
 		doubleJumpAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
 	}
 	doubleJumpAnim.loop = false;
-	doubleJumpAnim.speed = 0.25f;
+	doubleJumpAnim.speed = 5.0f;
 
 	for (int i = 0; i < TILESIZE * 7; i += TILESIZE)
 	{
 		appeAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
 	}
 	appeAnim.loop = false;
-	appeAnim.speed = 0.25f;
+	appeAnim.speed = 5.0f;
 
 	for (int i = 0; i < TILESIZE * 7; i += TILESIZE)
 	{
 		desAppeAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
 	}
 	desAppeAnim.loop = false;
-	desAppeAnim.speed = 0.25f;
+	desAppeAnim.speed = 5.0f;
 
 }
 
@@ -148,6 +146,12 @@ bool Player::PreUpdate()
 bool Player::Update(float dt)
 {
 	dt *= 6;
+	idleAnim.speed = 4.0f * dt;
+	runAnim.speed = 5 * dt;
+	deathAnim.speed = 4.0f * dt;
+	doubleJumpAnim.speed = 4.0f * dt;
+	desAppeAnim.speed = 5 * dt;
+	appeAnim.speed = 5 * dt;
 	if (death == false && appear == false)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
@@ -422,7 +426,14 @@ bool Player::Update(float dt)
 		}
 		else
 		{
-			speedY += 5.0f*dt;
+			if (app->fps <= 32)
+			{
+				speedY += 10.0f * dt;
+			}
+			else
+			{
+				speedY += 5.0f * dt;
+			}
 		}
 		position.y += speedY;
 

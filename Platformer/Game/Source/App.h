@@ -114,6 +114,7 @@ public:
 	SceneWin* sceneWin;
 
 	const int frameRate = 60;
+	float fps = 0.f;
     const int screenTicks = 1000 / frameRate;
 
 	List<unsigned int*>	musicList;
@@ -146,7 +147,6 @@ private:
 	float secondsSinceStartup;
 	float fpsMseconds;
 	float fpsCounter;
-	float fps = 0.f;
 	float fpsPreUpdate;
 
 	uint frames;

@@ -81,21 +81,6 @@ bool FadeToBlack::Fade(Module* toDisable, Module* toEnable, float frames)
 {
 	bool ret = false;
 
-	/*if (toDisable != (Module*)app->sceneWin && toDisable != (Module*)app->sceneLoose && toDisable != (Module*)app->sceneIntro)
-	{
-		lastLevel = toDisable;
-	}*/
-
-	/*if (lastLevel == (Module*)app->sceneLevel2 && toDisable == (Module*)app->sceneLoose)
-	{
-		toEnable = lastLevel;
-	}
-
-	if (lastLevel == (Module*)app->sceneLevel2 && toDisable == (Module*)app->sceneWin)
-	{
-		toEnable = (Module*)app->sceneMenu;
-	}*/
-
 	// If we are already in a fade process, ignore this call
 	if (currentStep == FadeStep::NONE)
 	{

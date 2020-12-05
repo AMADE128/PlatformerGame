@@ -63,7 +63,7 @@ bool SceneWin::Update(float dt)
 	app->render->DrawTexture(win, 0, 0);
 	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
-		app->fadeToBlack->Fade(this, (Module*)app->sceneMenu, 80);
+		app->fadeToBlack->Fade(this, (Module*)app->sceneMenu, 1600 * dt);
 	}
 
 	return true;
