@@ -8,6 +8,16 @@ class EnemyBird : public Enemy
 {
 public :
 
+	enum State
+	{
+		IDLE = 0,
+		RUN,
+		JUMP,
+		FALL,
+		HIT
+
+	};
+
 	EnemyBird(int x, int y);
 
 	void Update() override;
@@ -20,7 +30,12 @@ public :
 
 	bool StopMovement(Collider* c1, Collider* c2);
 
-	Collider* BunnyColl = nullptr;
+	Animation idle;
+	Animation hit;
+
+	Animation* currentAnim = nullptr;
+
+	Collider* collider = nullptr;
 
 	float speedX;
 

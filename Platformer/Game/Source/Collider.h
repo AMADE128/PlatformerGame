@@ -19,6 +19,7 @@ struct Collider
 		CHECKPOINT,
 		APPLE,
 		PINEAPPLE,
+		ENEMY,
 
 		MAX
 	};

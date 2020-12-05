@@ -14,6 +14,8 @@
 #include <stdio.h>
 
 #include "Enemy.h"
+#include "EnemyBunny.h"
+#include "EnemyBird.h"
 
 #include "SDL/include/SDL.h"
 
@@ -33,6 +35,17 @@ ModuleEnemies::~ModuleEnemies()
 
 bool ModuleEnemies::Start()
 {
+	bunnyIdle = app->tex->Load("Assets/Textures/Enemies/Bunny/idle.png");
+	bunnyJump = app->tex->Load("Assets/Textures/Enemies/Bunny/jump.png");
+	bunnyRun = app->tex->Load("Assets/Textures/Enemies/Bunny/run.png");
+	bunnyFall = app->tex->Load("Assets/Textures/Enemies/Bunny/fall.png");
+	bunnyHit = app->tex->Load("Assets/Textures/Enemies/Bunny/hit.png");
+
+	birdFly = app->tex->Load("Assets/Textures/Enemies/Bird/fly.png");
+	birdHit = app->tex->Load("Assets/Textures/Enemies/Bird/hit.png");
+		 
+
+
 
 	return true;
 }
@@ -58,7 +71,7 @@ bool ModuleEnemies::PostUpdate()
 	bool ret = true;
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
 	{
-		if (enemies[i] != nullptr)
+		if (enemies[i] != nullptr && enemies[i]->death == false)
 		{
 			enemies[i]->Draw();
 		}
@@ -80,6 +93,14 @@ bool ModuleEnemies::CleanUp()
 			enemies[i] = nullptr;
 		}
 	}
+
+	app->tex->UnLoad(bunnyFall);
+	app->tex->UnLoad(bunnyHit);
+	app->tex->UnLoad(bunnyIdle);
+	app->tex->UnLoad(bunnyJump);
+	app->tex->UnLoad(bunnyRun);
+	app->tex->UnLoad(birdFly);
+	app->tex->UnLoad(birdHit);
 
 	return true;
 }
@@ -127,7 +148,7 @@ void ModuleEnemies::EnemiesDespawn()
 	//// Iterate existing enemies
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
 	{
-		if (enemies[i] != nullptr)
+		if (enemies[i] != nullptr && enemies[i]->death == true)
 		{
 			delete enemies[i];
 			enemies[i] = nullptr;
@@ -145,12 +166,12 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info)
 			switch (info.type)
 			{
 			case EnemyType::BIRD:
-				//enemies[i] = new Enemy_Demon(info.x, info.y);
-				enemies[i]->texture = bird;
+				enemies[i] = new EnemyBird(info.x, info.y);
+				enemies[i]->texture = birdFly;
 				break;
 			case EnemyType::BUNNY:
-				//enemies[i] = new Frog(info.x, info.y);
-				enemies[i]->texture = bunny;
+				enemies[i] = new EnemyBunny(info.x, info.y);
+				enemies[i]->texture = bunnyIdle;
 				break;
 			}
 			break;

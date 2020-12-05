@@ -10,16 +10,36 @@
 
 EnemyBird::EnemyBird(int x, int y) : Enemy(x, y)
 {
+	for (int i = 0; i < TILESIZE * 11; i += TILESIZE)
+	{
+		idle.PushBack({ i, 0, TILESIZE, TILESIZE });
+	}
+	idle.loop = true;
+	idle.speed = 0.25f;
 
+	for (int i = 0; i < TILESIZE * 7; i += TILESIZE)
+	{
+		hit.PushBack({ i, 0, TILESIZE, TILESIZE });
+	}
+	hit.loop = false;
+	hit.speed = 0.25f;
+
+
+
+	collider = app->collision->AddCollider({ (position.x) + 14, position.y, 32 * 4 - 15, 32 * 4 - 15 }, Collider::Type::ENEMY, (Module*)app->moduleEnemies);
 }
 
 void EnemyBird::Update()
 {
-
+	if (currentAnim != nullptr)
+	{
+		currentAnim->Update();
+	}
 }
 
 bool EnemyBird::Cleanup()
 {
+	app->collision->RemoveCollider(collider);
 	return true;
 }
 
@@ -49,12 +69,12 @@ bool EnemyBird::StopMovementY(Collider* c1, Collider* c2)
 
 bool EnemyBird::StopMovement(Collider* c1, Collider* c2)
 {
-	if (c1->rect.x < c2->rect.x && (c1->rect.y + BunnyColl->rect.h - 3) > c2->rect.y)
+	if (c1->rect.x < c2->rect.x && (c1->rect.y + collider->rect.h - 3) > c2->rect.y)
 	{
 		xRightCollision = true;
 		speedX = 0.f;
 	}
-	if (c1->rect.x > c2->rect.x && (c1->rect.y + BunnyColl->rect.h - 3) > c2->rect.y)
+	if (c1->rect.x > c2->rect.x && (c1->rect.y + collider->rect.h - 3) > c2->rect.y)
 	{
 		xLeftCollision = true;
 		speedX = 0.f;

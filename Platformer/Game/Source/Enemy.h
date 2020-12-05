@@ -52,6 +52,8 @@ public:
 
 	// The enemy's collider
 	Collider* collider = nullptr;
+
+	bool death = false;
 protected:
 
 

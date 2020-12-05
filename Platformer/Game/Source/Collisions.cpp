@@ -27,6 +27,7 @@ Collisions::Collisions() : Module()
 	matrix[Collider::Type::PLAYER][Collider::Type::CHECKPOINT] = NOTHING;
 	matrix[Collider::Type::PLAYER][Collider::Type::APPLE] = NOTHING;
 	matrix[Collider::Type::PLAYER][Collider::Type::PINEAPPLE] = NOTHING;
+	matrix[Collider::Type::PLAYER][Collider::Type::ENEMY] = DIE;
 
 	matrix[Collider::Type::CAMERA][Collider::Type::WALL] = NOTHING;
 	matrix[Collider::Type::CAMERA][Collider::Type::GROUND] = NOTHING;
@@ -38,6 +39,7 @@ Collisions::Collisions() : Module()
 	matrix[Collider::Type::CAMERA][Collider::Type::CHECKPOINT] = NOTHING;
 	matrix[Collider::Type::CAMERA][Collider::Type::APPLE] = NOTHING;
 	matrix[Collider::Type::CAMERA][Collider::Type::PINEAPPLE] = NOTHING;
+	matrix[Collider::Type::CAMERA][Collider::Type::ENEMY] = NOTHING;
 
 	matrix[Collider::Type::NONE][Collider::Type::WALL] = NOTHING;
 	matrix[Collider::Type::NONE][Collider::Type::GROUND] = NOTHING;
@@ -49,6 +51,7 @@ Collisions::Collisions() : Module()
 	matrix[Collider::Type::NONE][Collider::Type::CHECKPOINT] = NOTHING;
 	matrix[Collider::Type::NONE][Collider::Type::APPLE] = NOTHING;
 	matrix[Collider::Type::NONE][Collider::Type::PINEAPPLE] = NOTHING;
+	matrix[Collider::Type::NONE][Collider::Type::ENEMY] = NOTHING;
 
 	matrix[Collider::Type::AIR][Collider::Type::WALL] = NOTHING;
 	matrix[Collider::Type::AIR][Collider::Type::GROUND] = NOTHING;
@@ -60,6 +63,7 @@ Collisions::Collisions() : Module()
 	matrix[Collider::Type::AIR][Collider::Type::CHECKPOINT] = NOTHING;
 	matrix[Collider::Type::AIR][Collider::Type::APPLE] = NOTHING;
 	matrix[Collider::Type::AIR][Collider::Type::PINEAPPLE] = NOTHING;
+	matrix[Collider::Type::AIR][Collider::Type::ENEMY] = NOTHING;
 
 	matrix[Collider::Type::CHECKPOINT][Collider::Type::WALL] = NOTHING;
 	matrix[Collider::Type::CHECKPOINT][Collider::Type::GROUND] = NOTHING;
@@ -71,6 +75,7 @@ Collisions::Collisions() : Module()
 	matrix[Collider::Type::CHECKPOINT][Collider::Type::CHECKPOINT] = NOTHING;
 	matrix[Collider::Type::CHECKPOINT][Collider::Type::APPLE] = NOTHING;
 	matrix[Collider::Type::CHECKPOINT][Collider::Type::PINEAPPLE] = NOTHING;
+	matrix[Collider::Type::CHECKPOINT][Collider::Type::ENEMY] = NOTHING;
 
 	matrix[Collider::Type::APPLE][Collider::Type::WALL] = NOTHING;
 	matrix[Collider::Type::APPLE][Collider::Type::GROUND] = NOTHING;
@@ -82,6 +87,7 @@ Collisions::Collisions() : Module()
 	matrix[Collider::Type::APPLE][Collider::Type::CHECKPOINT] = NOTHING;
 	matrix[Collider::Type::APPLE][Collider::Type::APPLE] = NOTHING;
 	matrix[Collider::Type::APPLE][Collider::Type::PINEAPPLE] = NOTHING;
+	matrix[Collider::Type::APPLE][Collider::Type::ENEMY] = NOTHING;
 
 	matrix[Collider::Type::PINEAPPLE][Collider::Type::WALL] = NOTHING;
 	matrix[Collider::Type::PINEAPPLE][Collider::Type::GROUND] = NOTHING;
@@ -93,6 +99,19 @@ Collisions::Collisions() : Module()
 	matrix[Collider::Type::PINEAPPLE][Collider::Type::CHECKPOINT] = NOTHING;
 	matrix[Collider::Type::PINEAPPLE][Collider::Type::APPLE] = NOTHING;
 	matrix[Collider::Type::PINEAPPLE][Collider::Type::PINEAPPLE] = NOTHING;
+	matrix[Collider::Type::PINEAPPLE][Collider::Type::ENEMY] = NOTHING;
+
+	matrix[Collider::Type::ENEMY][Collider::Type::WALL] = STOP;
+	matrix[Collider::Type::ENEMY][Collider::Type::GROUND] = STOP_Y;
+	matrix[Collider::Type::ENEMY][Collider::Type::PLAYER] = DIE;
+	matrix[Collider::Type::ENEMY][Collider::Type::NONE] = NOTHING;
+	matrix[Collider::Type::ENEMY][Collider::Type::AIR] = NOTHING;
+	matrix[Collider::Type::ENEMY][Collider::Type::SPIKE] = NOTHING;
+	matrix[Collider::Type::ENEMY][Collider::Type::CAMERA] = NOTHING;
+	matrix[Collider::Type::ENEMY][Collider::Type::CHECKPOINT] = NOTHING;
+	matrix[Collider::Type::ENEMY][Collider::Type::APPLE] = NOTHING;
+	matrix[Collider::Type::ENEMY][Collider::Type::PINEAPPLE] = NOTHING;
+	matrix[Collider::Type::ENEMY][Collider::Type::ENEMY] = NOTHING;
 }
 
 // Destructor

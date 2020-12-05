@@ -13,6 +13,7 @@
 #include "Animation.h"
 #include "Fonts.h"
 #include "ModuleParticles.h"
+#include "ModuleEnemies.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -112,6 +113,8 @@ bool Scene::Start()
 	app->map->Start();
 	app->moduleParticles->Init();
 	app->moduleParticles->Start();
+	app->moduleEnemies->Init();
+	app->moduleEnemies->Start();
 
 	return true;
 }

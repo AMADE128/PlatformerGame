@@ -4,6 +4,7 @@
 #include "Module.h"
 
 #define MAX_ENEMIES 100
+#define TILESIZE 96
 
 enum class EnemyType
 {
@@ -50,11 +51,18 @@ public:
 	void EnemiesDespawn();
 
 	// The enemies sprite sheet
-	SDL_Texture* bird = nullptr;
-	SDL_Texture* bunny = nullptr;
 
 	// All spawned enemies in the scene
 	Enemy* enemies[MAX_ENEMIES] = { nullptr };
+
+	SDL_Texture* bunnyIdle = nullptr;
+	SDL_Texture* bunnyFall = nullptr;
+	SDL_Texture* bunnyHit = nullptr;
+	SDL_Texture* bunnyRun = nullptr;
+	SDL_Texture* bunnyJump = nullptr;
+
+	SDL_Texture* birdFly = nullptr;
+	SDL_Texture* birdHit = nullptr;
 
 private:
 	// Spawns a new enemy using the data from the queue

@@ -4,9 +4,21 @@
 #include "Enemy.h"
 #include "Path.h"
 
+class Animation;
+
 class EnemyBunny : public Enemy
 {
 public:
+
+	enum State
+	{
+		IDLE = 0,
+		RUN,
+		JUMP,
+		FALL,
+		HIT
+
+	};
 
 	EnemyBunny(int x, int y);
 
@@ -20,7 +32,15 @@ public:
 
 	bool StopMovement(Collider* c1, Collider* c2);
 
-	Collider* BunnyColl = nullptr;
+	Animation idle;
+	Animation run;
+	Animation fall;
+	Animation jump;
+	Animation hit;
+
+	Animation* currentAnim = nullptr;
+
+	Collider* collider = nullptr;
 
 	float speedX;
 
@@ -28,6 +48,7 @@ public:
 private:
 
 	Path path;
+
 	bool yDownCollision;
 	bool yUpCollision;
 	bool xLeftCollision;
