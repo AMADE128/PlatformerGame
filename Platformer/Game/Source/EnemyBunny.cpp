@@ -11,29 +11,29 @@
 
 EnemyBunny::EnemyBunny(int x, int y) : Enemy(x, y)
 {
-	for (int i = 0; i < TILESIZE * 11; i += TILESIZE)
+	for (int i = 0; i < 102 * 8; i += 102)
 	{
-		idle.PushBack({ i, 0, TILESIZE, TILESIZE });
+		idle.PushBack({ i, 0, 102, 132 });
 	}
 	idle.loop = true;
 	idle.speed = 0.25f;
 
-	for (int i = 0; i < TILESIZE * 12; i += TILESIZE)
+	for (int i = 0; i < 102 * 12; i += 102)
 	{
-		run.PushBack({ i, 0, TILESIZE, TILESIZE });
+		run.PushBack({ i, 0, 102, 132 });
 	}
 	run.loop = true;
 	run.speed = 0.25f;
 
-	fall.PushBack({ 0, 0, TILESIZE, TILESIZE });
+	fall.PushBack({ 0, 0, 102, 132 });
 	fall.loop = true;
 	fall.speed = 0.25f;
 
-	jump.PushBack({ 0, 0, TILESIZE, TILESIZE });
+	jump.PushBack({ 0, 0, 102, 132 });
 
-	for (int i = 0; i < TILESIZE * 7; i += TILESIZE)
+	for (int i = 0; i < 102 * 5; i += 102)
 	{
-		hit.PushBack({ i, 0, TILESIZE, TILESIZE });
+		hit.PushBack({ i, 0, 102, 132 });
 	}
 	hit.loop = false;
 	hit.speed = 0.25f;
@@ -45,11 +45,10 @@ EnemyBunny::EnemyBunny(int x, int y) : Enemy(x, y)
 
 void EnemyBunny::Update()
 {
-	if (currentAnim != nullptr)
-	{
-		currentAnim->Update();
-	}
+	
+	currentAnim = &idle;
 
+	Enemy::Update();
 
 }
 
@@ -95,5 +94,10 @@ bool EnemyBunny::StopMovement(Collider* c1, Collider* c2)
 		xLeftCollision = true;
 		speedX = 0.f;
 	}
+	return true;
+}
+
+bool EnemyBunny::OnCollision(Collider* c1, Collider* c2)
+{
 	return true;
 }

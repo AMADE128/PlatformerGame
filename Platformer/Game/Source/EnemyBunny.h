@@ -28,6 +28,8 @@ public:
 
 	bool Fall(Collider* c1, Collider* c2);
 
+	bool OnCollision(Collider* c1, Collider* c2);
+
 	bool StopMovementY(Collider* c1, Collider* c2);
 
 	bool StopMovement(Collider* c1, Collider* c2);
@@ -37,10 +39,6 @@ public:
 	Animation fall;
 	Animation jump;
 	Animation hit;
-
-	Animation* currentAnim = nullptr;
-
-	Collider* collider = nullptr;
 
 	float speedX;
 

@@ -40,7 +40,7 @@ public:
 
 	bool CleanUp() override;
 
-	bool OnCollision(Collider* c1, Collider* c2) override;
+	bool Die(Collider* c1, Collider* c2) override;
 	bool Fall(Collider* c1, Collider* c2) override;
 	bool StopMovement(Collider* c1, Collider* c2) override;
 	bool StopMovementY(Collider* c1, Collider* c2) override;

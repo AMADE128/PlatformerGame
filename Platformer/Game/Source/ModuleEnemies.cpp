@@ -39,7 +39,7 @@ bool ModuleEnemies::Start()
 	bunnyFall = app->tex->Load("Assets/Textures/Enemies/Bunny/fall.png");
 	bunnyHit = app->tex->Load("Assets/Textures/Enemies/Bunny/hit.png");
 
-	birdFly = app->tex->Load("Assets/Textures/Enemies/Bird/fly.png");
+	birdFly = app->tex->Load("Assets/Textures/Enemies/Bird/flying.png");
 	birdHit = app->tex->Load("Assets/Textures/Enemies/Bird/hit.png");
 		 
 
@@ -171,13 +171,15 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info)
 	}
 }
 
-bool ModuleEnemies::OnCollision(Collider* c1, Collider* c2)
+bool ModuleEnemies::Die(Collider* c1, Collider* c2)
 {
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
 	{
-		if (enemies[i] != nullptr && enemies[i]->GetCollider() == c1)
+		if (enemies[i] != nullptr)
 		{
-			enemies[i]->OnCollision(c2); //Notify the enemy of a collision
+			enemies[i]->OnCollision(c1); //Notify the enemy of a collision
+
+			app->collision->RemoveCollider(enemies[i]->collider);
 
 			delete enemies[i];
 			enemies[i] = nullptr;

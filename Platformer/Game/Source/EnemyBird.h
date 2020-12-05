@@ -33,15 +33,9 @@ public :
 	Animation idle;
 	Animation hit;
 
-	Animation* currentAnim = nullptr;
-
-	Collider* collider = nullptr;
-
 	float speedX;
 
 private:
-
-	Path path;
 
 	bool yDownCollision;
 	bool yUpCollision;

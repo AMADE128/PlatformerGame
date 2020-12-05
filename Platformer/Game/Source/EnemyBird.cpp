@@ -24,17 +24,12 @@ EnemyBird::EnemyBird(int x, int y) : Enemy(x, y)
 	hit.loop = false;
 	hit.speed = 0.25f;
 
-	path.PushBack({ 1, 0 }, 1000, &idle);
-
 	collider = app->collision->AddCollider({ (position.x) + 14, position.y, 32 * 4 - 15, 32 * 4 - 15 }, Collider::Type::ENEMY, (Module*)app->moduleEnemies);
 }
 
 void EnemyBird::Update()
 {
-	if (currentAnim != nullptr)
-	{
-		currentAnim->Update();
-	}
+	currentAnim = &idle;
 
 	Enemy::Update();
 }
