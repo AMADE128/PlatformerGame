@@ -82,6 +82,14 @@ Player::Player() : Module()
 	dronAnim.loop = true;
 	dronAnim.speed = 0.4f;
 
+	for (int i = 0; i < 40 * 8; i += 40)
+	{
+		chickenAnim.PushBack({ i, 0, 40, 48 });
+	}
+	chickenAnim.loop = true;
+	chickenAnim.speed = 0.3f;
+
+
 }
 
 // Destructor
@@ -124,6 +132,7 @@ bool Player::Start()
 	desAppeTex = app->tex->Load("Assets/Textures/Character/desappearing.png");
 	appleTex = app->tex->Load("Assets/Textures/Items/Fruits/apple.png");
 	dronTex = app->tex->Load("Assets/Textures/Drone/flying.png");
+	chickenFlyTex = app->tex->Load("Assets/Textures/Drone/idle_skill.png");
 
 	hitFx = app->audio->LoadFx("Assets/Audio/MyscMusic/damage.wav");
 	app->musicList.Add(&hitFx);
@@ -175,6 +184,7 @@ bool Player::Update(float dt)
 	desAppeAnim.speed = 4.0f * dt;
 	appeAnim.speed = 4.0f * dt;
 	dronAnim.speed = 4.0f * dt;
+	chickenAnim.speed = 4.0f * dt;
 	if (death == false && appear == false)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
@@ -267,6 +277,18 @@ bool Player::Update(float dt)
 		{
 			app->moduleParticles->AddParticle(app->moduleParticles->rightLeaf, position.x - 30, position.y, Collider::Type::LEAF);
 			app->audio->PlayFx(leafFx);
+		}
+		if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN && flip == false && skillCoolDown == 0)
+		{
+			skillCoolDown = 200;
+			app->moduleParticles->AddParticle(app->moduleParticles->chickenFall, position.x + 200, position.y -350, Collider::Type::CHICKEN);
+			
+		}
+		if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN && flip == true && skillCoolDown == 0)
+		{
+			skillCoolDown = 200;
+			app->moduleParticles->AddParticle(app->moduleParticles->chickenFall, position.x - 200, position.y - 350, Collider::Type::CHICKEN);
+
 		}
 		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && god == true)
 		{
@@ -493,12 +515,17 @@ bool Player::Update(float dt)
 				speedY += 4.0f * dt;
 			}
 		}
+	
 		position.y += speedY;
 
 
 		playerColl->SetPos(position.x + 25, position.y + 20);
 		app->render->camera.x = ((cameraColl->rect.x + cameraColl->rect.w / 3) - (app->render->camera.w / 2)) * -1;
 		app->render->camera.y = ((cameraColl->rect.y + cameraColl->rect.h / 3) - (app->render->camera.h / 2.5)) * -1;
+	}
+	if(skillCoolDown > 0)
+	{
+		skillCoolDown--;
 	}
 
 	return true;
@@ -519,6 +546,20 @@ bool Player::PostUpdate()
 		dron->Update();
 		SDL_Rect dronRect = dron->GetCurrentFrame();
 		app->render->DrawTexture(dronTex, position.x - 50, position.y - 10, &dronRect);
+	}
+	if (flip == false && skillCoolDown == 0)
+	{
+		Animation* chicken = &chickenAnim;
+		chicken->Update();
+		SDL_Rect chickenRect = chicken->GetCurrentFrame();
+		app->render->DrawTextureFlip(chickenFlyTex, position.x + 80, position.y - 10, &chickenRect);
+	}
+	else if (flip == true && skillCoolDown == 0)
+	{
+		Animation* chicken = &chickenAnim;
+		chicken->Update();
+		SDL_Rect chickenRect = chicken->GetCurrentFrame();
+		app->render->DrawTexture(chickenFlyTex, position.x + 80, position.y - 10, &chickenRect);
 	}
 
 	currentAnimation->Update();
@@ -555,6 +596,7 @@ bool Player::PostUpdate()
 	{
 		app->fonts->BlitText((app->render->camera.x - 1145) * -1, (app->render->camera.y - 17) * -1, scoreFont, scoreText);
 	}
+
 
 	return true;
 }

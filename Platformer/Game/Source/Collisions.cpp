@@ -30,6 +30,7 @@ Collisions::Collisions() : Module()
 		matrix[Collider::Type::PLAYER][Collider::Type::PINEAPPLE] = NOTHING;
 		matrix[Collider::Type::PLAYER][Collider::Type::ENEMY] = DIE;
 		matrix[Collider::Type::PLAYER][Collider::Type::LEAF] = NOTHING;
+		matrix[Collider::Type::PLAYER][Collider::Type::CHICKEN] = NOTHING;
 
 		matrix[Collider::Type::GROUND][Collider::Type::WALL] = NOTHING;
 		matrix[Collider::Type::GROUND][Collider::Type::GROUND] = NOTHING;
@@ -43,6 +44,7 @@ Collisions::Collisions() : Module()
 		matrix[Collider::Type::GROUND][Collider::Type::PINEAPPLE] = NOTHING;
 		matrix[Collider::Type::GROUND][Collider::Type::ENEMY] = NOTHING;
 		matrix[Collider::Type::GROUND][Collider::Type::LEAF] = NOTHING;
+		matrix[Collider::Type::GROUND][Collider::Type::CHICKEN] = NOTHING;
 
 		matrix[Collider::Type::WALL][Collider::Type::WALL] = NOTHING;
 		matrix[Collider::Type::WALL][Collider::Type::GROUND] = NOTHING;
@@ -56,6 +58,7 @@ Collisions::Collisions() : Module()
 		matrix[Collider::Type::WALL][Collider::Type::PINEAPPLE] = NOTHING;
 		matrix[Collider::Type::WALL][Collider::Type::ENEMY] = NOTHING;
 		matrix[Collider::Type::WALL][Collider::Type::LEAF] = NOTHING;
+		matrix[Collider::Type::WALL][Collider::Type::CHICKEN] = NOTHING;
 
 		matrix[Collider::Type::SPIKE][Collider::Type::WALL] = NOTHING;
 		matrix[Collider::Type::SPIKE][Collider::Type::GROUND] = NOTHING;
@@ -69,6 +72,7 @@ Collisions::Collisions() : Module()
 		matrix[Collider::Type::SPIKE][Collider::Type::PINEAPPLE] = NOTHING;
 		matrix[Collider::Type::SPIKE][Collider::Type::ENEMY] = NOTHING;
 		matrix[Collider::Type::SPIKE][Collider::Type::LEAF] = NOTHING;
+		matrix[Collider::Type::SPIKE][Collider::Type::CHICKEN] = NOTHING;
 
 		matrix[Collider::Type::CAMERA][Collider::Type::WALL] = NOTHING;
 		matrix[Collider::Type::CAMERA][Collider::Type::GROUND] = NOTHING;
@@ -82,6 +86,7 @@ Collisions::Collisions() : Module()
 		matrix[Collider::Type::CAMERA][Collider::Type::PINEAPPLE] = NOTHING;
 		matrix[Collider::Type::CAMERA][Collider::Type::ENEMY] = NOTHING;
 		matrix[Collider::Type::CAMERA][Collider::Type::LEAF] = NOTHING;
+		matrix[Collider::Type::CAMERA][Collider::Type::CHICKEN] = NOTHING;
 
 		matrix[Collider::Type::NONE][Collider::Type::WALL] = NOTHING;
 		matrix[Collider::Type::NONE][Collider::Type::GROUND] = NOTHING;
@@ -95,7 +100,7 @@ Collisions::Collisions() : Module()
 		matrix[Collider::Type::NONE][Collider::Type::PINEAPPLE] = NOTHING;
 		matrix[Collider::Type::NONE][Collider::Type::ENEMY] = NOTHING;
 		matrix[Collider::Type::NONE][Collider::Type::LEAF] = NOTHING;
-
+		matrix[Collider::Type::NONE][Collider::Type::CHICKEN] = NOTHING;
 
 		matrix[Collider::Type::AIR][Collider::Type::WALL] = NOTHING;
 		matrix[Collider::Type::AIR][Collider::Type::GROUND] = NOTHING;
@@ -109,6 +114,7 @@ Collisions::Collisions() : Module()
 		matrix[Collider::Type::AIR][Collider::Type::PINEAPPLE] = NOTHING;
 		matrix[Collider::Type::AIR][Collider::Type::ENEMY] = NOTHING;
 		matrix[Collider::Type::AIR][Collider::Type::LEAF] = NOTHING;
+		matrix[Collider::Type::AIR][Collider::Type::CHICKEN] = NOTHING;
 
 		matrix[Collider::Type::CHECKPOINT][Collider::Type::WALL] = NOTHING;
 		matrix[Collider::Type::CHECKPOINT][Collider::Type::GROUND] = NOTHING;
@@ -122,6 +128,7 @@ Collisions::Collisions() : Module()
 		matrix[Collider::Type::CHECKPOINT][Collider::Type::PINEAPPLE] = NOTHING;
 		matrix[Collider::Type::CHECKPOINT][Collider::Type::ENEMY] = NOTHING;
 		matrix[Collider::Type::CHECKPOINT][Collider::Type::LEAF] = NOTHING;
+		matrix[Collider::Type::CHECKPOINT][Collider::Type::CHICKEN] = NOTHING;
 
 		matrix[Collider::Type::APPLE][Collider::Type::WALL] = NOTHING;
 		matrix[Collider::Type::APPLE][Collider::Type::GROUND] = NOTHING;
@@ -135,6 +142,7 @@ Collisions::Collisions() : Module()
 		matrix[Collider::Type::APPLE][Collider::Type::PINEAPPLE] = NOTHING;
 		matrix[Collider::Type::APPLE][Collider::Type::ENEMY] = NOTHING;
 		matrix[Collider::Type::APPLE][Collider::Type::LEAF] = NOTHING;
+		matrix[Collider::Type::APPLE][Collider::Type::CHICKEN] = NOTHING;
 
 		matrix[Collider::Type::PINEAPPLE][Collider::Type::WALL] = NOTHING;
 		matrix[Collider::Type::PINEAPPLE][Collider::Type::GROUND] = NOTHING;
@@ -148,6 +156,7 @@ Collisions::Collisions() : Module()
 		matrix[Collider::Type::PINEAPPLE][Collider::Type::PINEAPPLE] = NOTHING;
 		matrix[Collider::Type::PINEAPPLE][Collider::Type::ENEMY] = NOTHING;
 		matrix[Collider::Type::PINEAPPLE][Collider::Type::LEAF] = NOTHING;
+		matrix[Collider::Type::PINEAPPLE][Collider::Type::CHICKEN] = NOTHING;
 
 		matrix[Collider::Type::ENEMY][Collider::Type::WALL] = STOP;
 		matrix[Collider::Type::ENEMY][Collider::Type::GROUND] = STOP_Y;
@@ -161,6 +170,7 @@ Collisions::Collisions() : Module()
 		matrix[Collider::Type::ENEMY][Collider::Type::PINEAPPLE] = NOTHING;
 		matrix[Collider::Type::ENEMY][Collider::Type::ENEMY] = NOTHING;
 		matrix[Collider::Type::ENEMY][Collider::Type::LEAF] = DIE;
+		matrix[Collider::Type::ENEMY][Collider::Type::CHICKEN] = DIE;
 
 		matrix[Collider::Type::LEAF][Collider::Type::WALL] = DIE;
 		matrix[Collider::Type::LEAF][Collider::Type::GROUND] = DIE;
@@ -174,6 +184,21 @@ Collisions::Collisions() : Module()
 		matrix[Collider::Type::LEAF][Collider::Type::PINEAPPLE] = NOTHING;
 		matrix[Collider::Type::LEAF][Collider::Type::ENEMY] = DIE;
 		matrix[Collider::Type::LEAF][Collider::Type::LEAF] = NOTHING;
+		matrix[Collider::Type::LEAF][Collider::Type::CHICKEN] = NOTHING;
+
+		matrix[Collider::Type::CHICKEN][Collider::Type::WALL] = NOTHING;
+		matrix[Collider::Type::CHICKEN][Collider::Type::GROUND] = NOTHING;
+		matrix[Collider::Type::CHICKEN][Collider::Type::PLAYER] = NOTHING;
+		matrix[Collider::Type::CHICKEN][Collider::Type::NONE] = NOTHING;
+		matrix[Collider::Type::CHICKEN][Collider::Type::AIR] = NOTHING;
+		matrix[Collider::Type::CHICKEN][Collider::Type::SPIKE] = NOTHING;
+		matrix[Collider::Type::CHICKEN][Collider::Type::CAMERA] = NOTHING;
+		matrix[Collider::Type::CHICKEN][Collider::Type::CHECKPOINT] = NOTHING;
+		matrix[Collider::Type::CHICKEN][Collider::Type::APPLE] = NOTHING;
+		matrix[Collider::Type::CHICKEN][Collider::Type::PINEAPPLE] = NOTHING;
+		matrix[Collider::Type::CHICKEN][Collider::Type::ENEMY] = NOTHING;
+		matrix[Collider::Type::CHICKEN][Collider::Type::LEAF] = NOTHING;
+		matrix[Collider::Type::CHICKEN][Collider::Type::CHICKEN] = NOTHING;
 	}
 
 }
@@ -354,6 +379,9 @@ void Collisions::DebugDraw()
 			app->render->DrawRectangle(colliders[i]->rect, 165, 42, 42, alpha);
 			break;
 		case Collider::Type::ENEMY: // brown
+			app->render->DrawRectangle(colliders[i]->rect, 100, 42, 42, alpha);
+			break;
+		case Collider::Type::CHICKEN: // brown
 			app->render->DrawRectangle(colliders[i]->rect, 100, 42, 42, alpha);
 			break;
 			

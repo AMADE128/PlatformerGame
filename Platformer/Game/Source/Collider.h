@@ -21,6 +21,7 @@ struct Collider
 		PINEAPPLE,
 		ENEMY,
 		LEAF,
+		CHICKEN,
 
 		MAX
 	};

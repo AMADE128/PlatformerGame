@@ -57,8 +57,14 @@ public:
 	SDL_Texture* desAppeTex = nullptr;
 	SDL_Texture* appleTex = nullptr;
 	SDL_Texture* dronTex = nullptr;
+	SDL_Texture* chickenFlyTex = nullptr;
+
 
 	bool flip;
+	
+	int skillCoolDown = 0;
+
+	bool skillRest = 0;
 
 	int lifes = 3;
 
@@ -78,6 +84,7 @@ public:
 	Animation appeAnim;
 	Animation desAppeAnim;
 	Animation dronAnim;
+	Animation chickenAnim;
 
 	iPoint position;
 

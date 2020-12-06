@@ -37,6 +37,25 @@ ModuleParticles::ModuleParticles() : Module()
 	leftLeaf.speed.x = -15;
 	leftLeaf.lifetime = 40;
 
+	for (int i = 0; i < 120 * 4; i += 120)
+	{
+		chickenFall.anim.PushBack({ i, 0, 120, 144 });
+	}
+	chickenFall.anim.loop = false;
+	chickenFall.anim.speed = 0.2f;
+	chickenFall.speed.y = 9;
+	chickenFall.lifetime = 40;
+
+	for (int i = 0; i < 120 * 5; i += 120)
+	{
+		chickenHit.anim.PushBack({ i, 0, 120, 144 });
+	}
+	chickenHit.anim.loop = false;
+	chickenHit.anim.speed = 0.2f;
+	chickenFall.speed.x = 0.01f;
+	chickenHit.lifetime = 40;
+
+
 }
 
 ModuleParticles::~ModuleParticles()
@@ -50,6 +69,8 @@ bool ModuleParticles::Start()
 
 	fruitGetTex = app->tex->Load("Assets/Textures/Items/Fruits/collect.png");
 	leafTex = app->tex->Load("Assets/Textures/Drone/leaf.png");
+	chickenFallTex = app->tex->Load("Assets/Textures/Drone/fall_skill.png");
+	chickenHitTex = app->tex->Load("Assets/Textures/Drone/hit_skill.png");
 
 	return true;
 }
@@ -73,6 +94,8 @@ bool ModuleParticles::CleanUp()
 	}
 	app->tex->UnLoad(fruitGetTex);
 	app->tex->UnLoad(leafTex);
+	app->tex->UnLoad(chickenFallTex);
+	app->tex->UnLoad(chickenHitTex);
 	active = false;
 
 	return true;
@@ -98,6 +121,7 @@ bool ModuleParticles::Die(Collider* c1, Collider* c2)
 bool ModuleParticles::Update(float dt)
 {
 	bool ret = true;
+	chickenFall.speed.y = 500 * dt;
 
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 	{
@@ -117,6 +141,7 @@ bool ModuleParticles::Update(float dt)
 	return ret;
 }
 
+
 bool ModuleParticles::PostUpdate()
 {
 	bool ret = true;
@@ -125,13 +150,21 @@ bool ModuleParticles::PostUpdate()
 	{
 		Particle* particle = particles[i];
 
-		if (particle != nullptr && particle->speed.x == fruitGet.speed.x)
+		if (particle != nullptr && particle->speed.x == fruitGet.speed.x && particle->speed.y != chickenFall.speed.y)
 		{
 			app->render->DrawTexture(fruitGetTex, particle->position.x - 24, particle->position.y - 24, &(particle->anim.GetCurrentFrame()));
 		}
 		if (particle != nullptr && (particle->speed.x == rightLeaf.speed.x || particle->speed.x == leftLeaf.speed.x) && particle->speed.x != fruitGet.speed.x)
 		{
 			app->render->DrawTexture(leafTex, particle->position.x, particle->position.y + 10, &(particle->anim.GetCurrentFrame()));
+		}
+		if (particle != nullptr && particle->speed.y == chickenFall.speed.y)
+		{
+			app->render->DrawTexture(chickenFallTex, particle->position.x, particle->position.y, &(particle->anim.GetCurrentFrame()));
+		}
+		if (particle != nullptr && particle->speed.x == chickenHit.speed.x && particle->speed.y != chickenFall.speed.y && particle->speed.x != fruitGet.speed.x)
+		{
+			app->render->DrawTexture(chickenHitTex, particle->position.x, particle->position.y, &(particle->anim.GetCurrentFrame()));
 		}
 
 	}
