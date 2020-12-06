@@ -33,7 +33,14 @@ void Enemy::Draw()
 {
 	if (currentAnim != nullptr)
 	{
-		app->render->DrawTexture(texture, position.x, position.y, &(currentAnim->GetCurrentFrame()));
+		if (flip == true)
+		{
+			app->render->DrawTexture(texture, position.x, position.y, &(currentAnim->GetCurrentFrame()));
+		}
+		else
+		{
+			app->render->DrawTextureFlip(texture, position.x, position.y, &(currentAnim->GetCurrentFrame()));
+		}
 	}
 }
 

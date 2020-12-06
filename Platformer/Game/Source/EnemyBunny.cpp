@@ -70,11 +70,13 @@ void EnemyBunny::Update()
 		if (position.x < app->player->position.x)
 		{
 			enemyState = WALK;
+			flip = false;
 			position.x += speedX;
 		}
 		else if (position.x > app->player->position.x)
 		{
 			enemyState = WALK;
+			flip = true;
 			position.x -= speedX;
 		}
 		if (position.y < app->player->position.y && (yDownCollision == false || yUpCollision == false))
