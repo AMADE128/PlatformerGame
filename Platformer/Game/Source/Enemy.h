@@ -40,7 +40,7 @@ public:
 	virtual bool Fall(Collider* c1, Collider* c2);
 
 	enum State {
-		IDLE = 0,
+		IDLE,
 		WALK,
 		JUMP,
 		FALL,
@@ -67,6 +67,11 @@ public:
 	EnemyType enemyType;
 
 	float gravity = 0.0f;
+
+	bool yDownCollision;
+	bool yUpCollision;
+	bool xLeftCollision;
+	bool xRightCollision;
 
 	bool death = false;
 protected:

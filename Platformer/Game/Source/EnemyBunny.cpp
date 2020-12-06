@@ -8,6 +8,7 @@
 #include "ModuleEnemies.h"
 #include "Player.h"
 #include "Animation.h"
+#include "Map.h"
 
 EnemyBunny::EnemyBunny(int x, int y) : Enemy(x, y)
 {
@@ -38,8 +39,6 @@ EnemyBunny::EnemyBunny(int x, int y) : Enemy(x, y)
 	hit.loop = false;
 	hit.speed = 0.25f;
 
-
-
 	collider = app->collision->AddCollider({position.x, position.y, 80, 32 * 4 - 15 }, Collider::Type::ENEMY, (Module*)app->moduleEnemies);
 }
 
@@ -69,11 +68,18 @@ void EnemyBunny::Update()
 
 	if (yDownCollision == true)
 	{
+		enemyState = IDLE;
 		gravity = 0.0f;
 	}
 	else
 	{
-		gravity += 0.01f;
+		enemyState = FALL;
+		gravity += 0.3f;
+	}
+	if (xLeftCollision == false)
+	{
+		enemyState = WALK;
+		position.x -= 2;
 	}
 	position.y += gravity;
 
@@ -89,9 +95,6 @@ bool EnemyBunny::Cleanup()
 
 bool EnemyBunny::Fall(Collider* c1, Collider* c2)
 {
-	yDownCollision = false;
-	xLeftCollision = false;
-	xRightCollision = false;
 	return true;
 }
 
@@ -101,6 +104,7 @@ bool EnemyBunny::StopMovementY(Collider* c1, Collider* c2)
 	{
 		yUpCollision = false;
 		yDownCollision = true;
+		position.y = c2->rect.y - 132 + 1;
 	}
 	else if (c1->rect.y > c2->rect.y)
 	{
@@ -116,12 +120,12 @@ bool EnemyBunny::StopMovement(Collider* c1, Collider* c2)
 	if (c1->rect.x < c2->rect.x && (c1->rect.y + collider->rect.h - 3) > c2->rect.y)
 	{
 		xRightCollision = true;
-		speedX = 0.f;
+		speedX = 0.0f;
 	}
 	if (c1->rect.x > c2->rect.x && (c1->rect.y + collider->rect.h - 3) > c2->rect.y)
 	{
 		xLeftCollision = true;
-		speedX = 0.f;
+		speedX = 0.0f;
 	}
 	return true;
 }

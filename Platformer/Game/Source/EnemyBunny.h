@@ -35,12 +35,6 @@ public:
 
 private:
 
-	Path path;
-
-	bool yDownCollision;
-	bool yUpCollision;
-	bool xLeftCollision;
-	bool xRightCollision;
 
 };
 

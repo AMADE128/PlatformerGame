@@ -68,6 +68,26 @@ bool ModuleEnemies::Update(float dt)
 				enemies[i]->collider->SetPos(enemies[i]->position.x + 10, enemies[i]->position.y + 10);
 				break;
 			case EnemyType::BUNNY:
+				switch (enemies[i]->enemyState)
+				{
+				case Enemy::IDLE:
+					enemies[i]->texture = bunnyIdle;
+					break;
+				case Enemy::WALK:
+					enemies[i]->texture = bunnyRun;
+					break;
+				case Enemy::JUMP:
+					enemies[i]->texture = bunnyJump;
+					break;
+				case Enemy::FALL:
+					enemies[i]->texture = bunnyFall;
+					break;
+				case Enemy::HIT:
+					enemies[i]->texture = bunnyHit;
+					break;
+				default:
+					break;
+				}
 				enemies[i]->collider->SetPos(enemies[i]->position.x + 14, enemies[i]->position.y + 20);
 				break;
 			default:
@@ -188,12 +208,10 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info)
 			case EnemyType::BIRD:
 				enemies[i] = new EnemyBird(info.x, info.y);
 				enemies[i]->enemyType = info.type;
-				enemies[i]->texture = birdFly;
 				break;
 			case EnemyType::BUNNY:
 				enemies[i] = new EnemyBunny(info.x, info.y);
 				enemies[i]->enemyType = info.type;
-				enemies[i]->texture = bunnyIdle;
 				break;
 			}
 			break;
@@ -226,7 +244,9 @@ bool ModuleEnemies::Fall(Collider* c1, Collider* c2)
 	{
 		if (enemies[i] != nullptr && enemies[i]->GetCollider() == c1)
 		{
-			enemies[i]->Fall(c1, c2); //Notify the enemy of a collision
+			enemies[i]->yDownCollision = false;
+			enemies[i]->xLeftCollision = false;
+			enemies[i]->xRightCollision = false;
 			break;
 		}
 	}

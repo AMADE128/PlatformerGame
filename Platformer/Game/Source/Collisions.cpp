@@ -260,6 +260,8 @@ bool Collisions::PreUpdate()
 			{
 				if (matrix[c1->type][c2->type] == STOP && c1->listener)
 					c1->listener->StopMovement(c1, c2);
+				if (matrix[c2->type][c1->type] == STOP && c2->listener)
+					c2->listener->StopMovement(c2, c1);
 
 				if (matrix[c1->type][c2->type] == STOP_Y && c1->listener)
 					c1->listener->StopMovementY(c1, c2);
@@ -268,6 +270,8 @@ bool Collisions::PreUpdate()
 
 				if (matrix[c1->type][c2->type] == FALL && c1->listener)
 					c1->listener->Fall(c1, c2);
+				if (matrix[c2->type][c1->type] == FALL && c2->listener)
+					c2->listener->Fall(c2, c1);
 				
 				if (matrix[c1->type][c2->type] == DIE && c1->listener)
 					c1->listener->Die(c1, c2);
