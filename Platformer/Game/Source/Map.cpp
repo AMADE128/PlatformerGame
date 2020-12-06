@@ -129,18 +129,18 @@ void Map::ComputePath(int x, int y)
 	path.Clear();
 	iPoint goal = WorldToMap(x, y);
 
-	uint i = breadcrumbs.Count();
+	uint i = breadcrumbs.Count() - 2;
 	uint j = visited.Find(goal);
 
 	path.PushBack(goal);
 
-	while (breadcrumbs.Find(breadcrumbs[j]) != -1)
+	while (j > 0)
 	{
-		if (visited.At(i) != breadcrumbs.At(j))
+		if (visited[i] != breadcrumbs[j])
 		{
 			i--;
 		}
-		else if (visited.At(i) == breadcrumbs.At(j))
+		else if (visited[i] == breadcrumbs[j])
 		{
 			j = i;
 			path.PushBack(visited[j]);
@@ -182,7 +182,7 @@ void Map::PropagateDijkstra()
 
 	TileDestiny.x = app->player->position.x;
 	TileDestiny.y = app->player->position.y;
-	TileDestiny = WorldToMap(TileDestiny.x, TileDestiny.y);
+ 	TileDestiny = WorldToMap(TileDestiny.x, TileDestiny.y);
 
 	iPoint curr;
 	curr = frontier.GetLast()->data;
