@@ -54,11 +54,6 @@ bool ModuleEnemies::Update(float dt)
 
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
 	{
-		if (found == true)
-		{
-			app->map->ResetPath({ enemies[i]->position.x, enemies[i]->position.y + enemies[i]->collider->rect.h });
-			found = false;
-		}
 		if (app->fpsMseconds < SDL_GetTicks() - 250) pathFinding = true;
 		if (enemies[i] != nullptr)
 		{
@@ -102,11 +97,16 @@ bool ModuleEnemies::Update(float dt)
 				if (enemies[i]->position.DistanceManhattan(playerPos) < 800)
 				{
 					app->map->PropagateDijkstra();
-					enemies[i]->enemyPath = app->map->path;
 				}
 			}
 		}
 		pathFinding = false;
+		if (found == true && enemies[i] != nullptr)
+		{
+			app->map->ResetPath({ enemies[i]->position.x, enemies[i]->position.y + enemies[i]->collider->rect.h });
+			enemies[i]->enemyPath = app->map->path;
+			found = false;
+		}
 	}
 
 	EnemiesDespawn();

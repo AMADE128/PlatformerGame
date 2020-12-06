@@ -44,7 +44,6 @@ EnemyBunny::EnemyBunny(int x, int y) : Enemy(x, y)
 
 void EnemyBunny::Update()
 {
-	
 	switch (enemyState)
 	{
 	case Enemy::IDLE:
@@ -66,9 +65,27 @@ void EnemyBunny::Update()
 		break;
 	}
 
+	if (i < enemyPath.Count())
+	{
+		if (position.x / 48 < enemyPath[i].x && (xRightCollision == false || xLeftCollision == false))
+		{
+			enemyState = WALK;
+			position.x += 2;
+		}
+		else if (position.x / 48 > enemyPath[i].x && (xRightCollision == false || xLeftCollision == false))
+		{
+			enemyState = WALK;
+			position.x -= 2;
+		}
+		else if (position.x/48 == enemyPath[i].x) i++;
+	}
+
 	if (yDownCollision == true)
 	{
-		enemyState = IDLE;
+		if (i >= enemyPath.Count())
+		{
+			enemyState = IDLE;
+		}
 		gravity = 0.0f;
 	}
 	else

@@ -4,6 +4,7 @@
 #include "Point.h"
 #include "Animation.h"
 #include "ModuleEnemies.h"
+#include "DynArray.h"
 
 struct SDL_Texture;
 struct Collider;
@@ -53,6 +54,7 @@ public:
 
 	// The enemy's texture
 	SDL_Texture* texture = nullptr;
+	bool flip;
 
 	// Sound fx when destroyed
 	int destroyedFx = 0;
@@ -67,6 +69,7 @@ public:
 	EnemyType enemyType;
 
 	DynArray<iPoint> enemyPath;
+	int i = 0;
 
 	float gravity = 0.0f;
 
