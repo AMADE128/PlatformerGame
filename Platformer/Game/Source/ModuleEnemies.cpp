@@ -102,6 +102,7 @@ bool ModuleEnemies::Update(float dt)
 				if (enemies[i]->position.DistanceManhattan(playerPos) < 800)
 				{
 					app->map->PropagateDijkstra();
+					enemies[i]->enemyPath = app->map->path;
 				}
 			}
 		}

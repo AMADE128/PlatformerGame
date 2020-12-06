@@ -66,6 +66,8 @@ public:
 	State enemyState;
 	EnemyType enemyType;
 
+	DynArray<iPoint> enemyPath;
+
 	float gravity = 0.0f;
 
 	bool yDownCollision;
