@@ -66,7 +66,7 @@ bool SceneWin::Update(float dt)
 		app->fadeToBlack->Fade(this, (Module*)app->sceneMenu, 1600 * dt);
 	}
 
-	return true;
+	return true;	
 }
 
 // Called each loop iteration

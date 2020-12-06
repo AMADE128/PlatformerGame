@@ -44,7 +44,7 @@ public:
 		currentFrame += speed;
 		if (currentFrame >= totalFrames)
 		{
-			currentFrame = (loop || pingpong) ? 0.0f : totalFrames - 1; // si tienes un loop o un ping pong y estas en el maximo de frames, vuelves al primero (0.0f) o te mantienes en el último (totalFrames - 1)
+			currentFrame = (loop || pingpong) ? 0.0f : totalFrames - 1; 
 			++loopCount;
 
 			finish = true;

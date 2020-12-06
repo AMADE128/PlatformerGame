@@ -144,7 +144,7 @@ void Map::ComputePath(int x, int y)
 			path.PushBack(visited[j]);
 		}
 	}
-
+	path.Flip();
 
 	// L11: TODO 2: Follow the breadcrumps to goal back to the origin
 	// add each step into "path" dyn array (it will then draw automatically)

@@ -2,6 +2,7 @@
 #define __MODULE_ENEMIES_H__
 
 #include "Module.h"
+#include "Timer.h"
 
 #define MAX_ENEMIES 100
 #define TILESIZE 96
@@ -70,6 +71,7 @@ public:
 private:
 	// Spawns a new enemy using the data from the queue
 	void SpawnEnemy(const EnemySpawnpoint& info);
+	bool pathFinding = false;
 
 private:
 	// A queue with all spawn points information

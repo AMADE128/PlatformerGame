@@ -115,6 +115,7 @@ public:
 
 	int frameRate = 60;
 	float fps = 0.f;
+	float fpsMseconds;
     int screenTicks;
 
 	List<unsigned int*>	musicList;
@@ -145,7 +146,6 @@ private:
 	float dt = 0.0f;
 
 	float secondsSinceStartup;
-	float fpsMseconds;
 	float fpsCounter;
 	float fpsPreUpdate;
 

@@ -12,6 +12,8 @@
 #include "Log.h"
 #include "Window.h"
 #include <stdio.h>
+#include "Point.h"
+#include "Map.h"
 
 #include "Enemy.h"
 #include "EnemyBunny.h"
@@ -41,7 +43,7 @@ bool ModuleEnemies::Start()
 
 	birdFly = app->tex->Load("Assets/Textures/Enemies/Bird/flying.png");
 	birdHit = app->tex->Load("Assets/Textures/Enemies/Bird/hit.png");
-		 
+		
 
 
 
@@ -55,8 +57,7 @@ bool ModuleEnemies::Update(float dt)
 
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
 	{
-		if (enemies[i] != nullptr)
-			enemies[i]->Update();
+		if (app->fpsMseconds < SDL_GetTicks() - 1000) pathFinding = true;
 		if (enemies[i] != nullptr)
 		{
 			switch (enemies[i]->enemyType)
@@ -72,7 +73,16 @@ bool ModuleEnemies::Update(float dt)
 			default:
 				break;
 			}
+			enemies[i]->Update();
+			if (pathFinding == true)
+			{
+				if (enemies[i]->position.DistanceManhattan(app->player->position) < 8)
+				{
+					app->map->ComputePath(app->player->position.x, app->player->position.y);
+				}
+			}
 		}
+		pathFinding = false;
 	}
 
 	EnemiesDespawn();

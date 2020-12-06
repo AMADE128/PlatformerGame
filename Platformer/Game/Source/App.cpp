@@ -361,7 +361,9 @@ bool App::PostUpdate()
 	Module* pModule = NULL;
 
 	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	{
 		ret = false;
+	}
 
 	// Set VOLUME
 	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
