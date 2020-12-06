@@ -125,7 +125,7 @@ int Map::MovementCost(int x, int y) const
 void Map::ComputePath(int x, int y)
 {
 	path.Clear();
-	iPoint goal = { x, y };
+	iPoint goal = WorldToMap(x, y);
 
 	uint i = breadcrumbs.Count();
 	uint j = visited.Find(goal);
