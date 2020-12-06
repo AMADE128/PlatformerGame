@@ -9,6 +9,10 @@ Ian adventure is a 2D platformer, where you play as Ian a young traveler who is 
  - Fluid 2D platforming
  - Deadly spikes
  - Infinite attempts
+ - Dangerous enemies
+ - Friendly criatures that will help you throught your adventure!
+ - Points and extra lives.
+ - Amazing abilities to get rid of the enemies!
  
 ## Controls
 
@@ -19,7 +23,7 @@ Ian adventure is a 2D platformer, where you play as Ian a young traveler who is 
 ## Developers
 
  - Himar Bravo González - Lead Programmer, Desing
- - Pol Vázquez Porcar - Lead Artist, Programmer, Desing
+ - Pol Vázquez Porcar - Lead Artist, Programmer, Fx
  - Marc Pavon Llop - Lead Designer, Programmer, Q&A
 
 
