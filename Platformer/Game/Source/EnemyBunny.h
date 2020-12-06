@@ -10,16 +10,6 @@ class EnemyBunny : public Enemy
 {
 public:
 
-	enum State
-	{
-		IDLE = 0,
-		RUN,
-		JUMP,
-		FALL,
-		HIT
-
-	};
-
 	EnemyBunny(int x, int y);
 
 	void Update() override;

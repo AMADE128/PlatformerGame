@@ -27,9 +27,6 @@ void Enemy::Update()
 {
 	if (currentAnim != nullptr)
 		currentAnim->Update();
-
-	if (collider != nullptr)
-		collider->SetPos(position.x, position.y);
 }
 
 void Enemy::Draw()
@@ -40,19 +37,22 @@ void Enemy::Draw()
 	}
 }
 
-void Enemy::OnCollision(Collider* collider)
+bool Enemy::OnCollision(Collider* c1, Collider* c2)
 {
-
+	return true;
 }
 
-void Enemy::StopMovement(Collider* collider) {
-
+bool Enemy::StopMovement(Collider* c1, Collider* c2)
+{
+	return true;
 }
 
-void Enemy::StopMovementY(Collider* collider) {
-
+bool Enemy::StopMovementY(Collider* c1, Collider* c2)
+{
+	return true;
 }
 
-void Enemy::Fall(Collider* collider) {
-
+bool Enemy::Fall(Collider* c1, Collider* c2)
+{
+	return true;
 }

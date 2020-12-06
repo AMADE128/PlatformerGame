@@ -249,6 +249,8 @@ bool Scene::CleanUp()
 
 	app->player->CleanUp();
 	app->collision->CleanUp();
+	app->fonts->CleanUp();
+	app->moduleEnemies->CleanUp();
 	app->moduleParticles->CleanUp();
 	app->map->CleanUp();
 

@@ -108,10 +108,14 @@ bool SceneLvl2::Start()
 	app->player->Start();
 	app->collision->Init();
 	app->collision->Start();
+	app->fonts->Init();
+	app->fonts->Start();
 	app->map->Init();
 	app->map->Start();
 	app->moduleParticles->Init();
 	app->moduleParticles->Start();
+	app->moduleEnemies->Init();
+	app->moduleEnemies->Start();
 
 	app->moduleEnemies->AddEnemy(EnemyType::BUNNY, 5952/2, 4032/2);
 	app->moduleEnemies->AddEnemy(EnemyType::BUNNY, 7872/2, 3072/2);
@@ -249,6 +253,8 @@ bool SceneLvl2::CleanUp()
 
 	app->player->CleanUp();
 	app->collision->CleanUp();
+	app->fonts->CleanUp();
+	app->moduleEnemies->CleanUp();
 	app->moduleParticles->CleanUp();
 	app->map->CleanUp();
 

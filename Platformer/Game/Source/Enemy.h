@@ -3,9 +3,11 @@
 
 #include "Point.h"
 #include "Animation.h"
+#include "ModuleEnemies.h"
 
 struct SDL_Texture;
 struct Collider;
+enum class EnemyType;
 
 class Enemy
 {
@@ -29,13 +31,21 @@ public:
 
 	// Collision response
 	// Triggers an animation and a sound fx
-	virtual void OnCollision(Collider* collider);
+	virtual bool OnCollision(Collider* c1, Collider* c2);
 
-	virtual void StopMovement(Collider* collider);
+	virtual bool StopMovement(Collider* c1, Collider* c2);
 
-	virtual void StopMovementY(Collider* collider);
+	virtual bool StopMovementY(Collider* c1, Collider* c2);
 
-	virtual void Fall(Collider* collider);
+	virtual bool Fall(Collider* c1, Collider* c2);
+
+	enum State {
+		IDLE = 0,
+		WALK,
+		JUMP,
+		FALL,
+		HIT
+	};
 
 public:
 	// The current position in the world
@@ -52,6 +62,11 @@ public:
 
 	// The enemy's collider
 	Collider* collider = nullptr;
+
+	State enemyState;
+	EnemyType enemyType;
+
+	float gravity = 0.0f;
 
 	bool death = false;
 protected:

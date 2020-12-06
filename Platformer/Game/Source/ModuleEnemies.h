@@ -65,6 +65,8 @@ public:
 	SDL_Texture* birdFly = nullptr;
 	SDL_Texture* birdHit = nullptr;
 
+	EnemyType collType;
+
 private:
 	// Spawns a new enemy using the data from the queue
 	void SpawnEnemy(const EnemySpawnpoint& info);

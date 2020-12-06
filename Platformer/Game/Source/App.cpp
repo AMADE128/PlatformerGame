@@ -284,6 +284,7 @@ bool App::DoUpdate()
 
 	if (input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
+		player->god = false;
 		if (sceneIntro->active == true)
 		{
 			fadeToBlack->Fade(sceneIntro, (Module*)scene, 1600 * dt / 6);
@@ -311,6 +312,7 @@ bool App::DoUpdate()
 	}
 	if (input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
+		player->god = false;
 		if (sceneIntro->active == true)
 		{
 			fadeToBlack->Fade(sceneIntro, (Module*)sceneLvl2, 1600 * dt / 6);

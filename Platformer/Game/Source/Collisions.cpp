@@ -153,7 +153,7 @@ Collisions::Collisions() : Module()
 		matrix[Collider::Type::ENEMY][Collider::Type::GROUND] = STOP_Y;
 		matrix[Collider::Type::ENEMY][Collider::Type::PLAYER] = NOTHING;
 		matrix[Collider::Type::ENEMY][Collider::Type::NONE] = NOTHING;
-		matrix[Collider::Type::ENEMY][Collider::Type::AIR] = NOTHING;
+		matrix[Collider::Type::ENEMY][Collider::Type::AIR] = FALL;
 		matrix[Collider::Type::ENEMY][Collider::Type::SPIKE] = NOTHING;
 		matrix[Collider::Type::ENEMY][Collider::Type::CAMERA] = NOTHING;
 		matrix[Collider::Type::ENEMY][Collider::Type::CHECKPOINT] = NOTHING;
@@ -263,6 +263,8 @@ bool Collisions::PreUpdate()
 
 				if (matrix[c1->type][c2->type] == STOP_Y && c1->listener)
 					c1->listener->StopMovementY(c1, c2);
+				if (matrix[c2->type][c1->type] == STOP_Y && c2->listener)
+					c2->listener->StopMovementY(c2, c1);
 
 				if (matrix[c1->type][c2->type] == FALL && c1->listener)
 					c1->listener->Fall(c1, c2);

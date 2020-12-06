@@ -40,13 +40,42 @@ EnemyBunny::EnemyBunny(int x, int y) : Enemy(x, y)
 
 
 
-	collider = app->collision->AddCollider({(position.x) + 14, position.y, 32 * 4 - 15, 32 * 4 - 15 }, Collider::Type::ENEMY, (Module*)app->moduleEnemies);
+	collider = app->collision->AddCollider({position.x, position.y, 80, 32 * 4 - 15 }, Collider::Type::ENEMY, (Module*)app->moduleEnemies);
 }
 
 void EnemyBunny::Update()
 {
 	
-	currentAnim = &idle;
+	switch (enemyState)
+	{
+	case Enemy::IDLE:
+		currentAnim = &idle;
+		break;
+	case Enemy::WALK:
+		currentAnim = &run;
+		break;
+	case Enemy::JUMP:
+		currentAnim = &jump;
+		break;
+	case Enemy::FALL:
+		currentAnim = &fall;
+		break;
+	case Enemy::HIT:
+		currentAnim = &hit;
+		break;
+	default:
+		break;
+	}
+
+	if (yDownCollision == true)
+	{
+		gravity = 0.0f;
+	}
+	else
+	{
+		gravity += 0.01f;
+	}
+	position.y += gravity;
 
 	Enemy::Update();
 

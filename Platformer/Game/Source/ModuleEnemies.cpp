@@ -57,6 +57,22 @@ bool ModuleEnemies::Update(float dt)
 	{
 		if (enemies[i] != nullptr)
 			enemies[i]->Update();
+		if (enemies[i] != nullptr)
+		{
+			switch (enemies[i]->enemyType)
+			{
+			case EnemyType::NO_TYPE:
+				break;
+			case EnemyType::BIRD:
+				enemies[i]->collider->SetPos(enemies[i]->position.x + 10, enemies[i]->position.y + 10);
+				break;
+			case EnemyType::BUNNY:
+				enemies[i]->collider->SetPos(enemies[i]->position.x + 14, enemies[i]->position.y + 20);
+				break;
+			default:
+				break;
+			}
+		}
 	}
 
 	EnemiesDespawn();
@@ -159,10 +175,12 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info)
 			{
 			case EnemyType::BIRD:
 				enemies[i] = new EnemyBird(info.x, info.y);
+				enemies[i]->enemyType = info.type;
 				enemies[i]->texture = birdFly;
 				break;
 			case EnemyType::BUNNY:
 				enemies[i] = new EnemyBunny(info.x, info.y);
+				enemies[i]->enemyType = info.type;
 				enemies[i]->texture = bunnyIdle;
 				break;
 			}
@@ -177,7 +195,7 @@ bool ModuleEnemies::Die(Collider* c1, Collider* c2)
 	{
 		if (enemies[i] != nullptr)
 		{
-			enemies[i]->OnCollision(c1); //Notify the enemy of a collision
+			enemies[i]->OnCollision(c1, c2); //Notify the enemy of a collision
 
 			app->collision->RemoveCollider(enemies[i]->collider);
 
@@ -196,7 +214,7 @@ bool ModuleEnemies::Fall(Collider* c1, Collider* c2)
 	{
 		if (enemies[i] != nullptr && enemies[i]->GetCollider() == c1)
 		{
-			enemies[i]->Fall(c2); //Notify the enemy of a collision
+			enemies[i]->Fall(c1, c2); //Notify the enemy of a collision
 			break;
 		}
 	}
@@ -210,7 +228,7 @@ bool ModuleEnemies::StopMovement(Collider* c1, Collider* c2)
 	{
 		if (enemies[i] != nullptr && enemies[i]->GetCollider() == c1)
 		{
-			enemies[i]->StopMovement(c2); //Notify the enemy of a collision
+			enemies[i]->StopMovement(c1, c2); //Notify the enemy of a collision
 			break;
 		}
 	}
@@ -225,7 +243,7 @@ bool ModuleEnemies::StopMovementY(Collider* c1, Collider* c2)
 	{
 		if (enemies[i] != nullptr && enemies[i]->GetCollider() == c1)
 		{
-			enemies[i]->StopMovementY(c2); //Notify the enemy of a collision
+			enemies[i]->StopMovementY(c1, c2); //Notify the enemy of a collision
 			break;
 		}
 	}
