@@ -54,7 +54,6 @@ bool ModuleEnemies::Update(float dt)
 
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
 	{
-		if (app->fpsMseconds < SDL_GetTicks() - 250) pathFinding = true;
 		if (enemies[i] != nullptr)
 		{
 			switch (enemies[i]->enemyType)
@@ -62,6 +61,17 @@ bool ModuleEnemies::Update(float dt)
 			case EnemyType::NO_TYPE:
 				break;
 			case EnemyType::BIRD:
+				switch (enemies[i]->enemyState)
+				{
+				case Enemy::IDLE:
+					enemies[i]->texture = birdFly;
+					break;
+				case Enemy::HIT:
+					enemies[i]->texture = birdHit;
+					break;
+				default:
+					break;
+				}
 				enemies[i]->collider->SetPos(enemies[i]->position.x + 10, enemies[i]->position.y + 10);
 				break;
 			case EnemyType::BUNNY:
@@ -91,21 +101,17 @@ bool ModuleEnemies::Update(float dt)
 				break;
 			}
 			enemies[i]->Update();
-			if (pathFinding == true)
+			if (enemies[i] != nullptr)
 			{
-				iPoint playerPos = app->player->position;
-				if (enemies[i]->position.DistanceManhattan(playerPos) < 800)
+				if (enemies[i]->position.DistanceManhattan(app->player->position) < 400)
 				{
-					app->map->PropagateDijkstra();
+					enemies[i]->follow = true;
+				}
+				else
+				{
+					enemies[i]->follow = false;
 				}
 			}
-		}
-		pathFinding = false;
-		if (found == true && enemies[i] != nullptr)
-		{
-			app->map->ResetPath({ enemies[i]->position.x, enemies[i]->position.y + enemies[i]->collider->rect.h });
-			enemies[i]->enemyPath = app->map->path;
-			found = false;
 		}
 	}
 
@@ -227,7 +233,7 @@ bool ModuleEnemies::Die(Collider* c1, Collider* c2)
 	{
 		if (enemies[i] != nullptr)
 		{
-			enemies[i]->OnCollision(c1, c2); //Notify the enemy of a collision
+			enemies[i]->OnCollision(c1, c2);
 
 			app->collision->RemoveCollider(enemies[i]->collider);
 

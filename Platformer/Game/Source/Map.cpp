@@ -129,7 +129,7 @@ void Map::ComputePath(int x, int y)
 	path.Clear();
 	iPoint goal = WorldToMap(x, y);
 
-	uint i = breadcrumbs.Count() - 2;
+	uint i = breadcrumbs.Count() - (breadcrumbs.Count() - visited.Count() + 1);
 	uint j = visited.Find(goal);
 
 	path.PushBack(goal);
@@ -213,7 +213,6 @@ void Map::PropagateDijkstra()
 	{
 		breadcrumbs.Add(curr);
 		ComputePath(app->player->position.x, app->player->position.y);
-		app->moduleEnemies->found = true;
 	}
 	
 	// L11: TODO 3: Taking BFS as a reference, implement the Dijkstra algorithm

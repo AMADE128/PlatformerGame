@@ -29,7 +29,41 @@ EnemyBird::EnemyBird(int x, int y) : Enemy(x, y)
 
 void EnemyBird::Update()
 {
-	currentAnim = &idle;
+	switch (enemyState)
+	{
+	case Enemy::IDLE:
+		currentAnim = &idle;
+		break;
+	case Enemy::HIT:
+		currentAnim = &hit;
+		break;
+	default:
+		break;
+	}
+
+	if (follow == true)
+	{
+		if (position.x < app->player->position.x && (xLeftCollision == false))
+		{
+			enemyState = IDLE;
+			position.x += 2;
+		}
+		else if (position.x > app->player->position.x && (xRightCollision == false))
+		{
+			enemyState = IDLE;
+			position.x -= 2;
+		}
+		if (position.y < app->player->position.y && (yDownCollision == false || yUpCollision == false))
+		{
+			enemyState = IDLE;
+			position.y += 2;
+		}
+		else if (position.y > app->player->position.y && (yDownCollision == false || yUpCollision == false))
+		{
+			enemyState = IDLE;
+			position.y -= 2;
+		}
+	}
 
 	Enemy::Update();
 }
@@ -66,15 +100,23 @@ bool EnemyBird::StopMovementY(Collider* c1, Collider* c2)
 
 bool EnemyBird::StopMovement(Collider* c1, Collider* c2)
 {
-	if (c1->rect.x < c2->rect.x && (c1->rect.y + collider->rect.h - 3) > c2->rect.y)
+	if (c1->rect.x < c2->rect.x + c2->rect.w)
 	{
 		xRightCollision = true;
+		c1->rect.x += 1;
 		speedX = 0.f;
 	}
-	if (c1->rect.x > c2->rect.x && (c1->rect.y + collider->rect.h - 3) > c2->rect.y)
+	if (c1->rect.x > c2->rect.x)
 	{
 		xLeftCollision = true;
+		c1->rect.x -= 1;
 		speedX = 0.f;
 	}
+	return true;
+}
+
+bool EnemyBird::OnCollision(Collider* c1, Collider* c2)
+{
+	enemyState = HIT;
 	return true;
 }

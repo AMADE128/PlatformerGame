@@ -65,24 +65,34 @@ void EnemyBunny::Update()
 		break;
 	}
 
-	if (i < enemyPath.Count())
+	if (follow == true)
 	{
-		if (position.x / 48 < enemyPath[i].x && (xRightCollision == false || xLeftCollision == false))
+		if (position.x < app->player->position.x)
 		{
 			enemyState = WALK;
-			position.x += 2;
+			position.x += speedX;
 		}
-		else if (position.x / 48 > enemyPath[i].x && (xRightCollision == false || xLeftCollision == false))
+		else if (position.x > app->player->position.x)
 		{
 			enemyState = WALK;
-			position.x -= 2;
+			position.x -= speedX;
 		}
-		else if (position.x/48 == enemyPath[i].x) i++;
+		if (position.y < app->player->position.y && (yDownCollision == false || yUpCollision == false))
+		{
+			position.y += 2;
+		}
+		else if (position.y > app->player->position.y && (yDownCollision == false || yUpCollision == false))
+		{
+			position.y -= 2;
+		}
 	}
-
+	if (xLeftCollision == false || xRightCollision == false)
+	{
+		speedX = 2;
+	}
 	if (yDownCollision == true)
 	{
-		if (i >= enemyPath.Count())
+		if (speedX == 0)
 		{
 			enemyState = IDLE;
 		}
@@ -90,7 +100,10 @@ void EnemyBunny::Update()
 	}
 	else
 	{
-		enemyState = FALL;
+		if (speedX == 0)
+		{
+			enemyState = FALL;
+		}
 		gravity += 0.3f;
 	}
 	position.y += gravity;
@@ -107,6 +120,10 @@ bool EnemyBunny::Cleanup()
 
 bool EnemyBunny::Fall(Collider* c1, Collider* c2)
 {
+	xRightCollision = false;
+	xLeftCollision = false;
+	yUpCollision = false;
+	yDownCollision = false;
 	return true;
 }
 
@@ -129,12 +146,12 @@ bool EnemyBunny::StopMovementY(Collider* c1, Collider* c2)
 
 bool EnemyBunny::StopMovement(Collider* c1, Collider* c2)
 {
-	if (c1->rect.x < c2->rect.x && (c1->rect.y + collider->rect.h - 3) > c2->rect.y)
+	if (c1->rect.x < c2->rect.x + c2->rect.w)
 	{
 		xRightCollision = true;
 		speedX = 0.0f;
 	}
-	if (c1->rect.x > c2->rect.x && (c1->rect.y + collider->rect.h - 3) > c2->rect.y)
+	if (c1->rect.x > c2->rect.x)
 	{
 		xLeftCollision = true;
 		speedX = 0.0f;
@@ -144,5 +161,6 @@ bool EnemyBunny::StopMovement(Collider* c1, Collider* c2)
 
 bool EnemyBunny::OnCollision(Collider* c1, Collider* c2)
 {
+	enemyState = HIT;
 	return true;
 }
