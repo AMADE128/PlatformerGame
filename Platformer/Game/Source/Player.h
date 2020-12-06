@@ -79,7 +79,7 @@ public:
 	Animation desAppeAnim;
 	Animation dronAnim;
 
-	fPoint position;
+	iPoint position;
 
 	float speedX;
 	float speedY;

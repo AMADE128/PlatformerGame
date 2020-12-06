@@ -125,7 +125,7 @@ int Map::MovementCost(int x, int y) const
 void Map::ComputePath(int x, int y)
 {
 	path.Clear();
-	iPoint goal = WorldToMap(x, y);
+	iPoint goal = { x, y };
 
 	uint i = breadcrumbs.Count();
 	uint j = visited.Find(goal);
@@ -200,9 +200,10 @@ void Map::PropagateDijkstra()
 	else
 	{
 		breadcrumbs.Add(curr);
-		ComputePath(app->player->position.x, app->player->position.y);
 		app->map->ResetPath(app->map->TileDestiny);
 	}
+	ComputePath(app->player->position.x, app->player->position.y);
+	
 	// L11: TODO 3: Taking BFS as a reference, implement the Dijkstra algorithm
 	// use the 2 dimensional array "costSoFar" to track the accumulated costs
 	// on each cell (is already reset to 0 automatically)

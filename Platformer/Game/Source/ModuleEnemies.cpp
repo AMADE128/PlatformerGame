@@ -76,9 +76,11 @@ bool ModuleEnemies::Update(float dt)
 			enemies[i]->Update();
 			if (pathFinding == true)
 			{
-				if (enemies[i]->position.DistanceManhattan(app->player->position) < 8)
+				iPoint playerPos = app->player->position;
+				if (enemies[i]->position.DistanceManhattan(playerPos) < 800)
 				{
-					app->map->ComputePath(app->player->position.x, app->player->position.y);
+					app->map->frontier.Push(enemies[i]->position, 0);
+					app->map->PropagateDijkstra();
 				}
 			}
 		}

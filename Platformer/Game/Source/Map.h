@@ -168,6 +168,8 @@ public:
 
     // L03: DONE 1: Add your struct for map info
 	MapData data;
+	PQueue<iPoint> frontier;
+	DynArray<iPoint> path;
 
 private:
 
@@ -175,13 +177,11 @@ private:
     SString folder;
     bool mapLoaded;
 
-	PQueue<iPoint> frontier;
 	List<iPoint> visited;
 
 	// L11: Additional variables
 	List<iPoint> breadcrumbs;
 	uint costSoFar[COST_MAP_SIZE][COST_MAP_SIZE];
-	DynArray<iPoint> path;
 	iPoint TileDestiny;
 };
 
