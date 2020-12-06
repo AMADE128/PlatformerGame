@@ -43,9 +43,6 @@ bool ModuleEnemies::Start()
 
 	birdFly = app->tex->Load("Assets/Textures/Enemies/Bird/flying.png");
 	birdHit = app->tex->Load("Assets/Textures/Enemies/Bird/hit.png");
-		
-
-
 
 	return true;
 }
@@ -57,7 +54,12 @@ bool ModuleEnemies::Update(float dt)
 
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
 	{
-		if (app->fpsMseconds < SDL_GetTicks() - 1000) pathFinding = true;
+		if (found == true)
+		{
+			app->map->ResetPath({ enemies[i]->position.x, enemies[i]->position.y + enemies[i]->collider->rect.h });
+			found = false;
+		}
+		if (app->fpsMseconds < SDL_GetTicks() - 250) pathFinding = true;
 		if (enemies[i] != nullptr)
 		{
 			switch (enemies[i]->enemyType)
@@ -99,7 +101,6 @@ bool ModuleEnemies::Update(float dt)
 				iPoint playerPos = app->player->position;
 				if (enemies[i]->position.DistanceManhattan(playerPos) < 800)
 				{
-					app->map->frontier.Push(enemies[i]->position, 0);
 					app->map->PropagateDijkstra();
 				}
 			}

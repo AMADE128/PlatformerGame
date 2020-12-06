@@ -11,6 +11,7 @@
 #include "Log.h"
 #include "Collider.h"
 #include "Player.h"
+#include "ModuleEnemies.h"
 
 #include <math.h>
 
@@ -56,6 +57,7 @@ bool Map::Start()
 
 void Map::ResetPath(iPoint start)
 {
+	start = WorldToMap(start.x, start.y);
 	frontier.Clear();
 	visited.Clear();
 	breadcrumbs.Clear();
@@ -110,11 +112,11 @@ int Map::MovementCost(int x, int y) const
 {
 	int ret = -1;
 
-	if ((x >= 0) && (x < data.width) && (y >= 0) && (y < data.height))
+ 	if ((x >= 0) && (x < data.width) && (y >= 0) && (y < data.height))
 	{
-		int id = data.layers.start->next->data->Get(x, y);
+		int tileId = data.layers.end->data->Get(x, y); 
 
-		if (id == 0) ret = 3;
+		if (tileId == 0) ret = 3;
 		else ret = 0;
 	}
 
@@ -134,27 +136,36 @@ void Map::ComputePath(int x, int y)
 
 	while (breadcrumbs.Find(breadcrumbs[j]) != -1)
 	{
-		if (visited[i] != breadcrumbs[j])
+		if (visited.At(i) != breadcrumbs.At(j))
 		{
 			i--;
 		}
-		else if (visited[i] == breadcrumbs[j])
+		else if (visited.At(i) == breadcrumbs.At(j))
 		{
 			j = i;
 			path.PushBack(visited[j]);
 		}
 	}
+
+	/*while (breadcrumbs.At(i - 1)->data != visited.start->data)
+	{
+		if (visited.At(i) != breadcrumbs.At(j))
+		{
+			i--;
+		}
+		else if (visited.At(i) == breadcrumbs.At(j))
+		{
+			j = i;
+			path.PushBack(visited[j]);
+		}
+	}*/
 	path.Flip();
 
-	// L11: TODO 2: Follow the breadcrumps to goal back to the origin
-	// add each step into "path" dyn array (it will then draw automatically)
 }
 
 
 bool Map::IsWalkable(int x, int y) const
 {
-	// L10: TODO 3: return true only if x and y are within map limits
-	// and the tile is walkable (tile id 0 in the navigation layer)
 
 	MapLayer* layer = data.layers.start->data;
 	int tileId = layer->Get(x, y);
@@ -171,6 +182,7 @@ void Map::PropagateDijkstra()
 
 	TileDestiny.x = app->player->position.x;
 	TileDestiny.y = app->player->position.y;
+	TileDestiny = WorldToMap(TileDestiny.x, TileDestiny.y);
 
 	iPoint curr;
 	curr = frontier.GetLast()->data;
@@ -200,9 +212,9 @@ void Map::PropagateDijkstra()
 	else
 	{
 		breadcrumbs.Add(curr);
-		app->map->ResetPath(app->map->TileDestiny);
+		ComputePath(app->player->position.x, app->player->position.y);
+		app->moduleEnemies->found = true;
 	}
-	ComputePath(app->player->position.x, app->player->position.y);
 	
 	// L11: TODO 3: Taking BFS as a reference, implement the Dijkstra algorithm
 	// use the 2 dimensional array "costSoFar" to track the accumulated costs

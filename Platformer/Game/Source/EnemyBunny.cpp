@@ -76,11 +76,6 @@ void EnemyBunny::Update()
 		enemyState = FALL;
 		gravity += 0.3f;
 	}
-	if (xLeftCollision == false)
-	{
-		enemyState = WALK;
-		position.x -= 2;
-	}
 	position.y += gravity;
 
 	Enemy::Update();

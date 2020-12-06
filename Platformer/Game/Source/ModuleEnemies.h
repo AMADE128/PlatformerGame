@@ -68,6 +68,8 @@ public:
 
 	EnemyType collType;
 
+	bool found = true;
+
 private:
 	// Spawns a new enemy using the data from the queue
 	void SpawnEnemy(const EnemySpawnpoint& info);
