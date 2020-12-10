@@ -12,7 +12,9 @@ Ian adventure is a 2D platformer, where you play as Ian a young traveler who is 
  - Dangerous enemies
  - Friendly criatures that will help you throught your adventure!
  - Points and extra lives.
+ - CheckPoints throught the levels!
  - Amazing abilities to get rid of the enemies!
+ - Multiple levels!
  
 ## Controls
 
@@ -21,7 +23,17 @@ Ian adventure is a 2D platformer, where you play as Ian a young traveler who is 
  - UP and DOWN arrow keys to adjust volume
  - P for attack
  - O for speial ability with cooldown
-
+ 
+ # Debug Keys
+ 
+ - F1 Start First Level
+ - F2 Start Second Level
+ - F3 Start the current level
+ - F5 Save Game state
+ - F6 Load Previous game state
+ - F9 View Colliders / logic
+ - F10 God Mode
+ - F11 Enable/Disable FPS cap to 30
 ## Developers
 
  - Himar Bravo González - Lead Programmer, Desing
