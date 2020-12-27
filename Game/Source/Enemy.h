@@ -32,7 +32,7 @@ public:
 
 	// Collision response
 	// Triggers an animation and a sound fx
-	virtual bool OnCollision(Collider* c1, Collider* c2);
+	virtual bool Die(Collider* c1, Collider* c2);
 
 	virtual bool StopMovement(Collider* c1, Collider* c2);
 
@@ -82,6 +82,8 @@ public:
 	bool yUpCollision;
 	bool xLeftCollision;
 	bool xRightCollision;
+	float speedX;
+	float speedY;
 
 	bool death = false;
 protected:

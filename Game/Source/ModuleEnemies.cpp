@@ -84,9 +84,6 @@ bool ModuleEnemies::Update(float dt)
 				case Enemy::WALK:
 					enemies[i]->texture = bunnyRun;
 					break;
-				case Enemy::JUMP:
-					enemies[i]->texture = bunnyJump;
-					break;
 				case Enemy::FALL:
 					enemies[i]->texture = bunnyFall;
 					break;
@@ -101,7 +98,6 @@ bool ModuleEnemies::Update(float dt)
 			default:
 				break;
 			}
-			enemies[i]->Update();
 			if (enemies[i] != nullptr)
 			{
 				if (enemies[i]->position.DistanceManhattan(app->player->position) < 400)
@@ -122,12 +118,12 @@ bool ModuleEnemies::Update(float dt)
 					}
 					case EnemyType::BIRD:
 					{
+						iPoint mapPositionEnemy = app->map->WorldToMap(enemies[i]->position.x, enemies[i]->position.y);
 						enemies[i]->Pathfinding(enemies[i]->position.x, enemies[i]->position.y);
-						int j = GetCurrentPositionInPath(enemies[i]->position);
+						int j = GetCurrentPositionInPath(mapPositionEnemy);
 						if (lastPath->At(j + 1) != NULL)
 						{
-							iPoint mapPositionEnemy = app->map->WorldToMap(enemies[i]->position.x, enemies[i]->position.y);
-							iPoint nextPositionEnemy = *lastPath->At(i + 1);
+							iPoint nextPositionEnemy = *lastPath->At(j + 1);
 							iPoint nextAuxPositionEenemy = MapToWorld(nextPositionEnemy);
 							enemies[i]->MoveEnemy(enemies[i]->position,nextAuxPositionEenemy, mapPositionEnemy, enemies[i]->enemyType);
 						}
@@ -138,6 +134,7 @@ bool ModuleEnemies::Update(float dt)
 					}
 				}
 			}
+			enemies[i]->Update();
 		}
 	}
 
@@ -257,10 +254,9 @@ bool ModuleEnemies::Die(Collider* c1, Collider* c2)
 {
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
 	{
-		if (enemies[i] != nullptr)
+		if (enemies[i] != nullptr && enemies[i]->GetCollider() == c1)
 		{
-			enemies[i]->OnCollision(c1, c2);
-
+			enemies[i]->Die(c1, c2);
 			app->collision->RemoveCollider(enemies[i]->collider);
 
 			delete enemies[i];

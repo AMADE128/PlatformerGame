@@ -163,7 +163,7 @@ Collisions::Collisions() : Module()
 		matrix[Collider::Type::ENEMY][Collider::Type::PLAYER] = NOTHING;
 		matrix[Collider::Type::ENEMY][Collider::Type::NONE] = NOTHING;
 		matrix[Collider::Type::ENEMY][Collider::Type::AIR] = FALL;
-		matrix[Collider::Type::ENEMY][Collider::Type::SPIKE] = NOTHING;
+		matrix[Collider::Type::ENEMY][Collider::Type::SPIKE] = DIE;
 		matrix[Collider::Type::ENEMY][Collider::Type::CAMERA] = NOTHING;
 		matrix[Collider::Type::ENEMY][Collider::Type::CHECKPOINT] = NOTHING;
 		matrix[Collider::Type::ENEMY][Collider::Type::APPLE] = NOTHING;

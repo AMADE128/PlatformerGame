@@ -497,7 +497,7 @@ bool Player::Update(float dt)
 		{
 			xLeftCollision = false;
 			xRightCollision = false;
-			position.y += -40*dt;
+			position.y += -20*dt;
 		}
 
 		if (yDownCollision == true)
@@ -666,12 +666,12 @@ bool Player::StopMovementY(Collider* c1, Collider* c2)
 
 bool Player::StopMovement(Collider* c1, Collider* c2)
 {
-	if (c1->rect.x < c2->rect.x && (c1->rect.y + playerColl->rect.h - 3) > c2->rect.y)
+	if (c1->rect.x < c2->rect.x && (c1->rect.y + c1->rect.h - 3) > c2->rect.y)
 	{
 		xRightCollision = true;
 		speedX = 0.f;
 	}
-	if (c1->rect.x > c2->rect.x && (c1->rect.y + playerColl->rect.h - 3) > c2->rect.y)
+	if (c1->rect.x > c2->rect.x && (c1->rect.y + c1->rect.h - 3) > c2->rect.y)
 	{
 		xLeftCollision = true;
 		speedX = 0.f;

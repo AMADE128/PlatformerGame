@@ -30,8 +30,6 @@ EnemyBunny::EnemyBunny(int x, int y) : Enemy(x, y)
 	fall.loop = true;
 	fall.speed = 0.25f;
 
-	jump.PushBack({ 0, 0, 102, 132 });
-
 	for (int i = 0; i < 102 * 5; i += 102)
 	{
 		hit.PushBack({ i, 0, 102, 132 });
@@ -52,9 +50,6 @@ void EnemyBunny::Update()
 	case Enemy::WALK:
 		currentAnim = &run;
 		break;
-	case Enemy::JUMP:
-		currentAnim = &jump;
-		break;
 	case Enemy::FALL:
 		currentAnim = &fall;
 		break;
@@ -65,10 +60,21 @@ void EnemyBunny::Update()
 		break;
 	}
 
-	if (follow == true)
+	if (yDownCollision == true)
 	{
-
+		if (speedX == 0)
+		{
+			enemyState = IDLE;
+		}
+		speedY = 0;
 	}
+	else
+	{
+		enemyState = FALL;
+		speedY += 1.0f;
+	}
+
+	position.y += speedY;
 
 	Enemy::Update();
 
@@ -108,12 +114,12 @@ bool EnemyBunny::StopMovementY(Collider* c1, Collider* c2)
 
 bool EnemyBunny::StopMovement(Collider* c1, Collider* c2)
 {
-	if (c1->rect.x < c2->rect.x + c2->rect.w)
+	if (c1->rect.x < c2->rect.x && (c1->rect.y + c1->rect.h - 3) > c2->rect.y)
 	{
 		xRightCollision = true;
 		speedX = 0.0f;
 	}
-	if (c1->rect.x > c2->rect.x)
+	if (c1->rect.x > c2->rect.x && (c1->rect.y + c1->rect.h - 3) > c2->rect.y)
 	{
 		xLeftCollision = true;
 		speedX = 0.0f;
@@ -121,8 +127,8 @@ bool EnemyBunny::StopMovement(Collider* c1, Collider* c2)
 	return true;
 }
 
-bool EnemyBunny::OnCollision(Collider* c1, Collider* c2)
+bool EnemyBunny::Die(Collider* c1, Collider* c2)
 {
-	enemyState = HIT;
+	death = true;
 	return true;
 }

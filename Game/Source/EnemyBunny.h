@@ -18,7 +18,7 @@ public:
 
 	bool Fall(Collider* c1, Collider* c2);
 
-	bool OnCollision(Collider* c1, Collider* c2);
+	bool Die(Collider* c1, Collider* c2);
 
 	bool StopMovementY(Collider* c1, Collider* c2);
 
@@ -29,9 +29,6 @@ public:
 	Animation fall;
 	Animation jump;
 	Animation hit;
-
-	float speedX;
-
 
 private:
 

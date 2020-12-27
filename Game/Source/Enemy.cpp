@@ -45,7 +45,7 @@ void Enemy::Draw()
 	}
 }
 
-bool Enemy::OnCollision(Collider* c1, Collider* c2)
+bool Enemy::Die(Collider* c1, Collider* c2)
 {
 	return true;
 }
@@ -73,20 +73,36 @@ void Enemy::Pathfinding(int positionx, int positiony)
 	if (app->player->death != true)app->moduleEnemies->CreatePathEnemy(mapPositionEnemy, mapPositionPlayer);
 }
 
-void Enemy::MoveEnemy(iPoint position, iPoint nextAuxPositionEenemy, iPoint mapPositionEnemy, EnemyType type)
+void Enemy::MoveEnemy(iPoint positions, iPoint nextAuxPositionEenemy, iPoint mapPositionEnemy, EnemyType type)
 {
-	int positionEnemyX = position.x;
-	int positionEnemyY = position.y;
+	int positionEnemyX = positions.x;
+	int positionEnemyY = positions.y;
 	int velocity = 2;
 	if (type == EnemyType::BUNNY)
 	{
-		if (nextAuxPositionEenemy.x < positionEnemyX)
+		if (nextAuxPositionEenemy.x < positionEnemyX && xLeftCollision == false)
 		{
+			speedX = velocity;
+			flip = true;
+			if (speedX != 0 && speedY == 0)
+			{
+				enemyState = WALK;
+			}
 			position.x -= velocity;
 		}
-		else if (nextAuxPositionEenemy.x > positionEnemyX)
+		else if (nextAuxPositionEenemy.x > positionEnemyX && xRightCollision == false)
 		{
+			speedX = velocity;
+			flip = false;
+			if (speedX != 0 && speedY == 0)
+			{
+				enemyState = WALK;
+			}
 			position.x += velocity;
+		}
+		else
+		{
+			speedX = 0;
 		}
 	}
 	else if (type == EnemyType::BIRD)
@@ -94,11 +110,19 @@ void Enemy::MoveEnemy(iPoint position, iPoint nextAuxPositionEenemy, iPoint mapP
 		velocity = 2;
 		if (nextAuxPositionEenemy.x < positionEnemyX)
 		{
+			speedX = velocity;
+			flip = true;
 			position.x -= velocity;
 		}
 		else if (nextAuxPositionEenemy.x > positionEnemyX)
 		{
+			speedX = velocity;
+			flip = false;
 			position.x += velocity;
+		}
+		else
+		{
+			speedX = 0;
 		}
 		if (nextAuxPositionEenemy.y < positionEnemyY)
 		{
