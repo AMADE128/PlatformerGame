@@ -67,48 +67,8 @@ void EnemyBunny::Update()
 
 	if (follow == true)
 	{
-		if (position.x < app->player->position.x)
-		{
-			enemyState = WALK;
-			flip = false;
-			position.x += speedX;
-		}
-		else if (position.x > app->player->position.x)
-		{
-			enemyState = WALK;
-			flip = true;
-			position.x -= speedX;
-		}
-		if (position.y < app->player->position.y && (yDownCollision == false || yUpCollision == false))
-		{
-			position.y += 2;
-		}
-		else if (position.y > app->player->position.y && (yDownCollision == false || yUpCollision == false))
-		{
-			position.y -= 2;
-		}
+
 	}
-	if (xLeftCollision == false || xRightCollision == false)
-	{
-		speedX = 2;
-	}
-	if (yDownCollision == true)
-	{
-		if (speedX == 0)
-		{
-			enemyState = IDLE;
-		}
-		gravity = 0.0f;
-	}
-	else
-	{
-		if (speedX == 0)
-		{
-			enemyState = FALL;
-		}
-		gravity += 0.3f;
-	}
-	position.y += gravity;
 
 	Enemy::Update();
 

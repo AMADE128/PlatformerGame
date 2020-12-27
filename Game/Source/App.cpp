@@ -18,6 +18,7 @@
 #include "SceneIntro.h"
 #include "SceneLoose.h"
 #include "SceneWin.h"
+#include "Pathfinding.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -48,6 +49,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	sceneLoose = new SceneLoose();
 	sceneWin = new SceneWin();
 	sceneLvl2 = new SceneLvl2();
+	pathfinding = new PathFinding();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -68,6 +70,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(collision);
 	AddModule(fadeToBlack);
 	AddModule(fonts);
+	AddModule(pathfinding);
 
 	sceneLvl2->active = false;
 	sceneMenu->active = false;
@@ -80,6 +83,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	moduleEnemies->active = false;
 	collision->active = false;
 	fonts->active = false;
+	pathfinding->active = false;
 
 	// Render last to swap buffer
 	AddModule(render);

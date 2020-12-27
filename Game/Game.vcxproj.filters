@@ -43,6 +43,7 @@
     <ClCompile Include="Source\EnemyBird.cpp" />
     <ClCompile Include="Source\EnemyBunny.cpp" />
     <ClCompile Include="Source\SceneLvl2.cpp" />
+    <ClCompile Include="Source\Pathfinding.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -109,6 +110,7 @@
     <ClInclude Include="Source\EnemyBird.h" />
     <ClInclude Include="Source\EnemyBunny.h" />
     <ClInclude Include="Source\SceneLvl2.h" />
+    <ClInclude Include="Source\Pathfinding.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

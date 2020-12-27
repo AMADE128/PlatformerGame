@@ -27,3 +27,9 @@ float Timer::ReadSec() const
 {
 	return float(SDL_GetTicks() - startTime) / 1000.0f;
 }
+
+bool Timer::Time(int interval)
+{
+	if (Read() > interval)return true;
+	return false;
+}

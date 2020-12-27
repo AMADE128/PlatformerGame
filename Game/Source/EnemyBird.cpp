@@ -41,31 +41,7 @@ void EnemyBird::Update()
 		break;
 	}
 
-	if (follow == true)
-	{
-		if (position.x < app->player->position.x && (xLeftCollision == false))
-		{
-			enemyState = IDLE;
-			flip = false;
-			position.x += 2;
-		}
-		else if (position.x > app->player->position.x && (xRightCollision == false))
-		{
-			enemyState = IDLE;
-			flip = true;
-			position.x -= 2;
-		}
-		if (position.y < app->player->position.y && (yDownCollision == false || yUpCollision == false))
-		{
-			enemyState = IDLE;
-			position.y += 2;
-		}
-		else if (position.y > app->player->position.y && (yDownCollision == false || yUpCollision == false))
-		{
-			enemyState = IDLE;
-			position.y -= 2;
-		}
-	}
+	
 
 	Enemy::Update();
 }

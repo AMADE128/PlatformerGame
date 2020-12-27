@@ -10,8 +10,8 @@
 	<scene />
 	<scene />
 	<player>
-		<position x="3193" y="1862" />
-		<level lvl="2" />
+		<position x="720" y="1584" />
+		<level lvl="1" />
 	</player>
 	<scene />
 	<scene />
@@ -20,7 +20,8 @@
 	<collisions />
 	<:anonymous />
 	<:anonymous />
+	<pathfinding />
 	<renderer>
-		<camera x="-2401" y="-1558" />
+		<camera x="-86" y="-1282" />
 	</renderer>
 </game_state>

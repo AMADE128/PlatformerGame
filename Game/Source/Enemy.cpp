@@ -7,6 +7,7 @@
 #include "Render.h"
 #include "Player.h"
 #include "SDL/include/SDL.h"
+#include "Map.h"
 
 Enemy::Enemy(int x, int y) : position(x, y)
 {
@@ -62,4 +63,50 @@ bool Enemy::StopMovementY(Collider* c1, Collider* c2)
 bool Enemy::Fall(Collider* c1, Collider* c2)
 {
 	return true;
+}
+
+void Enemy::Pathfinding(int positionx, int positiony)
+{
+	iPoint mapPositionEnemy = app->map->WorldToMap(positionx, positiony);
+	iPoint worldPositionPlayer = app->player->position;
+	iPoint mapPositionPlayer = app->map->WorldToMap(worldPositionPlayer.x, worldPositionPlayer.y);
+	if (app->player->death != true)app->moduleEnemies->CreatePathEnemy(mapPositionEnemy, mapPositionPlayer);
+}
+
+void Enemy::MoveEnemy(iPoint position, iPoint nextAuxPositionEenemy, iPoint mapPositionEnemy, EnemyType type)
+{
+	int positionEnemyX = position.x;
+	int positionEnemyY = position.y;
+	int velocity = 2;
+	if (type == EnemyType::BUNNY)
+	{
+		if (nextAuxPositionEenemy.x < positionEnemyX)
+		{
+			position.x -= velocity;
+		}
+		else if (nextAuxPositionEenemy.x > positionEnemyX)
+		{
+			position.x += velocity;
+		}
+	}
+	else if (type == EnemyType::BIRD)
+	{
+		velocity = 2;
+		if (nextAuxPositionEenemy.x < positionEnemyX)
+		{
+			position.x -= velocity;
+		}
+		else if (nextAuxPositionEenemy.x > positionEnemyX)
+		{
+			position.x += velocity;
+		}
+		if (nextAuxPositionEenemy.y < positionEnemyY)
+		{
+			position.y -= velocity;
+		}
+		else if (nextAuxPositionEenemy.y > positionEnemyY)
+		{
+			position.y += velocity;
+		}
+	}
 }

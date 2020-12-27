@@ -30,6 +30,7 @@ class ModuleEnemies;
 class SceneIntro;
 class SceneLoose;
 class SceneWin;
+class PathFinding;
 
 class App
 {
@@ -112,6 +113,7 @@ public:
 	SceneIntro* sceneIntro;
 	SceneLoose* sceneLoose;
 	SceneWin* sceneWin;
+	PathFinding* pathfinding;
 
 	int frameRate = 60;
 	float fps = 0.f;

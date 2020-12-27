@@ -3,6 +3,8 @@
 
 #include "Module.h"
 #include "Timer.h"
+#include "Point.h"
+#include "DynArray.h"
 
 #define MAX_ENEMIES 100
 #define TILESIZE 96
@@ -51,6 +53,9 @@ public:
 	void EnemiesSpawn();
 
 	void EnemiesDespawn();
+	void CreatePathEnemy(iPoint origin, iPoint destination);
+	int GetCurrentPositionInPath(iPoint mapPositionEnemy);
+	iPoint MapToWorld(iPoint position);
 
 	// The enemies sprite sheet
 
@@ -78,6 +83,10 @@ private:
 private:
 	// A queue with all spawn points information
 	EnemySpawnpoint spawnQueue[MAX_ENEMIES];
+	Timer* checkDestination = new Timer();
+
+	//Stores the created path
+	DynArray<iPoint>* lastPath;
 
 };
 

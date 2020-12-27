@@ -18,6 +18,7 @@
 #include "Enemy.h"
 #include "EnemyBunny.h"
 #include "EnemyBird.h"
+#include "Pathfinding.h"
 
 #include "SDL/include/SDL.h"
 
@@ -105,11 +106,36 @@ bool ModuleEnemies::Update(float dt)
 			{
 				if (enemies[i]->position.DistanceManhattan(app->player->position) < 400)
 				{
-					enemies[i]->follow = true;
-				}
-				else
-				{
-					enemies[i]->follow = false;
+					switch (enemies[i]->enemyType)
+					{
+					case EnemyType::BUNNY:
+					{
+						iPoint mapPositionEnemy = app->map->WorldToMap(enemies[i]->position.x, enemies[i]->position.y);
+						enemies[i]->Pathfinding(enemies[i]->position.x, enemies[i]->position.y);
+						int j = GetCurrentPositionInPath(mapPositionEnemy);
+						if (lastPath->At(j + 1) != NULL)
+						{
+							iPoint nextPositionEnemy = *lastPath->At(j + 1);
+							iPoint nextAuxPositionEenemy = MapToWorld(nextPositionEnemy);
+ 							enemies[i]->MoveEnemy(enemies[i]->position, nextAuxPositionEenemy, mapPositionEnemy, enemies[i]->enemyType);
+						}
+					}
+					case EnemyType::BIRD:
+					{
+						enemies[i]->Pathfinding(enemies[i]->position.x, enemies[i]->position.y);
+						int j = GetCurrentPositionInPath(enemies[i]->position);
+						if (lastPath->At(j + 1) != NULL)
+						{
+							iPoint mapPositionEnemy = app->map->WorldToMap(enemies[i]->position.x, enemies[i]->position.y);
+							iPoint nextPositionEnemy = *lastPath->At(i + 1);
+							iPoint nextAuxPositionEenemy = MapToWorld(nextPositionEnemy);
+							enemies[i]->MoveEnemy(enemies[i]->position,nextAuxPositionEenemy, mapPositionEnemy, enemies[i]->enemyType);
+						}
+						enemies[i]->currentAnim->Update();
+					}
+						default:
+							break;
+					}
 				}
 			}
 		}
@@ -288,5 +314,36 @@ bool ModuleEnemies::StopMovementY(Collider* c1, Collider* c2)
 		}
 	}
 
+	return ret;
+}
+
+void ModuleEnemies::CreatePathEnemy(iPoint mapPositionEnemy, iPoint mapPositionDestination)
+{
+	if (checkDestination->Time(1000))
+	{
+		//destination != mapPositionDestination
+		app->pathfinding->ResetPath(mapPositionEnemy);
+		checkDestination->Start();
+		app->pathfinding->ComputePathAStar(mapPositionEnemy, mapPositionDestination);
+		lastPath = app->pathfinding->GetLastPath();
+	}
+}
+
+int ModuleEnemies::GetCurrentPositionInPath(iPoint mapPositionEnemy)
+{
+	int i;
+	for (i = 0; i < lastPath->Count(); i++)
+	{
+		if (mapPositionEnemy == iPoint({ lastPath->At(i)->x, lastPath->At(i)->y })) break;
+	}
+	return i;
+}
+
+iPoint ModuleEnemies::MapToWorld(iPoint position)
+{
+	iPoint mapDimensions = app->map->GetDimensionsMap();
+	iPoint ret;
+	ret.x = position.x * mapDimensions.x;
+	ret.y = position.y * mapDimensions.y;
 	return ret;
 }

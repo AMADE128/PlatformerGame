@@ -135,7 +135,6 @@ public:
     // Load new map
     bool Load(const char* path);
 
-	int GetProperty(const char* name, int default_value = 0) const;
 
 	// L04: DONE 8: Create a method that translates x,y coordinates from map positions to world positions
 	iPoint MapToWorld(int x, int y) const;
@@ -144,15 +143,7 @@ public:
 	iPoint WorldToMap(int x, int y) const;
 
 	TileSet* GetTilesetFromTileId(int id) const;
-
-	void ResetPath(iPoint start);
-	void DrawPath();
-	bool IsWalkable(int x, int y) const;
-
-	int MovementCost(int x, int y) const;
-	void ComputePath(int x, int y);
-
-	void PropagateDijkstra();
+	iPoint GetDimensionsMap();
 
 private:
 
@@ -161,6 +152,7 @@ private:
 	bool LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set);
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
+
 
 	
 
