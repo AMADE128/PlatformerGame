@@ -212,6 +212,15 @@ bool Player::Update(float dt)
 		}
 		if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN && !isJumping)
 		{
+			playerSave = true;
+			if (currentlvl == 1)
+			{
+				lvl = 1;
+			}
+			else if (currentlvl == 2)
+			{
+				lvl = 2;
+			}
 			app->SaveGameRequest();
 		}
 		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
@@ -223,7 +232,7 @@ bool Player::Update(float dt)
 					saveGame = true;
 					app->fadeToBlack->Fade(app->scene, (Module*)app->sceneLvl2, 80);
 				}
-				app->LoadGameRequest();
+				else if (app->sceneLvl2->active == true) app->LoadGameRequest();
 			}
 			else if (lvl == 1)
 			{
@@ -232,7 +241,7 @@ bool Player::Update(float dt)
 					saveGame = true;
 					app->fadeToBlack->Fade(app->sceneLvl2, (Module*)app->scene, 80);
 				}
-				app->LoadGameRequest();
+				else if (app->scene->active == true) app->LoadGameRequest();
 			}
 			appear = true;
 		}
@@ -811,7 +820,6 @@ bool Player::CheckPoint(Collider* c1, Collider* c2)
 	app->scene->savePoint = true;
 	app->sceneLvl2->savePoint = true;
 	app->audio->PlayFx(app->scene->checkpointFx);
-	app->SaveGameRequest();
 
 
 	return true;
@@ -819,24 +827,44 @@ bool Player::CheckPoint(Collider* c1, Collider* c2)
 
 bool Player::LoadState(pugi::xml_node& data)
 {
-	position.x = data.child("position").attribute("x").as_int();
-	position.y = data.child("position").attribute("y").as_int();
+	if (playerSave = true)
+	{
+		position.x = data.child("position").attribute("x").as_int();
+		position.y = data.child("position").attribute("y").as_int();
 
-	lvl = data.child("level").attribute("lvl").as_int();
+		currentlvl = data.child("level").attribute("lvl").as_int();
+	}
+	else
+	{
+		position.x = data.child("checkpoint").attribute("x").as_int();
+		position.y = data.child("checkpoint").attribute("y").as_int();
+	}
+
+	playerSave = false;
 
 	return true;
 }
 
 bool Player::SaveState(pugi::xml_node& data) const
 {
-	pugi::xml_node player = data.append_child("position");
+	if (playerSave == true)
+	{
+		pugi::xml_node player = data.append_child("position");
 
-	player.append_attribute("x") = position.x;
-	player.append_attribute("y") = position.y;
+		player.append_attribute("x") = position.x;
+		player.append_attribute("y") = position.y;
 
-	player = data.append_child("level");
+		player = data.append_child("level");
 
-	player.append_attribute("lvl") = lvl;
+		player.append_attribute("lvl") = lvl;
+	}
+	else
+	{
+		pugi::xml_node player = data.append_child("checkpoint");
+
+		player.append_attribute("x") = position.x;
+		player.append_attribute("y") = position.y;
+	}
 
 	return true;
 }

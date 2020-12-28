@@ -118,7 +118,9 @@ public:
 	bool SaveState(pugi::xml_node&) const;
 
 	unsigned int lvl;
+	unsigned int currentlvl;
 	bool saveGame = false;
+	bool playerSave = false;
 };
 
 #endif // __PLAYER_H__
