@@ -101,7 +101,6 @@ bool SceneLvl2::Start()
 	appleColl6 = app->collision->AddCollider({ 3408, 2112, 48 }, Collider::Type::APPLE, app->player);
 
 	savePoint = false;
-	app->player->lifes = 3;
 	checkPointTouchAnim.Reset();
 
 	app->player->Init();
@@ -126,6 +125,7 @@ bool SceneLvl2::Start()
 
 	if (app->player->saveGame == true)
 	{
+		app->player->playerLoadF6 = true;
 		app->LoadGameRequest();
 	}
 

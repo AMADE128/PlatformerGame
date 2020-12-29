@@ -112,13 +112,11 @@ bool Player::Start()
 	{
 		position.x = 720;
 		position.y = 1584;
-		app->SaveGameRequest();
 	}
 	else if (app->sceneLvl2->active == true)
 	{
 		position.x = 620;
 		position.y = 2256;
-		app->SaveGameRequest();
 	}
 	//Cargar texturas
 	idleTex = app->tex->Load("Assets/Textures/Character/idle.png");
@@ -159,6 +157,17 @@ bool Player::Start()
 
 bool Player::PreUpdate()
 {
+	if (changeLevel1 == true)
+	{
+		changeLevel1 = false;
+		app->fadeToBlack->Fade(app->sceneLvl2, (Module*)app->scene, 80);
+	}
+	else if (changeLevel2 == true)
+	{
+		changeLevel2 = false;
+		app->fadeToBlack->Fade(app->scene, (Module*)app->sceneLvl2, 80);
+	}
+
 	if (appear == true)
 	{
 		app->render->camera.x = ((cameraColl->rect.x + cameraColl->rect.w / 3) - (app->render->camera.w / 2)) * -1;
@@ -176,6 +185,7 @@ bool Player::PreUpdate()
 
 bool Player::Update(float dt)
 {
+	playerSave = false;
 	dt *= 6;
 	idleAnim.speed = 4.0f * dt;
 	runAnim.speed = 5.0f * dt;
@@ -230,7 +240,7 @@ bool Player::Update(float dt)
 				if (app->scene->active == true)
 				{
 					saveGame = true;
-					app->fadeToBlack->Fade(app->scene, (Module*)app->sceneLvl2, 80);
+					changeLevel2 = true;
 				}
 				else if (app->sceneLvl2->active == true) app->LoadGameRequest();
 			}
@@ -239,7 +249,7 @@ bool Player::Update(float dt)
 				if (app->sceneLvl2->active == true)
 				{
 					saveGame = true;
-					app->fadeToBlack->Fade(app->sceneLvl2, (Module*)app->scene, 80);
+					changeLevel1 = true;
 				}
 				else if (app->scene->active == true) app->LoadGameRequest();
 			}
@@ -849,7 +859,12 @@ bool Player::SaveState(pugi::xml_node& data) const
 {
 	if (playerSave == true)
 	{
-		pugi::xml_node player = data.append_child("position");
+		pugi::xml_node player = data.append_child("checkpoint");
+
+		player.append_attribute("x") = player.attribute("x").as_int();
+		player.append_attribute("y") = player.attribute("y").as_int();
+
+		player = data.append_child("position");
 
 		player.append_attribute("x") = position.x;
 		player.append_attribute("y") = position.y;
@@ -857,13 +872,22 @@ bool Player::SaveState(pugi::xml_node& data) const
 		player = data.append_child("level");
 
 		player.append_attribute("lvl") = lvl;
+
 	}
 	else
 	{
 		pugi::xml_node player = data.append_child("checkpoint");
-
 		player.append_attribute("x") = position.x;
 		player.append_attribute("y") = position.y;
+
+		player = data.append_child("position");
+
+		player.append_attribute("x") = player.attribute("x").as_int();
+		player.append_attribute("y") = player.attribute("y").as_int();
+
+		player = data.append_child("level");
+
+		player.append_attribute("lvl") = lvl;
 	}
 
 	return true;

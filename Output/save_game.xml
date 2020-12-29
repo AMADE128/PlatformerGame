@@ -11,6 +11,8 @@
 	<scene />
 	<player>
 		<checkpoint x="0" y="0" />
+		<position x="1912" y="1969" />
+		<level lvl="2" />
 	</player>
 	<scene />
 	<scene />
@@ -21,6 +23,6 @@
 	<:anonymous />
 	<pathfinding />
 	<renderer>
-		<camera x="14" y="-1954" />
+		<camera x="-1129" y="-1728" />
 	</renderer>
 </game_state>

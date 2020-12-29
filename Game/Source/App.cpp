@@ -534,7 +534,6 @@ bool App::SaveGame() const
 	saveFile.save_file("save_game.xml");
 
 	saveGameRequested = false;
-	app->player->playerSave = false;
 
 	return ret;
 }

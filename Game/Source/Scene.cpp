@@ -123,6 +123,7 @@ bool Scene::Start()
 
 	if (app->player->saveGame == true)
 	{
+		app->player->playerLoadF6 = true;
 		app->LoadGameRequest();
 	}
 

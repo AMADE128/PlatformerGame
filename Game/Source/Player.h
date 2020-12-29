@@ -122,6 +122,8 @@ public:
 	bool saveGame = false;
 	bool playerSave = false;
 	bool playerLoadF6 = false;
+	bool changeLevel1 = false;
+	bool changeLevel2 = false;
 };
 
 #endif // __PLAYER_H__
