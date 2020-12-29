@@ -121,6 +121,7 @@ public:
 	unsigned int currentlvl;
 	bool saveGame = false;
 	bool playerSave = false;
+	bool playerLoadF6 = false;
 };
 
 #endif // __PLAYER_H__

@@ -827,12 +827,13 @@ bool Player::CheckPoint(Collider* c1, Collider* c2)
 
 bool Player::LoadState(pugi::xml_node& data)
 {
-	if (playerSave = true)
+	if (playerLoadF6 = true)
 	{
 		position.x = data.child("position").attribute("x").as_int();
 		position.y = data.child("position").attribute("y").as_int();
 
 		currentlvl = data.child("level").attribute("lvl").as_int();
+		playerLoadF6 = false;
 	}
 	else
 	{
@@ -840,7 +841,6 @@ bool Player::LoadState(pugi::xml_node& data)
 		position.y = data.child("checkpoint").attribute("y").as_int();
 	}
 
-	playerSave = false;
 
 	return true;
 }

@@ -10,7 +10,7 @@
 	<scene />
 	<scene />
 	<player>
-		<checkpoint x="620" y="2256" />
+		<checkpoint x="0" y="0" />
 	</player>
 	<scene />
 	<scene />
