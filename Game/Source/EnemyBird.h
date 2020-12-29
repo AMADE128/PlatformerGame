@@ -18,7 +18,7 @@ public :
 
 	bool StopMovementY(Collider* c1, Collider* c2);
 
-	bool OnCollision(Collider* c1, Collider* c2);
+	bool Die(Collider* c1, Collider* c2);
 
 	bool StopMovement(Collider* c1, Collider* c2);
 

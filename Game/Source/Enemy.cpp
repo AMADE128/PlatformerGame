@@ -78,7 +78,7 @@ void Enemy::MoveEnemy(iPoint positions, iPoint nextAuxPositionEenemy, iPoint map
 	int positionEnemyX = positions.x;
 	int positionEnemyY = positions.y;
 	int velocity = 2;
-	if (type == EnemyType::BUNNY)
+	if (type == EnemyType::BUNNY && enemyState != HIT)
 	{
 		if (nextAuxPositionEenemy.x < positionEnemyX && xLeftCollision == false)
 		{
@@ -105,7 +105,7 @@ void Enemy::MoveEnemy(iPoint positions, iPoint nextAuxPositionEenemy, iPoint map
 			speedX = 0;
 		}
 	}
-	else if (type == EnemyType::BIRD)
+	else if (type == EnemyType::BIRD && enemyState != HIT)
 	{
 		velocity = 2;
 		if (nextAuxPositionEenemy.x < positionEnemyX)
