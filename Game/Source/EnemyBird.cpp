@@ -41,7 +41,10 @@ void EnemyBird::Update()
 		break;
 	}
 
-	
+	if (hit.finish == true)
+	{
+		deathFinish = true;
+	}
 
 	Enemy::Update();
 }
@@ -93,7 +96,7 @@ bool EnemyBird::StopMovement(Collider* c1, Collider* c2)
 	return true;
 }
 
-bool EnemyBird::OnCollision(Collider* c1, Collider* c2)
+bool EnemyBird::Die(Collider* c1, Collider* c2)
 {
 	enemyState = HIT;
 	return true;

@@ -35,7 +35,7 @@ EnemyBunny::EnemyBunny(int x, int y) : Enemy(x, y)
 		hit.PushBack({ i, 0, 102, 132 });
 	}
 	hit.loop = false;
-	hit.speed = 0.25f;
+	hit.speed = 0.20f;
 
 	collider = app->collision->AddCollider({position.x, position.y, 80, 32 * 4 - 15 }, Collider::Type::ENEMY, (Module*)app->moduleEnemies);
 }
@@ -62,16 +62,21 @@ void EnemyBunny::Update()
 
 	if (yDownCollision == true)
 	{
-		if (speedX == 0)
+		if (speedX == 0 && enemyState != HIT)
 		{
 			enemyState = IDLE;
 		}
 		speedY = 0;
 	}
-	else
+	else if (enemyState != HIT)
 	{
 		enemyState = FALL;
 		speedY += 1.0f;
+	}
+
+	if (hit.finish == true)
+	{
+		deathFinish = true;
 	}
 
 	position.y += speedY;
@@ -129,6 +134,6 @@ bool EnemyBunny::StopMovement(Collider* c1, Collider* c2)
 
 bool EnemyBunny::Die(Collider* c1, Collider* c2)
 {
-	death = true;
+	enemyState = HIT;
 	return true;
 }

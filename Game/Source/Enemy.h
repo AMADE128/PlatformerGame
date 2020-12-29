@@ -86,6 +86,7 @@ public:
 	float speedY;
 
 	bool death = false;
+	bool deathFinish = false;
 protected:
 
 

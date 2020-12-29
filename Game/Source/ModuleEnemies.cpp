@@ -134,7 +134,15 @@ bool ModuleEnemies::Update(float dt)
 					}
 				}
 			}
+
 			enemies[i]->Update();
+
+			if (enemies[i]->deathFinish == true)
+			{
+				app->collision->RemoveCollider(enemies[i]->collider);
+				delete enemies[i];
+				enemies[i] = nullptr;
+			}
 		}
 	}
 
@@ -257,10 +265,6 @@ bool ModuleEnemies::Die(Collider* c1, Collider* c2)
 		if (enemies[i] != nullptr && enemies[i]->GetCollider() == c1)
 		{
 			enemies[i]->Die(c1, c2);
-			app->collision->RemoveCollider(enemies[i]->collider);
-
-			delete enemies[i];
-			enemies[i] = nullptr;
 			break;
 		}
 	}
