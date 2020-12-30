@@ -2,6 +2,7 @@
 #define __SCENEMENU_H__
 
 #include "Module.h"
+#include "GuiButton.h"
 
 struct SDL_Texture;
 
@@ -32,11 +33,17 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	bool OnGuiMouseClickEvent(GuiControl* control);
+
 	SDL_Texture* menu;
 
 	unsigned int musicMenu;
 
 private:
+
+	GuiButton* btnStart;
+	GuiButton* btnExit;
+
 };
 
 #endif // __SCENE_H__

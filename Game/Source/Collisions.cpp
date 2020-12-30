@@ -346,43 +346,43 @@ void Collisions::DebugDraw()
 		switch (colliders[i]->type)
 		{
 		case Collider::Type::NONE: // white
-			app->render->DrawRectangle(colliders[i]->rect, 255, 255, 255, alpha);
+			app->render->DrawRectangle(colliders[i]->rect, { 255, 255, 255 });
 			break;
 		case Collider::Type::WALL: // green
-			app->render->DrawRectangle(colliders[i]->rect, 0, 255, 0, alpha);
+			app->render->DrawRectangle(colliders[i]->rect, { 0, 255, 0, alpha });
 			break;
 		case Collider::Type::GROUND: // red
-			app->render->DrawRectangle(colliders[i]->rect, 255, 0, 0, alpha);
+			app->render->DrawRectangle(colliders[i]->rect, { 255, 0, 0, alpha });
 			break;
 		case Collider::Type::PLAYER: // blue
-			app->render->DrawRectangle(colliders[i]->rect, 0, 0, 255, alpha);
+			app->render->DrawRectangle(colliders[i]->rect, { 0, 0, 255, alpha });
 			break;
 		case Collider::Type::AIR: // blue
-			app->render->DrawRectangle(colliders[i]->rect, 255, 255, 255, alpha);
+			app->render->DrawRectangle(colliders[i]->rect, {255, 255, 255, alpha});
 			break;
 		case Collider::Type::SPIKE: // purple
-			app->render->DrawRectangle(colliders[i]->rect, 128, 0, 128, alpha);
+			app->render->DrawRectangle(colliders[i]->rect, { 128, 0, 128, alpha });
 			break;
 		case Collider::Type::CAMERA: // purple
-			app->render->DrawRectangle(colliders[i]->rect, 200, 40, 128, alpha);
+			app->render->DrawRectangle(colliders[i]->rect, { 200, 40, 128, alpha });
 			break;
 		case Collider::Type::CHECKPOINT: // purple
-			app->render->DrawRectangle(colliders[i]->rect, 100, 40, 128, alpha);
+			app->render->DrawRectangle(colliders[i]->rect, { 100, 40, 128, alpha });
 			break;
 		case Collider::Type::APPLE: // pink
-			app->render->DrawRectangle(colliders[i]->rect, 255, 192, 203, alpha);
+			app->render->DrawRectangle(colliders[i]->rect, { 255, 192, 203, alpha });
 			break;
 		case Collider::Type::PINEAPPLE: // yellow
-			app->render->DrawRectangle(colliders[i]->rect, 255, 255, 51, alpha);
+			app->render->DrawRectangle(colliders[i]->rect, { 255, 255, 51, alpha } );
 			break;
 		case Collider::Type::LEAF: // brown
-			app->render->DrawRectangle(colliders[i]->rect, 165, 42, 42, alpha);
+			app->render->DrawRectangle(colliders[i]->rect, { 165, 42, 42, alpha });
 			break;
 		case Collider::Type::ENEMY: // brown
-			app->render->DrawRectangle(colliders[i]->rect, 100, 42, 42, alpha);
+			app->render->DrawRectangle(colliders[i]->rect, { 100, 42, 42, alpha });
 			break;
 		case Collider::Type::CHICKEN: // brown
-			app->render->DrawRectangle(colliders[i]->rect, 100, 42, 42, alpha);
+			app->render->DrawRectangle(colliders[i]->rect, { 100, 42, 42, alpha });
 			break;
 			
 		}

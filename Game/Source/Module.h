@@ -6,6 +6,7 @@
 #include "PugiXml/src/pugixml.hpp"
 
 class App;
+class GuiControl;
 struct Collider;
 
 class Module
@@ -109,6 +110,11 @@ public:
 	}
 
 	virtual bool CollectPineapple(Collider* c1, Collider* c2)
+	{
+		return true;
+	}
+
+	virtual bool OnGuiMouseClickEvent(GuiControl* control)
 	{
 		return true;
 	}

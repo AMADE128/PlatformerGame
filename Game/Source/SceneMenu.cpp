@@ -16,6 +16,12 @@
 SceneMenu::SceneMenu() : Module()
 {
 	name.Create("scene");
+
+	btnStart = new GuiButton(1, { 1280 / 2 - 300 / 2, 300, 300, 80 }, "START");
+	btnStart->SetObserver(this);
+
+	btnExit = new GuiButton(2, { 1280 / 2 - 300 / 2, 400, 300, 80 }, "EXIT");
+	btnExit->SetObserver(this);
 }
 
 // Destructor
@@ -55,10 +61,9 @@ bool SceneMenu::PreUpdate()
 bool SceneMenu::Update(float dt)
 {
 	app->render->DrawTexture(menu, 0, 0);
-	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-	{
-		app->fadeToBlack->Fade(this, (Module*)app->scene, 1600 * dt);
-	}
+
+	btnStart->Update(app->input, dt);
+	btnExit->Update(app->input, dt);
 
 	return true;
 }
@@ -67,6 +72,9 @@ bool SceneMenu::Update(float dt)
 bool SceneMenu::PostUpdate()
 {
 	bool ret = true;
+
+	btnStart->Draw(app->render);
+	btnExit->Draw(app->render);
 
 	return ret;
 }
@@ -82,6 +90,21 @@ bool SceneMenu::CleanUp()
 	app->musicList.Clear();
 
 	active = false;
+
+	return true;
+}
+
+bool SceneMenu::OnGuiMouseClickEvent(GuiControl* control)
+{
+	switch (control->type)
+	{
+	case GuiControlType::BUTTON:
+	{
+		if (control->id == 1) app->fadeToBlack->Fade(this, (Module*)app->scene, 80);
+		else if (control->id == 2) return false; // TODO: Exit request
+	}
+	default: break;
+	}
 
 	return true;
 }

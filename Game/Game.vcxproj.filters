@@ -44,6 +44,10 @@
     <ClCompile Include="Source\EnemyBunny.cpp" />
     <ClCompile Include="Source\SceneLvl2.cpp" />
     <ClCompile Include="Source\Pathfinding.cpp" />
+    <ClCompile Include="Source\GuiButton.cpp">
+      <Filter>GuiControl</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -111,6 +115,13 @@
     <ClInclude Include="Source\EnemyBunny.h" />
     <ClInclude Include="Source\SceneLvl2.h" />
     <ClInclude Include="Source\Pathfinding.h" />
+    <ClInclude Include="Source\GuiButton.h">
+      <Filter>GuiControl</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiManager.h" />
+    <ClInclude Include="Source\GuiControl.h">
+      <Filter>GuiControl</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
@@ -121,6 +132,9 @@
     </Filter>
     <Filter Include="External\PugiXml">
       <UniqueIdentifier>{2855ff7f-53a1-413d-a75b-18b4ade921dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GuiControl">
+      <UniqueIdentifier>{1f949820-637a-4e22-b374-239c5b5f195d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
