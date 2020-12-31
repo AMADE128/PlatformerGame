@@ -6,6 +6,9 @@
 #include "Point.h"
 #include "SString.h"
 
+#define BUTT_WIDTH 110
+#define BUTT_HEIGHT 50
+
 class GuiButton : public GuiControl
 {
 public:

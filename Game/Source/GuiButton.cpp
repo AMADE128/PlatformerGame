@@ -1,4 +1,5 @@
 #include "GuiButton.h"
+#include "Textures.h"
 
 GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::BUTTON, id)
 {
@@ -12,6 +13,10 @@ GuiButton::~GuiButton()
 
 bool GuiButton::Update(Input* input, float dt)
 {
+	if (id == 2)
+	{
+		state = GuiControlState::DISABLED;
+	}
 	if (state != GuiControlState::DISABLED)
 	{
 		int mouseX, mouseY;
@@ -45,15 +50,23 @@ bool GuiButton::Draw(Render* render)
 	// Draw the right button depending on state
 	switch (state)
 	{
-	case GuiControlState::DISABLED: render->DrawRectangle(bounds, { 100, 100, 100, 255 });
+	case GuiControlState::DISABLED:
+		section = { 330, 0, BUTT_WIDTH, BUTT_HEIGHT };
+		render->DrawTexture(texture, bounds.x, bounds.y, &section);
 		break;
-	case GuiControlState::NORMAL: render->DrawRectangle(bounds, { 0, 255, 0, 255 });
+	case GuiControlState::NORMAL:
+		section = { 0, 0, BUTT_WIDTH, BUTT_HEIGHT };
+		render->DrawTexture(texture,bounds.x,bounds.y,&section);
 		break;
-	case GuiControlState::FOCUSED: render->DrawRectangle(bounds, { 255, 255, 0, 255 });
+	case GuiControlState::FOCUSED:
+		section = { 220, 0, BUTT_WIDTH, BUTT_HEIGHT };
+		render->DrawTexture(texture, bounds.x, bounds.y, &section);
 		break;
-	case GuiControlState::PRESSED: render->DrawRectangle(bounds, { 0, 255, 255, 255 });
+	case GuiControlState::PRESSED:
+		section = { 111, 0, BUTT_WIDTH - 1, BUTT_HEIGHT };
+		render->DrawTexture(texture, bounds.x, bounds.y, &section);
 		break;
-	case GuiControlState::SELECTED: render->DrawRectangle(bounds, { 0, 255, 0, 255 });
+	case GuiControlState::SELECTED:
 		break;
 	default:
 		break;

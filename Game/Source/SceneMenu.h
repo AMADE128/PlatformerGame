@@ -36,13 +36,19 @@ public:
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
 	SDL_Texture* menu;
+	SDL_Texture* newButt;
+	SDL_Texture* loadButt;
+	SDL_Texture* optionButt;
+	SDL_Texture* exitButt;
 
 	unsigned int musicMenu;
 
-private:
-
-	GuiButton* btnStart;
+	GuiButton* btnNew;
 	GuiButton* btnExit;
+	GuiButton* btnLoad;
+	GuiButton* btnOptions;
+
+private:
 
 };
 

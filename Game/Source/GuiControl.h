@@ -4,6 +4,7 @@
 #include "Input.h"
 #include "Render.h"
 #include "Module.h"
+#include "App.h"
 
 #include "Point.h"
 #include "SString.h"
@@ -73,6 +74,22 @@ public:
 	void NotifyObserver()
 	{
 		observer->OnGuiMouseClickEvent(this);
+	}
+
+	bool GetEvent()
+	{
+		int mouseX, mouseY;
+		app->input->GetMousePosition(mouseX, mouseY);
+		if (state != GuiControlState::DISABLED && app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP && (mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) &&
+			(mouseY > bounds.y) && (mouseY < (bounds.y + bounds.h)))
+		{
+			if (observer->OnGuiMouseClickEvent(this) == true) return true;
+			else if (observer->OnGuiMouseClickEvent(this) == false) return false;
+		}
+		else
+		{
+			return true;
+		}
 	}
 
 public:

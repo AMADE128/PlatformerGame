@@ -17,10 +17,16 @@ SceneMenu::SceneMenu() : Module()
 {
 	name.Create("scene");
 
-	btnStart = new GuiButton(1, { 1280 / 2 - 300 / 2, 300, 300, 80 }, "START");
-	btnStart->SetObserver(this);
+	btnNew = new GuiButton(1, { 1280/2 - BUTT_WIDTH / 2, 430, BUTT_WIDTH, BUTT_HEIGHT }, "NEW");
+	btnNew->SetObserver(this);
 
-	btnExit = new GuiButton(2, { 1280 / 2 - 300 / 2, 400, 300, 80 }, "EXIT");
+	btnLoad = new GuiButton(2, { 1280 / 2 - BUTT_WIDTH / 2, 500, BUTT_WIDTH, BUTT_HEIGHT }, "LOAD");
+	btnLoad->SetObserver(this);
+
+	btnOptions = new GuiButton(3, { 1280 / 2 - BUTT_WIDTH / 2, 570, BUTT_WIDTH, BUTT_HEIGHT }, "OPTIONS");
+	btnOptions->SetObserver(this);
+
+	btnExit = new GuiButton(4, { 1280 / 2 - BUTT_WIDTH / 2, 640, BUTT_WIDTH, BUTT_HEIGHT }, "EXIT");
 	btnExit->SetObserver(this);
 }
 
@@ -34,8 +40,6 @@ bool SceneMenu::Awake()
 	LOG("Loading Scene");
 	bool ret = true;
 
-
-
 	return ret;
 }
 
@@ -45,6 +49,12 @@ bool SceneMenu::Start()
 	// L03: DONE: Load map
 	menu = app->tex->Load("Assets/Textures/Screens/menu.png");
 	musicMenu = app->audio->LoadFx("Assets/Audio/SceneMusic/intro_music.wav");
+	btnNew->texture = btnExit->texture = btnLoad->texture = btnOptions->texture = app->tex->Load("Assets/Textures/Interface/button.png");
+	newButt = app->tex->Load("Assets/Textures/Interface/new.png");
+	loadButt = app->tex->Load("Assets/Textures/Interface/load.png");
+	optionButt = app->tex->Load("Assets/Textures/Interface/option.png");
+	exitButt = app->tex->Load("Assets/Textures/Interface/exit.png");
+
 	app->musicList.Add(&musicMenu);
 	app->audio->PlayFx(musicMenu, -1);
 
@@ -60,10 +70,11 @@ bool SceneMenu::PreUpdate()
 // Called each loop iteration
 bool SceneMenu::Update(float dt)
 {
-	app->render->DrawTexture(menu, 0, 0);
 
-	btnStart->Update(app->input, dt);
+	btnNew->Update(app->input, dt);
 	btnExit->Update(app->input, dt);
+	btnLoad->Update(app->input, dt);
+	btnOptions->Update(app->input, dt);
 
 	return true;
 }
@@ -73,8 +84,16 @@ bool SceneMenu::PostUpdate()
 {
 	bool ret = true;
 
-	btnStart->Draw(app->render);
+	app->render->DrawTexture(menu, 0, 0);
+
+	btnNew->Draw(app->render);
+	app->render->DrawTexture(newButt, btnNew->bounds.x, btnNew->bounds.y);
 	btnExit->Draw(app->render);
+	app->render->DrawTexture(exitButt, btnExit->bounds.x, btnExit->bounds.y);
+	btnLoad->Draw(app->render);
+	app->render->DrawTexture(loadButt, btnLoad->bounds.x, btnLoad->bounds.y);
+	btnOptions->Draw(app->render);
+	app->render->DrawTexture(optionButt, btnOptions->bounds.x, btnOptions->bounds.y);
 
 	return ret;
 }
@@ -86,6 +105,10 @@ bool SceneMenu::CleanUp()
 
 	LOG("Freeing scene");
 	app->tex->UnLoad(menu);
+	app->tex->UnLoad(btnNew->texture);
+	app->tex->UnLoad(btnExit->texture);
+	app->tex->UnLoad(btnLoad->texture);
+	app->tex->UnLoad(btnOptions->texture);
 	app->audio->UnloadFX(musicMenu);
 	app->musicList.Clear();
 
@@ -100,8 +123,16 @@ bool SceneMenu::OnGuiMouseClickEvent(GuiControl* control)
 	{
 	case GuiControlType::BUTTON:
 	{
-		if (control->id == 1) app->fadeToBlack->Fade(this, (Module*)app->scene, 80);
-		else if (control->id == 2) return false; // TODO: Exit request
+		if (control->id == 1) app->fadeToBlack->Fade(this, (Module*)app->scene, 80); //Go to LVL 1
+		if (control->id == 4) return false; //Exit request
+		if (control->id == 3)
+		{
+			//return false;
+		}
+		if (control->id == 4)
+		{
+			//return false;
+		}
 	}
 	default: break;
 	}
