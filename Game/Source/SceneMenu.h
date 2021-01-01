@@ -44,6 +44,8 @@ public:
 	bool SaveMenu(pugi::xml_node&);
 	bool MenuLoad(pugi::xml_document& loadFile);
 	bool MenuSave(pugi::xml_document& loadFile);
+	bool SaveState(pugi::xml_node& data) const;
+	bool LoadState(pugi::xml_node& data);
 
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
@@ -64,6 +66,7 @@ public:
 	GuiButton* btnOptions;
 
 	int checkContinue = 0;
+	int continueGame;
 	bool newGame = false;
 	bool saved = false;
 

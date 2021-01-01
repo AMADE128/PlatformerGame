@@ -5,21 +5,26 @@
 	<textures />
 	<audio />
 	<map />
-	<menu>
-    <continue cont="0" />
-  </menu>
+	<scene>
+		<continue cont="0" />
+	</scene>
 	<scene />
 	<scene />
 	<scene />
 	<player>
 		<checkpoint x="0" y="0" />
-		<position x="1912" y="1969" />
-		<level lvl="2" />
+		<position x="1245" y="1537" />
+		<level lvl="1" />
 	</player>
 	<scene />
 	<scene />
+	<:anonymous />
+	<:anonymous />
+	<collisions />
+	<:anonymous />
+	<:anonymous />
 	<pathfinding />
 	<renderer>
-		<camera x="-1129" y="-1728" />
+		<camera x="-462" y="-1240" />
 	</renderer>
 </game_state>

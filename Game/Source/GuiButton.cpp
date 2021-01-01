@@ -83,8 +83,3 @@ bool GuiButton::Draw(Render* render)
 
 	return false;
 }
-
-bool Load(pugi::xml_node& data)
-{
-
-}
