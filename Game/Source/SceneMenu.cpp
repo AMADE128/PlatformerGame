@@ -70,7 +70,12 @@ bool SceneMenu::PreUpdate()
 // Called each loop iteration
 bool SceneMenu::Update(float dt)
 {
-
+	if (saved == true)
+	{
+		newGame = false;
+		MenuSave(loadFile);
+	}
+	saved = false;
 	btnNew->Update(app->input, dt);
 	btnExit->Update(app->input, dt);
 	btnLoad->Update(app->input, dt);
@@ -123,19 +128,79 @@ bool SceneMenu::OnGuiMouseClickEvent(GuiControl* control)
 	{
 	case GuiControlType::BUTTON:
 	{
-		if (control->id == 1) app->fadeToBlack->Fade(this, (Module*)app->scene, 80); //Go to LVL 1
-		if (control->id == 4) return false; //Exit request
+		if (control->id == 1)
+		{
+			newGame = true;
+			MenuSave(loadFile);
+			app->fadeToBlack->Fade(this, (Module*)app->scene, 80); //Go to LVL 1
+		}
+			if (control->id == 2) app->LoadGameRequest();
 		if (control->id == 3)
-		{
-			//return false;
-		}
-		if (control->id == 4)
-		{
-			//return false;
-		}
+		if (control->id == 4) return false;
 	}
 	default: break;
 	}
 
 	return true;
 }
+
+bool SceneMenu::LoadMenu(pugi::xml_node& data)
+{
+	checkContinue = data.child("Continue").attribute("cont").as_int();
+}
+
+bool SceneMenu::SaveMenu(pugi::xml_node& data) 
+{
+	pugi::xml_node player = data.append_child("continue");
+
+	if (newGame == true)
+	{
+		player.append_attribute("cont") = 0;
+		newGame = false;
+	}
+	else if (newGame == false)
+    {
+		player.append_attribute("cont") = 1;
+	}
+}
+
+bool SceneMenu::MenuLoad(pugi::xml_document& loadFile)
+{
+	bool ret = false;
+
+	pugi::xml_parse_result result = loadFile.load_file(SAVE_STATE_FILENAME);
+
+	if (result == NULL)
+	{
+		LOG("Could not load xml file: %s. pugi error: %s", SAVE_STATE_FILENAME, result.description());
+	}
+	else
+	{
+		ret = true;
+		load = loadFile.child("game_state");
+	}
+
+	if (ret == true)
+	{
+		LoadMenu(load.child("menu"));
+	}
+	return ret;
+}
+
+bool SceneMenu::MenuSave(pugi::xml_document& loadFile)
+{
+	bool ret = true;
+
+	pugi::xml_document saveFile;
+	pugi::xml_node nodeBase = saveFile.append_child("game_state");
+
+	if (ret == true)
+	{
+		ret = SaveMenu(nodeBase.child("menu"));
+	}
+
+	saveFile.save_file("save_game.xml");
+
+	return ret;
+}
+

@@ -33,6 +33,11 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	bool LoadMenu(pugi::xml_node&);
+	bool SaveMenu(pugi::xml_node&);
+	bool MenuLoad(pugi::xml_document& loadFile);
+	bool MenuSave(pugi::xml_document& loadFile);
+
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
 	SDL_Texture* menu;
@@ -48,8 +53,14 @@ public:
 	GuiButton* btnLoad;
 	GuiButton* btnOptions;
 
+	int checkContinue = 0;
+	bool newGame = false;
+	bool saved = false;
+
 private:
 
+	pugi::xml_node load;
+	pugi::xml_document loadFile;
 };
 
 #endif // __SCENE_H__

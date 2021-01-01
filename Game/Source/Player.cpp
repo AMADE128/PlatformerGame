@@ -222,6 +222,7 @@ bool Player::Update(float dt)
 		}
 		if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN && !isJumping)
 		{
+			app->sceneMenu->saved = true;
 			playerSave = true;
 			if (currentlvl == 1)
 			{

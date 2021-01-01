@@ -5,7 +5,9 @@
 	<textures />
 	<audio />
 	<map />
-	<scene />
+	<menu>
+    <continue cont="0" />
+  </menu>
 	<scene />
 	<scene />
 	<scene />
@@ -16,11 +18,6 @@
 	</player>
 	<scene />
 	<scene />
-	<:anonymous />
-	<:anonymous />
-	<collisions />
-	<:anonymous />
-	<:anonymous />
 	<pathfinding />
 	<renderer>
 		<camera x="-1129" y="-1728" />
