@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "GuiButton.h"
+#include "GuiSlider.h"
 
 struct SDL_Texture;
 
@@ -57,6 +58,8 @@ public:
 	GuiButton* btnExit;
 	GuiButton* btnLoad;
 	GuiButton* btnOptions;
+	
+	GuiSlider* sliderMusic;
 
 	bool LoadMenu(pugi::xml_node&);
 	bool Menu(pugi::xml_document& loadFile);
