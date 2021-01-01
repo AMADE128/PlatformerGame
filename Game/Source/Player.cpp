@@ -222,7 +222,7 @@ bool Player::Update(float dt)
 		}
 		if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN && !isJumping)
 		{
-			app->sceneMenu->saved = true;
+			cont = true;
 			playerSave = true;
 			if (currentlvl == 1)
 			{
@@ -236,6 +236,7 @@ bool Player::Update(float dt)
 		}
 		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		{
+			playerLoadF6 = true;
 			if (lvl == 2)
 			{
 				if (app->scene->active == true)
@@ -838,18 +839,22 @@ bool Player::CheckPoint(Collider* c1, Collider* c2)
 
 bool Player::LoadState(pugi::xml_node& data)
 {
-	if (playerLoadF6 = true)
+	if (playerLoadF6 == true)
 	{
 		position.x = data.child("position").attribute("x").as_int();
 		position.y = data.child("position").attribute("y").as_int();
 
 		currentlvl = data.child("level").attribute("lvl").as_int();
 		playerLoadF6 = false;
+
+		cont = data.child("continue").attribute("cont").as_bool();
 	}
 	else
 	{
 		position.x = data.child("checkpoint").attribute("x").as_int();
 		position.y = data.child("checkpoint").attribute("y").as_int();
+
+		cont = data.child("continue").attribute("cont").as_bool();
 	}
 
 
@@ -874,6 +879,10 @@ bool Player::SaveState(pugi::xml_node& data) const
 
 		player.append_attribute("lvl") = lvl;
 
+		player = data.append_child("continue");
+
+		player.append_attribute("cont") = cont;
+
 	}
 	else
 	{
@@ -889,6 +898,10 @@ bool Player::SaveState(pugi::xml_node& data) const
 		player = data.append_child("level");
 
 		player.append_attribute("lvl") = lvl;
+
+		player = data.append_child("continue");
+
+		player.append_attribute("cont") = cont;
 	}
 
 	return true;

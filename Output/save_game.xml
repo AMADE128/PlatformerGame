@@ -1,2 +1,29 @@
 <?xml version="1.0"?>
-<game_state />
+<game_state>
+	<window />
+	<input />
+	<textures />
+	<audio />
+	<map />
+	<scene />
+	<scene />
+	<scene />
+	<scene />
+	<player>
+		<checkpoint x="0" y="0" />
+		<position x="1140" y="1537" />
+		<level lvl="1" />
+		<continue cont="true" />
+	</player>
+	<scene />
+	<scene />
+	<:anonymous />
+	<:anonymous />
+	<collisions />
+	<:anonymous />
+	<:anonymous />
+	<pathfinding />
+	<renderer>
+		<camera x="-631" y="-1255" />
+	</renderer>
+</game_state>

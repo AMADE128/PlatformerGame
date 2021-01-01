@@ -59,6 +59,8 @@ bool SceneMenu::Start()
 	app->musicList.Add(&musicMenu);
 	app->audio->PlayFx(musicMenu, -1);
 
+	Menu(loadFile);
+
 	return true;
 }
 
@@ -71,12 +73,6 @@ bool SceneMenu::PreUpdate()
 // Called each loop iteration
 bool SceneMenu::Update(float dt)
 {
-	if (saved == true)
-	{
-		newGame = false;
-		MenuSave(loadFile);
-	}
-	saved = false;
 	switch (menuState)
 	{
 	case SceneMenu::NORMAL:
@@ -147,11 +143,10 @@ bool SceneMenu::OnGuiMouseClickEvent(GuiControl* control)
 	{
 		if (control->id == 1)
 		{
-			newGame = true;
-			MenuSave(loadFile);
+			app->player->cont = false;
 			app->fadeToBlack->Fade(this, (Module*)app->scene, 80); //Go to LVL 1
 		}
-		if (control->id == 2) app->LoadGameRequest();
+		if (control->id == 2) app->player->playerLoadF6 = true; app->LoadGameRequest();
 		if (control->id == 3) menuState = SETTINGS;
 		if (control->id == 4) return false;
 	}
@@ -163,31 +158,12 @@ bool SceneMenu::OnGuiMouseClickEvent(GuiControl* control)
 
 bool SceneMenu::LoadMenu(pugi::xml_node& data)
 {
-	checkContinue = data.child("continue").attribute("cont").as_int();
+	app->player->cont = data.child("continue").attribute("cont").as_bool();
 
 	return true;
 }
 
-bool SceneMenu::SaveMenu(pugi::xml_node& data) 
-{
-	pugi::xml_node player = data.append_child("continue");
-
-	if (newGame == true)
-	{
-		player.append_attribute("cont") = 0;
-		newGame = false;
-		continueGame = 0;
-	}
-	else if (newGame == false)
-    {
-		player.append_attribute("cont") = 1;
-		continueGame = 1;
-	}
-
-	return true;
-}
-
-bool SceneMenu::MenuLoad(pugi::xml_document& loadFile)
+bool SceneMenu::Menu(pugi::xml_document& loadFile)
 {
 	bool ret = false;
 
@@ -205,41 +181,8 @@ bool SceneMenu::MenuLoad(pugi::xml_document& loadFile)
 
 	if (ret == true)
 	{
-		LoadMenu(load.child("menu"));
+		LoadMenu(load.child("player"));
 	}
 	return ret;
-}
-
-bool SceneMenu::MenuSave(pugi::xml_document& loadFile)
-{
-	bool ret = true;
-
-	pugi::xml_document saveFile;
-	pugi::xml_node nodeBase = saveFile.append_child("game_state");
-
-	if (ret == true)
-	{
-		ret = SaveMenu(nodeBase.child("menu"));
-	}
-
-	saveFile.save_file("save_game.xml");
-
-	return ret;
-}
-
-bool SceneMenu::LoadState(pugi::xml_node& data)
-{
-	continueGame = data.child("continue").attribute("cont").as_int();
-
-	return true;
-}
-
-bool SceneMenu::SaveState(pugi::xml_node& data) const
-{
-	pugi::xml_node menu = data.append_child("continue");
-
-	menu.append_attribute("cont") = continueGame;
-
-	return true;
 }
 
