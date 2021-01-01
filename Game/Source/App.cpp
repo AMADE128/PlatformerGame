@@ -364,7 +364,7 @@ bool App::PostUpdate()
 	ListItem<Module*>* item;
 	Module* pModule = NULL;
 
-	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || sceneMenu->btnExit->GetEvent() == false)
+	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || sceneMenu->btnExit->GetEvent() == false && sceneMenu->active == true && sceneMenu->menuState == sceneMenu->NORMAL)
 	{
 		ret = false;
 	}

@@ -114,7 +114,7 @@ bool SceneMenu::PostUpdate()
 	if (menuState == SETTINGS)
 	{
 		app->render->DrawRectangle({ 0, 0, 1280, 720 }, { 0, 0, 0, 150 });
-		app->render->DrawTexture(boxTex, 0, 0);
+		app->render->DrawTexture(boxTex, btnNew->bounds.x - 32, btnNew->bounds.y - 20);
 	}
 
 	return ret;
