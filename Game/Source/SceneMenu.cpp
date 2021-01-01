@@ -47,13 +47,14 @@ bool SceneMenu::Awake()
 bool SceneMenu::Start()
 {
 	// L03: DONE: Load map
-	menu = app->tex->Load("Assets/Textures/Screens/menu.png");
+	menuTex = app->tex->Load("Assets/Textures/Screens/menu.png");
 	musicMenu = app->audio->LoadFx("Assets/Audio/SceneMusic/intro_music.wav");
 	btnNew->texture = btnExit->texture = btnLoad->texture = btnOptions->texture = app->tex->Load("Assets/Textures/Interface/button.png");
-	newButt = app->tex->Load("Assets/Textures/Interface/new.png");
-	loadButt = app->tex->Load("Assets/Textures/Interface/load.png");
-	optionButt = app->tex->Load("Assets/Textures/Interface/option.png");
-	exitButt = app->tex->Load("Assets/Textures/Interface/exit.png");
+	boxTex = app->tex->Load("Assets/Textures/Interface/box.png");
+	newButtTex = app->tex->Load("Assets/Textures/Interface/new.png");
+	loadButtTex = app->tex->Load("Assets/Textures/Interface/load.png");
+	optionButtTex = app->tex->Load("Assets/Textures/Interface/option.png");
+	exitButtTex = app->tex->Load("Assets/Textures/Interface/exit.png");
 
 	app->musicList.Add(&musicMenu);
 	app->audio->PlayFx(musicMenu, -1);
@@ -70,6 +71,7 @@ bool SceneMenu::PreUpdate()
 // Called each loop iteration
 bool SceneMenu::Update(float dt)
 {
+<<<<<<< Updated upstream
 	if (saved == true)
 	{
 		newGame = false;
@@ -80,6 +82,23 @@ bool SceneMenu::Update(float dt)
 	btnExit->Update(app->input, dt);
 	btnLoad->Update(app->input, dt);
 	btnOptions->Update(app->input, dt);
+=======
+	switch (menuState)
+	{
+	case SceneMenu::NORMAL:
+		btnNew->Update(app->input, dt);
+		btnExit->Update(app->input, dt);
+		btnLoad->Update(app->input, dt);
+		btnOptions->Update(app->input, dt);
+		break;
+	case SceneMenu::SETTINGS:
+		break;
+	case SceneMenu::CREDITS:
+		break;
+	default:
+		break;
+	}
+>>>>>>> Stashed changes
 
 	return true;
 }
@@ -88,17 +107,22 @@ bool SceneMenu::Update(float dt)
 bool SceneMenu::PostUpdate()
 {
 	bool ret = true;
-
-	app->render->DrawTexture(menu, 0, 0);
+	app->render->DrawTexture(menuTex, 0, 0);
 
 	btnNew->Draw(app->render);
-	app->render->DrawTexture(newButt, btnNew->bounds.x, btnNew->bounds.y);
+	app->render->DrawTexture(newButtTex, btnNew->bounds.x, btnNew->bounds.y);
 	btnExit->Draw(app->render);
-	app->render->DrawTexture(exitButt, btnExit->bounds.x, btnExit->bounds.y);
+	app->render->DrawTexture(exitButtTex, btnExit->bounds.x, btnExit->bounds.y);
 	btnLoad->Draw(app->render);
-	app->render->DrawTexture(loadButt, btnLoad->bounds.x, btnLoad->bounds.y);
+	app->render->DrawTexture(loadButtTex, btnLoad->bounds.x, btnLoad->bounds.y);
 	btnOptions->Draw(app->render);
-	app->render->DrawTexture(optionButt, btnOptions->bounds.x, btnOptions->bounds.y);
+	app->render->DrawTexture(optionButtTex, btnOptions->bounds.x, btnOptions->bounds.y);\
+
+	if (menuState == SETTINGS)
+	{
+		app->render->DrawRectangle({ 0, 0, 1280, 720 }, { 0, 0, 0, 150 });
+		app->render->DrawTexture(boxTex, 0, 0);
+	}
 
 	return ret;
 }
@@ -109,7 +133,7 @@ bool SceneMenu::CleanUp()
 	if (!active) return true;
 
 	LOG("Freeing scene");
-	app->tex->UnLoad(menu);
+	app->tex->UnLoad(menuTex);
 	app->tex->UnLoad(btnNew->texture);
 	app->tex->UnLoad(btnExit->texture);
 	app->tex->UnLoad(btnLoad->texture);
@@ -128,7 +152,17 @@ bool SceneMenu::OnGuiMouseClickEvent(GuiControl* control)
 	{
 	case GuiControlType::BUTTON:
 	{
+<<<<<<< Updated upstream
 		if (control->id == 1)
+=======
+		if (control->id == 1) app->fadeToBlack->Fade(this, (Module*)app->scene, 80); //Go to LVL 1
+		if (control->id == 4) return false; //Exit request
+		if (control->id == 3)
+		{
+			menuState = SETTINGS;
+		}
+		if (control->id == 4)
+>>>>>>> Stashed changes
 		{
 			newGame = true;
 			MenuSave(loadFile);

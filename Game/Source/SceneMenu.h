@@ -10,6 +10,13 @@ class SceneMenu : public Module
 {
 public:
 
+	enum MenuStates
+	{
+		NORMAL,
+		SETTINGS,
+		CREDITS
+	};
+
 	SceneMenu();
 
 	// Destructor
@@ -40,11 +47,14 @@ public:
 
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
-	SDL_Texture* menu;
-	SDL_Texture* newButt;
-	SDL_Texture* loadButt;
-	SDL_Texture* optionButt;
-	SDL_Texture* exitButt;
+	SDL_Texture* menuTex;
+	SDL_Texture* boxTex;
+	SDL_Texture* newButtTex;
+	SDL_Texture* loadButtTex;
+	SDL_Texture* optionButtTex;
+	SDL_Texture* exitButtTex;
+
+	MenuStates menuState = NORMAL;
 
 	unsigned int musicMenu;
 
