@@ -48,6 +48,9 @@
       <Filter>GuiControl</Filter>
     </ClCompile>
     <ClCompile Include="Source\GuiManager.cpp" />
+    <ClCompile Include="Source\GuiSlider.cpp">
+      <Filter>GuiControl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -120,6 +123,9 @@
     </ClInclude>
     <ClInclude Include="Source\GuiManager.h" />
     <ClInclude Include="Source\GuiControl.h">
+      <Filter>GuiControl</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiSlider.h">
       <Filter>GuiControl</Filter>
     </ClInclude>
   </ItemGroup>

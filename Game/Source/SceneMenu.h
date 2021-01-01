@@ -3,6 +3,7 @@
 
 #include "Module.h"
 #include "GuiButton.h"
+#include "GuiSlider.h"
 
 struct SDL_Texture;
 
@@ -64,6 +65,8 @@ public:
 	GuiButton* btnExit;
 	GuiButton* btnLoad;
 	GuiButton* btnOptions;
+	
+	GuiSlider* sliderMusic;
 
 	int checkContinue = 0;
 	int continueGame;
