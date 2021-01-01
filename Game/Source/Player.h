@@ -124,6 +124,8 @@ public:
 	bool playerLoadF6 = false;
 	bool changeLevel1 = false;
 	bool changeLevel2 = false;
+
+	bool cont = false;
 };
 
 #endif // __PLAYER_H__

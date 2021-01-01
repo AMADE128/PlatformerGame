@@ -1,6 +1,6 @@
 #include "GuiButton.h"
 #include "Textures.h"
-#include "SceneMenu.h"
+#include "Player.h"
 
 GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::BUTTON, id)
 {
@@ -16,11 +16,11 @@ bool GuiButton::Update(Input* input, float dt)
 {
 	if (id == 2)
 	{
-		if (app->sceneMenu->checkContinue == 0)
+		if (app->player->cont == false)
 		{
 			state = GuiControlState::DISABLED;
 		}
-		else if (app->sceneMenu->checkContinue == 1)
+		else if (app->player->cont == true)
 		{
 			state = GuiControlState::NORMAL;
 		}

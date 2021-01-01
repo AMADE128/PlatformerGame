@@ -41,13 +41,6 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	bool LoadMenu(pugi::xml_node&);
-	bool SaveMenu(pugi::xml_node&);
-	bool MenuLoad(pugi::xml_document& loadFile);
-	bool MenuSave(pugi::xml_document& loadFile);
-	bool SaveState(pugi::xml_node& data) const;
-	bool LoadState(pugi::xml_node& data);
-
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
 	SDL_Texture* menuTex;
@@ -68,10 +61,8 @@ public:
 	
 	GuiSlider* sliderMusic;
 
-	int checkContinue = 0;
-	int continueGame;
-	bool newGame = false;
-	bool saved = false;
+	bool LoadMenu(pugi::xml_node&);
+	bool Menu(pugi::xml_document& loadFile);
 
 private:
 
