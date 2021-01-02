@@ -197,24 +197,13 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
-	if (app->player->playerState == app->player->NORMAL)
-	{
-		currentAnimation->Update();
-	}
+	currentAnimation->Update();
 	SDL_Rect checkPointRect = currentAnimation->GetCurrentFrame();
 	app->render->DrawTexture(currentTex, 3800, 1296, &checkPointRect);
 	
 	Animation* apple = &appleAnim;
-<<<<<<< Updated upstream
 	apple->Update();
 	if (appleColl1 != nullptr && appleColl1->isCollected != true)
-=======
-	if (app->player->playerState == app->player->NORMAL)
-	{
-		apple->Update();
-	}
-	if (appleColl1->isCollected != true)
->>>>>>> Stashed changes
 	{
 		SDL_Rect appleRect = apple->GetCurrentFrame();
 		app->render->DrawTexture(appleTex, 2544, 1344, &appleRect);
@@ -250,16 +239,8 @@ bool Scene::PostUpdate()
 	else if (appleColl5 != nullptr && appleColl5->isCollected == true) apples[4] = 0;
 
 	Animation* pineapple = &pineappleAnim;
-<<<<<<< Updated upstream
 	pineapple->Update();
 	if (pineappleColl1 != nullptr && pineappleColl1->isCollected == false)
-=======
-	if (app->player->playerState == app->player->NORMAL)
-	{
-		pineapple->Update();
-	}
-	if (pineappleColl1->isCollected == false)
->>>>>>> Stashed changes
 	{
 		SDL_Rect pineappleRect1 = pineapple->GetCurrentFrame();
 		app->render->DrawTexture(pineappleTex, 4300, 500, &pineappleRect1);

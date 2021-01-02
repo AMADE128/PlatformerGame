@@ -207,393 +207,6 @@ bool Player::Update(float dt)
 	switch (playerState)
 	{
 	case Player::NORMAL:
-		playerSave = false;
-		dt *= 6;
-		idleAnim.speed = 4.0f * dt;
-		runAnim.speed = 5.0f * dt;
-		deathAnim.speed = 4.0f * dt;
-		doubleJumpAnim.speed = 4.0f * dt;
-		desAppeAnim.speed = 4.0f * dt;
-		appeAnim.speed = 4.0f * dt;
-		dronAnim.speed = 4.0f * dt;
-		chickenAnim.speed = 4.0f * dt;
-		if (death == false && appear == false)
-		{
-			if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
-			{
-				if (app->scene->active == true)
-				{
-					position.x = 720;
-					position.y = 1584;
-					playerColl->SetPos(position.x + 25, position.y + 20);
-					cameraColl->rect.x = position.x - 100;
-					cameraColl->rect.y = position.y - 100;
-					speedX = 0;
-					speedY = 0;
-				}
-				else if (app->sceneLvl2->active == true)
-				{
-					position.x = 620;
-					position.y = 2256;
-					playerColl->SetPos(position.x + 25, position.y + 20);
-					cameraColl->rect.x = position.x - 100;
-					cameraColl->rect.y = position.y - 100;
-					speedX = 0;
-					speedY = 0;
-				}
-			}
-			if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN && !isJumping)
-			{
-				cont = true;
-				playerSave = true;
-				if (currentLvl == 1)
-				{
-					lvl = 1;
-				}
-				else if (currentLvl == 2)
-				{
-					lvl = 2;
-				}
-				app->SaveGameRequest();
-			}
-<<<<<<< Updated upstream
-		}
-		if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN && !isJumping)
-		{
-			cont = true;
-			playerSave = true;
-			playerLoadF6 = true;
-			auxp.x = position.x;
-			auxp.y = position.y;
-			if (currentLvl == 1)
-=======
-			if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
->>>>>>> Stashed changes
-			{
-				playerLoadF6 = true;
-				if (lvl == 2)
-				{
-					if (app->scene->active == true)
-					{
-						saveGame = true;
-						changeLevel2 = true;
-					}
-					else if (app->sceneLvl2->active == true) app->LoadGameRequest();
-				}
-				else if (lvl == 1)
-				{
-					if (app->sceneLvl2->active == true)
-					{
-						saveGame = true;
-						changeLevel1 = true;
-					}
-					else if (app->scene->active == true) app->LoadGameRequest();
-				}
-				appear = true;
-			}
-			if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && yDownCollision == true)
-			{
-				if (god == false)
-				{
-					god = true;
-					playerColl->type = Collider::NONE;
-
-				}
-				else if (god == true)
-				{
-					god = false;
-					playerColl->type = Collider::PLAYER;
-				}
-
-			}
-<<<<<<< Updated upstream
-			app->SaveGameRequest();
-		}
-		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
-		{
-			if (lvl == 2)
-=======
-			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isJumping)
->>>>>>> Stashed changes
-			{
-				if (!secondJump)
-				{
-					app->audio->PlayFx(jumpFx);
-					speedY = 20 * dt;
-					secondJump = true;
-				}
-			}
-			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && yDownCollision == true && god == false)
-			{
-				if (!isJumping) // Solo salta cuando no esté en el aire
-				{
-					app->audio->PlayFx(jumpFx);
-					isJumping = true;
-				}
-			}
-			if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-			{
-				playerState = SETTINGS;
-			}
-			if (app->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && flip == true)
-			{
-				app->moduleParticles->AddParticle(app->moduleParticles->leftLeaf, position.x - 30, position.y, Collider::Type::LEAF);
-				app->audio->PlayFx(leafFx);
-			}
-			if (app->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && flip == false)
-			{
-				app->moduleParticles->AddParticle(app->moduleParticles->rightLeaf, position.x - 30, position.y, Collider::Type::LEAF);
-				app->audio->PlayFx(leafFx);
-			}
-			if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN && flip == false && skillCoolDown == 0)
-			{
-				skillCoolDown = 200;
-				app->moduleParticles->AddParticle(app->moduleParticles->chickenFall, position.x + 200, position.y - 350, Collider::Type::CHICKEN);
-
-			}
-			if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN && flip == true && skillCoolDown == 0)
-			{
-				skillCoolDown = 200;
-				app->moduleParticles->AddParticle(app->moduleParticles->chickenFall, position.x - 200, position.y - 350, Collider::Type::CHICKEN);
-
-			}
-			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && god == true)
-			{
-				speedY = -80 * dt;
-				position.y += speedY;
-			}
-			else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && god == true)
-			{
-				speedY = 80 * dt;
-				position.y += speedY;
-			}
-			else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && app->input->GetKey(SDL_SCANCODE_D) != KEY_REPEAT)
-			{
-				if (god == true)
-				{
-					speedXLastFrame = speedX;
-					speedX = -80 * dt;
-					position.x += speedX;
-				}
-				else if (god == false && xLeftCollision == false)
-				{
-					xRightCollision = false;
-					speedXLastFrame = speedX;
-					speedX = -60 * dt;
-					position.x += speedX;
-
-					if (yDownCollision == true)
-					{
-						currentTex = runTex;
-						currentAnimation = &runAnim;
-						flip = true;
-					}
-					else
-					{
-						flip = true;
-						if ((-30 * dt + speedY) < 0)
-						{
-							if (speedX <= 0 && speedXLastFrame < 0)
-							{
-								if (secondJump && doubleJumpAnim.finish == false)
-								{
-									currentAnimation = &doubleJumpAnim;
-									currentTex = doubleJumpTex;
-								}
-								if (doubleJumpAnim.finish == true || !secondJump)
-								{
-									currentAnimation = &jumpAnim;
-									currentTex = jumpTex;
-								}
-							}
-						}
-						else if ((-30 * dt + speedY) >= 0)
-						{
-							if (speedX <= 0 && speedXLastFrame < 0)
-							{
-								if (secondJump && doubleJumpAnim.finish == false)
-								{
-									currentAnimation = &doubleJumpAnim;
-									currentTex = doubleJumpTex;
-								}
-								if (doubleJumpAnim.finish == true || !secondJump)
-								{
-									currentAnimation = &fallAnim;
-									currentTex = fallTex;
-								}
-							}
-						}
-					}
-				}
-
-			}
-			else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && app->input->GetKey(SDL_SCANCODE_A) != KEY_REPEAT)
-			{
-				if (god == true)
-				{
-					speedXLastFrame = speedX;
-					speedX = 80 * dt;
-					position.x += speedX;
-				}
-				else if (god == false && xRightCollision == false)
-				{
-					xLeftCollision = false;
-					speedXLastFrame = speedX;
-					speedX = 60 * dt;
-					position.x += speedX;
-
-					if (yDownCollision == true)
-					{
-						currentTex = runTex;
-						currentAnimation = &runAnim;
-						flip = false;
-					}
-					else
-					{
-						flip = false;
-						if ((-30 * dt + speedY) < 0)
-						{
-							if (speedX >= 0 && speedXLastFrame > 0)
-							{
-								if (secondJump && doubleJumpAnim.finish == false)
-								{
-									currentAnimation = &doubleJumpAnim;
-									currentTex = doubleJumpTex;
-								}
-								if (doubleJumpAnim.finish == true || !secondJump)
-								{
-									currentAnimation = &jumpAnim;
-									currentTex = jumpTex;
-								}
-							}
-						}
-						else if ((-30 * dt + speedY) >= 0)
-						{
-							if (speedX >= 0 && speedXLastFrame > 0)
-							{
-								if (secondJump && doubleJumpAnim.finish == false)
-								{
-									currentAnimation = &doubleJumpAnim;
-									currentTex = doubleJumpTex;
-								}
-								if (doubleJumpAnim.finish == true || !secondJump)
-								{
-									currentAnimation = &fallAnim;
-									currentTex = fallTex;
-								}
-							}
-						}
-					}
-				}
-
-			}
-			else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP || app->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
-			{
-				speedX = 0;
-			}
-			else
-			{
-				if (speedX == 0)
-				{
-					if (speedY == 0)
-					{
-						currentAnimation = &idleAnim;
-						currentTex = idleTex;
-						if (speedXLastFrame > 0)
-						{
-							flip = false;
-						}
-						else if (speedXLastFrame < 0)
-						{
-							flip = true;
-						}
-					}
-					else if ((-30 * dt + speedY) < 0)
-					{
-						if (secondJump && doubleJumpAnim.finish == false)
-						{
-							currentAnimation = &doubleJumpAnim;
-							currentTex = doubleJumpTex;
-						}
-						if (doubleJumpAnim.finish == true || !secondJump)
-						{
-							currentAnimation = &jumpAnim;
-							currentTex = jumpTex;
-						}
-						if (speedXLastFrame > 0)
-						{
-							flip = false;
-						}
-						else if (speedXLastFrame < 0)
-						{
-							flip = true;
-						}
-					}
-					else if ((-30 * dt + speedY) >= 0)
-					{
-						if (secondJump && doubleJumpAnim.finish == false)
-						{
-							currentAnimation = &doubleJumpAnim;
-							currentTex = doubleJumpTex;
-						}
-						if (doubleJumpAnim.finish == true || !secondJump)
-						{
-							currentAnimation = &fallAnim;
-							currentTex = fallTex;
-						}
-						if (speedXLastFrame > 0)
-						{
-							flip = false;
-						}
-						else if (speedXLastFrame < 0)
-						{
-							flip = true;
-						}
-					}
-				}
-
-			}
-
-			if (isJumping)
-			{
-				xLeftCollision = false;
-				xRightCollision = false;
-				position.y += -100 * dt;
-			}
-			if (secondJump)
-			{
-				xLeftCollision = false;
-				xRightCollision = false;
-				position.y += -20 * dt;
-			}
-
-			if (yDownCollision == true)
-			{
-				speedY = 0;
-			}
-			else
-			{
-				if (app->fps <= 32)
-				{
-					speedY += 10.0f * dt;
-				}
-				else
-				{
-					speedY += 4.0f * dt;
-				}
-			}
-
-			position.y += speedY;
-
-
-			playerColl->SetPos(position.x + 25, position.y + 20);
-			app->render->camera.x = ((cameraColl->rect.x + cameraColl->rect.w / 3) - (app->render->camera.w / 2)) * -1;
-			app->render->camera.y = ((cameraColl->rect.y + cameraColl->rect.h / 3) - (app->render->camera.h / 2.5)) * -1;
-		}
-		if (skillCoolDown > 0)
-		{
-			skillCoolDown--;
-		}
 		break;
 	case Player::SETTINGS:
 		btnResume->Update(app->input, dt);
@@ -605,6 +218,376 @@ bool Player::Update(float dt)
 		break;
 	}
 
+	playerSave = false;
+	dt *= 6;
+	idleAnim.speed = 4.0f * dt;
+	runAnim.speed = 5.0f * dt;
+	deathAnim.speed = 4.0f * dt;
+	doubleJumpAnim.speed = 4.0f * dt;
+	desAppeAnim.speed = 4.0f * dt;
+	appeAnim.speed = 4.0f * dt;
+	dronAnim.speed = 4.0f * dt;
+	chickenAnim.speed = 4.0f * dt;
+	if (death == false && appear == false)
+	{
+		if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+		{
+			if (app->scene->active == true)
+			{
+				position.x = 720;
+				position.y = 1584;
+				playerColl->SetPos(position.x + 25, position.y + 20);
+				cameraColl->rect.x = position.x - 100;
+				cameraColl->rect.y = position.y - 100;
+				speedX = 0;
+				speedY = 0;
+			}
+			else if (app->sceneLvl2->active == true)
+			{
+				position.x = 620;
+				position.y = 2256;
+				playerColl->SetPos(position.x + 25, position.y + 20);
+				cameraColl->rect.x = position.x - 100;
+				cameraColl->rect.y = position.y - 100;
+				speedX = 0;
+				speedY = 0;
+			}
+		}
+		if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN && !isJumping)
+		{
+			cont = true;
+			playerSave = true;
+			playerLoadF6 = true;
+			auxp.x = position.x;
+			auxp.y = position.y;
+			if (currentLvl == 1)
+			{
+				lvl = 1;
+			}
+			else if (currentLvl == 2)
+			{
+				lvl = 2;
+			}
+			app->SaveGameRequest();
+		}
+		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+		{
+			if (lvl == 2)
+			{
+				if (app->scene->active == true)
+				{
+					saveGame = true;
+					changeLevel2 = true;
+				}
+				else if (app->sceneLvl2->active == true) app->LoadGameRequest();
+			}
+			else if (lvl == 1)
+			{
+				if (app->sceneLvl2->active == true)
+				{
+					saveGame = true;
+					changeLevel1 = true;
+				}
+				else if (app->scene->active == true) app->LoadGameRequest();
+			}
+			appear = true;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && yDownCollision == true)
+		{
+			if (god == false)
+			{
+				god = true;
+				playerColl->type = Collider::NONE;
+
+			}
+			else if (god == true)
+			{
+				god = false;
+				playerColl->type = Collider::PLAYER;
+			}
+
+		}
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && isJumping)
+		{
+			if (!secondJump)
+			{
+				app->audio->PlayFx(jumpFx);
+				speedY = 20*dt;
+				secondJump = true;
+			}
+		}
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && yDownCollision == true && god == false)
+		{
+			if (!isJumping) // Solo salta cuando no esté en el aire
+			{
+				app->audio->PlayFx(jumpFx);
+				isJumping = true;
+			}
+		}
+		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		{
+			playerState = SETTINGS;
+		}
+		if (app->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && flip == true) 
+		{
+			app->moduleParticles->AddParticle(app->moduleParticles->leftLeaf, position.x - 30, position.y, Collider::Type::LEAF);
+			app->audio->PlayFx(leafFx);
+		}
+		if (app->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && flip == false)
+		{
+			app->moduleParticles->AddParticle(app->moduleParticles->rightLeaf, position.x - 30, position.y, Collider::Type::LEAF);
+			app->audio->PlayFx(leafFx);
+		}
+		if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN && flip == false && skillCoolDown == 0)
+		{
+			skillCoolDown = 200;
+			app->moduleParticles->AddParticle(app->moduleParticles->chickenFall, position.x + 200, position.y -350, Collider::Type::CHICKEN);
+			
+		}
+		if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN && flip == true && skillCoolDown == 0)
+		{
+			skillCoolDown = 200;
+			app->moduleParticles->AddParticle(app->moduleParticles->chickenFall, position.x - 200, position.y - 350, Collider::Type::CHICKEN);
+
+		}
+		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && god == true)
+		{
+			speedY = -80*dt;
+			position.y += speedY;
+		}
+		else if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && god == true)
+		{
+			speedY = 80*dt;
+			position.y += speedY;
+		}
+		else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && app->input->GetKey(SDL_SCANCODE_D) != KEY_REPEAT)
+		{
+			if (god == true)
+			{
+				speedXLastFrame = speedX;
+				speedX = -80*dt;
+				position.x += speedX;
+			}
+			else if (god == false && xLeftCollision == false)
+			{
+				xRightCollision = false;
+				speedXLastFrame = speedX;
+				speedX = -60*dt;
+				position.x += speedX;
+
+				if (yDownCollision == true)
+				{
+					currentTex = runTex;
+					currentAnimation = &runAnim;
+					flip = true;
+				}
+				else
+				{
+					flip = true;
+					if ((-30*dt + speedY) < 0)
+					{
+						if (speedX <= 0 && speedXLastFrame < 0)
+						{
+							if (secondJump && doubleJumpAnim.finish == false)
+							{
+								currentAnimation = &doubleJumpAnim;
+								currentTex = doubleJumpTex;
+							}
+							if (doubleJumpAnim.finish == true || !secondJump)
+							{
+								currentAnimation = &jumpAnim;
+								currentTex = jumpTex;
+							}
+						}
+					}
+					else if ((-30*dt + speedY) >= 0)
+					{
+						if (speedX <= 0 && speedXLastFrame < 0)
+						{
+							if (secondJump && doubleJumpAnim.finish == false)
+							{
+								currentAnimation = &doubleJumpAnim;
+								currentTex = doubleJumpTex;
+							}
+							if (doubleJumpAnim.finish == true || !secondJump)
+							{
+								currentAnimation = &fallAnim;
+								currentTex = fallTex;
+							}
+						}
+					}
+				}
+			}
+
+		}
+		else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT && app->input->GetKey(SDL_SCANCODE_A) != KEY_REPEAT)
+		{
+			if (god == true)
+			{
+				speedXLastFrame = speedX;
+				speedX = 80*dt;
+				position.x += speedX;
+			}
+			else if (god == false && xRightCollision == false)
+			{
+				xLeftCollision = false;
+				speedXLastFrame = speedX;
+				speedX = 60*dt;
+				position.x += speedX;
+
+				if (yDownCollision == true)
+				{
+					currentTex = runTex;
+					currentAnimation = &runAnim;
+					flip = false;
+				}
+				else
+				{
+					flip = false;
+					if ((-30*dt + speedY) < 0)
+					{
+						if (speedX >= 0 && speedXLastFrame > 0)
+						{
+							if (secondJump && doubleJumpAnim.finish == false)
+							{
+								currentAnimation = &doubleJumpAnim;
+								currentTex = doubleJumpTex;
+							}
+							if (doubleJumpAnim.finish == true || !secondJump)
+							{
+								currentAnimation = &jumpAnim;
+								currentTex = jumpTex;
+							}
+						}
+					}
+					else if ((-30*dt + speedY) >= 0)
+					{
+						if (speedX >= 0 && speedXLastFrame > 0)
+						{
+							if (secondJump && doubleJumpAnim.finish == false)
+							{
+								currentAnimation = &doubleJumpAnim;
+								currentTex = doubleJumpTex;
+							}
+							if (doubleJumpAnim.finish == true || !secondJump)
+							{
+								currentAnimation = &fallAnim;
+								currentTex = fallTex;
+							}
+						}
+					}
+				}
+			}
+
+		}
+		else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_UP || app->input->GetKey(SDL_SCANCODE_A) == KEY_UP)
+		{
+			speedX = 0;
+		}
+		else
+		{
+			if (speedX == 0)
+			{
+				if (speedY == 0)
+				{
+					currentAnimation = &idleAnim;
+					currentTex = idleTex;
+					if (speedXLastFrame > 0)
+					{
+						flip = false;
+					}
+					else if (speedXLastFrame < 0)
+					{
+						flip = true;
+					}
+				}
+				else if ((-30*dt + speedY) < 0)
+				{
+					if (secondJump && doubleJumpAnim.finish == false)
+					{
+						currentAnimation = &doubleJumpAnim;
+						currentTex = doubleJumpTex;
+					}
+					if (doubleJumpAnim.finish == true || !secondJump)
+					{
+						currentAnimation = &jumpAnim;
+						currentTex = jumpTex;
+					}
+					if (speedXLastFrame > 0)
+					{
+						flip = false;
+					}
+					else if (speedXLastFrame < 0)
+					{
+						flip = true;
+					}
+				}
+				else if ((-30*dt + speedY) >= 0)
+				{
+					if (secondJump && doubleJumpAnim.finish == false)
+					{
+						currentAnimation = &doubleJumpAnim;
+						currentTex = doubleJumpTex;
+					}
+					if (doubleJumpAnim.finish == true || !secondJump)
+					{
+						currentAnimation = &fallAnim;
+						currentTex = fallTex;
+					}
+					if (speedXLastFrame > 0)
+					{
+						flip = false;
+					}
+					else if (speedXLastFrame < 0)
+					{
+						flip = true;
+					}
+				}
+			}
+
+		}
+
+		if (isJumping)
+		{
+			xLeftCollision = false;
+			xRightCollision = false;
+			position.y += -100*dt;
+		}
+		if (secondJump)
+		{
+			xLeftCollision = false;
+			xRightCollision = false;
+			position.y += -20*dt;
+		}
+
+		if (yDownCollision == true)
+		{
+			speedY = 0;
+		}
+		else
+		{
+			if (app->fps <= 32)
+			{
+				speedY += 10.0f * dt;
+			}
+			else
+			{
+				speedY += 4.0f * dt;
+			}
+		}
+	
+		position.y += speedY;
+
+
+		playerColl->SetPos(position.x + 25, position.y + 20);
+		app->render->camera.x = ((cameraColl->rect.x + cameraColl->rect.w / 3) - (app->render->camera.w / 2)) * -1;
+		app->render->camera.y = ((cameraColl->rect.y + cameraColl->rect.h / 3) - (app->render->camera.h / 2.5)) * -1;
+	}
+	if(skillCoolDown > 0)
+	{
+		skillCoolDown--;
+	}
+
 	return true;
 }
 
@@ -614,48 +597,33 @@ bool Player::PostUpdate()
 	if (flip == false) 
 	{
 		Animation* dron = &dronAnim;
-		if (playerState == NORMAL)
-		{
-			dron->Update();
-		}
+		dron->Update();
 		SDL_Rect dronRect = dron->GetCurrentFrame();
 		app->render->DrawTextureFlip(dronTex, position.x - 50, position.y - 10, &dronRect);
 	}
 	else if (flip == true)
 	{
 		Animation* dron = &dronAnim;
-		if (playerState == NORMAL)
-		{
-			dron->Update();
-		}
+		dron->Update();
 		SDL_Rect dronRect = dron->GetCurrentFrame();
 		app->render->DrawTexture(dronTex, position.x - 50, position.y - 10, &dronRect);
 	}
 	if (flip == false && skillCoolDown == 0)
 	{
 		Animation* chicken = &chickenAnim;
-		if (playerState == NORMAL)
-		{
-			chicken->Update();
-		}
+		chicken->Update();
 		SDL_Rect chickenRect = chicken->GetCurrentFrame();
 		app->render->DrawTextureFlip(chickenFlyTex, position.x + 80, position.y - 10, &chickenRect);
 	}
 	else if (flip == true && skillCoolDown == 0)
 	{
 		Animation* chicken = &chickenAnim;
-		if (playerState == NORMAL)
-		{
-			chicken->Update();
-		}
+		chicken->Update();
 		SDL_Rect chickenRect = chicken->GetCurrentFrame();
 		app->render->DrawTexture(chickenFlyTex, position.x + 80, position.y - 10, &chickenRect);
 	}
 
-	if (playerState == NORMAL)
-	{
-		currentAnimation->Update();
-	}
+	currentAnimation->Update();
 	SDL_Rect rect = currentAnimation->GetCurrentFrame();
 	if (flip == true)
 	{
@@ -694,34 +662,22 @@ bool Player::PostUpdate()
 	{
 		btnResume->bounds.x = (app->render->camera.x - app->render->camera.w / 2 + btnResume->bounds.w / 2) * -1;
 		btnResume->bounds.y = (app->render->camera.y - app->render->camera.h / 2 + 100) * -1;
-
 		btnSettings->bounds.x = (app->render->camera.x - app->render->camera.w / 2 + btnResume->bounds.w / 2) * -1;
 		btnSettings->bounds.y = (app->render->camera.y - app->render->camera.h / 2 + 45) * -1;
-
 		btnBack->bounds.x = (app->render->camera.x - app->render->camera.w / 2 + btnResume->bounds.w / 2) * -1;
 		btnBack->bounds.y = (app->render->camera.y - app->render->camera.h / 2 - 15) * -1;
-
 		btnExit->bounds.x = (app->render->camera.x - app->render->camera.w / 2 + btnResume->bounds.w / 2) * -1;
 		btnExit->bounds.y = (app->render->camera.y - app->render->camera.h / 2 - 75) * -1;
-
-		app->render->DrawRectangle({ app->render->camera.x*-1, app->render->camera.y*-1, 1280, 720 }, { 0, 0, 0, 170 });
+		app->render->DrawRectangle({ 0, 0, 1280, 720 }, { 0, 0, 0, 170 });
 		app->render->DrawTexture(boxTex, btnResume->bounds.x - 32, btnResume->bounds.y - 20);
-
 		btnResume->Draw(app->render);
-		if (btnResume->state == GuiControlState::PRESSED) app->render->DrawTexture(resumeButtTex, btnResume->bounds.x, btnResume->bounds.y + 5);
-		else app->render->DrawTexture(resumeButtTex, btnResume->bounds.x, btnResume->bounds.y);
-
+		app->render->DrawTexture(resumeButtTex, btnResume->bounds.x, btnResume->bounds.y);
 		btnSettings->Draw(app->render);
-		if (btnSettings->state == GuiControlState::PRESSED) app->render->DrawTexture(optionButtTex, btnSettings->bounds.x, btnSettings->bounds.y + 5);
-		else app->render->DrawTexture(optionButtTex, btnSettings->bounds.x, btnSettings->bounds.y);
-
+		app->render->DrawTexture(optionButtTex, btnSettings->bounds.x, btnSettings->bounds.y);
 		btnBack->Draw(app->render);
-		if (btnBack->state == GuiControlState::PRESSED) app->render->DrawTexture(returnButtTex, btnBack->bounds.x, btnBack->bounds.y + 5);
-		else app->render->DrawTexture(returnButtTex, btnBack->bounds.x, btnBack->bounds.y);
-
+		app->render->DrawTexture(returnButtTex, btnBack->bounds.x, btnBack->bounds.y);
 		btnExit->Draw(app->render);
-		if (btnExit->state == GuiControlState::PRESSED) app->render->DrawTexture(exitButtTex, btnExit->bounds.x, btnExit->bounds.y + 5);
-		else app->render->DrawTexture(exitButtTex, btnExit->bounds.x, btnExit->bounds.y);
+		app->render->DrawTexture(exitButtTex, btnExit->bounds.x, btnExit->bounds.y);
 	}
 
 
@@ -737,7 +693,6 @@ bool Player::OnGuiMouseClickEvent(GuiControl* control)
 		switch (control->id)
 		{
 		case 6:
-			playerState = NORMAL;
 			break;
 		case 7:
 			break;
