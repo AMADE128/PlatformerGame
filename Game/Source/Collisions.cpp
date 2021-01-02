@@ -346,7 +346,7 @@ void Collisions::DebugDraw()
 		switch (colliders[i]->type)
 		{
 		case Collider::Type::NONE: // white
-			app->render->DrawRectangle(colliders[i]->rect, { 255, 255, 255 });
+			app->render->DrawRectangle(colliders[i]->rect, { 255, 255, 255, alpha });
 			break;
 		case Collider::Type::WALL: // green
 			app->render->DrawRectangle(colliders[i]->rect, { 0, 255, 0, alpha });

@@ -28,17 +28,17 @@ Player::Player() : Module()
 {
 	name.Create("player");
 	
-	btnCallate = new GuiButton(1, { app->render->camera.x + 1280 / 2 - BUTT_WIDTH / 2, app->render->camera.y + 430, BUTT_WIDTH, BUTT_HEIGHT }, "NEW");
-	btnCallate->SetObserver(this);
+	btnResume = new GuiButton(6, { NULL, NULL, BUTT_WIDTH, BUTT_HEIGHT }, "NEW");
+	btnResume->SetObserver(this);
 
-	btnTonto = new GuiButton(2, { app->render->camera.x + 1280 / 2 - BUTT_WIDTH / 2, app->render->camera.y + 500, BUTT_WIDTH, BUTT_HEIGHT }, "LOAD");
-	btnTonto->SetObserver(this);
+	btnSettings = new GuiButton(7, { NULL, NULL, BUTT_WIDTH, BUTT_HEIGHT }, "LOAD");
+	btnSettings->SetObserver(this);
 
-	btnDe = new GuiButton(3, { app->render->camera.x + 1280 / 2 - BUTT_WIDTH / 2, app->render->camera.y + 570, BUTT_WIDTH, BUTT_HEIGHT }, "OPTIONS");
-	btnDe->SetObserver(this);
+	btnBack = new GuiButton(8, { NULL, NULL, BUTT_WIDTH, BUTT_HEIGHT }, "OPTIONS");
+	btnBack->SetObserver(this);
 
-	btnMierda = new GuiButton(4, { app->render->camera.x + 1280 / 2 - BUTT_WIDTH / 2, app->render->camera.y + 640, BUTT_WIDTH, BUTT_HEIGHT }, "EXIT");
-	btnMierda->SetObserver(this);
+	btnExit = new GuiButton(9, { NULL, NULL, BUTT_WIDTH, BUTT_HEIGHT }, "EXIT");
+	btnExit->SetObserver(this);
 
 	for (int i = 0; i < TILESIZE * 11; i += TILESIZE)
 	{
@@ -119,11 +119,11 @@ bool Player::Start()
 {
 	LOG("Loading player textures");
 
-	btnCallate->texture = btnTonto->texture = btnDe->texture = btnMierda->texture = app->tex->Load("Assets/Textures/Interface/button.png");
+	btnResume->texture = btnSettings->texture = btnBack->texture = btnExit->texture = app->tex->Load("Assets/Textures/Interface/button.png");
 	boxTex = app->tex->Load("Assets/Textures/Interface/box.png");
-	newButtTex = app->tex->Load("Assets/Textures/Interface/new.png");
-	loadButtTex = app->tex->Load("Assets/Textures/Interface/load.png");
+	resumeButtTex = app->tex->Load("Assets/Textures/Interface/start.png");
 	optionButtTex = app->tex->Load("Assets/Textures/Interface/option.png");
+	returnButtTex = app->tex->Load("Assets/Textures/Interface/back.png");
 	exitButtTex = app->tex->Load("Assets/Textures/Interface/exit.png");
 	
 	if (app->scene->active == true && cont == false)
@@ -209,11 +209,11 @@ bool Player::Update(float dt)
 	case Player::NORMAL:
 		break;
 	case Player::SETTINGS:
+		btnResume->Update(app->input, dt);
+		btnSettings->Update(app->input, dt);
+		btnBack->Update(app->input, dt);
+		btnExit->Update(app->input, dt);
 		break;
-		btnCallate->Update(app->input, dt);
-		btnTonto->Update(app->input, dt);
-		btnDe->Update(app->input, dt);
-		btnMierda->Update(app->input, dt);
 	default:
 		break;
 	}
@@ -592,20 +592,6 @@ bool Player::Update(float dt)
 bool Player::PostUpdate()
 {
 
-	if (playerState == SETTINGS)
-	{
-		app->render->DrawRectangle({ 0, 0, 1280, 720 }, { 0, 0, 0, 150 });
-		app->render->DrawTexture(boxTex, btnCallate->bounds.x - 32, btnCallate->bounds.y - 20);
-		btnCallate->Draw(app->render);
-		app->render->DrawTexture(newButtTex, btnCallate->bounds.x, btnCallate->bounds.y);
-		btnTonto->Draw(app->render);
-		app->render->DrawTexture(exitButtTex, btnTonto->bounds.x, btnTonto->bounds.y);
-		btnDe->Draw(app->render);
-		app->render->DrawTexture(loadButtTex, btnDe->bounds.x, btnDe->bounds.y);
-		btnMierda->Draw(app->render);
-		app->render->DrawTexture(optionButtTex, btnMierda->bounds.x, btnMierda->bounds.y);
-	}
-
 	if (flip == false) 
 	{
 		Animation* dron = &dronAnim;
@@ -670,6 +656,54 @@ bool Player::PostUpdate()
 		app->fonts->BlitText((app->render->camera.x - 1145) * -1, (app->render->camera.y - 17) * -1, scoreFont, scoreText);
 	}
 
+	if (playerState == SETTINGS)
+	{
+		btnResume->bounds.x = (app->render->camera.x - app->render->camera.w / 2 + btnResume->bounds.w / 2) * -1;
+		btnResume->bounds.y = (app->render->camera.y - app->render->camera.h / 2 + 100) * -1;
+		btnSettings->bounds.x = (app->render->camera.x - app->render->camera.w / 2 + btnResume->bounds.w / 2) * -1;
+		btnSettings->bounds.y = (app->render->camera.y - app->render->camera.h / 2 + 45) * -1;
+		btnBack->bounds.x = (app->render->camera.x - app->render->camera.w / 2 + btnResume->bounds.w / 2) * -1;
+		btnBack->bounds.y = (app->render->camera.y - app->render->camera.h / 2 - 15) * -1;
+		btnExit->bounds.x = (app->render->camera.x - app->render->camera.w / 2 + btnResume->bounds.w / 2) * -1;
+		btnExit->bounds.y = (app->render->camera.y - app->render->camera.h / 2 - 75) * -1;
+		app->render->DrawRectangle({ 0, 0, 1280, 720 }, { 0, 0, 0, 170 });
+		app->render->DrawTexture(boxTex, btnResume->bounds.x - 32, btnResume->bounds.y - 20);
+		btnResume->Draw(app->render);
+		app->render->DrawTexture(resumeButtTex, btnResume->bounds.x, btnResume->bounds.y);
+		btnSettings->Draw(app->render);
+		app->render->DrawTexture(optionButtTex, btnSettings->bounds.x, btnSettings->bounds.y);
+		btnBack->Draw(app->render);
+		app->render->DrawTexture(returnButtTex, btnBack->bounds.x, btnBack->bounds.y);
+		btnExit->Draw(app->render);
+		app->render->DrawTexture(exitButtTex, btnExit->bounds.x, btnExit->bounds.y);
+	}
+
+
+	return true;
+}
+
+bool Player::OnGuiMouseClickEvent(GuiControl* control)
+{
+	switch (control->type)
+	{
+	case GuiControlType::BUTTON:
+	{
+		switch (control->id)
+		{
+		case 6:
+			break;
+		case 7:
+			break;
+		case 8:
+			break;
+		case 9:
+			break;
+		default:
+			break;
+		}
+	}
+	default: break;
+	}
 
 	return true;
 }

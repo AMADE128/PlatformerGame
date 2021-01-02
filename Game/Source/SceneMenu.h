@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "GuiButton.h"
 #include "GuiSlider.h"
+#include "GuiCheckBox.h"
 
 struct SDL_Texture;
 
@@ -62,6 +63,10 @@ public:
 	GuiButton* btnBack;
 	
 	GuiSlider* sliderMusic;
+	GuiSlider* sliderFx;
+
+	GuiCheckBox* checkFullScreen;
+	GuiCheckBox* checkVSync;
 
 	bool LoadMenu(pugi::xml_node&);
 	bool Menu(pugi::xml_document& loadFile);

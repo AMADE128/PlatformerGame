@@ -212,10 +212,17 @@ bool Render::DrawRectangle(const SDL_Rect& rect, SDL_Color color, bool filled) c
 {
 	bool ret = true;
 
+	uint scale = app->win->GetScale();
+
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
 
 	SDL_Rect rec(rect);
+
+	rec.x = (int)(camera.x + rect.x * scale);
+	rec.y = (int)(camera.y + rect.y * scale);
+	rec.w *= scale;
+	rec.h *= scale;
 
 	int result = (filled) ? SDL_RenderFillRect(renderer, &rec) : SDL_RenderDrawRect(renderer, &rec);
 

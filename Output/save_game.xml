@@ -17,11 +17,6 @@
 	</player>
 	<scene />
 	<scene />
-	<:anonymous />
-	<:anonymous />
-	<collisions />
-	<:anonymous />
-	<:anonymous />
 	<pathfinding />
 	<renderer>
 		<camera x="-1009" y="-1720" />

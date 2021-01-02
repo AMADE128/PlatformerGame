@@ -118,7 +118,7 @@ bool SceneMenu::PostUpdate()
 
 	if (menuState == SETTINGS)
 	{
-		app->render->DrawRectangle({ 0, 0, 1280, 720 }, { 0, 0, 0, 150 });
+		app->render->DrawRectangle({ 0, 0, 1280, 720 }, { 0, 0, 0, 170 });
 		app->render->DrawTexture(boxTex, btnNew->bounds.x - 32, btnNew->bounds.y - 20);
 		btnBack->Draw(app->render);
 		if (btnBack->state == GuiControlState::PRESSED) app->render->DrawTexture(backButtTex, btnBack->bounds.x, btnBack->bounds.y + 5);

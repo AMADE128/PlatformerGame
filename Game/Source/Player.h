@@ -50,6 +50,9 @@ public:
 	bool CollectPineapple(Collider* c1, Collider* c2) override;
 
 	bool LoadPlayerCamera();
+	bool LoadState(pugi::xml_node&);
+	bool SaveState(pugi::xml_node&) const;
+	bool OnGuiMouseClickEvent(GuiControl* control);
 
 	// Called before quitting
 	bool CleanUp();
@@ -69,17 +72,17 @@ public:
 	SDL_Texture* chickenFlyTex = nullptr;
 
 	SDL_Texture* boxTex;
-	SDL_Texture* newButtTex;
-	SDL_Texture* loadButtTex;
+	SDL_Texture* resumeButtTex;
 	SDL_Texture* optionButtTex;
+	SDL_Texture* returnButtTex;
 	SDL_Texture* exitButtTex;
 
 	PlayerStates playerState = NORMAL;
 
-	GuiButton* btnCallate;
-	GuiButton* btnTonto;
-	GuiButton* btnDe;
-	GuiButton* btnMierda;
+	GuiButton* btnResume;
+	GuiButton* btnSettings;
+	GuiButton* btnBack;
+	GuiButton* btnExit;
 
 	bool flip;
 	
@@ -134,9 +137,6 @@ public:
 
 	bool isJumping;
 	bool secondJump;
-
-	bool LoadState(pugi::xml_node&);
-	bool SaveState(pugi::xml_node&) const;
 
 	unsigned int lvl;
 	unsigned int currentLvl;
