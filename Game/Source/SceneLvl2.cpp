@@ -196,12 +196,18 @@ bool SceneLvl2::PostUpdate()
 {
 	bool ret = true;
 
-	currentAnimation->Update();
+	if (app->player->playerState == app->player->NORMAL)
+	{
+		currentAnimation->Update();
+	}
 	SDL_Rect checkPointRect = currentAnimation->GetCurrentFrame();
 	app->render->DrawTexture(currentTex, 3144, 1824, &checkPointRect);                     
 
 	Animation* apple = &appleAnim;
-	apple->Update();
+	if (app->player->playerState == app->player->NORMAL)
+	{
+		apple->Update();
+	}
 	if (appleColl1 != nullptr && appleColl1->isCollected != true)
 	{
 		SDL_Rect appleRect = apple->GetCurrentFrame();
@@ -245,7 +251,10 @@ bool SceneLvl2::PostUpdate()
 	else if (appleColl6 != nullptr && appleColl6->isCollected == true) apples2[5] = 0;
 
 	Animation* pineapple = &pineappleAnim;
-	pineapple->Update();
+	if (app->player->playerState == app->player->NORMAL)
+	{
+		pineapple->Update();
+	}
 	if (pineappleColl1->isCollected == false)
 	{
 		SDL_Rect pineappleRect1 = pineapple->GetCurrentFrame();

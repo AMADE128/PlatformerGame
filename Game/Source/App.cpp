@@ -362,11 +362,6 @@ bool App::PostUpdate()
 	ListItem<Module*>* item;
 	Module* pModule = NULL;
 
-	if ((app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && app->player->active == false)|| (sceneMenu->btnExit->GetEvent() == false && sceneMenu->active == true && sceneMenu->menuState != sceneMenu->SETTINGS) || (player->btnExit->GetEvent() == false && scene->active == true && player->playerState == player->SETTINGS))
-	{
-		ret = false;
-	}
-
 	// Set VOLUME
 	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
 	{

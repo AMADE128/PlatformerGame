@@ -18,7 +18,8 @@ public:
 	enum PlayerStates
 	{
 		NORMAL,
-		SETTINGS
+		SETTINGS,
+		EXIT
 	};
 
 	Player();
@@ -77,7 +78,7 @@ public:
 	SDL_Texture* returnButtTex;
 	SDL_Texture* exitButtTex;
 
-	PlayerStates playerState = NORMAL;
+	PlayerStates playerState;
 
 	GuiButton* btnResume;
 	GuiButton* btnSettings;

@@ -60,6 +60,9 @@ bool SceneMenu::Start()
 	exitButtTex = app->tex->Load("Assets/Textures/Interface/exit.png");
 	backButtTex = app->tex->Load("Assets/Textures/Interface/back.png");
 
+	app->render->camera.x = 0;
+	app->render->camera.y = 0;
+
 	app->musicList.Add(&musicMenu);
 	app->audio->PlayFx(musicMenu, -1);
 
@@ -89,6 +92,9 @@ bool SceneMenu::Update(float dt)
 		btnBack->Update(app->input, dt);
 		break;
 	case SceneMenu::CREDITS:
+		break;
+	case SceneMenu::EXIT:
+		return false;
 		break;
 	default:
 		break;
@@ -179,7 +185,7 @@ bool SceneMenu::OnGuiMouseClickEvent(GuiControl* control)
 			menuState = SETTINGS;
 			break;
 		case 4:
-			return false;
+			menuState = EXIT;
 			break;
 		case 5:
 			menuState = NORMAL;

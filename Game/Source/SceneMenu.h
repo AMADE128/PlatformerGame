@@ -16,7 +16,8 @@ public:
 	{
 		NORMAL,
 		SETTINGS,
-		CREDITS
+		CREDITS,
+		EXIT
 	};
 
 	SceneMenu();
