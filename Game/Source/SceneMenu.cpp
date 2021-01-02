@@ -107,6 +107,7 @@ bool SceneMenu::PostUpdate()
 	btnExit->Draw(app->render);
 	btnLoad->Draw(app->render);
 	btnOptions->Draw(app->render);
+
 	if (btnNew->state == GuiControlState::PRESSED) app->render->DrawTexture(newButtTex, btnNew->bounds.x, btnNew->bounds.y + 5);
 	else app->render->DrawTexture(newButtTex, btnNew->bounds.x, btnNew->bounds.y);
 	if (btnExit->state == GuiControlState::PRESSED) app->render->DrawTexture(exitButtTex, btnExit->bounds.x, btnExit->bounds.y + 5);
