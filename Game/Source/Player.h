@@ -118,6 +118,8 @@ public:
 
 	Collider* playerColl = nullptr;
 	Collider* cameraColl = nullptr;
+	iPoint auxc;
+	iPoint auxp;
 
 	bool stopMovementX;
 	bool stopMovementY;
@@ -138,7 +140,8 @@ public:
 	bool isJumping;
 	bool secondJump;
 
-	unsigned int lvl;
+	int lvl = 1;
+
 	unsigned int currentLvl;
 	bool saveGame = false;
 	bool playerSave = false;

@@ -257,6 +257,9 @@ bool Player::Update(float dt)
 		{
 			cont = true;
 			playerSave = true;
+			playerLoadF6 = true;
+			auxp.x = position.x;
+			auxp.y = position.y;
 			if (currentLvl == 1)
 			{
 				lvl = 1;
@@ -269,7 +272,6 @@ bool Player::Update(float dt)
 		}
 		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		{
-			playerLoadF6 = true;
 			if (lvl == 2)
 			{
 				if (app->scene->active == true)
@@ -931,8 +933,14 @@ bool Player::CheckPoint(Collider* c1, Collider* c2)
 {
 	app->scene->savePoint = true;
 	app->sceneLvl2->savePoint = true;
+	playerLoadF6 = false;
 	app->audio->PlayFx(app->scene->checkpointFx);
 
+    auxc.x = position.x;
+	auxc.y = position.y;
+
+	app->SaveGameRequest();
+	
 
 	return true;
 }
@@ -946,63 +954,103 @@ bool Player::LoadState(pugi::xml_node& data)
 
 		currentLvl = data.child("level").attribute("lvl").as_int();
 		playerLoadF6 = false;
-
-		cont = data.child("continue").attribute("cont").as_bool();
 	}
-	else
+	else if (playerLoadF6 == false)
 	{
+
 		position.x = data.child("checkpoint").attribute("x").as_int();
 		position.y = data.child("checkpoint").attribute("y").as_int();
 
-		cont = data.child("continue").attribute("cont").as_bool();
 	}
 
+
+	cont = data.child("continue").attribute("cont").as_bool();
+
+	appleCounter = data.child("score").attribute("sco").as_int();
+
+	lifes = data.child("lifes").attribute("hp").as_int();
+
+	if (cont == true)
+	{
+		app->scene->apples[0] = data.child("apples").attribute("app1").as_int();
+		app->scene->apples[1] = data.child("apples").attribute("app2").as_int();
+		app->scene->apples[2] = data.child("apples").attribute("app3").as_int();
+		app->scene->apples[3] = data.child("apples").attribute("app4").as_int();
+		app->scene->apples[4] = data.child("apples").attribute("app5").as_int();
+		app->scene->apples[5] = data.child("apples").attribute("pine1").as_int();
+
+		app->sceneLvl2->apples2[0] = data.child("apples").attribute("app6").as_int();
+		app->sceneLvl2->apples2[1] = data.child("apples").attribute("app7").as_int();
+		app->sceneLvl2->apples2[2] = data.child("apples").attribute("app8").as_int();
+		app->sceneLvl2->apples2[3] = data.child("apples").attribute("app9").as_int();
+		app->sceneLvl2->apples2[4] = data.child("apples").attribute("app10").as_int();
+		app->sceneLvl2->apples2[5] = data.child("apples").attribute("app11").as_int();
+		app->sceneLvl2->apples2[6] = data.child("apples").attribute("pine2").as_int();
+	}
 
 	return true;
 }
 
 bool Player::SaveState(pugi::xml_node& data) const
 {
+	pugi::xml_node player;
 	if (playerSave == true)
 	{
-		pugi::xml_node player = data.append_child("checkpoint");
+		player = data.append_child("checkpoint");
 
-		player.append_attribute("x") = player.attribute("x").as_int();
-		player.append_attribute("y") = player.attribute("y").as_int();
+		player.append_attribute("x") = auxc.x;
+		player.append_attribute("y") = auxc.y;
 
 		player = data.append_child("position");
 
 		player.append_attribute("x") = position.x;
 		player.append_attribute("y") = position.y;
-
-		player = data.append_child("level");
-
-		player.append_attribute("lvl") = lvl;
-
-		player = data.append_child("continue");
-
-		player.append_attribute("cont") = cont;
-
 	}
-	else
+	else if (playerSave == false)
 	{
-		pugi::xml_node player = data.append_child("checkpoint");
+		player = data.append_child("checkpoint");
+
 		player.append_attribute("x") = position.x;
 		player.append_attribute("y") = position.y;
 
 		player = data.append_child("position");
 
-		player.append_attribute("x") = player.attribute("x").as_int();
-		player.append_attribute("y") = player.attribute("y").as_int();
-
-		player = data.append_child("level");
-
-		player.append_attribute("lvl") = lvl;
-
-		player = data.append_child("continue");
-
-		player.append_attribute("cont") = cont;
+		player.append_attribute("x") = auxp.x;
+	    player.append_attribute("y") = auxp.y;
 	}
+
+	player = data.append_child("level");
+
+	player.append_attribute("lvl") = lvl;
+
+	player = data.append_child("continue");
+
+	player.append_attribute("cont") = cont;
+
+	player = data.append_child("score");
+
+	player.append_attribute("sco") = appleCounter;
+
+	player = data.append_child("lifes");
+
+	player.append_attribute("hp") = lifes;
+
+	player = data.append_child("apples");
+
+	player.append_attribute("app1") = app->scene->apples[0];
+	player.append_attribute("app2") = app->scene->apples[1];
+	player.append_attribute("app3") = app->scene->apples[2];
+	player.append_attribute("app4") = app->scene->apples[3];
+	player.append_attribute("app5") = app->scene->apples[4];
+	player.append_attribute("pine1") = app->scene->apples[5];
+
+	player.append_attribute("app6") = app->sceneLvl2->apples2[0];
+	player.append_attribute("app7") = app->sceneLvl2->apples2[1];
+	player.append_attribute("app8") = app->sceneLvl2->apples2[2];
+	player.append_attribute("app9") = app->sceneLvl2->apples2[3];
+	player.append_attribute("app10") = app->sceneLvl2->apples2[4];
+	player.append_attribute("app11") = app->sceneLvl2->apples2[5];
+	player.append_attribute("pine2") = app->sceneLvl2->apples2[6];
 
 	return true;
 }

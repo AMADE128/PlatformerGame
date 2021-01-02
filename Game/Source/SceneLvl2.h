@@ -51,6 +51,7 @@ public:
 	unsigned int pointFx;
 	unsigned int damageFx;
 	unsigned int checkpointFx;
+	int apples2[7];
 
 private:
 

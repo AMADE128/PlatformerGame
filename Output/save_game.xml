@@ -10,15 +10,23 @@
 	<scene />
 	<scene />
 	<player>
-		<checkpoint x="0" y="0" />
-		<position x="1742" y="2017" />
+		<checkpoint x="3195" y="1868" />
+		<position x="1870" y="2933" />
 		<level lvl="2" />
 		<continue cont="true" />
+		<score sco="2" />
+		<lifes hp="2" />
+		<apples app1="1" app2="1" app3="1" app4="1" app5="1" pine1="1" app6="1" app7="1" app8="1" app9="1" app10="1" app11="1" pine2="1" />
 	</player>
 	<scene />
 	<scene />
+	<:anonymous />
+	<:anonymous />
+	<collisions />
+	<:anonymous />
+	<:anonymous />
 	<pathfinding />
 	<renderer>
-		<camera x="-1009" y="-1720" />
+		<camera x="-2586" y="-1564" />
 	</renderer>
 </game_state>
