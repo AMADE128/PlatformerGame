@@ -362,7 +362,7 @@ bool App::PostUpdate()
 	ListItem<Module*>* item;
 	Module* pModule = NULL;
 
-	if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN || sceneMenu->btnExit->GetEvent() == false && sceneMenu->active == true && sceneMenu->menuState != sceneMenu->SETTINGS)
+	if ((app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && app->player->active == false)|| (sceneMenu->btnExit->GetEvent() == false && sceneMenu->active == true && sceneMenu->menuState != sceneMenu->SETTINGS) || (player->btnMierda->GetEvent() == false && scene->active == true && player->playerState == player->SETTINGS))
 	{
 		ret = false;
 	}

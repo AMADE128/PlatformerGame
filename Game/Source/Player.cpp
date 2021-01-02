@@ -28,6 +28,17 @@ Player::Player() : Module()
 {
 	name.Create("player");
 	
+	btnCallate = new GuiButton(1, { app->render->camera.x + 1280 / 2 - BUTT_WIDTH / 2, app->render->camera.y + 430, BUTT_WIDTH, BUTT_HEIGHT }, "NEW");
+	btnCallate->SetObserver(this);
+
+	btnTonto = new GuiButton(2, { app->render->camera.x + 1280 / 2 - BUTT_WIDTH / 2, app->render->camera.y + 500, BUTT_WIDTH, BUTT_HEIGHT }, "LOAD");
+	btnTonto->SetObserver(this);
+
+	btnDe = new GuiButton(3, { app->render->camera.x + 1280 / 2 - BUTT_WIDTH / 2, app->render->camera.y + 570, BUTT_WIDTH, BUTT_HEIGHT }, "OPTIONS");
+	btnDe->SetObserver(this);
+
+	btnMierda = new GuiButton(4, { app->render->camera.x + 1280 / 2 - BUTT_WIDTH / 2, app->render->camera.y + 640, BUTT_WIDTH, BUTT_HEIGHT }, "EXIT");
+	btnMierda->SetObserver(this);
 
 	for (int i = 0; i < TILESIZE * 11; i += TILESIZE)
 	{
@@ -107,6 +118,13 @@ bool Player::Awake()
 bool Player::Start()
 {
 	LOG("Loading player textures");
+
+	btnCallate->texture = btnTonto->texture = btnDe->texture = btnMierda->texture = app->tex->Load("Assets/Textures/Interface/button.png");
+	boxTex = app->tex->Load("Assets/Textures/Interface/box.png");
+	newButtTex = app->tex->Load("Assets/Textures/Interface/new.png");
+	loadButtTex = app->tex->Load("Assets/Textures/Interface/load.png");
+	optionButtTex = app->tex->Load("Assets/Textures/Interface/option.png");
+	exitButtTex = app->tex->Load("Assets/Textures/Interface/exit.png");
 	
 	if (app->scene->active == true && cont == false)
 	{
@@ -185,6 +203,21 @@ bool Player::PreUpdate()
 
 bool Player::Update(float dt)
 {
+
+	switch (playerState)
+	{
+	case Player::NORMAL:
+		break;
+	case Player::SETTINGS:
+		break;
+		btnCallate->Update(app->input, dt);
+		btnTonto->Update(app->input, dt);
+		btnDe->Update(app->input, dt);
+		btnMierda->Update(app->input, dt);
+	default:
+		break;
+	}
+
 	playerSave = false;
 	dt *= 6;
 	idleAnim.speed = 4.0f * dt;
@@ -288,6 +321,10 @@ bool Player::Update(float dt)
 				app->audio->PlayFx(jumpFx);
 				isJumping = true;
 			}
+		}
+		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		{
+			playerState = SETTINGS;
 		}
 		if (app->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && flip == true) 
 		{
@@ -554,6 +591,21 @@ bool Player::Update(float dt)
 
 bool Player::PostUpdate()
 {
+
+	if (playerState == SETTINGS)
+	{
+		app->render->DrawRectangle({ 0, 0, 1280, 720 }, { 0, 0, 0, 150 });
+		app->render->DrawTexture(boxTex, btnCallate->bounds.x - 32, btnCallate->bounds.y - 20);
+		btnCallate->Draw(app->render);
+		app->render->DrawTexture(newButtTex, btnCallate->bounds.x, btnCallate->bounds.y);
+		btnTonto->Draw(app->render);
+		app->render->DrawTexture(exitButtTex, btnTonto->bounds.x, btnTonto->bounds.y);
+		btnDe->Draw(app->render);
+		app->render->DrawTexture(loadButtTex, btnDe->bounds.x, btnDe->bounds.y);
+		btnMierda->Draw(app->render);
+		app->render->DrawTexture(optionButtTex, btnMierda->bounds.x, btnMierda->bounds.y);
+	}
+
 	if (flip == false) 
 	{
 		Animation* dron = &dronAnim;
@@ -791,6 +843,7 @@ bool Player::Die(Collider* c1, Collider* c2)
 	
 	return true;
 }
+
 
 bool Player::CameraScroll(Collider* c1, Collider* c2)
 {

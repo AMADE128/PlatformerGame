@@ -141,6 +141,7 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+
 	dt *= 6;
 	checkPointIdleAnim.speed = 4.0f * dt;
 	checkPointTouchAnim.speed = 4.0f * dt;
@@ -259,3 +260,4 @@ bool Scene::CleanUp()
 
 	return true;
 }
+

@@ -6,6 +6,8 @@
 #include "SDL/include/SDL.h"
 
 #include "Point.h"
+#include "GuiButton.h"
+#include "GuiSlider.h"
 
 struct Collider;
 
@@ -13,6 +15,11 @@ class Player : public Module
 {
 
 public:
+	enum PlayerStates
+	{
+		NORMAL,
+		SETTINGS
+	};
 
 	Player();
 
@@ -61,6 +68,18 @@ public:
 	SDL_Texture* dronTex = nullptr;
 	SDL_Texture* chickenFlyTex = nullptr;
 
+	SDL_Texture* boxTex;
+	SDL_Texture* newButtTex;
+	SDL_Texture* loadButtTex;
+	SDL_Texture* optionButtTex;
+	SDL_Texture* exitButtTex;
+
+	PlayerStates playerState = NORMAL;
+
+	GuiButton* btnCallate;
+	GuiButton* btnTonto;
+	GuiButton* btnDe;
+	GuiButton* btnMierda;
 
 	bool flip;
 	
