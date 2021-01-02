@@ -68,6 +68,8 @@ private:
 
 	pugi::xml_node load;
 	pugi::xml_document loadFile;
+
+	int currentLvl;
 };
 
 #endif // __SCENE_H__

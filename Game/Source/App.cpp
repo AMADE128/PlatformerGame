@@ -265,14 +265,6 @@ bool App::PreUpdate()
 
 		ret = item->data->PreUpdate();
 	}
-	if (loadGameRequested == true)
-	{
-		LoadGame(loadFile);
-		app->player->playerColl->SetPos(app->player->position.x + 25, app->player->position.y + 20);
-		app->player->cameraColl->rect.x = app->player->playerColl->rect.x - 100;
-		app->player->cameraColl->rect.y = app->player->playerColl->rect.y - 100;
-		app->player->death = false;
-	}
 	if (saveGameRequested == true) SaveGame();
 
 	return ret;
@@ -285,6 +277,12 @@ bool App::DoUpdate()
 	ListItem<Module*>* item;
 	item = modules.start;
 	Module* pModule = NULL;
+
+	if (loadGameRequested == true)
+	{
+		LoadGame(loadFile);
+		player->LoadPlayerCamera();
+	}
 
 	if (input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{

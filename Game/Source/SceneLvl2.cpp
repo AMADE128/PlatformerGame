@@ -121,7 +121,7 @@ bool SceneLvl2::Start()
 	app->moduleEnemies->AddEnemy(EnemyType::BIRD, 5568/2, 2592/2);
 	app->moduleEnemies->AddEnemy(EnemyType::BIRD, 5472/2, 1152/2);
 	
-	app->player->currentlvl = 2;
+	app->player->currentLvl = 2;
 
 	if (app->player->saveGame == true)
 	{

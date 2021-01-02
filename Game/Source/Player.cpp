@@ -108,12 +108,12 @@ bool Player::Start()
 {
 	LOG("Loading player textures");
 	
-	if (app->scene->active == true)
+	if (app->scene->active == true && cont == false)
 	{
 		position.x = 720;
 		position.y = 1584;
 	}
-	else if (app->sceneLvl2->active == true)
+	else if (app->sceneLvl2->active == true && cont == false)
 	{
 		position.x = 620;
 		position.y = 2256;
@@ -224,11 +224,11 @@ bool Player::Update(float dt)
 		{
 			cont = true;
 			playerSave = true;
-			if (currentlvl == 1)
+			if (currentLvl == 1)
 			{
 				lvl = 1;
 			}
-			else if (currentlvl == 2)
+			else if (currentLvl == 2)
 			{
 				lvl = 2;
 			}
@@ -656,6 +656,19 @@ bool Player::CleanUp()
 	return true;
 }
 
+bool Player::LoadPlayerCamera()
+{
+	if (playerColl != NULL)
+	{
+		playerColl->SetPos(position.x + 25, position.y + 20);
+		cameraColl->rect.x = playerColl->rect.x - 100;
+		cameraColl->rect.y = playerColl->rect.y - 100;
+		death = false;
+	}
+
+	return true;
+}
+
 
 bool Player::StopMovementY(Collider* c1, Collider* c2)
 {
@@ -844,7 +857,7 @@ bool Player::LoadState(pugi::xml_node& data)
 		position.x = data.child("position").attribute("x").as_int();
 		position.y = data.child("position").attribute("y").as_int();
 
-		currentlvl = data.child("level").attribute("lvl").as_int();
+		currentLvl = data.child("level").attribute("lvl").as_int();
 		playerLoadF6 = false;
 
 		cont = data.child("continue").attribute("cont").as_bool();

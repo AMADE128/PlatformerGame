@@ -42,6 +42,8 @@ public:
 	bool CollectApple(Collider* c1, Collider* c2) override;
 	bool CollectPineapple(Collider* c1, Collider* c2) override;
 
+	bool LoadPlayerCamera();
+
 	// Called before quitting
 	bool CleanUp();
 	SDL_Texture* currentTex = nullptr;
@@ -118,7 +120,7 @@ public:
 	bool SaveState(pugi::xml_node&) const;
 
 	unsigned int lvl;
-	unsigned int currentlvl;
+	unsigned int currentLvl;
 	bool saveGame = false;
 	bool playerSave = false;
 	bool playerLoadF6 = false;

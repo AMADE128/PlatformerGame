@@ -146,7 +146,23 @@ bool SceneMenu::OnGuiMouseClickEvent(GuiControl* control)
 			app->player->cont = false;
 			app->fadeToBlack->Fade(this, (Module*)app->scene, 80); //Go to LVL 1
 		}
-		if (control->id == 2) app->player->playerLoadF6 = true; app->LoadGameRequest();
+		if (control->id == 2)
+		{
+			app->player->playerLoadF6 = true;
+			app->LoadGameRequest();
+			Menu(loadFile);
+			switch (currentLvl)
+			{
+			case 1:
+				app->fadeToBlack->Fade(this, (Module*)app->scene, 80);
+				break;
+			case 2:
+				app->fadeToBlack->Fade(this, (Module*)app->sceneLvl2, 80);
+				break;
+			default:
+				break;
+			}
+		}
 		if (control->id == 3) menuState = SETTINGS;
 		if (control->id == 4) return false;
 	}
@@ -159,6 +175,7 @@ bool SceneMenu::OnGuiMouseClickEvent(GuiControl* control)
 bool SceneMenu::LoadMenu(pugi::xml_node& data)
 {
 	app->player->cont = data.child("continue").attribute("cont").as_bool();
+	currentLvl = data.child("level").attribute("lvl").as_int();
 
 	return true;
 }

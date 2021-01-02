@@ -155,7 +155,7 @@ private:
 
 
 	mutable bool saveGameRequested;
-	bool loadGameRequested;
+	bool loadGameRequested = false;
 };
 
 extern App* app;

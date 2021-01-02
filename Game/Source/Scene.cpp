@@ -119,7 +119,7 @@ bool Scene::Start()
 	app->moduleEnemies->AddEnemy(EnemyType::BUNNY, 5088/2, 2880/2);
 	app->moduleEnemies->AddEnemy(EnemyType::BUNNY, 5568/2, 1440/2);
 
-	app->player->currentlvl = 1;
+	app->player->currentLvl = 1;
 
 	if (app->player->saveGame == true)
 	{
