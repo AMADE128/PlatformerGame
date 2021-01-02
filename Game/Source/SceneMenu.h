@@ -49,6 +49,7 @@ public:
 	SDL_Texture* loadButtTex;
 	SDL_Texture* optionButtTex;
 	SDL_Texture* exitButtTex;
+	SDL_Texture* backButtTex;
 
 	MenuStates menuState = NORMAL;
 
@@ -58,6 +59,7 @@ public:
 	GuiButton* btnExit;
 	GuiButton* btnLoad;
 	GuiButton* btnOptions;
+	GuiButton* btnBack;
 	
 	GuiSlider* sliderMusic;
 

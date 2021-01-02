@@ -28,6 +28,9 @@ SceneMenu::SceneMenu() : Module()
 
 	btnExit = new GuiButton(4, { 1280 / 2 - BUTT_WIDTH / 2, 640, BUTT_WIDTH, BUTT_HEIGHT }, "EXIT");
 	btnExit->SetObserver(this);
+
+	btnBack = new GuiButton(5, { 1280 / 2 - BUTT_WIDTH / 2, 570, BUTT_WIDTH, BUTT_HEIGHT }, "RETURN");
+	btnBack->SetObserver(this);
 }
 
 // Destructor
@@ -49,12 +52,13 @@ bool SceneMenu::Start()
 	// L03: DONE: Load map
 	menuTex = app->tex->Load("Assets/Textures/Screens/menu.png");
 	musicMenu = app->audio->LoadFx("Assets/Audio/SceneMusic/intro_music.wav");
-	btnNew->texture = btnExit->texture = btnLoad->texture = btnOptions->texture = app->tex->Load("Assets/Textures/Interface/button.png");
+	btnBack->texture = btnNew->texture = btnExit->texture = btnLoad->texture = btnOptions->texture = app->tex->Load("Assets/Textures/Interface/button.png");
 	boxTex = app->tex->Load("Assets/Textures/Interface/box.png");
 	newButtTex = app->tex->Load("Assets/Textures/Interface/new.png");
 	loadButtTex = app->tex->Load("Assets/Textures/Interface/load.png");
 	optionButtTex = app->tex->Load("Assets/Textures/Interface/option.png");
 	exitButtTex = app->tex->Load("Assets/Textures/Interface/exit.png");
+	backButtTex = app->tex->Load("Assets/Textures/Interface/back.png");
 
 	app->musicList.Add(&musicMenu);
 	app->audio->PlayFx(musicMenu, -1);
@@ -82,6 +86,7 @@ bool SceneMenu::Update(float dt)
 		btnOptions->Update(app->input, dt);
 		break;
 	case SceneMenu::SETTINGS:
+		btnBack->Update(app->input, dt);
 		break;
 	case SceneMenu::CREDITS:
 		break;
@@ -99,18 +104,25 @@ bool SceneMenu::PostUpdate()
 	app->render->DrawTexture(menuTex, 0, 0);
 
 	btnNew->Draw(app->render);
-	app->render->DrawTexture(newButtTex, btnNew->bounds.x, btnNew->bounds.y);
 	btnExit->Draw(app->render);
-	app->render->DrawTexture(exitButtTex, btnExit->bounds.x, btnExit->bounds.y);
 	btnLoad->Draw(app->render);
-	app->render->DrawTexture(loadButtTex, btnLoad->bounds.x, btnLoad->bounds.y);
 	btnOptions->Draw(app->render);
-	app->render->DrawTexture(optionButtTex, btnOptions->bounds.x, btnOptions->bounds.y);\
+	if (btnNew->state == GuiControlState::PRESSED) app->render->DrawTexture(newButtTex, btnNew->bounds.x, btnNew->bounds.y + 5);
+	else app->render->DrawTexture(newButtTex, btnNew->bounds.x, btnNew->bounds.y);
+	if (btnExit->state == GuiControlState::PRESSED) app->render->DrawTexture(exitButtTex, btnExit->bounds.x, btnExit->bounds.y + 5);
+	else app->render->DrawTexture(exitButtTex, btnExit->bounds.x, btnExit->bounds.y);
+	if (btnLoad->state == GuiControlState::PRESSED) app->render->DrawTexture(loadButtTex, btnLoad->bounds.x, btnLoad->bounds.y + 5);
+	else app->render->DrawTexture(loadButtTex, btnLoad->bounds.x, btnLoad->bounds.y);
+	if (btnOptions->state == GuiControlState::PRESSED) app->render->DrawTexture(optionButtTex, btnOptions->bounds.x, btnOptions->bounds.y + 5);
+	else app->render->DrawTexture(optionButtTex, btnOptions->bounds.x, btnOptions->bounds.y);
 
 	if (menuState == SETTINGS)
 	{
 		app->render->DrawRectangle({ 0, 0, 1280, 720 }, { 0, 0, 0, 150 });
 		app->render->DrawTexture(boxTex, btnNew->bounds.x - 32, btnNew->bounds.y - 20);
+		btnBack->Draw(app->render);
+		if (btnBack->state == GuiControlState::PRESSED) app->render->DrawTexture(backButtTex, btnBack->bounds.x, btnBack->bounds.y + 5);
+		else  app->render->DrawTexture(backButtTex, btnBack->bounds.x, btnBack->bounds.y);
 	}
 
 	return ret;
@@ -141,30 +153,40 @@ bool SceneMenu::OnGuiMouseClickEvent(GuiControl* control)
 	{
 	case GuiControlType::BUTTON:
 	{
-		if (control->id == 1)
+		switch (control->id)
 		{
+		case 1:
 			app->player->cont = false;
-			app->fadeToBlack->Fade(this, (Module*)app->scene, 80); //Go to LVL 1
-		}
-		if (control->id == 2)
-		{
+			app->fadeToBlack->Fade(this, (Module*)app->scene, 80); //Go to the start of the game
+			break;
+		case 2:
 			app->player->playerLoadF6 = true;
 			app->LoadGameRequest();
 			Menu(loadFile);
 			switch (currentLvl)
 			{
 			case 1:
-				app->fadeToBlack->Fade(this, (Module*)app->scene, 80);
+				app->fadeToBlack->Fade(this, (Module*)app->scene, 80); //Go to the LVL 1
 				break;
 			case 2:
-				app->fadeToBlack->Fade(this, (Module*)app->sceneLvl2, 80);
+				app->fadeToBlack->Fade(this, (Module*)app->sceneLvl2, 80); //Go to the LV 2
 				break;
 			default:
 				break;
 			}
+			break;
+		case 3:
+			menuState = SETTINGS;
+			break;
+		case 4:
+			return false;
+			break;
+		case 5:
+			menuState = NORMAL;
+			break;
+		default:
+			break;
 		}
-		if (control->id == 3) menuState = SETTINGS;
-		if (control->id == 4) return false;
 	}
 	default: break;
 	}
