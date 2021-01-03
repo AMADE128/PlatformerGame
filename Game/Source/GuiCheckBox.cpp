@@ -1,9 +1,8 @@
 #include "GuiCheckBox.h"
 
-GuiCheckBox::GuiCheckBox(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::CHECKBOX, id)
+GuiCheckBox::GuiCheckBox(uint32 id, SDL_Rect bounds) : GuiControl(GuiControlType::CHECKBOX, id)
 {
 	this->bounds = bounds;
-	this->text = text;
 }
 
 GuiCheckBox::~GuiCheckBox()
@@ -16,6 +15,8 @@ bool GuiCheckBox::Update(Input* input, float dt)
 	{
 		int mouseX, mouseY;
 		input->GetMousePosition(mouseX, mouseY);
+		mouseX += app->render->camera.x * -1;
+		mouseY += app->render->camera.y * -1;
 
 		// Check collision between mouse and button bounds
 		if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) &&

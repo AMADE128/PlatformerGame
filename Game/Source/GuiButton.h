@@ -5,6 +5,7 @@
 
 #include "Point.h"
 #include "SString.h"
+#include "Textures.h"
 
 #define BUTT_WIDTH 110
 #define BUTT_HEIGHT 50
@@ -13,11 +14,13 @@ class GuiButton : public GuiControl
 {
 public:
 
-	GuiButton(uint32 id, SDL_Rect bounds, const char* text);
+	GuiButton(uint32 id, SDL_Rect bounds);
 	virtual ~GuiButton();
 
 	bool Update(Input* input, float dt);
 	bool Draw(Render* render);
+
+	SDL_Texture* font;
 
 private:
 

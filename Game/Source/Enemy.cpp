@@ -30,6 +30,11 @@ void Enemy::Update()
 		currentAnim->Update();
 }
 
+bool Enemy::CleanUp()
+{
+	return true;
+}
+
 void Enemy::Draw()
 {
 	if (currentAnim != nullptr)

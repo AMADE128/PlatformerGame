@@ -28,16 +28,16 @@ Player::Player() : Module()
 {
 	name.Create("player");
 	
-	btnResume = new GuiButton(6, { NULL, NULL, BUTT_WIDTH, BUTT_HEIGHT }, "NEW");
+	btnResume = new GuiButton(6, { NULL, NULL, BUTT_WIDTH, BUTT_HEIGHT });
 	btnResume->SetObserver(this);
 
-	btnSettings = new GuiButton(7, { NULL, NULL, BUTT_WIDTH, BUTT_HEIGHT }, "LOAD");
+	btnSettings = new GuiButton(7, { NULL, NULL, BUTT_WIDTH, BUTT_HEIGHT });
 	btnSettings->SetObserver(this);
 
-	btnBack = new GuiButton(8, { NULL, NULL, BUTT_WIDTH, BUTT_HEIGHT }, "OPTIONS");
+	btnBack = new GuiButton(8, { NULL, NULL, BUTT_WIDTH, BUTT_HEIGHT });
 	btnBack->SetObserver(this);
 
-	btnExit = new GuiButton(9, { NULL, NULL, BUTT_WIDTH, BUTT_HEIGHT }, "EXIT");
+	btnExit = new GuiButton(9, { NULL, NULL, BUTT_WIDTH, BUTT_HEIGHT });
 	btnExit->SetObserver(this);
 
 	for (int i = 0; i < TILESIZE * 11; i += TILESIZE)
@@ -121,10 +121,10 @@ bool Player::Start()
 
 	btnResume->texture = btnSettings->texture = btnBack->texture = btnExit->texture = app->tex->Load("Assets/Textures/Interface/button.png");
 	boxTex = app->tex->Load("Assets/Textures/Interface/box.png");
-	resumeButtTex = app->tex->Load("Assets/Textures/Interface/start.png");
-	optionButtTex = app->tex->Load("Assets/Textures/Interface/option.png");
-	returnButtTex = app->tex->Load("Assets/Textures/Interface/back.png");
-	exitButtTex = app->tex->Load("Assets/Textures/Interface/exit.png");
+	btnResume->font = app->tex->Load("Assets/Textures/Interface/start.png");
+	btnSettings->font = app->tex->Load("Assets/Textures/Interface/option.png");
+	btnBack->font = app->tex->Load("Assets/Textures/Interface/back.png");
+	btnExit->font = app->tex->Load("Assets/Textures/Interface/exit.png");
 	
 	if (app->scene->active == true && cont == false)
 	{
@@ -695,20 +695,9 @@ bool Player::PostUpdate()
 		app->render->DrawTexture(boxTex, btnResume->bounds.x - 32, btnResume->bounds.y - 20);
 
 		btnResume->Draw(app->render);
-		if (btnResume->state == GuiControlState::PRESSED) app->render->DrawTexture(resumeButtTex, btnResume->bounds.x, btnResume->bounds.y + 5);
-		else app->render->DrawTexture(resumeButtTex, btnResume->bounds.x, btnResume->bounds.y);
-
 		btnSettings->Draw(app->render);
-		if (btnSettings->state == GuiControlState::PRESSED) app->render->DrawTexture(optionButtTex, btnSettings->bounds.x, btnSettings->bounds.y + 5);
-		else app->render->DrawTexture(optionButtTex, btnSettings->bounds.x, btnSettings->bounds.y);
-
 		btnBack->Draw(app->render);
-		if (btnBack->state == GuiControlState::PRESSED) app->render->DrawTexture(returnButtTex, btnBack->bounds.x, btnBack->bounds.y + 5);
-		else app->render->DrawTexture(returnButtTex, btnBack->bounds.x, btnBack->bounds.y);
-
 		btnExit->Draw(app->render);
-		if (btnExit->state == GuiControlState::PRESSED) app->render->DrawTexture(exitButtTex, btnExit->bounds.x, btnExit->bounds.y + 5);
-		else app->render->DrawTexture(exitButtTex, btnExit->bounds.x, btnExit->bounds.y);
 	}
 
 
@@ -753,7 +742,7 @@ bool Player::CleanUp()
 
 	LOG("Unloading player");
 
-	//Aqui deletamos cosas
+	//Unload de texturas
 	app->tex->UnLoad(idleTex);
 	app->tex->UnLoad(fallTex);
 	app->tex->UnLoad(deathTex);
@@ -765,13 +754,27 @@ bool Player::CleanUp()
 	app->tex->UnLoad(desAppeTex);
 	app->tex->UnLoad(appleTex);
 	app->tex->UnLoad(dronTex);
+	app->tex->UnLoad(chickenFlyTex);
+	app->tex->UnLoad(btnResume->texture);
+	app->tex->UnLoad(btnSettings->texture);
+	app->tex->UnLoad(btnBack->texture);
+	app->tex->UnLoad(btnExit->texture);
+	app->tex->UnLoad(boxTex);
+	app->tex->UnLoad(resumeButtTex);
+	app->tex->UnLoad(optionButtTex);
+	app->tex->UnLoad(returnButtTex);
+	app->tex->UnLoad(exitButtTex);
 
+	//Remove de los colliders
 	app->collision->RemoveCollider(playerColl);
 	app->collision->RemoveCollider(cameraColl);
 
+	//Unload de las pistas de audio
 	app->audio->UnloadFX(jumpFx);
 	app->audio->UnloadFX(hitFx);
 	app->audio->UnloadFX(pointFx);
+	app->audio->UnloadFX(leafFx);
+	app->musicList.Clear();
 
 	active = false;
 

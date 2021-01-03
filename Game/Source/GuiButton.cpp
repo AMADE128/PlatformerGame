@@ -1,12 +1,10 @@
 #include "GuiButton.h"
 #include "Textures.h"
 #include "Player.h"
-#include "Render.h"
 
-GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::BUTTON, id)
+GuiButton::GuiButton(uint32 id, SDL_Rect bounds) : GuiControl(GuiControlType::BUTTON, id)
 {
 	this->bounds = bounds;
-	this->text = text;
 }
 
 GuiButton::~GuiButton()
@@ -15,18 +13,6 @@ GuiButton::~GuiButton()
 
 bool GuiButton::Update(Input* input, float dt)
 {
-	if (id == 2)
-	{
-		if (app->player->cont == false)
-		{
-			state = GuiControlState::DISABLED;
-		}
-		else if (app->player->cont == true)
-		{
-			state = GuiControlState::NORMAL;
-		}
-	
-	}
 	if (state != GuiControlState::DISABLED)
 	{
 		int mouseX, mouseY;
@@ -65,18 +51,22 @@ bool GuiButton::Draw(Render* render)
 	case GuiControlState::DISABLED:
 		section = { 330, 0, BUTT_WIDTH, BUTT_HEIGHT };
 		render->DrawTexture(texture, bounds.x, bounds.y, &section);
+		render->DrawTexture(font, bounds.x, bounds.y);
 		break;
 	case GuiControlState::NORMAL:
 		section = { 0, 0, BUTT_WIDTH, BUTT_HEIGHT };
 		render->DrawTexture(texture,bounds.x,bounds.y,&section);
+		render->DrawTexture(font, bounds.x, bounds.y);
 		break;
 	case GuiControlState::FOCUSED:
 		section = { 220, 0, BUTT_WIDTH, BUTT_HEIGHT };
 		render->DrawTexture(texture, bounds.x, bounds.y, &section);
+		render->DrawTexture(font, bounds.x, bounds.y);
 		break;
 	case GuiControlState::PRESSED:
 		section = { 111, 0, BUTT_WIDTH - 1, BUTT_HEIGHT };
 		render->DrawTexture(texture, bounds.x, bounds.y, &section);
+		render->DrawTexture(font, bounds.x, bounds.y + 5);
 		break;
 	case GuiControlState::SELECTED:
 		break;

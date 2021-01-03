@@ -49,7 +49,7 @@ void EnemyBird::Update()
 	Enemy::Update();
 }
 
-bool EnemyBird::Cleanup()
+bool EnemyBird::CleanUp()
 {
 	app->collision->RemoveCollider(collider);
 	return true;

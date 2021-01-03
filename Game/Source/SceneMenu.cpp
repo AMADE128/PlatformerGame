@@ -17,19 +17,19 @@ SceneMenu::SceneMenu() : Module()
 {
 	name.Create("scene");
 
-	btnNew = new GuiButton(1, { 1280/2 - BUTT_WIDTH / 2, 430, BUTT_WIDTH, BUTT_HEIGHT }, "NEW");
+	btnNew = new GuiButton(1, { 1280/2 - BUTT_WIDTH / 2, 430, BUTT_WIDTH, BUTT_HEIGHT });
 	btnNew->SetObserver(this);
 
-	btnLoad = new GuiButton(2, { 1280 / 2 - BUTT_WIDTH / 2, 500, BUTT_WIDTH, BUTT_HEIGHT }, "LOAD");
+	btnLoad = new GuiButton(2, { 1280 / 2 - BUTT_WIDTH / 2, 500, BUTT_WIDTH, BUTT_HEIGHT });
 	btnLoad->SetObserver(this);
 
-	btnOptions = new GuiButton(3, { 1280 / 2 - BUTT_WIDTH / 2, 570, BUTT_WIDTH, BUTT_HEIGHT }, "OPTIONS");
+	btnOptions = new GuiButton(3, { 1280 / 2 - BUTT_WIDTH / 2, 570, BUTT_WIDTH, BUTT_HEIGHT });
 	btnOptions->SetObserver(this);
 
-	btnExit = new GuiButton(4, { 1280 / 2 - BUTT_WIDTH / 2, 640, BUTT_WIDTH, BUTT_HEIGHT }, "EXIT");
+	btnExit = new GuiButton(4, { 1280 / 2 - BUTT_WIDTH / 2, 640, BUTT_WIDTH, BUTT_HEIGHT });
 	btnExit->SetObserver(this);
 
-	btnBack = new GuiButton(5, { 1280 / 2 - BUTT_WIDTH / 2, 570, BUTT_WIDTH, BUTT_HEIGHT }, "RETURN");
+	btnBack = new GuiButton(5, { 1280 / 2 - BUTT_WIDTH / 2, 570, BUTT_WIDTH, BUTT_HEIGHT });
 	btnBack->SetObserver(this);
 }
 
@@ -54,11 +54,11 @@ bool SceneMenu::Start()
 	musicMenu = app->audio->LoadFx("Assets/Audio/SceneMusic/intro_music.wav");
 	btnBack->texture = btnNew->texture = btnExit->texture = btnLoad->texture = btnOptions->texture = app->tex->Load("Assets/Textures/Interface/button.png");
 	boxTex = app->tex->Load("Assets/Textures/Interface/box.png");
-	newButtTex = app->tex->Load("Assets/Textures/Interface/new.png");
-	loadButtTex = app->tex->Load("Assets/Textures/Interface/load.png");
-	optionButtTex = app->tex->Load("Assets/Textures/Interface/option.png");
-	exitButtTex = app->tex->Load("Assets/Textures/Interface/exit.png");
-	backButtTex = app->tex->Load("Assets/Textures/Interface/back.png");
+	btnNew->font = app->tex->Load("Assets/Textures/Interface/new.png");
+	btnLoad->font = app->tex->Load("Assets/Textures/Interface/load.png");
+	btnOptions->font = app->tex->Load("Assets/Textures/Interface/option.png");
+	btnExit->font = app->tex->Load("Assets/Textures/Interface/exit.png");
+	btnBack->font = app->tex->Load("Assets/Textures/Interface/back.png");
 
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
@@ -83,6 +83,14 @@ bool SceneMenu::Update(float dt)
 	switch (menuState)
 	{
 	case SceneMenu::NORMAL:
+		if (app->player->cont == false)
+		{
+			btnLoad->state = GuiControlState::DISABLED;
+		}
+		else if (app->player->cont == true)
+		{
+			btnLoad->state = GuiControlState::NORMAL;
+		}
 		btnNew->Update(app->input, dt);
 		btnExit->Update(app->input, dt);
 		btnLoad->Update(app->input, dt);
@@ -113,22 +121,12 @@ bool SceneMenu::PostUpdate()
 	btnExit->Draw(app->render);
 	btnLoad->Draw(app->render);
 	btnOptions->Draw(app->render);
-	if (btnNew->state == GuiControlState::PRESSED) app->render->DrawTexture(newButtTex, btnNew->bounds.x, btnNew->bounds.y + 5);
-	else app->render->DrawTexture(newButtTex, btnNew->bounds.x, btnNew->bounds.y);
-	if (btnExit->state == GuiControlState::PRESSED) app->render->DrawTexture(exitButtTex, btnExit->bounds.x, btnExit->bounds.y + 5);
-	else app->render->DrawTexture(exitButtTex, btnExit->bounds.x, btnExit->bounds.y);
-	if (btnLoad->state == GuiControlState::PRESSED) app->render->DrawTexture(loadButtTex, btnLoad->bounds.x, btnLoad->bounds.y + 5);
-	else app->render->DrawTexture(loadButtTex, btnLoad->bounds.x, btnLoad->bounds.y);
-	if (btnOptions->state == GuiControlState::PRESSED) app->render->DrawTexture(optionButtTex, btnOptions->bounds.x, btnOptions->bounds.y + 5);
-	else app->render->DrawTexture(optionButtTex, btnOptions->bounds.x, btnOptions->bounds.y);
 
 	if (menuState == SETTINGS)
 	{
 		app->render->DrawRectangle({ 0, 0, 1280, 720 }, { 0, 0, 0, 170 });
 		app->render->DrawTexture(boxTex, btnNew->bounds.x - 32, btnNew->bounds.y - 20);
 		btnBack->Draw(app->render);
-		if (btnBack->state == GuiControlState::PRESSED) app->render->DrawTexture(backButtTex, btnBack->bounds.x, btnBack->bounds.y + 5);
-		else  app->render->DrawTexture(backButtTex, btnBack->bounds.x, btnBack->bounds.y);
 	}
 
 	return ret;
@@ -140,11 +138,20 @@ bool SceneMenu::CleanUp()
 	if (!active) return true;
 
 	LOG("Freeing scene");
+
 	app->tex->UnLoad(menuTex);
 	app->tex->UnLoad(btnNew->texture);
 	app->tex->UnLoad(btnExit->texture);
 	app->tex->UnLoad(btnLoad->texture);
 	app->tex->UnLoad(btnOptions->texture);
+	app->tex->UnLoad(btnBack->texture);
+	app->tex->UnLoad(boxTex);
+	app->tex->UnLoad(btnNew->font);
+	app->tex->UnLoad(btnExit->font);
+	app->tex->UnLoad(btnLoad->font);
+	app->tex->UnLoad(btnOptions->font);
+	app->tex->UnLoad(btnBack->font);
+
 	app->audio->UnloadFX(musicMenu);
 	app->musicList.Clear();
 

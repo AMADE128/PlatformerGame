@@ -18,6 +18,9 @@
 SceneWin::SceneWin() : Module()
 {
 	name.Create("scene");
+
+	btnBack = new GuiButton(12, { 1280 / 2 - BUTT_WIDTH / 2, 615, BUTT_WIDTH, BUTT_HEIGHT });
+	btnBack->SetObserver(this);
 }
 
 // Destructor
@@ -40,6 +43,8 @@ bool SceneWin::Start()
 {
 	// L03: DONE: Load map
 	win = app->tex->Load("Assets/Textures/Screens/win.png");
+	btnBack->texture = app->tex->Load("Assets/Textures/Interface/button.png");
+	btnBack->font = app->tex->Load("Assets/Textures/Interface/back.png");
 
 	winMusic = app->audio->LoadFx("Assets/Audio/SceneMusic/win_music.wav");
 	app->musicList.Add(&winMusic);
@@ -60,11 +65,8 @@ bool SceneWin::PreUpdate()
 // Called each loop iteration
 bool SceneWin::Update(float dt)
 {
-	app->render->DrawTexture(win, 0, 0);
-	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-	{
-		app->fadeToBlack->Fade(this, (Module*)app->sceneMenu, 1600 * dt);
-	}
+
+	btnBack->Update(app->input, dt);
 
 	return true;	
 }
@@ -74,7 +76,31 @@ bool SceneWin::PostUpdate()
 {
 	bool ret = true;
 
+	app->render->DrawTexture(win, 0, 0);
+	btnBack->Draw(app->render);
+
 	return ret;
+}
+
+bool SceneWin::OnGuiMouseClickEvent(GuiControl* control)
+{
+	switch (control->type)
+	{
+	case GuiControlType::BUTTON:
+	{
+		switch (control->id)
+		{
+		case 12:
+			app->fadeToBlack->Fade(this, (Module*)app->sceneMenu, 80);
+			break;
+		default:
+			break;
+		}
+	}
+	default: break;
+	}
+
+	return true;
 }
 
 // Called before quitting
@@ -83,7 +109,10 @@ bool SceneWin::CleanUp()
 	if (!active) return true;
 
 	LOG("Freeing scene");
+
 	app->tex->UnLoad(win);
+	app->tex->UnLoad(btnBack->texture);
+	app->tex->UnLoad(btnBack->font);
 
 	app->musicList.Clear();
 	app->audio->UnloadFX(winMusic);

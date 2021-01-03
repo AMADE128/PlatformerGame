@@ -1,9 +1,8 @@
 #include "GuiSlider.h"
 
-GuiSlider::GuiSlider(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::SLIDER, id)
+GuiSlider::GuiSlider(uint32 id, SDL_Rect bounds, int min, int max, int variable) : GuiControl(GuiControlType::SLIDER, id)
 {
 	this->bounds = bounds;
-	this->text = text;
 }
 
 GuiSlider::~GuiSlider()

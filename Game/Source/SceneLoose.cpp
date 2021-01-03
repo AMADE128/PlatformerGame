@@ -18,6 +18,12 @@
 SceneLoose::SceneLoose() : Module()
 {
 	name.Create("scene");
+
+	btnContinue = new GuiButton(10, { 1280 / 2 - BUTT_WIDTH / 2, 590, BUTT_WIDTH, BUTT_HEIGHT });
+	btnContinue->SetObserver(this);
+
+	btnBack = new GuiButton(11, { 1280 / 2 - BUTT_WIDTH / 2, 660, BUTT_WIDTH, BUTT_HEIGHT });
+	btnBack->SetObserver(this);
 }
 
 // Destructor
@@ -41,6 +47,10 @@ bool SceneLoose::Start()
 	// L03: DONE: Load map
 
 	loose = app->tex->Load("Assets/Textures/Screens/lose.png");
+	btnContinue->texture = btnBack->texture = app->tex->Load("Assets/Textures/Interface/button.png");
+	btnContinue->font = app->tex->Load("Assets/Textures/Interface/start.png");
+	btnBack->font = app->tex->Load("Assets/Textures/Interface/back.png");
+
 	loseMusic = app->audio->LoadFx("Assets/Audio/SceneMusic/lose_music.wav");
 	app->musicList.Add(&loseMusic);
 	app->audio->PlayFx(loseMusic);
@@ -60,11 +70,8 @@ bool SceneLoose::PreUpdate()
 // Called each loop iteration
 bool SceneLoose::Update(float dt)
 {
-	app->render->DrawTexture(loose, 0, 0);
-	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-	{
-		app->fadeToBlack->Fade(this, (Module*)app->scene, 1600 * dt);
-	}
+	btnContinue->Update(app->input, dt);
+	btnBack->Update(app->input, dt);
 
 	return true;
 }
@@ -74,7 +81,36 @@ bool SceneLoose::PostUpdate()
 {
 	bool ret = true;
 
+	app->render->DrawTexture(loose, 0, 0);
+	btnContinue->Draw(app->render);
+	btnBack->Draw(app->render);
+
 	return ret;
+}
+
+bool SceneLoose::OnGuiMouseClickEvent(GuiControl* control)
+{
+	switch (control->type)
+	{
+	case GuiControlType::BUTTON:
+	{
+		switch (control->id)
+		{
+		case 10:
+			app->player->cont = false;
+			app->fadeToBlack->Fade(this, (Module*)app->scene, 80);
+			break;
+		case 11:
+			app->fadeToBlack->Fade(this, (Module*)app->sceneMenu, 10);
+			break;
+		default:
+			break;
+		}
+	}
+	default: break;
+	}
+
+	return true;
 }
 
 // Called before quitting
@@ -82,9 +118,15 @@ bool SceneLoose::CleanUp()
 {
 	if (!active) return true;
 	LOG("Freeing scene");
+
 	app->audio->UnloadFX(loseMusic);
 	app->musicList.Clear();
+
 	app->tex->UnLoad(loose);
+	app->tex->UnLoad(btnContinue->texture);
+	app->tex->UnLoad(btnBack->texture);
+	app->tex->UnLoad(btnContinue->font);
+	app->tex->UnLoad(btnBack->font);
 
 	active = false; 
 

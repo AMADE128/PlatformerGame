@@ -276,9 +276,18 @@ bool SceneLvl2::CleanUp()
 	app->tex->UnLoad(appleTex);
 	app->tex->UnLoad(pineappleTex);
 
-	app->musicList.Clear();
+	app->collision->RemoveCollider(appleColl1);
+	app->collision->RemoveCollider(appleColl2);
+	app->collision->RemoveCollider(appleColl3);
+	app->collision->RemoveCollider(appleColl4);
+	app->collision->RemoveCollider(appleColl5);
+	app->collision->RemoveCollider(appleColl6);
+	app->collision->RemoveCollider(pineappleColl1);
+	app->collision->RemoveCollider(checkPointColl);
+
 	app->audio->UnloadFX(musicScene1);
 	app->audio->UnloadFX(checkpointMusic);
+	app->musicList.Clear();
 
 	app->player->CleanUp();
 	app->collision->CleanUp();

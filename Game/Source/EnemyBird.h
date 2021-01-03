@@ -12,7 +12,7 @@ public :
 
 	void Update() override;
 
-	bool Cleanup();
+	bool CleanUp() override;
 
 	bool Fall(Collider* c1, Collider* c2);
 

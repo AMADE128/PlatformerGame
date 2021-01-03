@@ -2,6 +2,7 @@
 #define __SCENEWIN_H__
 
 #include "Module.h"
+#include "GuiButton.h"
 
 struct SDL_Texture;
 
@@ -32,9 +33,13 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	bool OnGuiMouseClickEvent(GuiControl* control);
+
 	SDL_Texture* win;
 
 private:
+
+	GuiButton* btnBack;
 
 	unsigned int winMusic;
 };

@@ -30,6 +30,8 @@ public:
 	// Called from ModuleEnemies' Update
 	virtual void Draw();
 
+	virtual bool CleanUp();
+
 	// Collision response
 	// Triggers an animation and a sound fx
 	virtual bool Die(Collider* c1, Collider* c2);

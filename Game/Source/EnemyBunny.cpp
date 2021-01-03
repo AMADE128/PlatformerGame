@@ -85,7 +85,7 @@ void EnemyBunny::Update()
 
 }
 
-bool EnemyBunny::Cleanup()
+bool EnemyBunny::CleanUp()
 {
 	app->collision->RemoveCollider(collider);
 	return true;

@@ -47,21 +47,10 @@ public:
 
 	SDL_Texture* menuTex;
 	SDL_Texture* boxTex;
-	SDL_Texture* newButtTex;
-	SDL_Texture* loadButtTex;
-	SDL_Texture* optionButtTex;
-	SDL_Texture* exitButtTex;
-	SDL_Texture* backButtTex;
 
 	MenuStates menuState = NORMAL;
 
 	unsigned int musicMenu;
-
-	GuiButton* btnNew;
-	GuiButton* btnExit;
-	GuiButton* btnLoad;
-	GuiButton* btnOptions;
-	GuiButton* btnBack;
 	
 	GuiSlider* sliderMusic;
 	GuiSlider* sliderFx;
@@ -73,6 +62,12 @@ public:
 	bool Menu(pugi::xml_document& loadFile);
 
 private:
+
+	GuiButton* btnNew;
+	GuiButton* btnExit;
+	GuiButton* btnLoad;
+	GuiButton* btnOptions;
+	GuiButton* btnBack;
 
 	pugi::xml_node load;
 	pugi::xml_document loadFile;
