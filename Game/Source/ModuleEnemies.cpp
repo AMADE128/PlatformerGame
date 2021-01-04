@@ -146,8 +146,10 @@ bool ModuleEnemies::Update(float dt)
 					enemies[i] = nullptr;
 				}
 			}
-			if(enemies[i] != nullptr)
-			enemies[i]->Draw();
+			if (enemies[i] != nullptr)
+			{
+				enemies[i]->Draw();
+			}
 		}
 	}
 
