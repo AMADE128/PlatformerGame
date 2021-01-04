@@ -95,27 +95,27 @@ bool SceneLvl2::Start()
 
 	if (app->player->cont == false)
 	{
-		appleColl1 = app->collision->AddCollider({ 2568, 1368, 48, 48 }, Collider::Type::APPLE, app->player); apples2[0] = 1;
-		appleColl2 = app->collision->AddCollider({ 3800, 924, 48, 48 }, Collider::Type::APPLE, app->player); apples2[1] = 1;
-		appleColl3 = app->collision->AddCollider({ 4000, 850, 48, 48 }, Collider::Type::APPLE, app->player); apples2[2] = 1;
-		appleColl4 = app->collision->AddCollider({ 4200, 800, 48, 48 }, Collider::Type::APPLE, app->player); apples2[3] = 1;
-		appleColl5 = app->collision->AddCollider({ 1392, 552, 48, 48 }, Collider::Type::APPLE, app->player); apples2[4] = 1;
-		appleColl6 = app->collision->AddCollider({ 3408, 2112, 48 }, Collider::Type::APPLE, app->player); apples2[5] = 1;
-		pineappleColl1 = app->collision->AddCollider({ 4324, 524, 48, 48 }, Collider::Type::PINEAPPLE, app->player); apples2[6] = 1;
+		appleColl1Lvl2 = app->collision->AddCollider({ 2568, 1368, 48, 48 }, Collider::Type::APPLE, app->player); apples2[0] = 1;
+		appleColl2Lvl2 = app->collision->AddCollider({ 3800, 924, 48, 48 }, Collider::Type::APPLE, app->player); apples2[1] = 1;
+		appleColl3Lvl2 = app->collision->AddCollider({ 4000, 850, 48, 48 }, Collider::Type::APPLE, app->player); apples2[2] = 1;
+		appleColl4Lvl2 = app->collision->AddCollider({ 4200, 800, 48, 48 }, Collider::Type::APPLE, app->player); apples2[3] = 1;
+		appleColl5Lvl2 = app->collision->AddCollider({ 1392, 552, 48, 48 }, Collider::Type::APPLE, app->player); apples2[4] = 1;
+		appleColl6Lvl2 = app->collision->AddCollider({ 3408, 2112, 48, 48 }, Collider::Type::APPLE, app->player); apples2[5] = 1;
+		pineappleColl1Lvl2 = app->collision->AddCollider({ 4324, 524, 48, 48 }, Collider::Type::PINEAPPLE, app->player); apples2[6] = 1;
+
+		savePoint = false;
+		checkPointTouchAnim.Reset();
 	}
 	else
 	{
-		if (apples2[0] == 1) appleColl1 = app->collision->AddCollider({ 2568, 1368, 48, 48 }, Collider::Type::APPLE, app->player);
-		if (apples2[1] == 1) appleColl2 = app->collision->AddCollider({ 3800, 924, 48, 48 }, Collider::Type::APPLE, app->player);
-		if (apples2[2] == 1) appleColl3 = app->collision->AddCollider({ 4000, 850, 48, 48 }, Collider::Type::APPLE, app->player);
-		if (apples2[3] == 1) appleColl4 = app->collision->AddCollider({ 4200, 800, 48, 48 }, Collider::Type::APPLE, app->player);
-		if (apples2[4] == 1) appleColl5 = app->collision->AddCollider({ 1392, 552, 48, 48 }, Collider::Type::APPLE, app->player);
-		if (apples2[5] == 1) appleColl6 = app->collision->AddCollider({ 3408, 2112, 48 }, Collider::Type::APPLE, app->player);
-		if (apples2[6] == 1) pineappleColl1 = app->collision->AddCollider({ 4324, 524, 48, 48 }, Collider::Type::PINEAPPLE, app->player);
+		if (apples2[0] == 1) appleColl1Lvl2 = app->collision->AddCollider({ 2568, 1368, 48, 48 }, Collider::Type::APPLE, app->player);
+		if (apples2[1] == 1) appleColl2Lvl2 = app->collision->AddCollider({ 3800, 924, 48, 48 }, Collider::Type::APPLE, app->player);
+		if (apples2[2] == 1) appleColl3Lvl2 = app->collision->AddCollider({ 4000, 850, 48, 48 }, Collider::Type::APPLE, app->player);
+		if (apples2[3] == 1) appleColl4Lvl2 = app->collision->AddCollider({ 4200, 800, 48, 48 }, Collider::Type::APPLE, app->player);
+		if (apples2[4] == 1) appleColl5Lvl2 = app->collision->AddCollider({ 1392, 552, 48, 48 }, Collider::Type::APPLE, app->player);
+		if (apples2[5] == 1) appleColl6Lvl2 = app->collision->AddCollider({ 3408, 2112, 48 }, Collider::Type::APPLE, app->player);
+		if (apples2[6] == 1) pineappleColl1Lvl2 = app->collision->AddCollider({ 4324, 524, 48, 48 }, Collider::Type::PINEAPPLE, app->player);
 	}
-
-	savePoint = false;
-	checkPointTouchAnim.Reset();
 
 	app->player->Init();
 	app->player->Start();
@@ -208,59 +208,59 @@ bool SceneLvl2::PostUpdate()
 	{
 		apple->Update();
 	}
-	if (appleColl1 != nullptr && appleColl1->isCollected != true)
+	if (appleColl1Lvl2 != nullptr && appleColl1Lvl2->isCollected == false)
 	{
 		SDL_Rect appleRect = apple->GetCurrentFrame();
 		app->render->DrawTexture(appleTex, 1104, 2016, &appleRect);                     
 	}
-	else if (appleColl1 != nullptr && appleColl1->isCollected == true) apples2[0] = 0;
+	else if (appleColl1Lvl2 != nullptr && appleColl1Lvl2->isCollected == true) apples2[0] = 0;
 
-	if (appleColl2 != nullptr && appleColl2->isCollected != true)
+	if (appleColl2Lvl2 != nullptr && appleColl2Lvl2->isCollected != true)
 	{
 		SDL_Rect appleRect = apple->GetCurrentFrame();
 		app->render->DrawTexture(appleTex, 2304, 1920, &appleRect);               
 	}
-	else if (appleColl2 != nullptr && appleColl2->isCollected == true) apples2[1] = 0;
+	else if (appleColl2Lvl2 != nullptr && appleColl2Lvl2->isCollected == true) apples2[1] = 0;
 
-	if (appleColl3 != nullptr && appleColl3->isCollected == false)
+	if (appleColl3Lvl2 != nullptr && appleColl3Lvl2->isCollected == false)
 	{
 		SDL_Rect appleRect = apple->GetCurrentFrame();   
 		app->render->DrawTexture(appleTex, 3384, 1464, &appleRect);
 	}
-	else if (appleColl3 != nullptr && appleColl3->isCollected == true) apples2[2] = 0;
+	else if (appleColl3Lvl2 != nullptr && appleColl3Lvl2->isCollected == true) apples2[2] = 0;
 
-	if (appleColl4 != nullptr && appleColl4->isCollected == false)
+	if (appleColl4Lvl2 != nullptr && appleColl4Lvl2->isCollected == false)
 	{
 		SDL_Rect appleRect = apple->GetCurrentFrame();
 		app->render->DrawTexture(appleTex, 2386, 1272, &appleRect);             
 	}
-	else if (appleColl4 != nullptr && appleColl4->isCollected == true) apples2[3] = 0;
+	else if (appleColl4Lvl2 != nullptr && appleColl4Lvl2->isCollected == true) apples2[3] = 0;
 
-	if (appleColl5 != nullptr && appleColl5->isCollected == false)
+	if (appleColl5Lvl2 != nullptr && appleColl5Lvl2->isCollected == false)
 	{
 		SDL_Rect appleRect = apple->GetCurrentFrame();
 		app->render->DrawTexture(appleTex, 2386, 792, &appleRect);  
 	}
-	else if (appleColl5 != nullptr && appleColl5->isCollected == true) apples2[4] = 0;
+	else if (appleColl5Lvl2 != nullptr && appleColl5Lvl2->isCollected == true) apples2[4] = 0;
 
-	if (appleColl6 != nullptr && appleColl6->isCollected == false)
+	if (appleColl6Lvl2 != nullptr && appleColl6Lvl2->isCollected == false)
 	{
 		SDL_Rect appleRect = apple->GetCurrentFrame();
 		app->render->DrawTexture(appleTex, 3384, 2088, &appleRect);
 	}
-	else if (appleColl6 != nullptr && appleColl6->isCollected == true) apples2[5] = 0;
+	else if (appleColl6Lvl2 != nullptr && appleColl6Lvl2->isCollected == true) apples2[5] = 0;
 
 	Animation* pineapple = &pineappleAnim;
 	if (app->player->playerState == app->player->NORMAL)
 	{
 		pineapple->Update();
 	}
-	if (pineappleColl1->isCollected == false)
+	if (pineappleColl1Lvl2 != nullptr && pineappleColl1Lvl2->isCollected == false)
 	{
 		SDL_Rect pineappleRect1 = pineapple->GetCurrentFrame();
 		app->render->DrawTexture(pineappleTex, 3094, 552, &pineappleRect1);
 	}
-	else if (pineappleColl1 != nullptr && pineappleColl1->isCollected == true) apples2[6] = 0;
+	else if (pineappleColl1Lvl2 != nullptr && pineappleColl1Lvl2->isCollected == true) apples2[6] = 0;
 	return ret;
 }
 
@@ -276,13 +276,13 @@ bool SceneLvl2::CleanUp()
 	app->tex->UnLoad(appleTex);
 	app->tex->UnLoad(pineappleTex);
 
-	app->collision->RemoveCollider(appleColl1);
-	app->collision->RemoveCollider(appleColl2);
-	app->collision->RemoveCollider(appleColl3);
-	app->collision->RemoveCollider(appleColl4);
-	app->collision->RemoveCollider(appleColl5);
-	app->collision->RemoveCollider(appleColl6);
-	app->collision->RemoveCollider(pineappleColl1);
+	app->collision->RemoveCollider(appleColl1Lvl2);
+	app->collision->RemoveCollider(appleColl2Lvl2);
+	app->collision->RemoveCollider(appleColl3Lvl2);
+	app->collision->RemoveCollider(appleColl4Lvl2);
+	app->collision->RemoveCollider(appleColl5Lvl2);
+	app->collision->RemoveCollider(appleColl6Lvl2);
+	app->collision->RemoveCollider(pineappleColl1Lvl2);
 	app->collision->RemoveCollider(checkPointColl);
 
 	app->audio->UnloadFX(musicScene1);

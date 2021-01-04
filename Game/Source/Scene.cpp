@@ -100,6 +100,10 @@ bool Scene::Start()
 		appleColl4 = app->collision->AddCollider({ 4200, 800, 48, 48 }, Collider::Type::APPLE, app->player); apples[3] = 1;
 		appleColl5 = app->collision->AddCollider({ 1392, 552, 48, 48 }, Collider::Type::APPLE, app->player); apples[4] = 1;
 		pineappleColl1 = app->collision->AddCollider({ 4324, 524, 48, 48 }, Collider::Type::PINEAPPLE, app->player); apples[5] = 1;
+
+
+		savePoint = false;
+        checkPointTouchAnim.Reset();
 	}
 	else
 	{
@@ -109,10 +113,8 @@ bool Scene::Start()
 		if (apples[3] == 1) appleColl4 = app->collision->AddCollider({ 4200, 800, 48, 48 }, Collider::Type::APPLE, app->player);
 		if (apples[4] == 1) appleColl5 = app->collision->AddCollider({ 1392, 552, 48, 48 }, Collider::Type::APPLE, app->player);
 		if (apples[5] == 1) pineappleColl1 = app->collision->AddCollider({ 4324, 524, 48, 48 }, Collider::Type::PINEAPPLE, app->player);
-	}
 
-	savePoint = false;
-	checkPointTouchAnim.Reset();
+	}
 
 	app->player->Init();
 	app->player->Start();

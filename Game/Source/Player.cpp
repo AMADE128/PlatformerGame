@@ -166,6 +166,12 @@ bool Player::Start()
 
 	playerState = NORMAL;
 
+	if (cont == false)
+	{
+		lifes = 3;
+		appleCounter = 0;
+	}
+
 	currentAnimation = &idleAnim;
 	death = false;
 	appear = true;
@@ -871,6 +877,8 @@ bool Player::Die(Collider* c1, Collider* c2)
 				cameraColl->rect.y = position.y - 100;
 				speedX = 0;
 				speedY = 0;
+				lifes = 3;
+				appleCounter = 0;
 				if (app->scene->active == true)
 				{
 					app->fadeToBlack->Fade(app->scene, (Module*)app->sceneLoose, 10);
@@ -906,9 +914,10 @@ bool Player::Die(Collider* c1, Collider* c2)
 				playerColl->SetPos(position.x + 25, position.y + 20);
 				cameraColl->rect.x = position.x - 100;
 				cameraColl->rect.y = position.y - 100;
-				appear = true;
 				lifes--;
+				appear = true;
 				death = false;
+
 			}
 		}
 		app->audio->PlayFx(hitFx);
@@ -968,8 +977,17 @@ bool Player::CollectPineapple(Collider* c1, Collider* c2)
 
 bool Player::CheckPoint(Collider* c1, Collider* c2)
 {
-	app->scene->savePoint = true;
-	app->sceneLvl2->savePoint = true;
+	switch (currentLvl)
+	{
+	case 1:
+		app->scene->savePoint = true;
+		break;
+	case 2:
+		app->sceneLvl2->savePoint = true;
+		break;
+	default:
+		break;
+	}
 	playerLoadF6 = false;
 	app->audio->PlayFx(app->scene->checkpointFx);
 
@@ -1000,15 +1018,14 @@ bool Player::LoadState(pugi::xml_node& data)
 
 	}
 
-
-	cont = data.child("continue").attribute("cont").as_bool();
-
-	appleCounter = data.child("score").attribute("sco").as_int();
-
-	lifes = data.child("lifes").attribute("hp").as_int();
-
 	if (cont == true)
 	{
+		cont = data.child("continue").attribute("cont").as_bool();
+
+		appleCounter = data.child("score").attribute("sco").as_int();
+
+		lifes = data.child("lifes").attribute("hp").as_int();
+
 		app->scene->apples[0] = data.child("apples").attribute("app1").as_int();
 		app->scene->apples[1] = data.child("apples").attribute("app2").as_int();
 		app->scene->apples[2] = data.child("apples").attribute("app3").as_int();
@@ -1023,6 +1040,10 @@ bool Player::LoadState(pugi::xml_node& data)
 		app->sceneLvl2->apples2[4] = data.child("apples").attribute("app10").as_int();
 		app->sceneLvl2->apples2[5] = data.child("apples").attribute("app11").as_int();
 		app->sceneLvl2->apples2[6] = data.child("apples").attribute("pine2").as_int();
+
+		app->scene->savePoint = data.child("savepoint").attribute("lvl1").as_bool();
+		app->sceneLvl2->savePoint = data.child("savepoint").attribute("lvl2").as_bool();
+
 	}
 
 	return true;
@@ -1088,6 +1109,11 @@ bool Player::SaveState(pugi::xml_node& data) const
 	player.append_attribute("app10") = app->sceneLvl2->apples2[4];
 	player.append_attribute("app11") = app->sceneLvl2->apples2[5];
 	player.append_attribute("pine2") = app->sceneLvl2->apples2[6];
+
+	player = data.append_child("savepoint");
+
+	player.append_attribute("lvl1") = app->scene->savePoint;
+	player.append_attribute("lvl2") = app->sceneLvl2->savePoint;
 
 	return true;
 }
