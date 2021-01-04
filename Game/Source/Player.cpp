@@ -685,8 +685,8 @@ bool Player::PostUpdate()
 
 	if (playerState == SETTINGS)
 	{
-		btnResume->bounds.x = (app->render->camera.x - app->render->camera.w / 2 + btnResume->bounds.w / 2) * -1;
-		btnResume->bounds.y = (app->render->camera.y - app->render->camera.h / 2 + 100) * -1;
+		btnResume->bounds.x = app->win->scale * (app->render->camera.x - app->render->camera.w / 2 + btnResume->bounds.w / 2) * -1;
+		btnResume->bounds.y = app->win->scale * (app->render->camera.y - app->render->camera.h / 2 + 100) * -1;
 
 		btnSettings->bounds.x = (app->render->camera.x - app->render->camera.w / 2 + btnResume->bounds.w / 2) * -1;
 		btnSettings->bounds.y = app->win->scale * (app->render->camera.y - app->render->camera.h / 2 + 45) * -1;
