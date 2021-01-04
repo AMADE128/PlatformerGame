@@ -149,6 +149,7 @@ public:
 	bool playerLoadF6 = false;
 	bool changeLevel1 = false;
 	bool changeLevel2 = false;
+	bool nothingSaved = true;
 
 	bool cont = false;
 };

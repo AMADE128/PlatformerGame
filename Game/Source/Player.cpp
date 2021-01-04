@@ -252,6 +252,7 @@ bool Player::Update(float dt)
 			}
 			if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN && !isJumping)
 			{
+				nothingSaved = false;
 				cont = true;
 				playerSave = true;
 				playerLoadF6 = true;
@@ -269,25 +270,28 @@ bool Player::Update(float dt)
 			}
 			if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 			{
-				if (lvl == 2)
+				if (nothingSaved == false)
 				{
-					if (app->scene->active == true)
+					if (lvl == 2)
 					{
-						saveGame = true;
-						changeLevel2 = true;
+						if (app->scene->active == true)
+						{
+							saveGame = true;
+							changeLevel2 = true;
+						}
+						else if (app->sceneLvl2->active == true) app->LoadGameRequest();
 					}
-					else if (app->sceneLvl2->active == true) app->LoadGameRequest();
-				}
-				else if (lvl == 1)
-				{
-					if (app->sceneLvl2->active == true)
+					else if (lvl == 1)
 					{
-						saveGame = true;
-						changeLevel1 = true;
+						if (app->sceneLvl2->active == true)
+						{
+							saveGame = true;
+							changeLevel1 = true;
+						}
+						else if (app->scene->active == true) app->LoadGameRequest();
 					}
-					else if (app->scene->active == true) app->LoadGameRequest();
+					appear = true;
 				}
-				appear = true;
 			}
 			if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && yDownCollision == true)
 			{
@@ -993,6 +997,8 @@ bool Player::CheckPoint(Collider* c1, Collider* c2)
 
     auxc.x = position.x;
 	auxc.y = position.y;
+
+	nothingSaved = false;
 
 	app->SaveGameRequest();
 	
