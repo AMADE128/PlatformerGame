@@ -31,6 +31,9 @@ SceneMenu::SceneMenu() : Module()
 
 	btnBack = new GuiButton(5, { 1280 / 2 - BUTT_WIDTH / 2, 570, BUTT_WIDTH, BUTT_HEIGHT });
 	btnBack->SetObserver(this);
+
+	checkFullScreen = new GuiCheckBox(1, { 1280 / 2 - SMALL_BUTT_WIDTH / 2, 500, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT });
+	checkFullScreen->SetObserver(this);
 }
 
 // Destructor
@@ -52,13 +55,17 @@ bool SceneMenu::Start()
 	// L03: DONE: Load map
 	menuTex = app->tex->Load("Assets/Textures/Screens/menu.png");
 	musicMenu = app->audio->LoadFx("Assets/Audio/SceneMusic/intro_music.wav");
+
 	btnBack->texture = btnNew->texture = btnExit->texture = btnLoad->texture = btnOptions->texture = app->tex->Load("Assets/Textures/Interface/button.png");
 	boxTex = app->tex->Load("Assets/Textures/Interface/box.png");
-	btnNew->font = app->tex->Load("Assets/Textures/Interface/new.png");
-	btnLoad->font = app->tex->Load("Assets/Textures/Interface/load.png");
-	btnOptions->font = app->tex->Load("Assets/Textures/Interface/option.png");
-	btnExit->font = app->tex->Load("Assets/Textures/Interface/exit.png");
-	btnBack->font = app->tex->Load("Assets/Textures/Interface/back.png");
+	btnNew->text = app->tex->Load("Assets/Textures/Interface/new.png");
+	btnLoad->text = app->tex->Load("Assets/Textures/Interface/load.png");
+	btnOptions->text = app->tex->Load("Assets/Textures/Interface/option.png");
+	btnExit->text = app->tex->Load("Assets/Textures/Interface/exit.png");
+	btnBack->text = app->tex->Load("Assets/Textures/Interface/back.png");
+
+	checkFullScreen->texture = app->tex->Load("Assets/Textures/Interface/small_button.png");
+	checkFullScreen->text = app->tex->Load("Assets/Textures/Interface/checked.png");
 
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
@@ -98,6 +105,7 @@ bool SceneMenu::Update(float dt)
 		break;
 	case SceneMenu::SETTINGS:
 		btnBack->Update(app->input, dt);
+		checkFullScreen->Update(app->input, dt);
 		break;
 	case SceneMenu::CREDITS:
 		break;
@@ -116,17 +124,27 @@ bool SceneMenu::PostUpdate()
 {
 	bool ret = true;
 	app->render->DrawTexture(menuTex, 0, 0);
-
-	btnNew->Draw(app->render);
-	btnExit->Draw(app->render);
-	btnLoad->Draw(app->render);
-	btnOptions->Draw(app->render);
-
-	if (menuState == SETTINGS)
+	
+	switch (menuState)
 	{
+	case SceneMenu::NORMAL:
+		btnNew->Draw(app->render);
+		btnExit->Draw(app->render);
+		btnLoad->Draw(app->render);
+		btnOptions->Draw(app->render);
+		break;
+	case SceneMenu::SETTINGS:
 		app->render->DrawRectangle({ 0, 0, 1280, 720 }, { 0, 0, 0, 170 });
 		app->render->DrawTexture(boxTex, btnNew->bounds.x - 32, btnNew->bounds.y - 20);
 		btnBack->Draw(app->render);
+		checkFullScreen->Draw(app->render);
+		break;
+	case SceneMenu::CREDITS:
+		break;
+	case SceneMenu::EXIT:
+		break;
+	default:
+		break;
 	}
 
 	return ret;
@@ -140,17 +158,23 @@ bool SceneMenu::CleanUp()
 	LOG("Freeing scene");
 
 	app->tex->UnLoad(menuTex);
+
 	app->tex->UnLoad(btnNew->texture);
 	app->tex->UnLoad(btnExit->texture);
 	app->tex->UnLoad(btnLoad->texture);
 	app->tex->UnLoad(btnOptions->texture);
 	app->tex->UnLoad(btnBack->texture);
+
 	app->tex->UnLoad(boxTex);
-	app->tex->UnLoad(btnNew->font);
-	app->tex->UnLoad(btnExit->font);
-	app->tex->UnLoad(btnLoad->font);
-	app->tex->UnLoad(btnOptions->font);
-	app->tex->UnLoad(btnBack->font);
+
+	app->tex->UnLoad(btnNew->text);
+	app->tex->UnLoad(btnExit->text);
+	app->tex->UnLoad(btnLoad->text);
+	app->tex->UnLoad(btnOptions->text);
+	app->tex->UnLoad(btnBack->text);
+
+	app->tex->UnLoad(checkFullScreen->texture);
+	app->tex->UnLoad(checkFullScreen->text);
 
 	app->audio->UnloadFX(musicMenu);
 	app->musicList.Clear();
@@ -165,7 +189,6 @@ bool SceneMenu::OnGuiMouseClickEvent(GuiControl* control)
 	switch (control->type)
 	{
 	case GuiControlType::BUTTON:
-	{
 		switch (control->id)
 		{
 		case 1:
@@ -200,7 +223,25 @@ bool SceneMenu::OnGuiMouseClickEvent(GuiControl* control)
 		default:
 			break;
 		}
-	}
+	case GuiControlType::CHECKBOX:
+		switch (control->id)
+		{
+		case 1:
+			if (checkFullScreen->checked)
+			{
+				SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+				app->win->scale = 1.5f;
+			}
+			else
+			{
+				SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_RESIZABLE);
+				app->win->scale = 1;
+			}
+			break;
+		default:
+			break;
+		}
+		break;
 	default: break;
 	}
 

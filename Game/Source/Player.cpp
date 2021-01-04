@@ -121,10 +121,10 @@ bool Player::Start()
 
 	btnResume->texture = btnSettings->texture = btnBack->texture = btnExit->texture = app->tex->Load("Assets/Textures/Interface/button.png");
 	boxTex = app->tex->Load("Assets/Textures/Interface/box.png");
-	btnResume->font = app->tex->Load("Assets/Textures/Interface/start.png");
-	btnSettings->font = app->tex->Load("Assets/Textures/Interface/option.png");
-	btnBack->font = app->tex->Load("Assets/Textures/Interface/back.png");
-	btnExit->font = app->tex->Load("Assets/Textures/Interface/exit.png");
+	btnResume->text = app->tex->Load("Assets/Textures/Interface/start.png");
+	btnSettings->text = app->tex->Load("Assets/Textures/Interface/option.png");
+	btnBack->text = app->tex->Load("Assets/Textures/Interface/back.png");
+	btnExit->text = app->tex->Load("Assets/Textures/Interface/exit.png");
 	
 	if (app->scene->active == true && cont == false)
 	{
@@ -161,8 +161,8 @@ bool Player::Start()
 
 	playerColl = app->collision->AddCollider({ (int)position.x, (int)position.y, TILESIZE - 50, TILESIZE - 20}, Collider::Type::PLAYER, this);
 	cameraColl = app->collision->AddCollider({ (int)position.x - 100, (int)position.y - 100, app->render->camera.w/4, app->render->camera.h / 3 + 20}, Collider::Type::CAMERA, this);
-	app->render->camera.x = ((cameraColl->rect.x + cameraColl->rect.w / 3) - (app->render->camera.w / 2)) * -1;
-	app->render->camera.y = ((cameraColl->rect.y + cameraColl->rect.h / 3) - (app->render->camera.h / 2.5)) * -1;
+	app->render->camera.x = app->win->scale * ((cameraColl->rect.x + cameraColl->rect.w / 3) - (app->render->camera.w / 2)) * -1;
+	app->render->camera.y = app->win->scale * ((cameraColl->rect.y + cameraColl->rect.h / 3) - (app->render->camera.h / 2.5)) * -1;
 
 	playerState = NORMAL;
 
@@ -196,8 +196,8 @@ bool Player::PreUpdate()
 
 	if (appear == true)
 	{
-		app->render->camera.x = ((cameraColl->rect.x + cameraColl->rect.w / 3) - (app->render->camera.w / 2)) * -1;
-		app->render->camera.y = ((cameraColl->rect.y + cameraColl->rect.h / 3) - (app->render->camera.h / 2.5)) * -1;
+		app->render->camera.x = app->win->scale * ((cameraColl->rect.x + cameraColl->rect.w / 3) - (app->render->camera.w / 2)) * -1;
+		app->render->camera.y = app->win->scale * ((cameraColl->rect.y + cameraColl->rect.h / 3) - (app->render->camera.h / 2.5)) * -1;
 		currentAnimation = &appeAnim;
 		currentTex = appeTex;
 		if (appeAnim.finish == true)
@@ -577,8 +577,8 @@ bool Player::Update(float dt)
 
 
 			playerColl->SetPos(position.x + 25, position.y + 20);
-			app->render->camera.x = ((cameraColl->rect.x + cameraColl->rect.w / 3) - (app->render->camera.w / 2)) * -1;
-			app->render->camera.y = ((cameraColl->rect.y + cameraColl->rect.h / 3) - (app->render->camera.h / 2.5)) * -1;
+			app->render->camera.x = app->win->scale * ((cameraColl->rect.x + cameraColl->rect.w / 3) - (app->render->camera.w / 2)) * -1;
+			app->render->camera.y = app->win->scale * ((cameraColl->rect.y + cameraColl->rect.h / 3) - (app->render->camera.h / 2.5)) * -1;
 		}
 		if (skillCoolDown > 0)
 		{
@@ -689,13 +689,13 @@ bool Player::PostUpdate()
 		btnResume->bounds.y = (app->render->camera.y - app->render->camera.h / 2 + 100) * -1;
 
 		btnSettings->bounds.x = (app->render->camera.x - app->render->camera.w / 2 + btnResume->bounds.w / 2) * -1;
-		btnSettings->bounds.y = (app->render->camera.y - app->render->camera.h / 2 + 45) * -1;
+		btnSettings->bounds.y = app->win->scale * (app->render->camera.y - app->render->camera.h / 2 + 45) * -1;
 
 		btnBack->bounds.x = (app->render->camera.x - app->render->camera.w / 2 + btnResume->bounds.w / 2) * -1;
-		btnBack->bounds.y = (app->render->camera.y - app->render->camera.h / 2 - 15) * -1;
+		btnBack->bounds.y = app->win->scale * (app->render->camera.y - app->render->camera.h / 2 - 15) * -1;
 
-		btnExit->bounds.x = (app->render->camera.x - app->render->camera.w / 2 + btnResume->bounds.w / 2) * -1;
-		btnExit->bounds.y = (app->render->camera.y - app->render->camera.h / 2 - 75) * -1;
+		btnExit->bounds.x = app->win->scale * (app->render->camera.x - app->render->camera.w / 2 + btnResume->bounds.w / 2) * -1;
+		btnExit->bounds.y = app->win->scale * (app->render->camera.y - app->render->camera.h / 2 - 75) * -1;
 
 		app->render->DrawRectangle({ app->render->camera.x * -1, app->render->camera.y * -1, 1280, 720 }, { 0, 0, 0, 170 });
 		app->render->DrawTexture(boxTex, btnResume->bounds.x - 32, btnResume->bounds.y - 20);
@@ -766,10 +766,10 @@ bool Player::CleanUp()
 	app->tex->UnLoad(btnBack->texture);
 	app->tex->UnLoad(btnExit->texture);
 	app->tex->UnLoad(boxTex);
-	app->tex->UnLoad(resumeButtTex);
-	app->tex->UnLoad(optionButtTex);
-	app->tex->UnLoad(returnButtTex);
-	app->tex->UnLoad(exitButtTex);
+	app->tex->UnLoad(btnResume->text);
+	app->tex->UnLoad(btnSettings->text);
+	app->tex->UnLoad(btnBack->text);
+	app->tex->UnLoad(btnExit->text);
 
 	//Remove de los colliders
 	app->collision->RemoveCollider(playerColl);

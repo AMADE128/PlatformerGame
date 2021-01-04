@@ -6,6 +6,9 @@
 #include "Point.h"
 #include "SString.h"
 
+#define SMALL_BUTT_WIDTH 50
+#define SMALL_BUTT_HEIGHT 50
+
 class GuiCheckBox : public GuiControl
 {
 public:
@@ -16,11 +19,12 @@ public:
 	bool Update(Input* input, float dt);
 	bool Draw(Render* render);
 
+	bool checked;
+
 private:
 
 	// GuiCheckBox specific properties
 	// Maybe some animation properties for state change?
-	bool checked;
 };
 
 #endif // __GUICHECKBOX_H__

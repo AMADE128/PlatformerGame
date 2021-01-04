@@ -20,8 +20,6 @@ public:
 	bool Update(Input* input, float dt);
 	bool Draw(Render* render);
 
-	SDL_Texture* font;
-
 private:
 
 	// Gui Button specific properties

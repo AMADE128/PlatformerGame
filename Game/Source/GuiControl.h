@@ -43,8 +43,7 @@ public:
 	GuiControl(GuiControlType type, SDL_Rect bounds, const char* text) :
 		type(type),
 		state(GuiControlState::NORMAL),
-		bounds(bounds),
-		text(text)
+		bounds(bounds)
 	{
 		color.r = 255; color.g = 255; color.b = 255;
 		texture = NULL;
@@ -82,12 +81,13 @@ public:
 	GuiControlType type;
 	GuiControlState state;
 
-	SString text;           // Control text (if required)
 	SDL_Rect bounds;        // Position and size
 	SDL_Color color;        // Tint color
 
-	SDL_Texture* texture;   // Texture atlas reference
-	SDL_Rect section;       // Texture atlas base section
+	SDL_Texture* texture; 
+	SDL_Texture* text;// Texture atlas reference
+	SDL_Rect section; // Texture atlas base section
+	SDL_Rect checkSection;
 
 	//Font font;              // Text font
 

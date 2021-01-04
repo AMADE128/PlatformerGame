@@ -22,7 +22,9 @@ FadeToBlack::~FadeToBlack()
 bool FadeToBlack::Start()
 {
 	LOG("Preparing Fade Screen");
+
 	screenRect = { 0, 0, app->win->screenSurface->w, app->win->screenSurface->h };
+
 	// Enable blending mode for transparency
 	SDL_SetRenderDrawBlendMode(app->render->renderer, SDL_BLENDMODE_BLEND);
 	return true;
@@ -72,6 +74,8 @@ bool FadeToBlack::PostUpdate()
 
 	// Render the black square with alpha on the screen
 	SDL_SetRenderDrawColor(app->render->renderer, 0, 0, 0, (Uint8)(fadeRatio * 255.0f));
+	screenRect.w = (int)(app->win->screenSurface->w * app->win->scale);
+	screenRect.h = (int)(app->win->screenSurface->h * app->win->scale);
 	SDL_RenderFillRect(app->render->renderer, &screenRect);
 
 	return true;

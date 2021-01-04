@@ -1,4 +1,5 @@
 #include "GuiCheckBox.h"
+#include "Window.h"
 
 GuiCheckBox::GuiCheckBox(uint32 id, SDL_Rect bounds) : GuiControl(GuiControlType::CHECKBOX, id)
 {
@@ -15,8 +16,8 @@ bool GuiCheckBox::Update(Input* input, float dt)
 	{
 		int mouseX, mouseY;
 		input->GetMousePosition(mouseX, mouseY);
-		mouseX += app->render->camera.x * -1;
-		mouseY += app->render->camera.y * -1;
+		mouseX += app->win->scale * app->render->camera.x * -1;
+		mouseY += app->win->scale * app->render->camera.y * -1;
 
 		// Check collision between mouse and button bounds
 		if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) &&
@@ -48,20 +49,50 @@ bool GuiCheckBox::Draw(Render* render)
 	switch (state)
 	{
 	case GuiControlState::DISABLED:
-	{
-		if (checked) render->DrawRectangle(bounds, { 100, 100, 100, 255 });
-		else render->DrawRectangle(bounds, { 100, 100, 100, 255 });
-	} break;
+		break;
 	case GuiControlState::NORMAL:
-	{
-		if (checked) render->DrawRectangle(bounds, { 0, 255, 0, 255 });
-		else render->DrawRectangle(bounds, { 0, 255, 0, 255 });
-	} break;
-	case GuiControlState::FOCUSED: render->DrawRectangle(bounds, { 255, 255, 0, 255 });
+		section = { 0, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
+		render->DrawTexture(texture, bounds.x, bounds.y, &section);
+		if (checked)
+		{
+			checkSection = { 50, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
+			render->DrawTexture(text, bounds.x, bounds.y, &checkSection);
+		}
+		else
+		{
+			checkSection = { 0, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
+			render->DrawTexture(text, bounds.x, bounds.y, &checkSection);
+		}
 		break;
-	case GuiControlState::PRESSED: render->DrawRectangle(bounds, { 0, 255, 255, 255 });
+	case GuiControlState::FOCUSED:
+		section = { 100, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
+		render->DrawTexture(texture, bounds.x, bounds.y, &section);
+		if (checked)
+		{
+			checkSection = { 50, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
+			render->DrawTexture(text, bounds.x, bounds.y, &checkSection);
+		}
+		else
+		{
+			checkSection = { 0, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
+			render->DrawTexture(text, bounds.x, bounds.y, &checkSection);
+		}
 		break;
-	case GuiControlState::SELECTED: render->DrawRectangle(bounds, { 0, 255, 0, 255 });
+	case GuiControlState::PRESSED:
+		section = { 50, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
+		render->DrawTexture(texture, bounds.x, bounds.y, &section);
+		if (checked)
+		{
+			checkSection = { 50, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
+			render->DrawTexture(text, bounds.x, bounds.y + 5, &checkSection);
+		}
+		else
+		{
+			checkSection = { 0, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
+			render->DrawTexture(text, bounds.x, bounds.y + 5, &checkSection);
+		}
+		break;
+	case GuiControlState::SELECTED:
 		break;
 	default:
 		break;

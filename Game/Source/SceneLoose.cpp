@@ -48,8 +48,8 @@ bool SceneLoose::Start()
 
 	loose = app->tex->Load("Assets/Textures/Screens/lose.png");
 	btnContinue->texture = btnBack->texture = app->tex->Load("Assets/Textures/Interface/button.png");
-	btnContinue->font = app->tex->Load("Assets/Textures/Interface/start.png");
-	btnBack->font = app->tex->Load("Assets/Textures/Interface/back.png");
+	btnContinue->text = app->tex->Load("Assets/Textures/Interface/start.png");
+	btnBack->text = app->tex->Load("Assets/Textures/Interface/back.png");
 
 	loseMusic = app->audio->LoadFx("Assets/Audio/SceneMusic/lose_music.wav");
 	app->musicList.Add(&loseMusic);
@@ -125,8 +125,8 @@ bool SceneLoose::CleanUp()
 	app->tex->UnLoad(loose);
 	app->tex->UnLoad(btnContinue->texture);
 	app->tex->UnLoad(btnBack->texture);
-	app->tex->UnLoad(btnContinue->font);
-	app->tex->UnLoad(btnBack->font);
+	app->tex->UnLoad(btnContinue->text);
+	app->tex->UnLoad(btnBack->text);
 
 	active = false; 
 

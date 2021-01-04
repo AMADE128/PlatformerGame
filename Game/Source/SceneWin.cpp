@@ -44,7 +44,7 @@ bool SceneWin::Start()
 	// L03: DONE: Load map
 	win = app->tex->Load("Assets/Textures/Screens/win.png");
 	btnBack->texture = app->tex->Load("Assets/Textures/Interface/button.png");
-	btnBack->font = app->tex->Load("Assets/Textures/Interface/back.png");
+	btnBack->text = app->tex->Load("Assets/Textures/Interface/back.png");
 
 	winMusic = app->audio->LoadFx("Assets/Audio/SceneMusic/win_music.wav");
 	app->musicList.Add(&winMusic);
@@ -112,7 +112,7 @@ bool SceneWin::CleanUp()
 
 	app->tex->UnLoad(win);
 	app->tex->UnLoad(btnBack->texture);
-	app->tex->UnLoad(btnBack->font);
+	app->tex->UnLoad(btnBack->text);
 
 	app->musicList.Clear();
 	app->audio->UnloadFX(winMusic);
