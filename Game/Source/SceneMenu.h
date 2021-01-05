@@ -61,6 +61,8 @@ public:
 	bool LoadMenu(pugi::xml_node&);
 	bool Menu(pugi::xml_document& loadFile);
 
+	float valueToVolume = 0;
+
 private:
 
 	GuiButton* btnNew;

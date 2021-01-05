@@ -111,6 +111,7 @@ bool SceneMenu::Update(float dt)
 		btnBack->Update(app->input, dt);
 		checkFullScreen->Update(app->input, dt);
 		sliderMusic->Update(app->input, dt);
+		app->volume = (int)(sliderMusic->value*VALUE_TO_VOLUME);
 		break;
 	case SceneMenu::CREDITS:
 		break;

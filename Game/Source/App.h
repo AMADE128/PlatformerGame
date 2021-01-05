@@ -10,6 +10,7 @@
 
 #define CONFIG_FILENAME		"config.xml"
 #define SAVE_STATE_FILENAME "save_game.xml"
+#define VALUE_TO_VOLUME 128/137
 
 // Modules
 class Window;
