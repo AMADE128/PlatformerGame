@@ -40,6 +40,18 @@ Player::Player() : Module()
 	btnExit = new GuiButton(9, { NULL, NULL, BUTT_WIDTH, BUTT_HEIGHT });
 	btnExit->SetObserver(this);
 
+	btnBack2 = new GuiButton(10, { 1280 / 2 - BUTT_WIDTH / 2, 570, BUTT_WIDTH, BUTT_HEIGHT });
+	btnBack2->SetObserver(this);
+
+	playerCheckFullScreen = new GuiCheckBox(2, { 1280 / 2 - SMALL_BUTT_WIDTH / 2, 500, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT });
+	playerCheckFullScreen->SetObserver(this);
+
+	playerSliderMusic = new GuiSlider(3, { 1280 / 2 - SLIDER_WIDTH / 2, 450, SLIDER_WIDTH, SLIDER_HEIGHT }, 0, 128);
+	playerSliderMusic->SetObserver(this);
+
+	playerSliderFx = new GuiSlider(4, { 1280 / 2 - SLIDER_WIDTH / 2, 400, SLIDER_WIDTH, SLIDER_HEIGHT }, 0, 128);
+	playerSliderFx->SetObserver(this);
+
 	for (int i = 0; i < TILESIZE * 11; i += TILESIZE)
 	{
 		idleAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
@@ -119,12 +131,20 @@ bool Player::Start()
 {
 	LOG("Loading player textures");
 
-	btnResume->texture = btnSettings->texture = btnBack->texture = btnExit->texture = app->tex->Load("Assets/Textures/Interface/button.png");
+	btnResume->texture = btnSettings->texture = btnBack->texture = btnBack2->texture = btnExit->texture = app->tex->Load("Assets/Textures/Interface/button.png");
 	boxTex = app->tex->Load("Assets/Textures/Interface/box.png");
 	btnResume->text = app->tex->Load("Assets/Textures/Interface/start.png");
 	btnSettings->text = app->tex->Load("Assets/Textures/Interface/option.png");
-	btnBack->text = app->tex->Load("Assets/Textures/Interface/back.png");
+	btnBack->text = btnBack2->text = app->tex->Load("Assets/Textures/Interface/back.png");
 	btnExit->text = app->tex->Load("Assets/Textures/Interface/exit.png");
+
+	playerSliderFx->text = app->tex->Load("Assets/Textures/Interface/sound.png");
+	playerSliderMusic->text = app->tex->Load("Assets/Textures/Interface/music.png");
+	playerSliderMusic->texture = playerSliderFx->texture = app->tex->Load("Assets/Textures/Interface/slider.png");
+
+	playerCheckFullScreen->texture = app->tex->Load("Assets/Textures/Interface/small_button.png");
+	playerCheckFullScreen->text = app->tex->Load("Assets/Textures/Interface/checked.png");
+	playerCheckFullScreen->leftText = app->tex->Load("Assets/Textures/Interface/full_screen.png");
 	
 	if (app->scene->active == true && cont == false)
 	{
@@ -595,6 +615,14 @@ bool Player::Update(float dt)
 		btnBack->Update(app->input, dt);
 		btnExit->Update(app->input, dt);
 		break;
+	case Player::OPTIONS:
+		btnBack2->Update(app->input, dt);
+		playerCheckFullScreen->Update(app->input, dt);
+		playerSliderMusic->Update(app->input, dt);
+		app->volumeMusic = (int)(playerSliderMusic->value * VALUE_TO_VOLUME);
+		playerSliderFx->Update(app->input, dt);
+		app->volumeFX = (int)(playerSliderFx->value * VALUE_TO_VOLUME);
+		break;
 	case Player::EXIT:
 		return false;
 		break;
@@ -711,6 +739,29 @@ bool Player::PostUpdate()
 		btnExit->Draw(app->render);
 	}
 
+	if (playerState == OPTIONS)
+	{
+		btnBack2->bounds.x = cameraColl->rect.x + cameraColl->rect.w / 2 - btnResume->bounds.w / 2 - 60;
+		btnBack2->bounds.y = cameraColl->rect.y + 120;
+
+		playerCheckFullScreen->bounds.x = cameraColl->rect.x + cameraColl->rect.w / 2 - btnResume->bounds.w / 2 - 25;
+		playerCheckFullScreen->bounds.y = cameraColl->rect.y + 60;
+
+		playerSliderMusic->bounds.x = cameraColl->rect.x + cameraColl->rect.w / 2 - btnResume->bounds.w / 2 - 70;
+		playerSliderMusic->bounds.y = cameraColl->rect.y;
+
+		playerSliderFx->bounds.x = cameraColl->rect.x + cameraColl->rect.w / 2 - btnResume->bounds.w / 2 - 70;
+		playerSliderFx->bounds.y = cameraColl->rect.y - 50;
+
+
+		app->render->DrawRectangle({ 0, 0, 1280, 720 }, { 0, 0, 0, 170 });
+		app->render->DrawTexture(boxTex, btnBack->bounds.x - 170, btnBack->bounds.y - 210);
+		btnBack2->Draw(app->render);
+		playerCheckFullScreen->Draw(app->render);
+		playerSliderMusic->Draw(app->render);
+		playerSliderFx->Draw(app->render);
+	}
+
 
 	return true;
 }
@@ -727,6 +778,7 @@ bool Player::OnGuiMouseClickEvent(GuiControl* control)
 			playerState = NORMAL;
 			break;
 		case 7:
+			playerState = OPTIONS;
 			break;
 		case 8:
 			app->fadeToBlack->Fade(app->scene, (Module*)app->sceneMenu, 10);
@@ -734,12 +786,35 @@ bool Player::OnGuiMouseClickEvent(GuiControl* control)
 		case 9:
 			playerState = EXIT;
 			break;
+		case 10:
+			playerState = SETTINGS;
+			break;
 		default:
 			break;
 		}
 	}
+	case GuiControlType::CHECKBOX:
+		switch (control->id)
+		{
+		case 2:
+			if (playerCheckFullScreen->checked)
+			{
+				SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
+				app->win->scale = 1.5f;
+			}
+			else
+			{
+				SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_RESIZABLE);
+				app->win->scale = 1;
+			}
+			break;
+		default:
+			break;
+		}
+		break;
 	default: break;
 	}
+
 
 	return true;
 }
@@ -775,6 +850,16 @@ bool Player::CleanUp()
 	app->tex->UnLoad(btnSettings->text);
 	app->tex->UnLoad(btnBack->text);
 	app->tex->UnLoad(btnExit->text);
+
+	app->tex->UnLoad(btnBack2->text);
+	app->tex->UnLoad(playerSliderMusic->texture);
+	app->tex->UnLoad(playerSliderMusic->text);
+	app->tex->UnLoad(playerSliderFx->texture);
+	app->tex->UnLoad(playerSliderFx->text);
+
+	app->tex->UnLoad(playerCheckFullScreen->texture);
+	app->tex->UnLoad(playerCheckFullScreen->text);
+	app->tex->UnLoad(playerCheckFullScreen->leftText);
 
 	//Remove de los colliders
 	app->collision->RemoveCollider(playerColl);

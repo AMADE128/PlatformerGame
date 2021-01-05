@@ -8,6 +8,7 @@
 #include "Point.h"
 #include "GuiButton.h"
 #include "GuiSlider.h"
+#include "GuiCheckBox.h"
 
 struct Collider;
 
@@ -19,6 +20,7 @@ public:
 	{
 		NORMAL,
 		SETTINGS,
+		OPTIONS,
 		EXIT
 	};
 
@@ -83,7 +85,11 @@ public:
 	GuiButton* btnResume;
 	GuiButton* btnSettings;
 	GuiButton* btnBack;
+	GuiButton* btnBack2;
 	GuiButton* btnExit;
+	GuiCheckBox* playerCheckFullScreen;
+	GuiSlider* playerSliderMusic;
+	GuiSlider* playerSliderFx;
 
 	bool flip;
 	

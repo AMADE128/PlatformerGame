@@ -1,4 +1,5 @@
 #include "GuiSlider.h"
+#include "Window.h"
 
 GuiSlider::GuiSlider(uint32 id, SDL_Rect bounds, int min, int max) : GuiControl(GuiControlType::SLIDER, id)
 {
@@ -17,6 +18,8 @@ bool GuiSlider::Update(Input* input, float dt)
 	{
 		int mouseX, mouseY;
 		input->GetMousePosition(mouseX, mouseY);
+		mouseX += app->render->camera.x * -1 / app->win->scale;
+		mouseY += app->render->camera.y * -1 / app->win->scale;
 
 		// Check collision between mouse and button bounds
 		if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) &&
