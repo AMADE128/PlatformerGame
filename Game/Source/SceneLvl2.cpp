@@ -86,7 +86,7 @@ bool SceneLvl2::Start()
 	app->audio->PlayFx(musicScene1, -1);
 
 	checkpointMusic = app->audio->LoadFx("Assets/Audio/MyscMusic/checkpoint.wav");
-	app->musicList.Add(&checkpointMusic);
+	app->fxList.Add(&checkpointMusic);
 
 	currentAnimation = &checkPointIdleAnim;
 	currentTex = checkPointStartTex;
@@ -288,6 +288,7 @@ bool SceneLvl2::CleanUp()
 	app->audio->UnloadFX(musicScene1);
 	app->audio->UnloadFX(checkpointMusic);
 	app->musicList.Clear();
+	app->fxList.Clear();
 
 	app->player->CleanUp();
 	app->collision->CleanUp();
