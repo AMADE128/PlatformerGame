@@ -362,21 +362,6 @@ bool App::PostUpdate()
 	ListItem<Module*>* item;
 	Module* pModule = NULL;
 
-	// Set VOLUME
-	if (app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
-	{
-		if (volume < 128)
-		{
-			volume += 128 / 32;
-		}
-	}
-	if (app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_DOWN)
-	{
-		if (volume > 0)
-		{
-			volume -= 128 / 32;
-		}
-	}
 	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
 	{
 		if (frameRate == 30)
@@ -403,7 +388,11 @@ bool App::PostUpdate()
 	ListItem<unsigned int*>* itemMusic;
 	for (itemMusic = musicList.start; itemMusic != NULL; itemMusic = itemMusic->next)
 	{
-		app->audio->SetVolume(*itemMusic->data, volume);
+		app->audio->SetVolume(*itemMusic->data, volumeMusic);
+	}
+	for (itemMusic = fxList.start; itemMusic != NULL; itemMusic = itemMusic->next)
+	{
+		app->audio->SetVolume(*itemMusic->data, volumeFX);
 	}
 
 	return ret;

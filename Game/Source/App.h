@@ -122,7 +122,9 @@ public:
     int screenTicks;
 
 	List<unsigned int*>	musicList;
-	int volume = 64;
+	List<unsigned int*>	fxList;
+	int volumeMusic = 64;
+	int volumeFX = 64;
 
 private:
 	int argc;

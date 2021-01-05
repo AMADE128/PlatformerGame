@@ -151,13 +151,13 @@ bool Player::Start()
 	chickenFlyTex = app->tex->Load("Assets/Textures/Drone/idle_skill.png");
 
 	hitFx = app->audio->LoadFx("Assets/Audio/MyscMusic/damage.wav");
-	app->musicList.Add(&hitFx);
+	app->fxList.Add(&hitFx);
 	jumpFx = app->audio->LoadFx("Assets/Audio/MyscMusic/jumps.wav");
-	app->musicList.Add(&jumpFx);
+	app->fxList.Add(&jumpFx);
 	pointFx = app->audio->LoadFx("Assets/Audio/MyscMusic/points.wav");
-	app->musicList.Add(&pointFx);
+	app->fxList.Add(&pointFx);
 	leafFx = app->audio->LoadFx("Assets/Audio/MyscMusic/leaf_shot.wav");
-	app->musicList.Add(&leafFx);
+	app->fxList.Add(&leafFx);
 
 	playerColl = app->collision->AddCollider({ (int)position.x, (int)position.y, TILESIZE - 50, TILESIZE - 20}, Collider::Type::PLAYER, this);
 	cameraColl = app->collision->AddCollider({ (int)position.x - 100, (int)position.y - 100, app->render->camera.w/4, app->render->camera.h / 3 + 20}, Collider::Type::CAMERA, this);

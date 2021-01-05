@@ -37,6 +37,9 @@ SceneMenu::SceneMenu() : Module()
 
 	sliderMusic = new GuiSlider(1, { 1280 / 2 - SLIDER_WIDTH / 2, 450, SLIDER_WIDTH, SLIDER_HEIGHT }, 0, 128);
 	sliderMusic->SetObserver(this);
+
+	sliderFx = new GuiSlider(2, { 1280 / 2 - SLIDER_WIDTH / 2, 400, SLIDER_WIDTH, SLIDER_HEIGHT }, 0, 128);
+	sliderFx->SetObserver(this);
 }
 
 // Destructor
@@ -66,7 +69,7 @@ bool SceneMenu::Start()
 	btnOptions->text = app->tex->Load("Assets/Textures/Interface/option.png");
 	btnExit->text = app->tex->Load("Assets/Textures/Interface/exit.png");
 	btnBack->text = app->tex->Load("Assets/Textures/Interface/back.png");
-	sliderMusic->texture = app->tex->Load("Assets/Textures/Interface/slider.png");
+	sliderMusic->texture = sliderFx->texture = app->tex->Load("Assets/Textures/Interface/slider.png");
 
 	checkFullScreen->texture = app->tex->Load("Assets/Textures/Interface/small_button.png");
 	checkFullScreen->text = app->tex->Load("Assets/Textures/Interface/checked.png");
@@ -111,7 +114,9 @@ bool SceneMenu::Update(float dt)
 		btnBack->Update(app->input, dt);
 		checkFullScreen->Update(app->input, dt);
 		sliderMusic->Update(app->input, dt);
-		app->volume = (int)(sliderMusic->value*VALUE_TO_VOLUME);
+		app->volumeMusic = (int)(sliderMusic->value*VALUE_TO_VOLUME);
+		sliderFx->Update(app->input, dt);
+		app->volumeFX = (int)(sliderFx->value * VALUE_TO_VOLUME);
 		break;
 	case SceneMenu::CREDITS:
 		break;
@@ -145,6 +150,7 @@ bool SceneMenu::PostUpdate()
 		btnBack->Draw(app->render);
 		checkFullScreen->Draw(app->render);
 		sliderMusic->Draw(app->render);
+		sliderFx->Draw(app->render);
 		break;
 	case SceneMenu::CREDITS:
 		break;
@@ -180,6 +186,7 @@ bool SceneMenu::CleanUp()
 	app->tex->UnLoad(btnOptions->text);
 	app->tex->UnLoad(btnBack->text);
 	app->tex->UnLoad(sliderMusic->texture);
+	app->tex->UnLoad(sliderFx->texture);
 
 	app->tex->UnLoad(checkFullScreen->texture);
 	app->tex->UnLoad(checkFullScreen->text);
