@@ -34,6 +34,9 @@ SceneMenu::SceneMenu() : Module()
 
 	checkFullScreen = new GuiCheckBox(1, { 1280 / 2 - SMALL_BUTT_WIDTH / 2, 500, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT });
 	checkFullScreen->SetObserver(this);
+
+	sliderMusic = new GuiSlider(1, { 1280 / 2 - SLIDER_WIDTH / 2, 500, SLIDER_WIDTH, SLIDER_HEIGHT }, 0, 128);
+	sliderMusic->SetObserver(this);
 }
 
 // Destructor
@@ -63,6 +66,7 @@ bool SceneMenu::Start()
 	btnOptions->text = app->tex->Load("Assets/Textures/Interface/option.png");
 	btnExit->text = app->tex->Load("Assets/Textures/Interface/exit.png");
 	btnBack->text = app->tex->Load("Assets/Textures/Interface/back.png");
+	sliderMusic->texture = app->tex->Load("Assets/Textures/Interface/slider.png");
 
 	checkFullScreen->texture = app->tex->Load("Assets/Textures/Interface/small_button.png");
 	checkFullScreen->text = app->tex->Load("Assets/Textures/Interface/checked.png");
@@ -106,6 +110,7 @@ bool SceneMenu::Update(float dt)
 	case SceneMenu::SETTINGS:
 		btnBack->Update(app->input, dt);
 		checkFullScreen->Update(app->input, dt);
+		sliderMusic->Update(app->input, dt);
 		break;
 	case SceneMenu::CREDITS:
 		break;
@@ -138,6 +143,7 @@ bool SceneMenu::PostUpdate()
 		app->render->DrawTexture(boxTex, btnNew->bounds.x - 32, btnNew->bounds.y - 20);
 		btnBack->Draw(app->render);
 		checkFullScreen->Draw(app->render);
+		sliderMusic->Draw(app->render);
 		break;
 	case SceneMenu::CREDITS:
 		break;

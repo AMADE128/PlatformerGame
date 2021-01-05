@@ -1,8 +1,10 @@
 #include "GuiSlider.h"
 
-GuiSlider::GuiSlider(uint32 id, SDL_Rect bounds, int min, int max, int variable) : GuiControl(GuiControlType::SLIDER, id)
+GuiSlider::GuiSlider(uint32 id, SDL_Rect bounds, int min, int max) : GuiControl(GuiControlType::SLIDER, id)
 {
 	this->bounds = bounds;
+	this->minValue = min;
+	this->maxValue = max;
 }
 
 GuiSlider::~GuiSlider()
@@ -22,6 +24,12 @@ bool GuiSlider::Update(Input* input, float dt)
 		{
 			state = GuiControlState::FOCUSED;
 
+			if (input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
+			{
+				state = GuiControlState::PRESSED;
+			}
+
+			
 			// TODO.
 		}
 		else state = GuiControlState::NORMAL;
@@ -35,15 +43,27 @@ bool GuiSlider::Draw(Render* render)
 	// Draw the right button depending on state
 	switch (state)
 	{
-	case GuiControlState::DISABLED: render->DrawRectangle(bounds, { 100, 100, 100, 255 });
+	case GuiControlState::DISABLED: 
 		break;
-	case GuiControlState::NORMAL: render->DrawRectangle(bounds, { 0, 255, 0, 255 });
+	case GuiControlState::NORMAL: 
+		section = { 0, 0, SLIDER_WIDTH, SLIDER_HEIGHT };
+		render->DrawTexture(texture, bounds.x, bounds.y, &section);
+		section = { 0, 50, SLIDER_WIDTH, SLIDER_HEIGHT };
+		render->DrawTexture(texture, bounds.x, bounds.y, &section);
 		break;
-	case GuiControlState::FOCUSED: render->DrawRectangle(bounds, { 255, 255, 0, 255 });
+	case GuiControlState::FOCUSED: 
+		section = { 0, 0, SLIDER_WIDTH, SLIDER_HEIGHT };
+		render->DrawTexture(texture, bounds.x, bounds.y, &section);
+		section = { 0, 50, SLIDER_WIDTH, SLIDER_HEIGHT };
+		render->DrawTexture(texture, bounds.x, bounds.y, &section);
 		break;
-	case GuiControlState::PRESSED: render->DrawRectangle(bounds, { 0, 255, 255, 255 });
+	case GuiControlState::PRESSED: 
+		section = { 0, 0, SLIDER_WIDTH, SLIDER_HEIGHT };
+		render->DrawTexture(texture, bounds.x, bounds.y, &section);
+		section = { 0, 50, SLIDER_WIDTH, SLIDER_HEIGHT };
+		render->DrawTexture(texture, bounds.x, bounds.y, &section);
 		break;
-	case GuiControlState::SELECTED: render->DrawRectangle(bounds, { 0, 255, 0, 255 });
+	case GuiControlState::SELECTED: 
 		break;
 	default:
 		break;
