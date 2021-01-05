@@ -66,7 +66,6 @@ public:
 	SDL_Texture* bunnyFall = nullptr;
 	SDL_Texture* bunnyHit = nullptr;
 	SDL_Texture* bunnyRun = nullptr;
-	SDL_Texture* bunnyJump = nullptr;
 
 	SDL_Texture* birdFly = nullptr;
 	SDL_Texture* birdHit = nullptr;
@@ -74,19 +73,17 @@ public:
 	EnemyType collType;
 
 	bool found = true;
+	DynArray<iPoint>* lastPath;
 
-private:
+
 	// Spawns a new enemy using the data from the queue
-	void SpawnEnemy(const EnemySpawnpoint& info);
 	bool pathFinding = false;
+	void SpawnEnemy(const EnemySpawnpoint& info);
 
-private:
 	// A queue with all spawn points information
 	EnemySpawnpoint spawnQueue[MAX_ENEMIES];
 	Timer* checkDestination = new Timer();
 
-	//Stores the created path
-	DynArray<iPoint>* lastPath;
 
 };
 

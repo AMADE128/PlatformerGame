@@ -37,7 +37,6 @@ ModuleEnemies::~ModuleEnemies()
 bool ModuleEnemies::Start()
 {
 	bunnyIdle = app->tex->Load("Assets/Textures/Enemies/Bunny/idle.png");
-	bunnyJump = app->tex->Load("Assets/Textures/Enemies/Bunny/jump.png");
 	bunnyRun = app->tex->Load("Assets/Textures/Enemies/Bunny/run.png");
 	bunnyFall = app->tex->Load("Assets/Textures/Enemies/Bunny/fall.png");
 	bunnyHit = app->tex->Load("Assets/Textures/Enemies/Bunny/hit.png");
@@ -129,7 +128,7 @@ bool ModuleEnemies::Update(float dt)
 								iPoint nextAuxPositionEenemy = MapToWorld(nextPositionEnemy);
 								enemies[i]->MoveEnemy(enemies[i]->position, nextAuxPositionEenemy, mapPositionEnemy, enemies[i]->enemyType);
 							}
-							enemies[i]->currentAnim->Update();
+							if(enemies[i] != nullptr)enemies[i]->currentAnim->Update();
 						}
 						default:
 							break;
@@ -183,7 +182,6 @@ bool ModuleEnemies::CleanUp()
 	app->tex->UnLoad(bunnyFall);
 	app->tex->UnLoad(bunnyHit);
 	app->tex->UnLoad(bunnyIdle);
-	app->tex->UnLoad(bunnyJump);
 	app->tex->UnLoad(bunnyRun);
 	app->tex->UnLoad(birdFly);
 	app->tex->UnLoad(birdHit);

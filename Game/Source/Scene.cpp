@@ -108,11 +108,17 @@ bool Scene::Start()
 	else
 	{
 		if (apples[0] == 1) appleColl1 = app->collision->AddCollider({ 2568, 1368, 48, 48 }, Collider::Type::APPLE, app->player);
-		if (apples[1] == 1) appleColl2 = app->collision->AddCollider({ 3800, 924, 48, 48 }, Collider::Type::APPLE, app->player);
+		else appleColl1 = nullptr;
+		if (apples[1] == 1) appleColl2 = app->collision->AddCollider({ 3800, 924, 48, 48 }, Collider::Type::APPLE, app->player); 
+		else appleColl2 = nullptr;
 		if (apples[2] == 1) appleColl3 = app->collision->AddCollider({ 4000, 850, 48, 48 }, Collider::Type::APPLE, app->player);
+		else appleColl3 = nullptr;
 		if (apples[3] == 1) appleColl4 = app->collision->AddCollider({ 4200, 800, 48, 48 }, Collider::Type::APPLE, app->player);
+		else appleColl4 = nullptr;
 		if (apples[4] == 1) appleColl5 = app->collision->AddCollider({ 1392, 552, 48, 48 }, Collider::Type::APPLE, app->player);
+		else appleColl5 = nullptr;
 		if (apples[5] == 1) pineappleColl1 = app->collision->AddCollider({ 4324, 524, 48, 48 }, Collider::Type::PINEAPPLE, app->player);
+		else pineappleColl1 = nullptr;
 
 	}
 

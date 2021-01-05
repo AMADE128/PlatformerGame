@@ -1025,7 +1025,7 @@ bool Player::LoadState(pugi::xml_node& data)
 
 	}
 
-	if (cont == true)
+	if (cont == true && started == false)
 	{
 		cont = data.child("continue").attribute("cont").as_bool();
 
@@ -1051,7 +1051,9 @@ bool Player::LoadState(pugi::xml_node& data)
 		app->scene->savePoint = data.child("savepoint").attribute("lvl1").as_bool();
 		app->sceneLvl2->savePoint = data.child("savepoint").attribute("lvl2").as_bool();
 
+		started = true;
 	}
+
 
 	return true;
 }

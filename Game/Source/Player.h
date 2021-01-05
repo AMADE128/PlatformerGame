@@ -150,6 +150,7 @@ public:
 	bool changeLevel1 = false;
 	bool changeLevel2 = false;
 	bool nothingSaved = true;
+	bool started = false;
 
 	bool cont = false;
 };
