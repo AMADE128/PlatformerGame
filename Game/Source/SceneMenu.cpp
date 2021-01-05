@@ -81,6 +81,15 @@ bool SceneMenu::Start()
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
 
+	if (app->win->fullScreen == true)
+	{
+		checkFullScreen->checked = true;
+	}
+	else
+	{
+		checkFullScreen->checked = false;
+	}
+
 	app->musicList.Add(&musicMenu);
 	app->audio->PlayFx(musicMenu, -1);
 
@@ -253,11 +262,13 @@ bool SceneMenu::OnGuiMouseClickEvent(GuiControl* control)
 			{
 				SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 				app->win->scale = 1.5f;
+				app->win->fullScreen = true;
 			}
 			else
 			{
 				SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_RESIZABLE);
 				app->win->scale = 1;
+				app->win->fullScreen = false;
 			}
 			break;
 		default:

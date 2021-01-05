@@ -192,6 +192,15 @@ bool Player::Start()
 		appleCounter = 0;
 	}
 
+	if (app->win->fullScreen == true)
+	{
+		playerCheckFullScreen->checked = true;
+	}
+	else
+	{
+		playerCheckFullScreen->checked = false;
+	}
+
 	currentAnimation = &idleAnim;
 	death = false;
 	appear = true;
@@ -754,7 +763,7 @@ bool Player::PostUpdate()
 		playerSliderFx->bounds.y = cameraColl->rect.y - 50;
 
 
-		app->render->DrawRectangle({ 0, 0, 1280, 720 }, { 0, 0, 0, 170 });
+		app->render->DrawRectangle({ cameraColl->rect.x - app->render->camera.w / 2 + cameraColl->rect.w / 3, (int)(cameraColl->rect.y - app->render->camera.h / 2.5 + cameraColl->rect.h / 3), 1280, 720 }, { 0, 0, 0, 170 });
 		app->render->DrawTexture(boxTex, btnBack->bounds.x - 170, btnBack->bounds.y - 210);
 		btnBack2->Draw(app->render);
 		playerCheckFullScreen->Draw(app->render);
@@ -801,11 +810,17 @@ bool Player::OnGuiMouseClickEvent(GuiControl* control)
 			{
 				SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 				app->win->scale = 1.5f;
+				app->win->fullScreen = true;
+				app->render->camera.x = app->win->scale * ((cameraColl->rect.x + cameraColl->rect.w / 3) - (app->render->camera.w / 2)) * -1;
+				app->render->camera.y = app->win->scale * ((cameraColl->rect.y + cameraColl->rect.h / 3) - (app->render->camera.h / 2.5)) * -1;
 			}
 			else
 			{
 				SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_RESIZABLE);
 				app->win->scale = 1;
+				app->win->fullScreen = false;
+				app->render->camera.x = app->win->scale * ((cameraColl->rect.x + cameraColl->rect.w / 3) - (app->render->camera.w / 2)) * -1;
+				app->render->camera.y = app->win->scale * ((cameraColl->rect.y + cameraColl->rect.h / 3) - (app->render->camera.h / 2.5)) * -1;
 			}
 			break;
 		default:
