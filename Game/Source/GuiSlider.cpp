@@ -27,6 +27,7 @@ bool GuiSlider::Update(Input* input, float dt)
 			if (input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
 			{
 				state = GuiControlState::PRESSED;
+				//value =
 			}
 
 			
@@ -48,19 +49,19 @@ bool GuiSlider::Draw(Render* render)
 	case GuiControlState::NORMAL: 
 		section = { 0, 0, SLIDER_WIDTH, SLIDER_HEIGHT };
 		render->DrawTexture(texture, bounds.x, bounds.y, &section);
-		section = { 0, 50, SLIDER_WIDTH, SLIDER_HEIGHT };
+		section = { 0, 49, value, SLIDER_HEIGHT };
 		render->DrawTexture(texture, bounds.x, bounds.y, &section);
 		break;
 	case GuiControlState::FOCUSED: 
 		section = { 0, 0, SLIDER_WIDTH, SLIDER_HEIGHT };
 		render->DrawTexture(texture, bounds.x, bounds.y, &section);
-		section = { 0, 50, SLIDER_WIDTH, SLIDER_HEIGHT };
+		section = { 0, 49, value, SLIDER_HEIGHT };
 		render->DrawTexture(texture, bounds.x, bounds.y, &section);
 		break;
 	case GuiControlState::PRESSED: 
 		section = { 0, 0, SLIDER_WIDTH, SLIDER_HEIGHT };
 		render->DrawTexture(texture, bounds.x, bounds.y, &section);
-		section = { 0, 50, SLIDER_WIDTH, SLIDER_HEIGHT };
+		section = { 0, 49, value, SLIDER_HEIGHT };
 		render->DrawTexture(texture, bounds.x, bounds.y, &section);
 		break;
 	case GuiControlState::SELECTED: 

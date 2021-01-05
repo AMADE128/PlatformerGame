@@ -95,26 +95,26 @@ bool SceneLvl2::Start()
 
 	if (app->player->cont == false)
 	{
-		appleColl1Lvl2 = app->collision->AddCollider({ 2568, 1368, 48, 48 }, Collider::Type::APPLE, app->player); apples2[0] = 1;
-		appleColl2Lvl2 = app->collision->AddCollider({ 3800, 924, 48, 48 }, Collider::Type::APPLE, app->player); apples2[1] = 1;
-		appleColl3Lvl2 = app->collision->AddCollider({ 4000, 850, 48, 48 }, Collider::Type::APPLE, app->player); apples2[2] = 1;
-		appleColl4Lvl2 = app->collision->AddCollider({ 4200, 800, 48, 48 }, Collider::Type::APPLE, app->player); apples2[3] = 1;
-		appleColl5Lvl2 = app->collision->AddCollider({ 1392, 552, 48, 48 }, Collider::Type::APPLE, app->player); apples2[4] = 1;
+		appleColl1Lvl2 = app->collision->AddCollider({ 1128, 2040, 48, 48 }, Collider::Type::APPLE, app->player); apples2[0] = 1;
+		appleColl2Lvl2 = app->collision->AddCollider({ 2328, 1944, 48, 48 }, Collider::Type::APPLE, app->player); apples2[1] = 1;
+		appleColl3Lvl2 = app->collision->AddCollider({ 3408, 1488, 48, 48 }, Collider::Type::APPLE, app->player); apples2[2] = 1;
+		appleColl4Lvl2 = app->collision->AddCollider({ 2400, 1296, 48, 48 }, Collider::Type::APPLE, app->player); apples2[3] = 1;
+		appleColl5Lvl2 = app->collision->AddCollider({ 2400, 816, 48, 48 }, Collider::Type::APPLE, app->player); apples2[4] = 1;
 		appleColl6Lvl2 = app->collision->AddCollider({ 3408, 2112, 48, 48 }, Collider::Type::APPLE, app->player); apples2[5] = 1;
-		pineappleColl1Lvl2 = app->collision->AddCollider({ 4324, 524, 48, 48 }, Collider::Type::PINEAPPLE, app->player); apples2[6] = 1;
+		pineappleColl1Lvl2 = app->collision->AddCollider({ 3120, 576, 48, 48 }, Collider::Type::PINEAPPLE, app->player); apples2[6] = 1;
 
 		savePoint = false;
 		checkPointTouchAnim.Reset();
 	}
 	else
 	{
-		if (apples2[0] == 1) appleColl1Lvl2 = app->collision->AddCollider({ 2568, 1368, 48, 48 }, Collider::Type::APPLE, app->player);
-		if (apples2[1] == 1) appleColl2Lvl2 = app->collision->AddCollider({ 3800, 924, 48, 48 }, Collider::Type::APPLE, app->player);
-		if (apples2[2] == 1) appleColl3Lvl2 = app->collision->AddCollider({ 4000, 850, 48, 48 }, Collider::Type::APPLE, app->player);
-		if (apples2[3] == 1) appleColl4Lvl2 = app->collision->AddCollider({ 4200, 800, 48, 48 }, Collider::Type::APPLE, app->player);
-		if (apples2[4] == 1) appleColl5Lvl2 = app->collision->AddCollider({ 1392, 552, 48, 48 }, Collider::Type::APPLE, app->player);
-		if (apples2[5] == 1) appleColl6Lvl2 = app->collision->AddCollider({ 3408, 2112, 48 }, Collider::Type::APPLE, app->player);
-		if (apples2[6] == 1) pineappleColl1Lvl2 = app->collision->AddCollider({ 4324, 524, 48, 48 }, Collider::Type::PINEAPPLE, app->player);
+		if (apples2[0] == 1) appleColl1Lvl2 = app->collision->AddCollider({ 1128, 2040, 48, 48 }, Collider::Type::APPLE, app->player);
+		if (apples2[1] == 1) appleColl2Lvl2 = app->collision->AddCollider({ 2328, 1944, 48, 48 }, Collider::Type::APPLE, app->player);
+		if (apples2[2] == 1) appleColl3Lvl2 = app->collision->AddCollider({ 3408, 1488, 48, 48 }, Collider::Type::APPLE, app->player);
+		if (apples2[3] == 1) appleColl4Lvl2 = app->collision->AddCollider({ 2400, 1296, 48, 48 }, Collider::Type::APPLE, app->player);
+		if (apples2[4] == 1) appleColl5Lvl2 = app->collision->AddCollider({ 2400, 816, 48, 48 }, Collider::Type::APPLE, app->player);
+		if (apples2[5] == 1) appleColl6Lvl2 = app->collision->AddCollider({ 3408, 2112, 48, 48 }, Collider::Type::APPLE, app->player);
+		if (apples2[6] == 1) pineappleColl1Lvl2 = app->collision->AddCollider({ 3120, 576, 48, 48 }, Collider::Type::PINEAPPLE, app->player);
 	}
 
 	app->player->Init();

@@ -35,7 +35,7 @@ SceneMenu::SceneMenu() : Module()
 	checkFullScreen = new GuiCheckBox(1, { 1280 / 2 - SMALL_BUTT_WIDTH / 2, 500, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT });
 	checkFullScreen->SetObserver(this);
 
-	sliderMusic = new GuiSlider(1, { 1280 / 2 - SLIDER_WIDTH / 2, 500, SLIDER_WIDTH, SLIDER_HEIGHT }, 0, 128);
+	sliderMusic = new GuiSlider(1, { 1280 / 2 - SLIDER_WIDTH / 2, 450, SLIDER_WIDTH, SLIDER_HEIGHT }, 0, 128);
 	sliderMusic->SetObserver(this);
 }
 
@@ -178,6 +178,7 @@ bool SceneMenu::CleanUp()
 	app->tex->UnLoad(btnLoad->text);
 	app->tex->UnLoad(btnOptions->text);
 	app->tex->UnLoad(btnBack->text);
+	app->tex->UnLoad(sliderMusic->texture);
 
 	app->tex->UnLoad(checkFullScreen->texture);
 	app->tex->UnLoad(checkFullScreen->text);
