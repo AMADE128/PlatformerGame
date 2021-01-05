@@ -20,6 +20,7 @@ public:
 	bool Draw(Render* render);
 
 	bool checked;
+	SDL_Texture* leftText;
 
 private:
 

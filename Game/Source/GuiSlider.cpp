@@ -49,18 +49,21 @@ bool GuiSlider::Draw(Render* render)
 	case GuiControlState::NORMAL: 
 		section = { 0, 0, SLIDER_WIDTH, SLIDER_HEIGHT };
 		render->DrawTexture(texture, bounds.x, bounds.y, &section);
+		render->DrawTexture(text, bounds.x - 120, bounds.y);
 		section = { 0, 49, value, SLIDER_HEIGHT };
 		render->DrawTexture(texture, bounds.x, bounds.y, &section);
 		break;
 	case GuiControlState::FOCUSED: 
 		section = { 0, 0, SLIDER_WIDTH, SLIDER_HEIGHT };
 		render->DrawTexture(texture, bounds.x, bounds.y, &section);
+		render->DrawTexture(text, bounds.x - 120, bounds.y);
 		section = { 0, 49, value, SLIDER_HEIGHT };
 		render->DrawTexture(texture, bounds.x, bounds.y, &section);
 		break;
 	case GuiControlState::PRESSED: 
 		section = { 0, 0, SLIDER_WIDTH, SLIDER_HEIGHT };
 		render->DrawTexture(texture, bounds.x, bounds.y, &section);
+		render->DrawTexture(text, bounds.x - 120, bounds.y);
 		section = { 0, 49, value, SLIDER_HEIGHT };
 		render->DrawTexture(texture, bounds.x, bounds.y, &section);
 		break;

@@ -703,7 +703,7 @@ bool Player::PostUpdate()
 		btnExit->bounds.y = cameraColl->rect.y + 180;
 
 		app->render->DrawRectangle({ cameraColl->rect.x - app->render->camera.w / 2 + cameraColl->rect.w / 3, (int)(cameraColl->rect.y - app->render->camera.h / 2.5 + cameraColl->rect.h / 3), 1280, 720 }, { 0, 0, 0, 170 });
-		app->render->DrawTexture(boxTex, btnResume->bounds.x - 32, btnResume->bounds.y - 20);
+		app->render->DrawTexture(boxTex, btnResume->bounds.x - 135, btnResume->bounds.y - 30);
 
 		btnResume->Draw(app->render);
 		btnSettings->Draw(app->render);

@@ -52,6 +52,7 @@ bool GuiCheckBox::Draw(Render* render)
 		break;
 	case GuiControlState::NORMAL:
 		section = { 0, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
+		render->DrawTexture(leftText, bounds.x - 150, bounds.y);
 		render->DrawTexture(texture, bounds.x, bounds.y, &section);
 		if (checked)
 		{
@@ -66,6 +67,7 @@ bool GuiCheckBox::Draw(Render* render)
 		break;
 	case GuiControlState::FOCUSED:
 		section = { 100, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
+		render->DrawTexture(leftText, bounds.x - 150, bounds.y);
 		render->DrawTexture(texture, bounds.x, bounds.y, &section);
 		if (checked)
 		{
@@ -80,6 +82,7 @@ bool GuiCheckBox::Draw(Render* render)
 		break;
 	case GuiControlState::PRESSED:
 		section = { 50, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
+		render->DrawTexture(leftText, bounds.x - 150, bounds.y);
 		render->DrawTexture(texture, bounds.x, bounds.y, &section);
 		if (checked)
 		{

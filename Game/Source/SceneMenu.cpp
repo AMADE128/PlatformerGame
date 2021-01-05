@@ -69,10 +69,14 @@ bool SceneMenu::Start()
 	btnOptions->text = app->tex->Load("Assets/Textures/Interface/option.png");
 	btnExit->text = app->tex->Load("Assets/Textures/Interface/exit.png");
 	btnBack->text = app->tex->Load("Assets/Textures/Interface/back.png");
+
+	sliderFx->text = app->tex->Load("Assets/Textures/Interface/sound.png");
+	sliderMusic->text = app->tex->Load("Assets/Textures/Interface/music.png");
 	sliderMusic->texture = sliderFx->texture = app->tex->Load("Assets/Textures/Interface/slider.png");
 
 	checkFullScreen->texture = app->tex->Load("Assets/Textures/Interface/small_button.png");
 	checkFullScreen->text = app->tex->Load("Assets/Textures/Interface/checked.png");
+	checkFullScreen->leftText = app->tex->Load("Assets/Textures/Interface/full_screen.png");
 
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
@@ -146,7 +150,7 @@ bool SceneMenu::PostUpdate()
 		break;
 	case SceneMenu::SETTINGS:
 		app->render->DrawRectangle({ 0, 0, 1280, 720 }, { 0, 0, 0, 170 });
-		app->render->DrawTexture(boxTex, btnNew->bounds.x - 32, btnNew->bounds.y - 20);
+		app->render->DrawTexture(boxTex, btnBack->bounds.x - 170, btnBack->bounds.y - 210);
 		btnBack->Draw(app->render);
 		checkFullScreen->Draw(app->render);
 		sliderMusic->Draw(app->render);
@@ -186,10 +190,13 @@ bool SceneMenu::CleanUp()
 	app->tex->UnLoad(btnOptions->text);
 	app->tex->UnLoad(btnBack->text);
 	app->tex->UnLoad(sliderMusic->texture);
+	app->tex->UnLoad(sliderMusic->text);
 	app->tex->UnLoad(sliderFx->texture);
+	app->tex->UnLoad(sliderFx->text);
 
 	app->tex->UnLoad(checkFullScreen->texture);
 	app->tex->UnLoad(checkFullScreen->text);
+	app->tex->UnLoad(checkFullScreen->leftText);
 
 	app->audio->UnloadFX(musicMenu);
 	app->musicList.Clear();
