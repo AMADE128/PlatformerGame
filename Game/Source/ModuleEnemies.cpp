@@ -263,6 +263,7 @@ bool ModuleEnemies::Die(Collider* c1, Collider* c2)
 	{
 		if (enemies[i] != nullptr && enemies[i]->GetCollider() == c1)
 		{
+			enemies[i]->collider->type == app->collision->NOTHING;
 			enemies[i]->Die(c1, c2);
 			break;
 		}
