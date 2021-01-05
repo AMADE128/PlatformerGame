@@ -664,44 +664,45 @@ bool Player::PostUpdate()
 	}
 	if (lifes >= 1)
 	{
-		app->render->DrawTexture(lifesTex, (app->render->camera.x - 20) * -1, (app->render->camera.y - 15) * -1, NULL);
+		app->render->DrawTexture(lifesTex, cameraColl->rect.x - 500, cameraColl->rect.y - 180, NULL);
 
 	}
 	if (lifes >= 2)
 	{
-		app->render->DrawTexture(lifesTex, (app->render->camera.x - 100) * -1, (app->render->camera.y - 15) * -1, NULL);
+		app->render->DrawTexture(lifesTex, cameraColl->rect.x - 420, cameraColl->rect.y - 180, NULL);
 	}
 	if (lifes >= 3)
 	{
-		app->render->DrawTexture(lifesTex, (app->render->camera.x - 180) * -1, (app->render->camera.y - 15) * -1, NULL);
+		app->render->DrawTexture(lifesTex, cameraColl->rect.x - 340, cameraColl->rect.y - 180, NULL);
 	}
 
-	app->render->DrawTexture(appleTex, (app->render->camera.x - 1200) * -1, (app->render->camera.y - 0) * -1, NULL);
+	SDL_Rect appleUi = { 0, 0, 96, 96};
+	app->render->DrawTexture(appleTex, cameraColl->rect.x + 640, cameraColl->rect.y - 200, &appleUi);
 	sprintf_s(scoreText, 10, "%d", appleCounter);
 	if(appleCounter < 10)
 	{
-		app->fonts->BlitText((app->render->camera.x - 1185) * -1, (app->render->camera.y - 17) * -1, scoreFont, scoreText);
+		app->fonts->BlitText(cameraColl->rect.x + 620, cameraColl->rect.y - 185, scoreFont, scoreText);
 	}
 	else if (appleCounter >= 10)
 	{
-		app->fonts->BlitText((app->render->camera.x - 1145) * -1, (app->render->camera.y - 17) * -1, scoreFont, scoreText);
+		app->fonts->BlitText(cameraColl->rect.x + 580, cameraColl->rect.y - 185, scoreFont, scoreText);
 	}
 
 	if (playerState == SETTINGS)
 	{
-		btnResume->bounds.x = app->win->scale * (app->render->camera.x - app->render->camera.w / 2 + btnResume->bounds.w / 2) * -1;
-		btnResume->bounds.y = app->win->scale * (app->render->camera.y - app->render->camera.h / 2 + 100) * -1;
+		btnResume->bounds.x = cameraColl->rect.x + cameraColl->rect.w/2 - btnResume->bounds.w/2 -  50;
+		btnResume->bounds.y = cameraColl->rect.y;
 
-		btnSettings->bounds.x = (app->render->camera.x - app->render->camera.w / 2 + btnResume->bounds.w / 2) * -1;
-		btnSettings->bounds.y = app->win->scale * (app->render->camera.y - app->render->camera.h / 2 + 45) * -1;
+		btnSettings->bounds.x = cameraColl->rect.x + cameraColl->rect.w / 2 - btnResume->bounds.w / 2 - 50;
+		btnSettings->bounds.y = cameraColl->rect.y + 60;
 
-		btnBack->bounds.x = (app->render->camera.x - app->render->camera.w / 2 + btnResume->bounds.w / 2) * -1;
-		btnBack->bounds.y = app->win->scale * (app->render->camera.y - app->render->camera.h / 2 - 15) * -1;
+		btnBack->bounds.x = cameraColl->rect.x + cameraColl->rect.w / 2 - btnResume->bounds.w / 2 - 50;
+		btnBack->bounds.y = cameraColl->rect.y + 120;
 
-		btnExit->bounds.x = app->win->scale * (app->render->camera.x - app->render->camera.w / 2 + btnResume->bounds.w / 2) * -1;
-		btnExit->bounds.y = app->win->scale * (app->render->camera.y - app->render->camera.h / 2 - 75) * -1;
+		btnExit->bounds.x = cameraColl->rect.x + cameraColl->rect.w / 2 - btnResume->bounds.w / 2 - 50;
+		btnExit->bounds.y = cameraColl->rect.y + 180;
 
-		app->render->DrawRectangle({ app->render->camera.x * -1, app->render->camera.y * -1, 1280, 720 }, { 0, 0, 0, 170 });
+		app->render->DrawRectangle({ cameraColl->rect.x - app->render->camera.w / 2 + cameraColl->rect.w / 3, (int)(cameraColl->rect.y - app->render->camera.h / 2.5 + cameraColl->rect.h / 3), 1280, 720 }, { 0, 0, 0, 170 });
 		app->render->DrawTexture(boxTex, btnResume->bounds.x - 32, btnResume->bounds.y - 20);
 
 		btnResume->Draw(app->render);

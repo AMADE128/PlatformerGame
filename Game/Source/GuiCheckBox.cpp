@@ -16,8 +16,8 @@ bool GuiCheckBox::Update(Input* input, float dt)
 	{
 		int mouseX, mouseY;
 		input->GetMousePosition(mouseX, mouseY);
-		mouseX += app->win->scale * app->render->camera.x * -1;
-		mouseY += app->win->scale * app->render->camera.y * -1;
+		mouseX += app->render->camera.x * -1 / app->win->scale;
+		mouseY += app->render->camera.y * -1 / app->win->scale;
 
 		// Check collision between mouse and button bounds
 		if ((mouseX > bounds.x) && (mouseX < (bounds.x + bounds.w)) &&

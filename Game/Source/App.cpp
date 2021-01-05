@@ -235,8 +235,8 @@ void App::FinishUpdate()
 		fps = fpsCounter;
 		fpsCounter = 0;
 	}
-	SString title("Platformer Game: FPS: %.2f Av.FPS: %.2f Last Frame Ms: %.2f Time since startup: %.3f Frame Count: %I64u ",fps,
-		averageFps, fpsMsecondsAfter, secondsSinceStartup, frameCount);
+	SString title("Platformer Game: FPS: %.2f Av.FPS: %.2f Last Frame Ms: %.2f Time since startup: %.3f Frame Count: %I64u MouseX: %d MouseY: %d ",fps,
+		averageFps, fpsMsecondsAfter, secondsSinceStartup, frameCount, input->mouseX, input->mouseY);
 	app->win->SetTitle(title.GetString());
 
 	
