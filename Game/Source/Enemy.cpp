@@ -26,8 +26,7 @@ const Collider* Enemy::GetCollider() const
 
 void Enemy::Update()
 {
-	if (currentAnim != nullptr)
-		currentAnim->Update();
+	if (currentAnim != nullptr) currentAnim->Update();
 }
 
 bool Enemy::CleanUp()
