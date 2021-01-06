@@ -38,6 +38,10 @@ bool SceneIntro::Start()
 {
 	// L03: DONE: Load map
 	logo = app->tex->Load("Assets/Textures/Screens/logo_screen.png");
+	logoMusic = app->audio->LoadFx("Assets/Audio/SceneMusic/logo_music.wav");
+	app->musicList.Add(&logoMusic);
+
+	app->audio->PlayFx(logoMusic);
 
 	return true;
 }
@@ -75,6 +79,7 @@ bool SceneIntro::CleanUp()
 
 	LOG("Freeing scene");
 	app->tex->UnLoad(logo);
+	app->audio->UnloadFX(logoMusic);
 
 	active = false;
 

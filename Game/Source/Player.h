@@ -103,6 +103,7 @@ public:
 	bool checkpointLvl2 = false;
 
 	unsigned int hitFx;
+	unsigned int abilityFx;
 	unsigned int jumpFx;
 	unsigned int pointFx;
 	unsigned int leafFx;
