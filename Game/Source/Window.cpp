@@ -43,6 +43,7 @@ bool Window::Awake(pugi::xml_node& config)
 		width = config.child("resolution").attribute("width").as_int(640);
 		height = config.child("resolution").attribute("height").as_int(480);
 		scale = config.child("resolution").attribute("scale").as_int(1);
+		app->win->GetScreenSize(screenWidth, screenHeight);
 
 		if(fullscreen == true) flags |= SDL_WINDOW_FULLSCREEN;
 		if(borderless == true) flags |= SDL_WINDOW_BORDERLESS;
@@ -93,6 +94,14 @@ void Window::GetWindowSize(uint& width, uint& height) const
 {
 	width = this->width;
 	height = this->height;
+}
+
+void Window::GetScreenSize(uint& width, uint& height) const
+{
+	SDL_DisplayMode DM;
+	SDL_GetCurrentDisplayMode(0, &DM);
+	width = DM.w;
+	height = DM.h;
 }
 
 float Window::GetScale() const

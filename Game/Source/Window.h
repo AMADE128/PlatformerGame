@@ -30,6 +30,8 @@ public:
 	// Retrieve window scale
 	float GetScale() const;
 
+	void GetScreenSize(uint& width, uint& height) const;
+
 public:
 	// The window we'll be rendering to
 	SDL_Window* window;
@@ -37,6 +39,8 @@ public:
 
 	// The surface contained by the window
 	SDL_Surface* screenSurface;
+	uint screenWidth;
+	uint screenHeight;
 	uint width;
 	uint height;
 	float scale;

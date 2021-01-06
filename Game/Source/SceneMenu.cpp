@@ -261,7 +261,7 @@ bool SceneMenu::OnGuiMouseClickEvent(GuiControl* control)
 			if (checkFullScreen->checked)
 			{
 				SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
-				app->win->scale = 1.5f;
+				app->win->scale = (float)app->win->screenWidth / 1280;
 				app->win->fullScreen = true;
 			}
 			else

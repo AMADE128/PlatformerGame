@@ -809,7 +809,7 @@ bool Player::OnGuiMouseClickEvent(GuiControl* control)
 			if (playerCheckFullScreen->checked)
 			{
 				SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
-				app->win->scale = 1.5f;
+				app->win->scale = (float)app->win->screenWidth / 1280;
 				app->win->fullScreen = true;
 				app->render->camera.x = app->win->scale * ((cameraColl->rect.x + cameraColl->rect.w / 3) - (app->render->camera.w / 2)) * -1;
 				app->render->camera.y = app->win->scale * ((cameraColl->rect.y + cameraColl->rect.h / 3) - (app->render->camera.h / 2.5)) * -1;
