@@ -64,6 +64,7 @@ bool GuiCheckBox::Draw(Render* render)
 			checkSection = { 0, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
 			render->DrawTexture(text, bounds.x, bounds.y, &checkSection);
 		}
+		if (app->guiDebug) render->DrawRectangle(bounds, { 0, 255, 0, 150 });
 		break;
 	case GuiControlState::FOCUSED:
 		section = { 100, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
@@ -79,6 +80,7 @@ bool GuiCheckBox::Draw(Render* render)
 			checkSection = { 0, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
 			render->DrawTexture(text, bounds.x, bounds.y, &checkSection);
 		}
+		if (app->guiDebug) render->DrawRectangle(bounds, { 255, 255, 0, 150 });
 		break;
 	case GuiControlState::PRESSED:
 		section = { 50, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
@@ -94,6 +96,7 @@ bool GuiCheckBox::Draw(Render* render)
 			checkSection = { 0, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
 			render->DrawTexture(text, bounds.x, bounds.y + 5, &checkSection);
 		}
+		if (app->guiDebug) render->DrawRectangle(bounds, { 0, 255, 255, 150 });
 		break;
 	case GuiControlState::SELECTED:
 		break;

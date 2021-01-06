@@ -120,11 +120,14 @@ public:
 	float fps = 0.f;
 	float fpsMseconds;
     int screenTicks;
+	float secondsSinceStartup;
 
 	List<unsigned int*>	musicList;
 	List<unsigned int*>	fxList;
 	int volumeMusic = 64;
 	int volumeFX = 64;
+
+	bool guiDebug = false;
 
 private:
 	int argc;
@@ -150,7 +153,6 @@ private:
 	uint32 prevLastSecFrameCount = 0;
 	float dt = 0.0f;
 
-	float secondsSinceStartup;
 	float fpsCounter;
 	float fpsPreUpdate;
 

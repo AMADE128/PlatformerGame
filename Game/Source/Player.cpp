@@ -201,6 +201,11 @@ bool Player::Start()
 		playerCheckFullScreen->checked = false;
 	}
 
+	secondsLvl = 0;
+	minutesLvl = 0;
+	msLvl = 0;
+	startTime = SDL_GetTicks();
+
 	currentAnimation = &idleAnim;
 	death = false;
 	appear = true;
@@ -212,6 +217,19 @@ bool Player::Start()
 
 bool Player::PreUpdate()
 {
+	msLvl = (SDL_GetTicks() - startTime) / 10;
+	if (msLvl >= 100)
+	{
+		secondsLvl += 1;
+		msLvl = 0;
+		startTime = SDL_GetTicks();
+	}
+	if (secondsLvl >= 60)
+	{
+		minutesLvl += 1;
+		secondsLvl = 0;
+	}
+
 	if (changeLevel1 == true)
 	{
 		changeLevel1 = false;
@@ -714,8 +732,17 @@ bool Player::PostUpdate()
 	}
 
 	SDL_Rect appleUi = { 0, 0, 96, 96};
-	app->render->DrawTexture(appleTex, cameraColl->rect.x + 640, cameraColl->rect.y - 200, &appleUi);
+	app->render->DrawTexture(appleTex, cameraColl->rect.x + 640, cameraColl->rect.y - 203, &appleUi);
 	sprintf_s(scoreText, 10, "%d", appleCounter);
+	if (minutesLvl < 10) sprintf_s(minutesText, 10, "0%d:", minutesLvl);
+	else sprintf_s(minutesText, 10, "%d:", minutesLvl);
+	if (secondsLvl < 10) sprintf_s(secondsText, 10, "0%d:", secondsLvl);
+	else sprintf_s(secondsText, 10, "%d:", secondsLvl);
+	if (msLvl < 10) sprintf_s(msText, 10, "0%d", msLvl);
+	else sprintf_s(msText, 10, "%d", msLvl);
+	app->fonts->BlitText(cameraColl->rect.x + 515, cameraColl->rect.y - 185, scoreFont, msText);
+	app->fonts->BlitText(cameraColl->rect.x + 400, cameraColl->rect.y - 185, scoreFont, secondsText);
+	app->fonts->BlitText(cameraColl->rect.x + 285, cameraColl->rect.y - 185, scoreFont, minutesText);
 	if(appleCounter < 10)
 	{
 		app->fonts->BlitText(cameraColl->rect.x + 620, cameraColl->rect.y - 185, scoreFont, scoreText);

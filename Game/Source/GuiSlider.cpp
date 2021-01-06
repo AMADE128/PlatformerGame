@@ -55,6 +55,7 @@ bool GuiSlider::Draw(Render* render)
 		render->DrawTexture(text, bounds.x - 120, bounds.y);
 		section = { 0, 49, value, SLIDER_HEIGHT };
 		render->DrawTexture(texture, bounds.x, bounds.y, &section);
+		if (app->guiDebug) render->DrawRectangle(bounds, { 0, 255, 0, 150 });
 		break;
 	case GuiControlState::FOCUSED: 
 		section = { 0, 0, SLIDER_WIDTH, SLIDER_HEIGHT };
@@ -62,6 +63,7 @@ bool GuiSlider::Draw(Render* render)
 		render->DrawTexture(text, bounds.x - 120, bounds.y);
 		section = { 0, 49, value, SLIDER_HEIGHT };
 		render->DrawTexture(texture, bounds.x, bounds.y, &section);
+		if (app->guiDebug) render->DrawRectangle(bounds, { 255, 255, 0, 150 });
 		break;
 	case GuiControlState::PRESSED: 
 		section = { 0, 0, SLIDER_WIDTH, SLIDER_HEIGHT };
@@ -69,6 +71,7 @@ bool GuiSlider::Draw(Render* render)
 		render->DrawTexture(text, bounds.x - 120, bounds.y);
 		section = { 0, 49, value, SLIDER_HEIGHT };
 		render->DrawTexture(texture, bounds.x, bounds.y, &section);
+		if (app->guiDebug) render->DrawRectangle(bounds, { 0, 255, 255, 150 });
 		break;
 	case GuiControlState::SELECTED: 
 		break;

@@ -138,6 +138,13 @@ public:
 	int appleCounter = 0;
 	int scoreFont = -1;
 	char scoreText[10] = { "\0" };
+	char secondsText[10] = { "\0" };
+	char minutesText[10] = { "\0" };
+	char msText[10] = { "\0" };
+	int secondsLvl;
+	int minutesLvl;
+	int msLvl;
+	int startTime;
 
 	bool yDownCollision;
 	bool yUpCollision;

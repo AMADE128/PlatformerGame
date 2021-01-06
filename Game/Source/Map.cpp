@@ -60,6 +60,57 @@ iPoint Map::GetDimensionsMap()
 	return { data.tileWidth,data.tileHeight };
 }
 
+void Map::DrawPath()
+{
+	iPoint pointV;
+	iPoint pointF;
+	iPoint pointPath;
+
+	// Draw visited
+	ListItem<iPoint>* itemVisited = visited.start;
+	PQueueItem<iPoint>* itemFrontier = frontier.start;
+
+
+	while (itemVisited)
+	{
+		pointV = itemVisited->data;
+
+		TileSet* tileset = GetTilesetFromTileId(260);
+
+		SDL_Rect rec = tileset->GetTileRect(260);
+		iPoint pos = MapToWorld(pointV.x, pointV.y);
+
+		app->render->DrawTexture(tileset->texture, pos.x, pos.y, &rec);
+		itemVisited = itemVisited->next;
+
+	}
+	while (itemFrontier)
+	{
+		TileSet* tileset = GetTilesetFromTileId(259);
+
+		SDL_Rect rec = tileset->GetTileRect(259);
+
+		pointF = itemFrontier->data;
+		tileset = GetTilesetFromTileId(259);
+		iPoint pos = MapToWorld(pointF.x, pointF.y);
+		app->render->DrawTexture(tileset->texture, pos.x, pos.y, &rec);
+		itemFrontier = itemFrontier->next;
+	}
+	int pathSize = path.Count();
+	for (size_t i = 0; i < pathSize; i++)
+	{
+		TileSet* tileset = GetTilesetFromTileId(259);
+
+		SDL_Rect rec = tileset->GetTileRect(259);
+
+		pointPath = { path.At(i)->x,path.At(i)->y };
+		tileset = GetTilesetFromTileId(259);
+		iPoint pos = MapToWorld(pointPath.x, pointPath.y);
+		app->render->DrawTexture(tileset->texture, pos.x, pos.y, &rec);
+
+	}
+}
+
 void Map::Draw()
 {
 	if (mapLoaded == false) return;

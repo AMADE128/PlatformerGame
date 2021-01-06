@@ -53,21 +53,25 @@ bool GuiButton::Draw(Render* render)
 		section = { 330, 0, BUTT_WIDTH, BUTT_HEIGHT };
 		render->DrawTexture(texture, bounds.x, bounds.y, &section);
 		render->DrawTexture(text, bounds.x, bounds.y);
+		if (app->guiDebug) render->DrawRectangle(bounds, { 100, 100, 100, 150 });
 		break;
 	case GuiControlState::NORMAL:
 		section = { 0, 0, BUTT_WIDTH, BUTT_HEIGHT };
 		render->DrawTexture(texture,bounds.x,bounds.y,&section);
 		render->DrawTexture(text, bounds.x, bounds.y);
+		if (app->guiDebug) render->DrawRectangle(bounds, { 0, 255, 0, 150 });
 		break;
 	case GuiControlState::FOCUSED:
 		section = { 220, 0, BUTT_WIDTH, BUTT_HEIGHT };
 		render->DrawTexture(texture, bounds.x, bounds.y, &section);
 		render->DrawTexture(text, bounds.x, bounds.y);
+		if (app->guiDebug) render->DrawRectangle(bounds, { 255, 255, 0, 150 });
 		break;
 	case GuiControlState::PRESSED:
 		section = { 111, 0, BUTT_WIDTH - 1, BUTT_HEIGHT };
 		render->DrawTexture(texture, bounds.x, bounds.y, &section);
 		render->DrawTexture(text, bounds.x, bounds.y + 5);
+		if (app->guiDebug) render->DrawRectangle(bounds, { 0, 255, 255, 150 });
 		break;
 	case GuiControlState::SELECTED:
 		break;
