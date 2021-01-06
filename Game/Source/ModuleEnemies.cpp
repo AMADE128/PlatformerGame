@@ -44,6 +44,11 @@ bool ModuleEnemies::Start()
 	birdFly = app->tex->Load("Assets/Textures/Enemies/Bird/flying.png");
 	birdHit = app->tex->Load("Assets/Textures/Enemies/Bird/hit.png");
 
+	//bunnyDieFx = app->audio->LoadFx("Assets/Audio/EnemiesMusic/bunny_hit.wav");
+	//app->fxList.Add(&bunnyDieFx);
+	//birdDieFx = app->audio->LoadFx("Assets/Audio/EnemiesMusic/bird_hit.wav");
+	//app->fxList.Add(&birdDieFx);
+
 	return true;
 }
 
@@ -190,6 +195,10 @@ bool ModuleEnemies::CleanUp()
 	app->tex->UnLoad(birdFly);
 	app->tex->UnLoad(birdHit);
 
+	//app->audio->UnloadFX(bunnyDieFx);
+	//app->audio->UnloadFX(birdDieFx);
+	//app->fxList.Clear();
+
 	return true;
 }
 
@@ -269,6 +278,17 @@ bool ModuleEnemies::Die(Collider* c1, Collider* c2)
 		{
 			enemies[i]->collider->type = enemies[i]->collider->NONE;
 			enemies[i]->Die(c1, c2);
+			//switch (enemies[i]->enemyType)
+			//{
+			//case EnemyType::BUNNY:
+			//	app->audio->PlayFx(bunnyDieFx);
+			//	break;
+			//case EnemyType::BIRD:
+			//	app->audio->PlayFx(birdDieFx);
+			//	break;
+			//default:
+			//	break;
+			//}
 			break;
 		}
 	}

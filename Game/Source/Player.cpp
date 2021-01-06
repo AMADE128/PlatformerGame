@@ -190,6 +190,8 @@ bool Player::Start()
 
 	hitFx = app->audio->LoadFx("Assets/Audio/MyscMusic/damage.wav");
 	app->fxList.Add(&hitFx);
+	abilityFx = app->audio->LoadFx("Assets/Audio/MyscMusic/ability.wav");
+	app->fxList.Add(&abilityFx);
 	jumpFx = app->audio->LoadFx("Assets/Audio/MyscMusic/jumps.wav");
 	app->fxList.Add(&jumpFx);
 	pointFx = app->audio->LoadFx("Assets/Audio/MyscMusic/points.wav");
@@ -421,13 +423,13 @@ bool Player::Update(float dt)
 			{
 				skillCoolDown = 200;
 				app->moduleParticles->AddParticle(app->moduleParticles->chickenFall, position.x + 200, position.y - 350, Collider::Type::CHICKEN);
-
+				app->audio->PlayFx(abilityFx);
 			}
 			if (app->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN && flip == true && skillCoolDown == 0)
 			{
 				skillCoolDown = 200;
 				app->moduleParticles->AddParticle(app->moduleParticles->chickenFall, position.x - 200, position.y - 350, Collider::Type::CHICKEN);
-
+				app->audio->PlayFx(abilityFx);
 			}
 			if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && god == true)
 			{
@@ -943,6 +945,7 @@ bool Player::CleanUp()
 	app->audio->UnloadFX(hitFx);
 	app->audio->UnloadFX(pointFx);
 	app->audio->UnloadFX(leafFx);
+	app->audio->UnloadFX(abilityFx);
 	app->musicList.Clear();
 
 	active = false;
