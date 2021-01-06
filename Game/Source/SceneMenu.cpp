@@ -80,6 +80,7 @@ bool SceneMenu::Start()
 	sliderMusic->texture = sliderFx->texture = app->tex->Load("Assets/Textures/Interface/slider.png");
 
 	checkFullScreen->texture = checkCredits->texture = app->tex->Load("Assets/Textures/Interface/small_button.png");
+	checkCredits->text = app->tex->Load("Assets/Textures/Interface/info.png");
 	checkFullScreen->text = app->tex->Load("Assets/Textures/Interface/checked.png");
 	checkFullScreen->leftText = app->tex->Load("Assets/Textures/Interface/full_screen.png");
 
@@ -97,6 +98,9 @@ bool SceneMenu::Start()
 
 	app->musicList.Add(&musicMenu);
 	app->audio->PlayFx(musicMenu, -1);
+
+	app->fonts->Init();
+	app->fonts->Start();
 
 	Menu(loadFile);
 
@@ -164,8 +168,6 @@ bool SceneMenu::PostUpdate()
 		btnLoad->Draw(app->render);
 		btnOptions->Draw(app->render);
 		checkCredits->Draw(app->render);
-		sprintf_s(btnCreditsText, 3, "i");
-		app->fonts->BlitText(1100, 50, app->player->blackFont, btnCreditsText);
 		break;
 	case SceneMenu::SETTINGS:
 		app->render->DrawRectangle({ 0, 0, 1280, 720 }, { 0, 0, 0, 170 });
@@ -178,8 +180,6 @@ bool SceneMenu::PostUpdate()
 	case SceneMenu::CREDITS:
 		app->render->DrawTexture(creditsTex, 50, 10);
 		checkCredits->Draw(app->render);
-		sprintf_s(btnCreditsText, 3, "I");
-		app->fonts->BlitText(20, 20, app->player->whiteFont, btnCreditsText);
 		break;
 	case SceneMenu::EXIT:
 		break;
@@ -225,6 +225,8 @@ bool SceneMenu::CleanUp()
 
 	app->audio->UnloadFX(musicMenu);
 	app->musicList.Clear();
+
+	app->fonts->CleanUp();
 
 	active = false;
 
