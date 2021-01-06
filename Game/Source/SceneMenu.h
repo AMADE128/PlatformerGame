@@ -47,6 +47,9 @@ public:
 
 	SDL_Texture* menuTex;
 	SDL_Texture* boxTex;
+	SDL_Texture* creditsTex;
+
+	char btnCreditsText[10] = { "\0" };
 
 	MenuStates menuState = NORMAL;
 
@@ -57,6 +60,7 @@ public:
 
 	GuiCheckBox* checkFullScreen;
 	GuiCheckBox* checkVSync;
+	GuiCheckBox* checkCredits;
 
 	bool LoadMenu(pugi::xml_node&);
 	bool Menu(pugi::xml_document& loadFile);
@@ -70,6 +74,7 @@ private:
 	GuiButton* btnLoad;
 	GuiButton* btnOptions;
 	GuiButton* btnBack;
+
 
 	pugi::xml_node load;
 	pugi::xml_document loadFile;

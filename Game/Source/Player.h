@@ -139,7 +139,8 @@ public:
 	bool appear = false;
 
 	int appleCounter = 0;
-	int scoreFont = -1;
+	int whiteFont = -1;
+	int blackFont = -1;
 	char scoreText[10] = { "\0" };
 	char secondsText[10] = { "\0" };
 	char minutesText[10] = { "\0" };

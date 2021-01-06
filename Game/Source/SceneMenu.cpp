@@ -9,6 +9,7 @@
 #include "Collisions.h"
 #include "Player.h"
 #include "FadeToBlack.h"
+#include "Fonts.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -40,6 +41,9 @@ SceneMenu::SceneMenu() : Module()
 
 	sliderFx = new GuiSlider(2, { 1280 / 2 - SLIDER_WIDTH / 2, 400, SLIDER_WIDTH, SLIDER_HEIGHT }, 0, 128);
 	sliderFx->SetObserver(this);
+
+	checkCredits = new GuiCheckBox(2, { 1200, 40, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT });
+	checkCredits->SetObserver(this);
 }
 
 // Destructor
@@ -60,6 +64,7 @@ bool SceneMenu::Start()
 {
 	// L03: DONE: Load map
 	menuTex = app->tex->Load("Assets/Textures/Screens/menu.png");
+	creditsTex = app->tex->Load("Assets/Textures/Interface/text_box.png");
 	musicMenu = app->audio->LoadFx("Assets/Audio/SceneMusic/intro_music.wav");
 
 	btnBack->texture = btnNew->texture = btnExit->texture = btnLoad->texture = btnOptions->texture = app->tex->Load("Assets/Textures/Interface/button.png");
@@ -74,7 +79,7 @@ bool SceneMenu::Start()
 	sliderMusic->text = app->tex->Load("Assets/Textures/Interface/music.png");
 	sliderMusic->texture = sliderFx->texture = app->tex->Load("Assets/Textures/Interface/slider.png");
 
-	checkFullScreen->texture = app->tex->Load("Assets/Textures/Interface/small_button.png");
+	checkFullScreen->texture = checkCredits->texture = app->tex->Load("Assets/Textures/Interface/small_button.png");
 	checkFullScreen->text = app->tex->Load("Assets/Textures/Interface/checked.png");
 	checkFullScreen->leftText = app->tex->Load("Assets/Textures/Interface/full_screen.png");
 
@@ -122,6 +127,7 @@ bool SceneMenu::Update(float dt)
 		btnExit->Update(app->input, dt);
 		btnLoad->Update(app->input, dt);
 		btnOptions->Update(app->input, dt);
+		checkCredits->Update(app->input, dt);
 		break;
 	case SceneMenu::SETTINGS:
 		btnBack->Update(app->input, dt);
@@ -132,6 +138,7 @@ bool SceneMenu::Update(float dt)
 		app->volumeFX = (int)(sliderFx->value * VALUE_TO_VOLUME);
 		break;
 	case SceneMenu::CREDITS:
+		checkCredits->Update(app->input, dt);
 		break;
 	case SceneMenu::EXIT:
 		return false;
@@ -156,6 +163,9 @@ bool SceneMenu::PostUpdate()
 		btnExit->Draw(app->render);
 		btnLoad->Draw(app->render);
 		btnOptions->Draw(app->render);
+		checkCredits->Draw(app->render);
+		sprintf_s(btnCreditsText, 3, "i");
+		app->fonts->BlitText(1100, 50, app->player->blackFont, btnCreditsText);
 		break;
 	case SceneMenu::SETTINGS:
 		app->render->DrawRectangle({ 0, 0, 1280, 720 }, { 0, 0, 0, 170 });
@@ -166,6 +176,10 @@ bool SceneMenu::PostUpdate()
 		sliderFx->Draw(app->render);
 		break;
 	case SceneMenu::CREDITS:
+		app->render->DrawTexture(creditsTex, 50, 10);
+		checkCredits->Draw(app->render);
+		sprintf_s(btnCreditsText, 3, "I");
+		app->fonts->BlitText(20, 20, app->player->whiteFont, btnCreditsText);
 		break;
 	case SceneMenu::EXIT:
 		break;
@@ -184,6 +198,7 @@ bool SceneMenu::CleanUp()
 	LOG("Freeing scene");
 
 	app->tex->UnLoad(menuTex);
+	app->tex->UnLoad(creditsTex);
 
 	app->tex->UnLoad(btnNew->texture);
 	app->tex->UnLoad(btnExit->texture);
@@ -206,6 +221,7 @@ bool SceneMenu::CleanUp()
 	app->tex->UnLoad(checkFullScreen->texture);
 	app->tex->UnLoad(checkFullScreen->text);
 	app->tex->UnLoad(checkFullScreen->leftText);
+	app->tex->UnLoad(checkCredits->texture);
 
 	app->audio->UnloadFX(musicMenu);
 	app->musicList.Clear();
@@ -270,6 +286,17 @@ bool SceneMenu::OnGuiMouseClickEvent(GuiControl* control)
 				app->win->scale = 1;
 				app->win->fullScreen = false;
 			}
+			break;
+		case 2:
+			if (menuState == NORMAL)
+			{
+				menuState = CREDITS;
+			}
+			else
+			{
+				menuState = NORMAL;
+			}
+			break;
 			break;
 		default:
 			break;

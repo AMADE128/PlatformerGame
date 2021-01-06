@@ -25,8 +25,9 @@ bool Fonts::Start()
 	bool ret = true;
 
 	char num_font[] = { "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,:?!()+-/////" };
-	app->player->scoreFont = app->fonts->Load("Assets/Textures/Items/Fonts/font.png", num_font, 5);
+	app->player->whiteFont = app->fonts->Load("Assets/Textures/Items/Fonts/font.png", num_font, 5);
 
+	app->player->blackFont = app->fonts->Load("Assets/Textures/Items/Fonts/black_font.png", num_font, 5);
 	return ret;
 }
 // Load new texture from file path

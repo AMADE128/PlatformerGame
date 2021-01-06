@@ -771,16 +771,16 @@ bool Player::PostUpdate()
 	else sprintf_s(secondsText, 10, "%d:", secondsLvl);
 	if (msLvl < 10) sprintf_s(msText, 10, "0%d", msLvl);
 	else sprintf_s(msText, 10, "%d", msLvl);
-	app->fonts->BlitText(cameraColl->rect.x + 515, cameraColl->rect.y - 185, scoreFont, msText);
-	app->fonts->BlitText(cameraColl->rect.x + 400, cameraColl->rect.y - 185, scoreFont, secondsText);
-	app->fonts->BlitText(cameraColl->rect.x + 285, cameraColl->rect.y - 185, scoreFont, minutesText);
+	app->fonts->BlitText(cameraColl->rect.x + 515, cameraColl->rect.y - 185, whiteFont, msText);
+	app->fonts->BlitText(cameraColl->rect.x + 400, cameraColl->rect.y - 185, whiteFont, secondsText);
+	app->fonts->BlitText(cameraColl->rect.x + 285, cameraColl->rect.y - 185, whiteFont, minutesText);
 	if(appleCounter < 10)
 	{
-		app->fonts->BlitText(cameraColl->rect.x + 620, cameraColl->rect.y - 185, scoreFont, scoreText);
+		app->fonts->BlitText(cameraColl->rect.x + 620, cameraColl->rect.y - 185, whiteFont, scoreText);
 	}
 	else if (appleCounter >= 10)
 	{
-		app->fonts->BlitText(cameraColl->rect.x + 580, cameraColl->rect.y - 185, scoreFont, scoreText);
+		app->fonts->BlitText(cameraColl->rect.x + 580, cameraColl->rect.y - 185, whiteFont, scoreText);
 	}
 
 	if (playerState == SETTINGS)
