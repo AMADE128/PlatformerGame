@@ -56,6 +56,7 @@ bool ModuleEnemies::Update(float dt)
 	{
 		if (enemies[i] != nullptr)
 		{
+
 			if (app->player->playerState == app->player->NORMAL)
 			{
 				switch (enemies[i]->enemyType)
@@ -144,6 +145,7 @@ bool ModuleEnemies::Update(float dt)
 					delete enemies[i];
 					enemies[i] = nullptr;
 				}
+
 			}
 			if (enemies[i] != nullptr)
 			{
@@ -263,7 +265,7 @@ bool ModuleEnemies::Die(Collider* c1, Collider* c2)
 	{
 		if (enemies[i] != nullptr && enemies[i]->GetCollider() == c1)
 		{
-			enemies[i]->collider->type == app->collision->NOTHING;
+			enemies[i]->collider->type = enemies[i]->collider->NONE;
 			enemies[i]->Die(c1, c2);
 			break;
 		}

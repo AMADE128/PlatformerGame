@@ -148,13 +148,31 @@ bool Player::Start()
 	
 	if (app->scene->active == true && cont == false)
 	{
-		position.x = 720;
-		position.y = 1584;
+		if (checkpointLvl1 == false)
+		{
+			position.x = 720;
+			position.y = 1584;
+		}
+		else
+		{
+			position.x = 3888;
+			position.y = 1392;
+		}
+
 	}
 	else if (app->sceneLvl2->active == true && cont == false)
 	{
-		position.x = 620;
-		position.y = 2256;
+		if (checkpointLvl2 == false)
+		{
+			position.x = 620;
+			position.y = 2256;
+		}
+		else
+		{
+			position.x = 3216;
+			position.y = 1920;
+		}
+
 	}
 	//Cargar texturas
 	idleTex = app->tex->Load("Assets/Textures/Character/idle.png");
@@ -338,6 +356,19 @@ bool Player::Update(float dt)
 						else if (app->scene->active == true) app->LoadGameRequest();
 					}
 					appear = true;
+				}
+			}
+			if (app->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN && yDownCollision == true)
+			{
+				if (app->scene->active == true)
+				{
+					checkpointLvl2 = true;
+					app->fadeToBlack->Fade(app->scene, (Module*)app->sceneLvl2);
+				}
+				else if (app->sceneLvl2->active == true)
+				{
+					checkpointLvl1 = true;
+					app->fadeToBlack->Fade(app->sceneLvl2, (Module*)app->scene);
 				}
 			}
 			if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && yDownCollision == true)

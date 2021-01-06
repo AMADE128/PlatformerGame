@@ -99,6 +99,9 @@ public:
 
 	int lifes = 3;
 
+	bool checkpointLvl1 = false;
+	bool checkpointLvl2 = false;
+
 	unsigned int hitFx;
 	unsigned int jumpFx;
 	unsigned int pointFx;
