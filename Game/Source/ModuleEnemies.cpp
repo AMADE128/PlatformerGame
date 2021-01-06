@@ -134,7 +134,6 @@ bool ModuleEnemies::Update(float dt)
 								iPoint nextAuxPositionEenemy = MapToWorld(nextPositionEnemy);
 								enemies[i]->MoveEnemy(enemies[i]->position, nextAuxPositionEenemy, mapPositionEnemy, enemies[i]->enemyType);
 							}
-							if(enemies[i] != nullptr)enemies[i]->currentAnim->Update();
 						}
 						default:
 							break;
@@ -144,17 +143,6 @@ bool ModuleEnemies::Update(float dt)
 
 				enemies[i]->Update();
 
-				if (enemies[i]->deathFinish == true)
-				{
-					app->collision->RemoveCollider(enemies[i]->collider);
-					delete enemies[i];
-					enemies[i] = nullptr;
-				}
-
-			}
-			if (enemies[i] != nullptr)
-			{
-				enemies[i]->Draw();
 			}
 		}
 	}
@@ -167,6 +155,20 @@ bool ModuleEnemies::Update(float dt)
 bool ModuleEnemies::PostUpdate()
 {
 	bool ret = true;
+
+	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	{
+		if (enemies[i] != nullptr)
+		{
+			enemies[i]->Draw();
+			if (enemies[i]->deathFinish == true)
+			{
+				app->collision->RemoveCollider(enemies[i]->collider);
+				delete enemies[i];
+				enemies[i] = nullptr;
+			}
+		}
+	}
 
 	return ret;
 }

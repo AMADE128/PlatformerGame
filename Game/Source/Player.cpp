@@ -155,7 +155,7 @@ bool Player::Start()
 		}
 		else
 		{
-			position.x = 3888;
+			position.x = 3860;
 			position.y = 1392;
 		}
 
