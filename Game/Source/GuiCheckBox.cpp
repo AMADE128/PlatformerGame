@@ -54,10 +54,18 @@ bool GuiCheckBox::Draw(Render* render)
 		section = { 0, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
 		render->DrawTexture(leftText, bounds.x - 150, bounds.y);
 		render->DrawTexture(texture, bounds.x, bounds.y, &section);
-		if (checked)
+		if (id != 2)
 		{
-			checkSection = { 50, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
-			render->DrawTexture(text, bounds.x, bounds.y, &checkSection);
+			if (checked)
+			{
+				checkSection = { 50, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
+				render->DrawTexture(text, bounds.x, bounds.y, &checkSection);
+			}
+			else
+			{
+				checkSection = { 0, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
+				render->DrawTexture(text, bounds.x, bounds.y, &checkSection);
+			}
 		}
 		else
 		{
@@ -70,10 +78,18 @@ bool GuiCheckBox::Draw(Render* render)
 		section = { 100, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
 		render->DrawTexture(leftText, bounds.x - 150, bounds.y);
 		render->DrawTexture(texture, bounds.x, bounds.y, &section);
-		if (checked)
+		if (id != 2)
 		{
-			checkSection = { 50, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
-			render->DrawTexture(text, bounds.x, bounds.y, &checkSection);
+			if (checked)
+			{
+				checkSection = { 50, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
+				render->DrawTexture(text, bounds.x, bounds.y, &checkSection);
+			}
+			else
+			{
+				checkSection = { 0, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
+				render->DrawTexture(text, bounds.x, bounds.y, &checkSection);
+			}
 		}
 		else
 		{
@@ -86,15 +102,23 @@ bool GuiCheckBox::Draw(Render* render)
 		section = { 50, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
 		render->DrawTexture(leftText, bounds.x - 150, bounds.y);
 		render->DrawTexture(texture, bounds.x, bounds.y, &section);
-		if (checked)
+		if (id != 2)
 		{
-			checkSection = { 50, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
-			render->DrawTexture(text, bounds.x, bounds.y + 5, &checkSection);
+			if (checked)
+			{
+				checkSection = { 50, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
+				render->DrawTexture(text, bounds.x, bounds.y, &checkSection);
+			}
+			else
+			{
+				checkSection = { 0, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
+				render->DrawTexture(text, bounds.x, bounds.y, &checkSection);
+			}
 		}
 		else
 		{
 			checkSection = { 0, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
-			render->DrawTexture(text, bounds.x, bounds.y + 5, &checkSection);
+			render->DrawTexture(text, bounds.x, bounds.y, &checkSection);
 		}
 		if (app->guiDebug) render->DrawRectangle(bounds, { 0, 255, 255, 150 });
 		break;
