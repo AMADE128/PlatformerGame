@@ -237,17 +237,30 @@ bool Player::Start()
 
 bool Player::PreUpdate()
 {
-	msLvl = (SDL_GetTicks() - startTime) / 10;
-	if (msLvl >= 100)
+	switch (playerState)
 	{
-		secondsLvl += 1;
-		msLvl = 0;
-		startTime = SDL_GetTicks();
-	}
-	if (secondsLvl >= 60)
-	{
-		minutesLvl += 1;
-		secondsLvl = 0;
+	case Player::NORMAL:
+		msLvl = (SDL_GetTicks() - startTime) / 10;
+		if (msLvl >= 100)
+		{
+			secondsLvl += 1;
+			msLvl = 0;
+			startTime = SDL_GetTicks();
+		}
+		if (secondsLvl >= 60)
+		{
+			minutesLvl += 1;
+			secondsLvl = 0;
+		}
+		break;
+	case Player::SETTINGS:
+		break;
+	case Player::OPTIONS:
+		break;
+	case Player::EXIT:
+		break;
+	default:
+		break;
 	}
 
 	if (changeLevel1 == true)
@@ -408,6 +421,7 @@ bool Player::Update(float dt)
 			if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 			{
 				playerState = SETTINGS;
+				startTime = SDL_GetTicks() - startTime;
 			}
 			if (app->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && flip == true)
 			{
@@ -845,6 +859,7 @@ bool Player::OnGuiMouseClickEvent(GuiControl* control)
 		{
 		case 6:
 			playerState = NORMAL;
+			startTime = SDL_GetTicks() - startTime;
 			break;
 		case 7:
 			playerState = OPTIONS;
