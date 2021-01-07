@@ -33,8 +33,10 @@ public:
 	bool CleanUp();
 
 	SDL_Texture* logo;
+	SDL_Texture* logoOff;
 	
 	unsigned int logoMusic;
+	int frameMusic;
 
 private:
 };
