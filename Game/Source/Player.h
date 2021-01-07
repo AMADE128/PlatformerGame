@@ -99,6 +99,9 @@ public:
 
 	int lifes = 3;
 
+	int score;
+	int highScore = 10000;
+
 	bool checkpointLvl1 = false;
 	bool checkpointLvl2 = false;
 
@@ -107,6 +110,7 @@ public:
 	unsigned int jumpFx;
 	unsigned int pointFx;
 	unsigned int leafFx;
+	
 
 	Animation* currentAnimation = nullptr;
 
@@ -169,6 +173,8 @@ public:
 	bool changeLevel2 = false;
 	bool nothingSaved = true;
 	bool started = false;
+	bool setScore = false;
+	bool newHighScore = false;
 
 	bool cont = false;
 };

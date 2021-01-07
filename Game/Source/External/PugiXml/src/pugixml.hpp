@@ -519,7 +519,9 @@ namespace pugi
 
         // Parses buffer as an XML document fragment and appends all nodes as children of the current node.
         // Copies/converts the buffer, so it may be deleted or changed after the function returns.
-        // Note: append_buffer allocates memory that has the lifetime of the owning document; removing the appended nodes does not immediately reclaim that memory.
+        // Note: append_buffer allocates memory that has the life
+        
+        //of the owning document; removing the appended nodes does not immediately reclaim that memory.
         xml_parse_result append_buffer(const void* contents, size_t size, unsigned int options = parse_default, xml_encoding encoding = encoding_auto);
 
         // Find attribute using predicate. Returns first attribute for which predicate returned true.

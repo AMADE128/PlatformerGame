@@ -146,6 +146,9 @@ bool Player::Start()
 	playerCheckFullScreen->text = app->tex->Load("Assets/Textures/Interface/checked.png");
 	playerCheckFullScreen->leftText = app->tex->Load("Assets/Textures/Interface/full_screen.png");
 	
+	setScore = true;
+	app->LoadGameRequest();
+
 	if (app->scene->active == true && cont == false)
 	{
 		if (checkpointLvl1 == false)
@@ -1185,7 +1188,7 @@ bool Player::CheckPoint(Collider* c1, Collider* c2)
 
 bool Player::LoadState(pugi::xml_node& data)
 {
-	if (playerLoadF6 == true)
+	if (playerLoadF6 == true && setScore == false)
 	{
 		position.x = data.child("position").attribute("x").as_int();
 		position.y = data.child("position").attribute("y").as_int();
@@ -1193,7 +1196,7 @@ bool Player::LoadState(pugi::xml_node& data)
 		currentLvl = data.child("level").attribute("lvl").as_int();
 		playerLoadF6 = false;
 	}
-	else if (playerLoadF6 == false)
+	else if (playerLoadF6 == false && setScore == false)
 	{
 
 		position.x = data.child("checkpoint").attribute("x").as_int();
@@ -1201,7 +1204,7 @@ bool Player::LoadState(pugi::xml_node& data)
 
 	}
 
-	if (cont == true && started == false)
+	if (cont == true && started == false && setScore == false)
 	{
 		cont = data.child("continue").attribute("cont").as_bool();
 
@@ -1226,10 +1229,12 @@ bool Player::LoadState(pugi::xml_node& data)
 
 		app->scene->savePoint = data.child("savepoint").attribute("lvl1").as_bool();
 		app->sceneLvl2->savePoint = data.child("savepoint").attribute("lvl2").as_bool();
-
-		started = true;
 	}
-
+	if(setScore == true)
+	{
+		highScore = data.child("highscore").attribute("score").as_int();
+		setScore = false;
+	}
 
 	return true;
 }
@@ -1237,6 +1242,7 @@ bool Player::LoadState(pugi::xml_node& data)
 bool Player::SaveState(pugi::xml_node& data) const
 {
 	pugi::xml_node player;
+	
 	if (playerSave == true)
 	{
 		player = data.append_child("checkpoint");
@@ -1259,7 +1265,7 @@ bool Player::SaveState(pugi::xml_node& data) const
 		player = data.append_child("position");
 
 		player.append_attribute("x") = auxp.x;
-	    player.append_attribute("y") = auxp.y;
+		player.append_attribute("y") = auxp.y;
 	}
 
 	player = data.append_child("level");
@@ -1300,5 +1306,9 @@ bool Player::SaveState(pugi::xml_node& data) const
 	player.append_attribute("lvl1") = app->scene->savePoint;
 	player.append_attribute("lvl2") = app->sceneLvl2->savePoint;
 
+	player = data.append_child("highscore");
+
+	player.append_attribute("score") = highScore;
+	
 	return true;
 }

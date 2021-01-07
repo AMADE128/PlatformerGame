@@ -53,6 +53,9 @@ bool SceneWin::Start()
 	app->render->camera.x = 0;
 	app->render->camera.y = 0;
 
+	app->fonts->Init();
+	app->fonts->Start();
+
 	return true;
 }
 
@@ -75,8 +78,38 @@ bool SceneWin::Update(float dt)
 bool SceneWin::PostUpdate()
 {
 	bool ret = true;
-
+	
 	app->render->DrawTexture(win, 0, 0);
+
+	
+	if (app->player->minutesLvl < 10) sprintf_s(app->player->minutesText, 10, "0%d:", app->player->minutesLvl);
+	else sprintf_s(app->player->minutesText, 10, "%d:", app->player->minutesLvl);
+	if (app->player->secondsLvl < 10) sprintf_s(app->player->secondsText, 10, "0%d:", app->player->secondsLvl);
+	else sprintf_s(app->player->secondsText, 10, "%d:", app->player->secondsLvl);
+	if (app->player->msLvl < 10) sprintf_s(app->player->msText, 10, "0%d", app->player->msLvl);
+	else sprintf_s(app->player->msText, 10, "%d", app->player->msLvl);
+
+	sprintf_s(scoreText, 30, "SCORE:");
+	app->fonts->BlitText(700, 600, app->player->whiteFont, scoreText);
+	sprintf_s(scoreText, 30, "%d:");
+	app->fonts->BlitText(930, 600, app->player->whiteFont, app->player->minutesText);
+	sprintf_s(scoreText, 30, "%d:");
+	app->fonts->BlitText(1050, 600, app->player->whiteFont, app->player->secondsText);
+	sprintf_s(scoreText, 30, "%d");
+	app->fonts->BlitText(1169, 600, app->player->whiteFont, app->player->msText);
+	
+
+	if (app->player->newHighScore == true)
+	{
+		sprintf_s(highscoreText, 30, "NEW-HIGHSCORE!");
+		app->fonts->BlitText(700, 660, app->player->whiteFont, highscoreText);
+	}
+	else
+	{
+		sprintf_s(highscoreText, 30, "HIGHSCORE:%d", app->player->highScore);
+		app->fonts->BlitText(700, 660, app->player->whiteFont, highscoreText);
+	}
+
 	btnBack->Draw(app->render);
 
 	return ret;

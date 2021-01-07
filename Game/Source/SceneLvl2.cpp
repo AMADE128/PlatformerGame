@@ -157,9 +157,21 @@ bool SceneLvl2::PreUpdate()
 // Called each loop iteration
 bool SceneLvl2::Update(float dt)
 {
-	if (app->player->position.x > 4704 && app->player->position.y > 2256)
+	if (app->player->setScore == true)
 	{
 		app->fadeToBlack->Fade(app->sceneLvl2, (Module*)app->sceneWin, 1600 * dt);
+	}
+
+	if (app->player->position.x > 4704 && app->player->position.y > 2256)
+	{
+		app->player->setScore = true;
+		app->player->newHighScore = true;
+		app->player->score = app->player->secondsLvl + (app->player->minutesLvl * 60);
+		if (app->player->score < app->player->highScore)
+		{
+			app->player->highScore = app->player->score;
+			app->SaveGameRequest();
+		}
 	}
 
 	//Draw Scenes
