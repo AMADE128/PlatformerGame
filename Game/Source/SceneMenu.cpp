@@ -65,6 +65,7 @@ bool SceneMenu::Start()
 	// L03: DONE: Load map
 	menuTex = app->tex->Load("Assets/Textures/Screens/menu.png");
 	creditsTex = app->tex->Load("Assets/Textures/Interface/text_box.png");
+	licenseTex = app->tex->Load("Assets/Textures/Interface/license.png");
 	musicMenu = app->audio->LoadFx("Assets/Audio/SceneMusic/intro_music.wav");
 
 	btnBack->texture = btnNew->texture = btnExit->texture = btnLoad->texture = btnOptions->texture = app->tex->Load("Assets/Textures/Interface/button.png");
@@ -179,6 +180,7 @@ bool SceneMenu::PostUpdate()
 		break;
 	case SceneMenu::CREDITS:
 		app->render->DrawTexture(creditsTex, 50, 10);
+		app->render->DrawTexture(licenseTex, 200, 120);
 		checkCredits->Draw(app->render);
 		break;
 	case SceneMenu::EXIT:
@@ -199,6 +201,7 @@ bool SceneMenu::CleanUp()
 
 	app->tex->UnLoad(menuTex);
 	app->tex->UnLoad(creditsTex);
+	app->tex->UnLoad(licenseTex);
 
 	app->tex->UnLoad(btnNew->texture);
 	app->tex->UnLoad(btnExit->texture);

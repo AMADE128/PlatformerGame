@@ -48,6 +48,7 @@ public:
 	SDL_Texture* menuTex;
 	SDL_Texture* boxTex;
 	SDL_Texture* creditsTex;
+	SDL_Texture* licenseTex;
 
 	char btnCreditsText[10] = { "\0" };
 

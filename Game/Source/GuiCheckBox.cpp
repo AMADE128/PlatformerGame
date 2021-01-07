@@ -70,7 +70,7 @@ bool GuiCheckBox::Draw(Render* render)
 		else
 		{
 			checkSection = { 0, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
-			render->DrawTexture(text, bounds.x, bounds.y, &checkSection);
+			render->DrawTexture(text, bounds.x + 1, bounds.y - 1, &checkSection);
 		}
 		if (app->guiDebug) render->DrawRectangle(bounds, { 0, 255, 0, 150 });
 		break;
@@ -94,7 +94,7 @@ bool GuiCheckBox::Draw(Render* render)
 		else
 		{
 			checkSection = { 0, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
-			render->DrawTexture(text, bounds.x, bounds.y, &checkSection);
+			render->DrawTexture(text, bounds.x + 1, bounds.y - 1, &checkSection);
 		}
 		if (app->guiDebug) render->DrawRectangle(bounds, { 255, 255, 0, 150 });
 		break;
@@ -118,7 +118,7 @@ bool GuiCheckBox::Draw(Render* render)
 		else
 		{
 			checkSection = { 0, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
-			render->DrawTexture(text, bounds.x, bounds.y, &checkSection);
+			render->DrawTexture(text, bounds.x + 1, bounds.y + 4, &checkSection);
 		}
 		if (app->guiDebug) render->DrawRectangle(bounds, { 0, 255, 255, 150 });
 		break;
