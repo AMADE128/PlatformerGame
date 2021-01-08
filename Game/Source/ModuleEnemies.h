@@ -75,8 +75,8 @@ public:
 	bool found = true;
 	DynArray<iPoint>* lastPath;
 
-	//unsigned int bunnyDieFx;
-	//unsigned int birdDieFx;
+	unsigned int bunnyDieFx;
+	unsigned int birdDieFx;
 
 	// Spawns a new enemy using the data from the queue
 	bool pathFinding = false;

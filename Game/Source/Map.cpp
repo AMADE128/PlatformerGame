@@ -12,6 +12,7 @@
 #include "Collider.h"
 #include "Player.h"
 #include "ModuleEnemies.h"
+#include "Pathfinding.h"
 
 #include <math.h>
 
@@ -67,46 +68,35 @@ void Map::DrawPath()
 	iPoint pointPath;
 
 	// Draw visited
-	ListItem<iPoint>* itemVisited = visited.start;
-	PQueueItem<iPoint>* itemFrontier = frontier.start;
+	ListItem<iPoint>* itemVisited = app->pathfinding->visited.start;
+	PQueueItem<iPoint>* itemFrontier = app->pathfinding->frontier.start;
 
 
 	while (itemVisited)
 	{
 		pointV = itemVisited->data;
-
-		TileSet* tileset = GetTilesetFromTileId(260);
-
-		SDL_Rect rec = tileset->GetTileRect(260);
 		iPoint pos = MapToWorld(pointV.x, pointV.y);
 
-		app->render->DrawTexture(tileset->texture, pos.x, pos.y, &rec);
+		app->render->DrawRectangle({ pos.x,pos.y,48,48 }, { 0,200,0,150 });
 		itemVisited = itemVisited->next;
 
 	}
 	while (itemFrontier)
 	{
-		TileSet* tileset = GetTilesetFromTileId(259);
-
-		SDL_Rect rec = tileset->GetTileRect(259);
 
 		pointF = itemFrontier->data;
-		tileset = GetTilesetFromTileId(259);
 		iPoint pos = MapToWorld(pointF.x, pointF.y);
-		app->render->DrawTexture(tileset->texture, pos.x, pos.y, &rec);
+		app->render->DrawRectangle({ pos.x,pos.y,48,48 }, { 0,200,0,150 });
 		itemFrontier = itemFrontier->next;
+
 	}
 	int pathSize = path.Count();
 	for (size_t i = 0; i < pathSize; i++)
 	{
-		TileSet* tileset = GetTilesetFromTileId(259);
-
-		SDL_Rect rec = tileset->GetTileRect(259);
 
 		pointPath = { path.At(i)->x,path.At(i)->y };
-		tileset = GetTilesetFromTileId(259);
 		iPoint pos = MapToWorld(pointPath.x, pointPath.y);
-		app->render->DrawTexture(tileset->texture, pos.x, pos.y, &rec);
+		app->render->DrawRectangle({ pos.x,pos.y,48,48 }, { 0,200,0,150 });
 
 	}
 }
@@ -139,6 +129,8 @@ void Map::Draw()
 			}
 		}
 	}
+
+	if (app->collision->debug == true) app->map->DrawPath();
 }
 
 // L04: DONE 8: Create a method that translates x,y coordinates from map positions to world positions

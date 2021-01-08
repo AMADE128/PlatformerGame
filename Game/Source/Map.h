@@ -171,8 +171,6 @@ private:
     SString folder;
     bool mapLoaded;
 
-	List<iPoint> visited;
-
 	// L11: Additional variables
 	List<iPoint> breadcrumbs;
 	uint costSoFar[COST_MAP_SIZE][COST_MAP_SIZE];

@@ -43,13 +43,14 @@ public:
 	bool PropagateAStar(const iPoint&);
 	void ComputePathAStar(const iPoint& origin, const iPoint& destination);
 
+	PQueue<iPoint> frontier;
+	List<iPoint> visited;
+
 private:
 
 	// size of the map
 	uint width;
 	uint height;
-	PQueue<iPoint> frontier;
-	List<iPoint> visited;
 	List<iPoint> breadcrumbs;
 	// all map walkability values [0..255]
 	uchar* map;

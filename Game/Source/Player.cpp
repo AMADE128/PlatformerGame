@@ -790,9 +790,9 @@ bool Player::PostUpdate()
 	else sprintf_s(secondsText, 10, "%d:", secondsLvl);
 	if (msLvl < 10) sprintf_s(msText, 10, "0%d", msLvl);
 	else sprintf_s(msText, 10, "%d", msLvl);
-	app->fonts->BlitText(cameraColl->rect.x + 515, cameraColl->rect.y - 185, whiteFont, msText);
-	app->fonts->BlitText(cameraColl->rect.x + 400, cameraColl->rect.y - 185, whiteFont, secondsText);
-	app->fonts->BlitText(cameraColl->rect.x + 285, cameraColl->rect.y - 185, whiteFont, minutesText);
+	app->fonts->BlitText(cameraColl->rect.x + 485, cameraColl->rect.y - 185, whiteFont, msText);
+	app->fonts->BlitText(cameraColl->rect.x + 370, cameraColl->rect.y - 185, whiteFont, secondsText);
+	app->fonts->BlitText(cameraColl->rect.x + 255, cameraColl->rect.y - 185, whiteFont, minutesText);
 	if(appleCounter < 10)
 	{
 		app->fonts->BlitText(cameraColl->rect.x + 620, cameraColl->rect.y - 185, whiteFont, scoreText);
@@ -848,6 +848,59 @@ bool Player::PostUpdate()
 		playerSliderFx->Draw(app->render);
 	}
 
+	if (deathAnim.finish == true)
+	{
+		if (lifes <= 1)
+		{
+			deathAnim.Reset();
+			playerColl->SetPos(position.x + 25, position.y + 20);
+			cameraColl->rect.x = position.x - 100;
+			cameraColl->rect.y = position.y - 100;
+			speedX = 0;
+			speedY = 0;
+			lifes = 3;
+			appleCounter = 0;
+			if (app->scene->active == true)
+			{
+				app->fadeToBlack->Fade(app->scene, (Module*)app->sceneLoose, 10);
+			}
+			else if (app->sceneLvl2->active == true)
+			{
+				app->fadeToBlack->Fade(app->sceneLvl2, (Module*)app->sceneLoose, 10);
+			}
+		}
+		else
+		{
+			speedX = 0;
+			speedY = 0;
+			isJumping = false;
+			if (app->scene->savePoint == true)
+			{
+				app->LoadGameRequest();
+			}
+			else
+			{
+				if (app->scene->active == true)
+				{
+					position.x = 720;
+					position.y = 1584;
+				}
+				else if (app->sceneLvl2->active == true)
+				{
+					position.x = 620;
+					position.y = 2256;
+				}
+			}
+			deathAnim.Reset();
+			playerColl->SetPos(position.x + 25, position.y + 20);
+			cameraColl->rect.x = position.x - 100;
+			cameraColl->rect.y = position.y - 100;
+			lifes--;
+			appear = true;
+			death = false;
+
+		}
+	}
 
 	return true;
 }
@@ -1038,74 +1091,18 @@ bool Player::Fall(Collider* c1, Collider* c2)
 
 bool Player::Die(Collider* c1, Collider* c2)
 {
-	if (c1->rect.y + TILESIZE > c2->rect.y + c2->rect.w/2)
+	death = true;
+	currentAnimation = &deathAnim;
+	currentTex = deathTex;
+	if (speedXLastFrame > 0)
 	{
-		death = true;
-		currentAnimation = &deathAnim;
-		currentTex = deathTex;
-		if (speedXLastFrame > 0)
-		{
-			flip = false;
-		}
-		else if (speedXLastFrame < 0)
-		{
-			flip = true;
-		}
-		if (deathAnim.finish == true)
-		{
-			if (lifes <= 1)
-			{
-				deathAnim.Reset();
-				playerColl->SetPos(position.x + 25, position.y + 20);
-				cameraColl->rect.x = position.x - 100;
-				cameraColl->rect.y = position.y - 100;
-				speedX = 0;
-				speedY = 0;
-				lifes = 3;
-				appleCounter = 0;
-				if (app->scene->active == true)
-				{
-					app->fadeToBlack->Fade(app->scene, (Module*)app->sceneLoose, 10);
-				}
-				else if (app->sceneLvl2->active == true)
-				{
-					app->fadeToBlack->Fade(app->sceneLvl2, (Module*)app->sceneLoose, 10);
-				}
-			}
-			else
-			{
-				speedX = 0;
-				speedY = 0;
-				isJumping = false;
-				if (app->scene->savePoint == true)
-				{
-					app->LoadGameRequest();
-				}
-				else
-				{
-					if (app->scene->active == true)
-					{
-						position.x = 720;
-						position.y = 1584;
-					}
-					else if (app->sceneLvl2->active == true)
-					{
-						position.x = 620;
-						position.y = 2256;
-					}
-				}
-				deathAnim.Reset();
-				playerColl->SetPos(position.x + 25, position.y + 20);
-				cameraColl->rect.x = position.x - 100;
-				cameraColl->rect.y = position.y - 100;
-				lifes--;
-				appear = true;
-				death = false;
-
-			}
-		}
-		app->audio->PlayFx(hitFx);
+		flip = false;
 	}
+	else if (speedXLastFrame < 0)
+	{
+		flip = true;
+	}
+	app->audio->PlayFx(hitFx);
 	
 	return true;
 }

@@ -59,14 +59,13 @@ public:
 	// All existing colliders in the scene
 	Collider* colliders[MAX_COLLIDERS] = { nullptr };
 
+	bool debug = false;
+
 private:
 
 	// The collision matrix. Defines the interaction for two collider types
 	// If set two false, collider 1 will ignore collider 2
 	CollType matrix[Collider::Type::MAX][Collider::Type::MAX];
-
-	// Simple debugging flag to draw all colliders
-	bool debug = false;
 };
 
 #endif // __COLLISIONS_H__
