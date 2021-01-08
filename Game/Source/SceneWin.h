@@ -35,12 +35,14 @@ public:
 
 	bool OnGuiMouseClickEvent(GuiControl* control);
 
-	SDL_Texture* win;
+	SDL_Texture* winTex;
+	SDL_Texture* appleTex;
 	char scoreText[30] = { "\0" };
 	char highscoreText[30] = { "\0" };
 	char secondsText[10] = { "\0" };
 	char minutesText[10] = { "\0" };
 	char msText[10] = { "\0" };
+	char applesText[10] = { "\0" };
 
 private:
 

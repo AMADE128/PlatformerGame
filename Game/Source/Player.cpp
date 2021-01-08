@@ -209,10 +209,13 @@ bool Player::Start()
 
 	playerState = NORMAL;
 
-	if (cont == false)
+	if (cont == false && app->sceneLvl2->active == false)
 	{
 		lifes = 3;
 		appleCounter = 0;
+		secondsLvl = 0;
+		minutesLvl = 0;
+		msLvl = 0;
 	}
 
 	if (app->win->fullScreen == true)
@@ -224,9 +227,6 @@ bool Player::Start()
 		playerCheckFullScreen->checked = false;
 	}
 
-	secondsLvl = 0;
-	minutesLvl = 0;
-	msLvl = 0;
 	startTime = SDL_GetTicks();
 
 	currentAnimation = &idleAnim;

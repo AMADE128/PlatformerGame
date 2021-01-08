@@ -42,7 +42,8 @@ bool SceneWin::Awake()
 bool SceneWin::Start()
 {
 	// L03: DONE: Load map
-	win = app->tex->Load("Assets/Textures/Screens/win.png");
+	winTex = app->tex->Load("Assets/Textures/Screens/win.png");
+	appleTex = app->tex->Load("Assets/Textures/Items/Fruits/apple.png");
 	btnBack->texture = app->tex->Load("Assets/Textures/Interface/button.png");
 	btnBack->text = app->tex->Load("Assets/Textures/Interface/back.png");
 
@@ -79,7 +80,7 @@ bool SceneWin::PostUpdate()
 {
 	bool ret = true;
 	
-	app->render->DrawTexture(win, 0, 0);
+	app->render->DrawTexture(winTex, 0, 0);
 
 	
 	if (app->player->minutesLvl < 10) sprintf_s(app->player->minutesText, 10, "0%d:", app->player->minutesLvl);
@@ -109,6 +110,11 @@ bool SceneWin::PostUpdate()
 		sprintf_s(highscoreText, 30, "HIGHSCORE:%d", app->player->highScore);
 		app->fonts->BlitText(700, 660, app->player->whiteFont, highscoreText);
 	}
+
+	sprintf_s(applesText, 10, "%d-15", app->player->appleCounter);
+	app->fonts->BlitText(700, 500, app->player->whiteFont, applesText);
+	SDL_Rect appleRect = { 0, 0, 100, 100 };
+	app->render->DrawTexture(appleTex, 870, 480, &appleRect);
 
 	btnBack->Draw(app->render);
 
@@ -143,7 +149,8 @@ bool SceneWin::CleanUp()
 
 	LOG("Freeing scene");
 
-	app->tex->UnLoad(win);
+	app->tex->UnLoad(winTex);
+	app->tex->UnLoad(appleTex);
 	app->tex->UnLoad(btnBack->texture);
 	app->tex->UnLoad(btnBack->text);
 

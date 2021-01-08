@@ -10,14 +10,14 @@
 	<scene />
 	<scene />
 	<player>
-		<checkpoint x="4712" y="2257" />
+		<checkpoint x="3850" y="1363" />
 		<position x="0" y="0" />
 		<level lvl="1" />
 		<continue cont="false" />
-		<score sco="0" />
-		<lifes hp="3" />
-		<apples app1="1" app2="1" app3="1" app4="1" app5="1" pine1="1" app6="1" app7="1" app8="1" app9="1" app10="1" app11="1" pine2="1" />
-		<savepoint lvl1="false" lvl2="true" />
+		<score sco="2" />
+		<lifes hp="2" />
+		<apples app1="1" app2="0" app3="0" app4="1" app5="1" pine1="1" app6="0" app7="0" app8="0" app9="0" app10="0" app11="0" pine2="0" />
+		<savepoint lvl1="true" lvl2="false" />
 		<highscore score="4" />
 	</player>
 	<scene />
@@ -29,6 +29,6 @@
 	<:anonymous />
 	<pathfinding />
 	<renderer>
-		<camera x="-3923" y="-1898" />
+		<camera x="-3241" y="-1111" />
 	</renderer>
 </game_state>
