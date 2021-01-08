@@ -61,25 +61,22 @@ bool Audio::Awake(pugi::xml_node& config)
 // Called before quitting
 bool Audio::CleanUp()
 {
-	if(!active)
+	if (!active)
 		return true;
 
 	LOG("Freeing sound FX, closing Mixer and Audio subsystem");
 
-	if(music != NULL)
+	if (music != NULL)
 	{
 		Mix_FreeMusic(music);
 	}
 
-	ListItem<Mix_Chunk*>* item;
-	for(item = fx.start; item != NULL; item = item->next)
-		Mix_FreeChunk(item->data);
-
-	fx.Clear();
+	FxCleanUp();
 
 	Mix_CloseAudio();
 	Mix_Quit();
 	SDL_QuitSubSystem(SDL_INIT_AUDIO);
+	return true;
 
 	return true;
 }
@@ -143,19 +140,26 @@ unsigned int Audio::LoadFx(const char* path)
 {
 	unsigned int ret = 0;
 
-	if(!active)
+
+	if (!active)
 		return 0;
 
 	Mix_Chunk* chunk = Mix_LoadWAV(path);
 
-	if(chunk == NULL)
+	if (chunk == NULL)
 	{
 		LOG("Cannot load wav %s. Mix_GetError(): %s", path, Mix_GetError());
 	}
 	else
 	{
-		fx.Add(chunk);
-		ret = fx.Count();
+		for (ret = 0; ret < MAX_FX; ++ret)
+		{
+			if (fx[ret] == nullptr)
+			{
+				fx[ret] = chunk;
+				break;
+			}
+		}
 	}
 
 	return ret;
@@ -166,12 +170,10 @@ bool Audio::PlayFx(unsigned int id, int repeat)
 {
 	bool ret = false;
 
-	if(!active)
-		return false;
-
-	if(id > 0 && id <= fx.Count())
+	if (fx[id] != nullptr)
 	{
-		Mix_PlayChannel(-1, fx[id - 1], repeat);
+		Mix_PlayChannel(-1, fx[id], repeat);
+		ret = true;
 	}
 
 	return ret;
@@ -180,23 +182,37 @@ bool Audio::PlayFx(unsigned int id, int repeat)
 bool Audio::SetVolume(unsigned int id, int volume)
 {
 	bool ret = false;
-	if (id > 0 && id <= fx.Count() && fx[id - 1] != NULL)
+	if (fx[id] != nullptr)
 	{
-		Mix_VolumeChunk(fx[id - 1], volume);
+		Mix_VolumeChunk(fx[id], volume);
 	}
 
 	return ret;
 }
 
-bool Audio::UnloadFX(unsigned int id)
+bool Audio::UnloadFX(int index)
 {
 	bool ret = false;
-	if (fx[id - 1] != nullptr)
+
+	if (fx[index] != nullptr)
 	{
-		Mix_FreeChunk(fx[id - 1]);
-		fx[id - 1] = nullptr;
+		Mix_FreeChunk(fx[index]);
+		fx[index] = nullptr;
+		ret = true;
 	}
 	
 
 	return ret;
+}
+
+bool Audio::FxCleanUp()
+{
+
+	for (uint i = 0; i < MAX_FX; ++i)
+	{
+		if (fx[i] != nullptr)
+			Mix_FreeChunk(fx[i]);
+	}
+
+	return true;
 }

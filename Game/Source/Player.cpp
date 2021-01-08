@@ -209,6 +209,9 @@ bool Player::Start()
 
 	playerState = NORMAL;
 
+	playerSliderFx->value = app->volumeFX;
+	playerSliderMusic->value = app->volumeMusic;
+
 	if (cont == false && app->sceneLvl2->active == false)
 	{
 		lifes = 3;
