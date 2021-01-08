@@ -91,30 +91,30 @@ bool SceneWin::PostUpdate()
 	else sprintf_s(app->player->msText, 10, "%d", app->player->msLvl);
 
 	sprintf_s(scoreText, 30, "SCORE:");
-	app->fonts->BlitText(700, 600, app->player->whiteFont, scoreText);
+	app->fonts->BlitText(400, 500, app->player->whiteFont, scoreText);
 	sprintf_s(scoreText, 30, "%d:");
-	app->fonts->BlitText(930, 600, app->player->whiteFont, app->player->minutesText);
+	app->fonts->BlitText(630, 500, app->player->whiteFont, app->player->minutesText);
 	sprintf_s(scoreText, 30, "%d:");
-	app->fonts->BlitText(1050, 600, app->player->whiteFont, app->player->secondsText);
+	app->fonts->BlitText(750, 500, app->player->whiteFont, app->player->secondsText);
 	sprintf_s(scoreText, 30, "%d");
-	app->fonts->BlitText(1169, 600, app->player->whiteFont, app->player->msText);
+	app->fonts->BlitText(869, 500, app->player->whiteFont, app->player->msText);
 	
 
 	if (app->player->newHighScore == true)
 	{
 		sprintf_s(highscoreText, 30, "NEW-HIGHSCORE!");
-		app->fonts->BlitText(700, 660, app->player->whiteFont, highscoreText);
+		app->fonts->BlitText(400, 560, app->player->whiteFont, highscoreText);
 	}
 	else
 	{
 		sprintf_s(highscoreText, 30, "HIGHSCORE:%d", app->player->highScore);
-		app->fonts->BlitText(700, 660, app->player->whiteFont, highscoreText);
+		app->fonts->BlitText(400, 560, app->player->whiteFont, highscoreText);
 	}
 
 	sprintf_s(applesText, 10, "%d-15", app->player->appleCounter);
-	app->fonts->BlitText(700, 500, app->player->whiteFont, applesText);
+	app->fonts->BlitText(500, 400, app->player->whiteFont, applesText);
 	SDL_Rect appleRect = { 0, 0, 100, 100 };
-	app->render->DrawTexture(appleTex, 870, 480, &appleRect);
+	app->render->DrawTexture(appleTex, 670, 380, &appleRect);
 
 	btnBack->Draw(app->render);
 
