@@ -70,6 +70,14 @@ bool SceneMenu::Start()
 	menuTex = app->tex->Load("Assets/Textures/Screens/menu.png");
 	creditsTex = app->tex->Load("Assets/Textures/Interface/text_box.png");
 	licenseTex = app->tex->Load("Assets/Textures/Interface/license.png");
+
+	hoverFx = app->audio->LoadFx("Assets/Audio/GuiMusic/button_hover.wav");
+	pressedFx = app->audio->LoadFx("Assets/Audio/GuiMusic/button_click.wav");
+	startButtonFx = app->audio->LoadFx("Assets/Audio/GuiMusic/start_button.wav");
+	app->fxList.Add(&hoverFx);
+	app->fxList.Add(&pressedFx);
+	app->fxList.Add(&startButtonFx);
+
 	btnBack->texture = btnNew->texture = btnExit->texture = btnLoad->texture = btnOptions->texture = app->tex->Load("Assets/Textures/Interface/button.png");
 	boxTex = app->tex->Load("Assets/Textures/Interface/box.png");
 	btnNew->text = app->tex->Load("Assets/Textures/Interface/new.png");
@@ -226,6 +234,12 @@ bool SceneMenu::CleanUp()
 	app->tex->UnLoad(checkFullScreen->leftText);
 	app->tex->UnLoad(checkCredits->texture);
 
+
+	app->audio->UnloadFX(startButtonFx);
+	app->audio->UnloadFX(pressedFx);
+	app->audio->UnloadFX(hoverFx);
+	app->fxList.Clear();
+
 	app->fonts->CleanUp();
 
 	active = false;
@@ -242,10 +256,12 @@ bool SceneMenu::OnGuiMouseClickEvent(GuiControl* control)
 		{
 		case 1:
 			app->player->cont = false;
+			app->audio->PlayFx(startButtonFx);
 			app->fadeToBlack->Fade(this, (Module*)app->scene, 80); //Go to the start of the game
 			break;
 		case 2:
 			app->player->playerLoadF6 = true;
+			app->audio->PlayFx(startButtonFx);
 			app->LoadGameRequest();
 			Menu(loadFile);
 			switch (currentLvl)
@@ -261,12 +277,15 @@ bool SceneMenu::OnGuiMouseClickEvent(GuiControl* control)
 			}
 			break;
 		case 3:
+			app->audio->PlayFx(pressedFx);
 			menuState = SETTINGS;
 			break;
 		case 4:
+			app->audio->PlayFx(pressedFx);
 			menuState = EXIT;
 			break;
 		case 5:
+			app->audio->PlayFx(pressedFx);
 			menuState = NORMAL;
 			break;
 		default:
@@ -278,12 +297,14 @@ bool SceneMenu::OnGuiMouseClickEvent(GuiControl* control)
 		case 1:
 			if (checkFullScreen->checked)
 			{
+				app->audio->PlayFx(pressedFx);
 				SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 				app->win->scale = (float)app->win->screenWidth / 1280;
 				app->win->fullScreen = true;
 			}
 			else
 			{
+				app->audio->PlayFx(pressedFx);
 				SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_RESIZABLE);
 				app->win->scale = 1;
 				app->win->fullScreen = false;
@@ -292,10 +313,12 @@ bool SceneMenu::OnGuiMouseClickEvent(GuiControl* control)
 		case 2:
 			if (menuState == NORMAL)
 			{
+				app->audio->PlayFx(pressedFx);
 				menuState = CREDITS;
 			}
 			else
 			{
+				app->audio->PlayFx(pressedFx);
 				menuState = NORMAL;
 			}
 			break;

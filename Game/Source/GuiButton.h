@@ -19,6 +19,7 @@ public:
 
 	bool Update(Input* input, float dt);
 	bool Draw(Render* render);
+	bool hover = false;
 
 private:
 

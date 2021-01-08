@@ -166,6 +166,8 @@ public:
 	int lvl = 1;
 
 	unsigned int currentLvl;
+	unsigned int menuHoverFx;
+	unsigned int menuPressedFx;
 	bool saveGame = false;
 	bool playerSave = false;
 	bool playerLoadF6 = false;

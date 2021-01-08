@@ -201,6 +201,10 @@ bool Player::Start()
 	app->fxList.Add(&pointFx);
 	leafFx = app->audio->LoadFx("Assets/Audio/MyscMusic/leaf_shot.wav");
 	app->fxList.Add(&leafFx);
+	menuHoverFx = app->audio->LoadFx("Assets/Audio/GuiMusic/button_hover.wav");
+	app->fxList.Add(&menuHoverFx);
+	menuPressedFx = app->audio->LoadFx("Assets/Audio/GuiMusic/button_click.wav");
+	app->fxList.Add(&menuPressedFx);
 
 	playerColl = app->collision->AddCollider({ (int)position.x, (int)position.y, TILESIZE - 50, TILESIZE - 20}, Collider::Type::PLAYER, this);
 	cameraColl = app->collision->AddCollider({ (int)position.x - 100, (int)position.y - 100, app->render->camera.w/4, app->render->camera.h / 3 + 20}, Collider::Type::CAMERA, this);
@@ -917,19 +921,24 @@ bool Player::OnGuiMouseClickEvent(GuiControl* control)
 		switch (control->id)
 		{
 		case 6:
+			app->audio->PlayFx(menuPressedFx);
 			playerState = NORMAL;
 			startTime = SDL_GetTicks() - startTime;
 			break;
 		case 7:
+			app->audio->PlayFx(menuPressedFx);
 			playerState = OPTIONS;
 			break;
 		case 8:
+			app->audio->PlayFx(menuPressedFx);
 			app->fadeToBlack->Fade(app->scene, (Module*)app->sceneMenu, 10);
 			break;
 		case 9:
+			app->audio->PlayFx(menuPressedFx);
 			playerState = EXIT;
 			break;
 		case 10:
+			app->audio->PlayFx(menuPressedFx);
 			playerState = SETTINGS;
 			break;
 		default:
@@ -942,6 +951,7 @@ bool Player::OnGuiMouseClickEvent(GuiControl* control)
 		case 2:
 			if (playerCheckFullScreen->checked)
 			{
+				app->audio->PlayFx(menuPressedFx);
 				SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_FULLSCREEN_DESKTOP);
 				app->win->scale = (float)app->win->screenWidth / 1280;
 				app->win->fullScreen = true;
@@ -950,6 +960,7 @@ bool Player::OnGuiMouseClickEvent(GuiControl* control)
 			}
 			else
 			{
+				app->audio->PlayFx(menuPressedFx);
 				SDL_SetWindowFullscreen(app->win->window, SDL_WINDOW_RESIZABLE);
 				app->win->scale = 1;
 				app->win->fullScreen = false;
@@ -1020,6 +1031,10 @@ bool Player::CleanUp()
 	app->audio->UnloadFX(pointFx);
 	app->audio->UnloadFX(leafFx);
 	app->audio->UnloadFX(abilityFx);
+	app->audio->UnloadFX(menuHoverFx);
+	app->audio->UnloadFX(menuPressedFx);
+
+	app->fxList.Clear();
 
 	active = false;
 

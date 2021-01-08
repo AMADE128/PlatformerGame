@@ -53,6 +53,11 @@ public:
 	char btnCreditsText[10] = { "\0" };
 
 	MenuStates menuState = NORMAL;
+
+	unsigned int pressedFx;
+	unsigned int hoverFx;
+	unsigned int startButtonFx;
+
 	
 	GuiSlider* sliderMusic;
 	GuiSlider* sliderFx;
