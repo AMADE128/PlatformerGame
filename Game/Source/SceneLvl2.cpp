@@ -220,42 +220,42 @@ bool SceneLvl2::PostUpdate()
 	{
 		apple->Update();
 	}
-	if (appleColl1Lvl2 != nullptr && appleColl1Lvl2->isCollected == false)
+	if (appleColl1Lvl2 != nullptr && appleColl1Lvl2->isCollected != true && apples2[0] == 1)
 	{
 		SDL_Rect appleRect = apple->GetCurrentFrame();
 		app->render->DrawTexture(appleTex, 1104, 2016, &appleRect);                     
 	}
 	else if (appleColl1Lvl2 != nullptr && appleColl1Lvl2->isCollected == true) apples2[0] = 0;
 
-	if (appleColl2Lvl2 != nullptr && appleColl2Lvl2->isCollected != true)
+	if (appleColl2Lvl2 != nullptr && appleColl2Lvl2->isCollected != true && apples2[1] == 1)
 	{
 		SDL_Rect appleRect = apple->GetCurrentFrame();
 		app->render->DrawTexture(appleTex, 2304, 1920, &appleRect);               
 	}
 	else if (appleColl2Lvl2 != nullptr && appleColl2Lvl2->isCollected == true) apples2[1] = 0;
 
-	if (appleColl3Lvl2 != nullptr && appleColl3Lvl2->isCollected == false)
+	if (appleColl3Lvl2 != nullptr && appleColl3Lvl2->isCollected!= true && apples2[2] == 1)
 	{
 		SDL_Rect appleRect = apple->GetCurrentFrame();   
 		app->render->DrawTexture(appleTex, 3384, 1464, &appleRect);
 	}
 	else if (appleColl3Lvl2 != nullptr && appleColl3Lvl2->isCollected == true) apples2[2] = 0;
 
-	if (appleColl4Lvl2 != nullptr && appleColl4Lvl2->isCollected == false)
+	if (appleColl4Lvl2 != nullptr && appleColl4Lvl2->isCollected != true && apples2[3] == 1)
 	{
 		SDL_Rect appleRect = apple->GetCurrentFrame();
 		app->render->DrawTexture(appleTex, 2386, 1272, &appleRect);             
 	}
 	else if (appleColl4Lvl2 != nullptr && appleColl4Lvl2->isCollected == true) apples2[3] = 0;
 
-	if (appleColl5Lvl2 != nullptr && appleColl5Lvl2->isCollected == false)
+	if (appleColl5Lvl2 != nullptr && appleColl5Lvl2->isCollected != true && apples2[4] == 1)
 	{
 		SDL_Rect appleRect = apple->GetCurrentFrame();
 		app->render->DrawTexture(appleTex, 2386, 792, &appleRect);  
 	}
 	else if (appleColl5Lvl2 != nullptr && appleColl5Lvl2->isCollected == true) apples2[4] = 0;
 
-	if (appleColl6Lvl2 != nullptr && appleColl6Lvl2->isCollected == false)
+	if (appleColl6Lvl2 != nullptr && appleColl6Lvl2->isCollected != true && apples2[5] == 1)
 	{
 		SDL_Rect appleRect = apple->GetCurrentFrame();
 		app->render->DrawTexture(appleTex, 3384, 2088, &appleRect);
@@ -267,7 +267,7 @@ bool SceneLvl2::PostUpdate()
 	{
 		pineapple->Update();
 	}
-	if (pineappleColl1Lvl2 != nullptr && pineappleColl1Lvl2->isCollected == false)
+	if (pineappleColl1Lvl2 != nullptr && pineappleColl1Lvl2->isCollected != true && apples2[6] == 1)
 	{
 		SDL_Rect pineappleRect1 = pineapple->GetCurrentFrame();
 		app->render->DrawTexture(pineappleTex, 3094, 552, &pineappleRect1);

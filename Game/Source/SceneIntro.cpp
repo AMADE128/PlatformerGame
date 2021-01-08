@@ -41,7 +41,7 @@ bool SceneIntro::Start()
 	logoOff = app->tex->Load("Assets/Textures/Screens/logo_off.png");
 
 	logoMusic = app->audio->LoadFx("Assets/Audio/SceneMusic/light.wav");
-	//app->musicList.Add(&logoMusic);
+	app->musicList.Add(&logoMusic);
 
 	app->audio->PlayFx(logoMusic);
 
@@ -124,7 +124,7 @@ bool SceneIntro::CleanUp()
 
 	LOG("Freeing scene");
 	app->tex->UnLoad(logo);
-	app->audio->UnloadFX(1);
+	app->audio->UnloadFX(logoMusic);
 
 	active = false;
 

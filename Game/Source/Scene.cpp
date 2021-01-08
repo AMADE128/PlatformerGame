@@ -217,35 +217,35 @@ bool Scene::PostUpdate()
 	{
 		apple->Update();
 	}
-	if (appleColl1 != nullptr && appleColl1->isCollected != true)
+	if (appleColl1 != nullptr && appleColl1->isCollected != true && apples[0] == 1)
 	{
 		SDL_Rect appleRect = apple->GetCurrentFrame();
 		app->render->DrawTexture(appleTex, 2544, 1344, &appleRect);
 	}
 	else if (appleColl1 != nullptr && appleColl1->isCollected == true) apples[0] = 0;
 
-	if (appleColl2 != nullptr && appleColl2->isCollected != true)
+	if (appleColl2 != nullptr && appleColl2->isCollected != true && apples[1] == 1)
 	{
 		SDL_Rect appleRect = apple->GetCurrentFrame();
 		app->render->DrawTexture(appleTex, 3776, 900, &appleRect);
 	}
 	else if (appleColl2 != nullptr && appleColl2->isCollected == true) apples[1] = 0;
 
-	if (appleColl3 != nullptr && appleColl3->isCollected == false)
+	if (appleColl3 != nullptr && appleColl3->isCollected == false && apples[2] == 1)
 	{
 		SDL_Rect appleRect = apple->GetCurrentFrame();
 		app->render->DrawTexture(appleTex, 3976, 836, &appleRect);
 	}
 	else if (appleColl3 != nullptr && appleColl3->isCollected == true) apples[2] = 0;
 
-	if (appleColl4 != nullptr && appleColl4->isCollected == false)
+	if (appleColl4 != nullptr && appleColl4->isCollected == false && apples[3] == 1)
 	{
 		SDL_Rect appleRect = apple->GetCurrentFrame();
 		app->render->DrawTexture(appleTex, 4176, 776, &appleRect);
 	}
 	else if (appleColl4 != nullptr && appleColl4->isCollected == true) apples[3] = 0;
 
-	if (appleColl5 != nullptr && appleColl5->isCollected == false)
+	if (appleColl5 != nullptr && appleColl5->isCollected == false && apples[4] == 1)
 	{
 		SDL_Rect appleRect = apple->GetCurrentFrame();
 		app->render->DrawTexture(appleTex, 1368, 528, &appleRect);
@@ -257,7 +257,7 @@ bool Scene::PostUpdate()
 	{
 		pineapple->Update();
 	}
-	if (pineappleColl1 != nullptr && pineappleColl1->isCollected == false)
+	if (pineappleColl1 != nullptr && pineappleColl1->isCollected == false && apples[5] == 1)
 	{
 		SDL_Rect pineappleRect1 = pineapple->GetCurrentFrame();
 		app->render->DrawTexture(pineappleTex, 4300, 500, &pineappleRect1);
