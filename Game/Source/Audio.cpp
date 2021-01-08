@@ -86,12 +86,12 @@ bool Audio::PlayMusic(const char* path, float fade_time)
 {
 	bool ret = true;
 
-	if(!active)
+	if (!active)
 		return false;
 
-	if(music != NULL)
+	if (music != NULL)
 	{
-		if(fade_time > 0.0f)
+		if (fade_time > 0.0f)
 		{
 			Mix_FadeOutMusic(int(fade_time * 1000.0f));
 		}
@@ -100,22 +100,22 @@ bool Audio::PlayMusic(const char* path, float fade_time)
 			Mix_HaltMusic();
 		}
 
-		// this call blocks until fade out is done
+		// This call blocks until fade out is done
 		Mix_FreeMusic(music);
 	}
 
 	music = Mix_LoadMUS(path);
 
-	if(music == NULL)
+	if (music == NULL)
 	{
 		LOG("Cannot load music %s. Mix_GetError(): %s\n", path, Mix_GetError());
 		ret = false;
 	}
 	else
 	{
-		if(fade_time > 0.0f)
+		if (fade_time > 0.0f)
 		{
-			if(Mix_FadeInMusic(music, -1, (int) (fade_time * 1000.0f)) < 0)
+			if (Mix_FadeInMusic(music, -1, (int)(fade_time * 1000.0f)) < 0)
 			{
 				LOG("Cannot fade in music %s. Mix_GetError(): %s", path, Mix_GetError());
 				ret = false;
@@ -123,7 +123,7 @@ bool Audio::PlayMusic(const char* path, float fade_time)
 		}
 		else
 		{
-			if(Mix_PlayMusic(music, -1) < 0)
+			if (Mix_PlayMusic(music, -1) < 0)
 			{
 				LOG("Cannot play in music %s. Mix_GetError(): %s", path, Mix_GetError());
 				ret = false;
@@ -179,12 +179,24 @@ bool Audio::PlayFx(unsigned int id, int repeat)
 	return ret;
 }
 
-bool Audio::SetVolume(unsigned int id, int volume)
+bool Audio::SetVolumeFx(unsigned int id, int volume)
 {
 	bool ret = false;
 	if (fx[id] != nullptr)
 	{
 		Mix_VolumeChunk(fx[id], volume);
+	}
+
+	return ret;
+}
+
+bool Audio::SetVolumeMusic(_Mix_Music* music, int volume)
+{
+	bool ret = false;
+	if (music != nullptr)
+	{
+		Mix_VolumeMusic(volume);
+		ret = true;
 	}
 
 	return ret;

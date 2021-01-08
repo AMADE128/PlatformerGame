@@ -11,6 +11,8 @@
 #include "FadeToBlack.h"
 #include "Fonts.h"
 
+#include <SDL_mixer\include\SDL_mixer.h>
+
 #include "Defs.h"
 #include "Log.h"
 
@@ -62,12 +64,12 @@ bool SceneMenu::Awake()
 // Called before the first frame
 bool SceneMenu::Start()
 {
-	// L03: DONE: Load map
+
+	app->audio->PlayMusic("Assets/Audio/SceneMusic/intro_music.wav");
+
 	menuTex = app->tex->Load("Assets/Textures/Screens/menu.png");
 	creditsTex = app->tex->Load("Assets/Textures/Interface/text_box.png");
 	licenseTex = app->tex->Load("Assets/Textures/Interface/license.png");
-	musicMenu = app->audio->LoadFx("Assets/Audio/SceneMusic/intro_music.wav");
-
 	btnBack->texture = btnNew->texture = btnExit->texture = btnLoad->texture = btnOptions->texture = app->tex->Load("Assets/Textures/Interface/button.png");
 	boxTex = app->tex->Load("Assets/Textures/Interface/box.png");
 	btnNew->text = app->tex->Load("Assets/Textures/Interface/new.png");
@@ -96,9 +98,6 @@ bool SceneMenu::Start()
 	{
 		checkFullScreen->checked = false;
 	}
-
-	app->musicList.Add(&musicMenu);
-	app->audio->PlayFx(musicMenu, -1);
 
 	app->fonts->Init();
 	app->fonts->Start();
@@ -198,6 +197,7 @@ bool SceneMenu::CleanUp()
 	if (!active) return true;
 
 	LOG("Freeing scene");
+	Mix_HaltMusic();
 
 	app->tex->UnLoad(menuTex);
 	app->tex->UnLoad(creditsTex);
@@ -225,9 +225,6 @@ bool SceneMenu::CleanUp()
 	app->tex->UnLoad(checkFullScreen->text);
 	app->tex->UnLoad(checkFullScreen->leftText);
 	app->tex->UnLoad(checkCredits->texture);
-
-	app->audio->UnloadFX(musicMenu);
-	app->musicList.Clear();
 
 	app->fonts->CleanUp();
 

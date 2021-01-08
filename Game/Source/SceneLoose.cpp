@@ -12,6 +12,8 @@
 #include "Fonts.h"
 #include "ModuleParticles.h"
 
+#include <SDL_mixer\include\SDL_mixer.h>
+
 #include "Defs.h"
 #include "Log.h"
 
@@ -52,7 +54,7 @@ bool SceneLoose::Start()
 	btnBack->text = app->tex->Load("Assets/Textures/Interface/back.png");
 
 	loseMusic = app->audio->LoadFx("Assets/Audio/SceneMusic/lose_music.wav");
-	app->musicList.Add(&loseMusic);
+	app->fxList.Add(&loseMusic);
 	app->audio->PlayFx(loseMusic);
 
 	app->render->camera.x = 0;
@@ -118,9 +120,10 @@ bool SceneLoose::CleanUp()
 {
 	if (!active) return true;
 	LOG("Freeing scene");
+	Mix_HaltMusic();
 
 	app->audio->UnloadFX(loseMusic);
-	app->musicList.Clear();
+	app->fxList.Clear();
 
 	app->tex->UnLoad(loose);
 	app->tex->UnLoad(btnContinue->texture);

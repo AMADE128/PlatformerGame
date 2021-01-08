@@ -1020,7 +1020,6 @@ bool Player::CleanUp()
 	app->audio->UnloadFX(pointFx);
 	app->audio->UnloadFX(leafFx);
 	app->audio->UnloadFX(abilityFx);
-	app->musicList.Clear();
 
 	active = false;
 
@@ -1164,23 +1163,38 @@ bool Player::CheckPoint(Collider* c1, Collider* c2)
 	switch (currentLvl)
 	{
 	case 1:
-		app->scene->savePoint = true;
+		if (app->scene->savePoint == false)
+		{
+			app->scene->savePoint = true;
+			playerLoadF6 = false;
+			app->audio->PlayFx(app->scene->checkpointFx);
+
+			auxc.x = position.x;
+			auxc.y = position.y;
+
+			nothingSaved = false;
+
+			app->SaveGameRequest();
+		}
 		break;
 	case 2:
-		app->sceneLvl2->savePoint = true;
+		if (app->sceneLvl2->savePoint == false)
+		{
+			app->sceneLvl2->savePoint = true;
+			playerLoadF6 = false;
+			app->audio->PlayFx(app->scene->checkpointFx);
+
+			auxc.x = position.x;
+			auxc.y = position.y;
+
+			nothingSaved = false;
+
+			app->SaveGameRequest();
+		}
 		break;
 	default:
 		break;
 	}
-	playerLoadF6 = false;
-	app->audio->PlayFx(app->scene->checkpointFx);
-
-    auxc.x = position.x;
-	auxc.y = position.y;
-
-	nothingSaved = false;
-
-	app->SaveGameRequest();
 	
 
 	return true;

@@ -122,7 +122,6 @@ public:
     int screenTicks;
 	float secondsSinceStartup;
 
-	List<unsigned int*>	musicList;
 	List<unsigned int*>	fxList;
 	int volumeMusic = 64;
 	int volumeFX = 64;

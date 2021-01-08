@@ -389,14 +389,9 @@ bool App::PostUpdate()
 	}
 
 	ListItem<unsigned int*>* itemMusic;
-	for (itemMusic = musicList.start; itemMusic != NULL; itemMusic = itemMusic->next)
-	{
-		app->audio->SetVolume(*itemMusic->data, volumeMusic);
-	}
-	for (itemMusic = fxList.start; itemMusic != NULL; itemMusic = itemMusic->next)
-	{
-		app->audio->SetVolume(*itemMusic->data, volumeFX);
-	}
+	for (itemMusic = fxList.start; itemMusic != NULL; itemMusic = itemMusic->next) app->audio->SetVolumeFx(*itemMusic->data, volumeFX);
+
+	app->audio->SetVolumeMusic(audio->music, volumeMusic);
 
 	return ret;
 }

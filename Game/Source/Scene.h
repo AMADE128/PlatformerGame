@@ -68,7 +68,6 @@ private:
 	Animation appleAnim;
 	Animation pineappleAnim;
 
-	unsigned int musicScene1;
 	unsigned int checkpointMusic;
 
 };

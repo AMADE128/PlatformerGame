@@ -15,6 +15,8 @@
 #include "ModuleParticles.h"
 #include "ModuleEnemies.h"
 
+#include <SDL_mixer\include\SDL_mixer.h>
+
 #include "Defs.h"
 #include "Log.h"
 
@@ -80,10 +82,7 @@ bool SceneLvl2::Start()
 	appleTex = app->tex->Load("Assets/Textures/Items/Fruits/apple.png");
 	pineappleTex = app->tex->Load("Assets/Textures/Items/Fruits/pineapple.png");
 
-
-	musicScene1 = app->audio->LoadFx("Assets/Audio/SceneMusic/level_music.wav");
-	app->musicList.Add(&musicScene1);
-	app->audio->PlayFx(musicScene1, -1);
+	app->audio->PlayMusic("Assets/Audio/SceneMusic/level_music.wav");
 
 	checkpointMusic = app->audio->LoadFx("Assets/Audio/MyscMusic/checkpoint.wav");
 	app->fxList.Add(&checkpointMusic);
@@ -282,6 +281,8 @@ bool SceneLvl2::CleanUp()
 	if (!active) return true;
 
 	LOG("Freeing scene");
+	Mix_HaltMusic();
+
 	app->tex->UnLoad(checkPointIdleTex);
 	app->tex->UnLoad(checkPointStartTex);
 	app->tex->UnLoad(checkPointTouchTex);
@@ -297,9 +298,7 @@ bool SceneLvl2::CleanUp()
 	app->collision->RemoveCollider(pineappleColl1Lvl2);
 	app->collision->RemoveCollider(checkPointColl);
 
-	app->audio->UnloadFX(musicScene1);
 	app->audio->UnloadFX(checkpointMusic);
-	app->musicList.Clear();
 	app->fxList.Clear();
 
 	app->player->CleanUp();

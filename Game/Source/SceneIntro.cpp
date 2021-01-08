@@ -10,6 +10,8 @@
 #include "Player.h"
 #include "FadeToBlack.h"
 
+#include <SDL_mixer\include\SDL_mixer.h>
+
 #include "Defs.h"
 #include "Log.h"
 
@@ -41,8 +43,6 @@ bool SceneIntro::Start()
 	logoOff = app->tex->Load("Assets/Textures/Screens/logo_off.png");
 
 	logoMusic = app->audio->LoadFx("Assets/Audio/SceneMusic/light.wav");
-	app->musicList.Add(&logoMusic);
-
 	app->audio->PlayFx(logoMusic);
 
 	return true;
@@ -123,8 +123,11 @@ bool SceneIntro::CleanUp()
 	if (!active) return true;
 
 	LOG("Freeing scene");
+	Mix_HaltMusic();
+
 	app->tex->UnLoad(logo);
 	app->audio->UnloadFX(logoMusic);
+	app->fxList.Clear();
 
 	active = false;
 

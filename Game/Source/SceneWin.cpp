@@ -12,6 +12,8 @@
 #include "ModuleParticles.h"
 #include "Fonts.h"
 
+#include <SDL_mixer\include\SDL_mixer.h>
+
 #include "Defs.h"
 #include "Log.h"
 
@@ -48,7 +50,6 @@ bool SceneWin::Start()
 	btnBack->text = app->tex->Load("Assets/Textures/Interface/back.png");
 
 	winMusic = app->audio->LoadFx("Assets/Audio/SceneMusic/win_music.wav");
-	app->musicList.Add(&winMusic);
 	app->audio->PlayFx(winMusic);
 
 	app->render->camera.x = 0;
@@ -148,14 +149,15 @@ bool SceneWin::CleanUp()
 	if (!active) return true;
 
 	LOG("Freeing scene");
+	Mix_HaltMusic();
 
 	app->tex->UnLoad(winTex);
 	app->tex->UnLoad(appleTex);
 	app->tex->UnLoad(btnBack->texture);
 	app->tex->UnLoad(btnBack->text);
 
-	app->musicList.Clear();
 	app->audio->UnloadFX(winMusic);
+	app->fxList.Clear();
 
 	active = false;
 

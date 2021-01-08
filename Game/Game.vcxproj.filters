@@ -134,6 +134,7 @@
     <ClInclude Include="Source\GuiCheckBox.h">
       <Filter>GuiControl</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Entity.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

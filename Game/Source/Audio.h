@@ -36,12 +36,14 @@ public:
 	bool PlayFx(unsigned int fx, int repeat = 0);
 	bool UnloadFX(int id);
 
-	bool SetVolume(unsigned int id, int volume);
+	bool SetVolumeFx(unsigned int id, int volume);
+	bool SetVolumeMusic(_Mix_Music* music, int volume);
 
 	Mix_Chunk* fx[MAX_FX] = { nullptr };
-private:
 
 	_Mix_Music* music;
+
+private:
 };
 
 #endif // __AUDIO_H__

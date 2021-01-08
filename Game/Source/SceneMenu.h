@@ -53,8 +53,6 @@ public:
 	char btnCreditsText[10] = { "\0" };
 
 	MenuStates menuState = NORMAL;
-
-	unsigned int musicMenu;
 	
 	GuiSlider* sliderMusic;
 	GuiSlider* sliderFx;
