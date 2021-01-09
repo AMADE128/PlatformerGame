@@ -1268,75 +1268,73 @@ bool Player::SaveState(pugi::xml_node& data) const
 		player.append_attribute("cont") = cont;
 	}
 
-	else
+
+	if (playerSave == true)
 	{
-		if (playerSave == true)
-		{
-			player = data.append_child("checkpoint");
+		player = data.append_child("checkpoint");
 
-			player.append_attribute("x") = auxc.x;
-			player.append_attribute("y") = auxc.y;
+		player.append_attribute("x") = auxc.x;
+		player.append_attribute("y") = auxc.y;
 
-			player = data.append_child("position");
+		player = data.append_child("position");
 
-			player.append_attribute("x") = position.x;
-			player.append_attribute("y") = position.y;
-		}
-		else if (playerSave == false)
-		{
-			player = data.append_child("checkpoint");
-
-			player.append_attribute("x") = position.x;
-			player.append_attribute("y") = position.y;
-
-			player = data.append_child("position");
-
-			player.append_attribute("x") = auxp.x;
-			player.append_attribute("y") = auxp.y;
-		}
-
-		player = data.append_child("level");
-
-		player.append_attribute("lvl") = lvl;
-
-		player = data.append_child("continue");
-
-		player.append_attribute("cont") = cont;
-
-		player = data.append_child("score");
-
-		player.append_attribute("sco") = appleCounter;
-
-		player = data.append_child("lifes");
-
-		player.append_attribute("hp") = lifes;
-
-		player = data.append_child("apples");
-
-		player.append_attribute("app1") = app->scene->apples[0];
-		player.append_attribute("app2") = app->scene->apples[1];
-		player.append_attribute("app3") = app->scene->apples[2];
-		player.append_attribute("app4") = app->scene->apples[3];
-		player.append_attribute("app5") = app->scene->apples[4];
-		player.append_attribute("pine1") = app->scene->apples[5];
-
-		player.append_attribute("app6") = app->sceneLvl2->apples2[0];
-		player.append_attribute("app7") = app->sceneLvl2->apples2[1];
-		player.append_attribute("app8") = app->sceneLvl2->apples2[2];
-		player.append_attribute("app9") = app->sceneLvl2->apples2[3];
-		player.append_attribute("app10") = app->sceneLvl2->apples2[4];
-		player.append_attribute("app11") = app->sceneLvl2->apples2[5];
-		player.append_attribute("pine2") = app->sceneLvl2->apples2[6];
-
-		player = data.append_child("savepoint");
-
-		player.append_attribute("lvl1") = app->scene->savePoint;
-		player.append_attribute("lvl2") = app->sceneLvl2->savePoint;
-
-		player = data.append_child("highscore");
-
-		player.append_attribute("score") = highScore;
+		player.append_attribute("x") = position.x;
+		player.append_attribute("y") = position.y;
 	}
+	else if (playerSave == false)
+	{
+		player = data.append_child("checkpoint");
+
+		player.append_attribute("x") = position.x;
+		player.append_attribute("y") = position.y;
+
+		player = data.append_child("position");
+
+		player.append_attribute("x") = auxp.x;
+		player.append_attribute("y") = auxp.y;
+	}
+
+	player = data.append_child("level");
+
+	player.append_attribute("lvl") = lvl;
+
+	player = data.append_child("continue");
+
+	player.append_attribute("cont") = cont;
+
+	player = data.append_child("score");
+
+	player.append_attribute("sco") = appleCounter;
+
+	player = data.append_child("lifes");
+
+	player.append_attribute("hp") = lifes;
+
+	player = data.append_child("apples");
+
+	player.append_attribute("app1") = app->scene->apples[0];
+	player.append_attribute("app2") = app->scene->apples[1];
+	player.append_attribute("app3") = app->scene->apples[2];
+	player.append_attribute("app4") = app->scene->apples[3];
+	player.append_attribute("app5") = app->scene->apples[4];
+	player.append_attribute("pine1") = app->scene->apples[5];
+
+	player.append_attribute("app6") = app->sceneLvl2->apples2[0];
+	player.append_attribute("app7") = app->sceneLvl2->apples2[1];
+	player.append_attribute("app8") = app->sceneLvl2->apples2[2];
+	player.append_attribute("app9") = app->sceneLvl2->apples2[3];
+	player.append_attribute("app10") = app->sceneLvl2->apples2[4];
+	player.append_attribute("app11") = app->sceneLvl2->apples2[5];
+	player.append_attribute("pine2") = app->sceneLvl2->apples2[6];
+
+	player = data.append_child("savepoint");
+
+	player.append_attribute("lvl1") = app->scene->savePoint;
+	player.append_attribute("lvl2") = app->sceneLvl2->savePoint;
+
+	player = data.append_child("highscore");
+
+	player.append_attribute("score") = highScore;
 		
 	return true;
 }
