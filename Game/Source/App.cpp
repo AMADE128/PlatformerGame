@@ -62,12 +62,12 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(sceneMenu);
 	AddModule(scene);
 	AddModule(sceneLvl2);
-	AddModule(player);
 	AddModule(sceneLoose);
 	AddModule(sceneWin);
 	AddModule(moduleParticles);
 	AddModule(moduleEnemies);
 	AddModule(collision);
+	AddModule(player);
 	AddModule(fadeToBlack);
 	AddModule(fonts);
 	AddModule(pathfinding);
@@ -83,7 +83,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	moduleEnemies->active = false;
 	collision->active = false;
 	fonts->active = false;
-	pathfinding->active = false;
 
 	// Render last to swap buffer
 	AddModule(render);

@@ -75,7 +75,6 @@ public:
 	EnemyType enemyType;
 
 	DynArray<iPoint> enemyPath;
-	bool follow;
 	int i = 0;
 
 	float gravity = 0.0f;

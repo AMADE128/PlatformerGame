@@ -57,8 +57,6 @@ public:
 	int GetCurrentPositionInPath(iPoint mapPositionEnemy);
 	iPoint MapToWorld(iPoint position);
 
-	// The enemies sprite sheet
-
 	// All spawned enemies in the scene
 	Enemy* enemies[MAX_ENEMIES] = { nullptr };
 

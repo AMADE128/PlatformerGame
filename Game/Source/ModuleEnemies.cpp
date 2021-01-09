@@ -140,7 +140,6 @@ bool ModuleEnemies::Update(float dt)
 				enemies[i]->Update();
 
 			}
-			enemies[i]->Draw();
 		}
 	}
 
@@ -156,6 +155,7 @@ bool ModuleEnemies::PostUpdate()
 	{
 		if (enemies[i] != nullptr)
 		{
+			enemies[i]->Draw();
 			if (enemies[i]->deathFinish == true)
 			{
 				app->pathfinding->ResetPath({ enemies[i]->collider->rect.x, enemies[i]->collider->rect.y });

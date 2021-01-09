@@ -82,20 +82,7 @@ uchar PathFinding::GetTileAt(const iPoint& pos) const
 
 	return INVALID_WALK_CODE;
 }
-//int PathFinding::MovementCost(iPoint pos) const
-//{
-//	int ret = -1;
-//
-//	if (CheckBoundaries(pos))
-//	{
-//		int id = app->map->data.layers.start->next->data->Get(pos.x, pos.y);
-//
-//		if (id == 0) ret = 3;
-//		else ret = 0;
-//	}
-//
-//	return ret;
-//}
+
 bool PathFinding::PropagateAStar(const iPoint& destination)
 {
 	// L12a: TODO 2: Implement AStar algorythm
