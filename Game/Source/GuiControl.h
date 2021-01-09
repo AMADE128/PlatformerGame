@@ -84,8 +84,8 @@ public:
 	SDL_Rect bounds;        // Position and size
 	SDL_Color color;        // Tint color
 
-	SDL_Texture* texture; 
-	SDL_Texture* text;// Texture atlas reference
+	SDL_Texture* texture = nullptr; 
+	SDL_Texture* text = nullptr;// Texture atlas reference
 	SDL_Rect section; // Texture atlas base section
 	SDL_Rect checkSection;
 

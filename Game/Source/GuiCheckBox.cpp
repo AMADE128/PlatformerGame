@@ -52,7 +52,10 @@ bool GuiCheckBox::Draw(Render* render)
 		break;
 	case GuiControlState::NORMAL:
 		section = { 0, 0, SMALL_BUTT_WIDTH, SMALL_BUTT_HEIGHT };
-		render->DrawTexture(leftText, bounds.x - 150, bounds.y);
+		if (leftText != nullptr)
+		{
+			render->DrawTexture(leftText, bounds.x - 150, bounds.y);
+		}
 		render->DrawTexture(texture, bounds.x, bounds.y, &section);
 		if (id != 2)
 		{
