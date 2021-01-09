@@ -334,6 +334,7 @@ bool Player::Update(float dt)
 			{
 				if (nothingSaved == false)
 				{
+						playerLoadF6 = true;
 					if (lvl == 2)
 					{
 						if (app->scene->active == true)
@@ -1243,6 +1244,14 @@ bool Player::LoadState(pugi::xml_node& data)
 	{
 		highScore = data.child("highscore").attribute("score").as_int();
 		setScore = false;
+		if (playerLoadF6 == true)
+		{
+			position.x = data.child("position").attribute("x").as_int();
+			position.y = data.child("position").attribute("y").as_int();
+
+			currentLvl = data.child("level").attribute("lvl").as_int();
+			playerLoadF6 = false;
+		}
 	}
 
 	return true;

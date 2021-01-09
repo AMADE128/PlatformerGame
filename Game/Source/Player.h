@@ -177,6 +177,7 @@ public:
 	bool started = false;
 	bool setScore = false;
 	bool newHighScore = false;
+	bool startLevel = false;
 
 	bool cont = false;
 };

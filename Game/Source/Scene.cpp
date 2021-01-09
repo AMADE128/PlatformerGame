@@ -148,18 +148,28 @@ bool Scene::Start()
 
 	if (app->player->cont == false)
 	{
-		if (app->player->checkpointLvl1 == false)
-		{
-			app->player->position.x = 720;
-			app->player->position.y = 1584;
-		}
-		else
+		if (app->player->checkpointLvl1 == true)
 		{
 			app->player->position.x = 3860;
 			app->player->position.y = 1392;
 		}
+		else
+		{
+		    app->player->position.x = 720;
+			app->player->position.y = 1584;
+		}
 	}
-
+	else if (app->player->checkpointLvl1 == true)
+	{
+		app->player->position.x = 3860;
+		app->player->position.y = 1392;
+	}
+	if (app->player->startLevel == true)
+	{
+		app->player->position.x = 720;
+		app->player->position.y = 1584;
+		app->player->startLevel = false;
+	}
 	app->player->saveGame = false;
 
 	return true;
