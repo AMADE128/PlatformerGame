@@ -144,7 +144,7 @@ bool SceneLvl2::Start()
 
 	if (app->player->cont == false)
 	{	
-		if(app->player->checkpointLvl2 == true)
+		if(app->player->checkpointLvl2 == true && app->player->dead == false)
 		{
 			app->player->position.x = 3216;
 			app->player->position.y = 1920;
@@ -155,7 +155,7 @@ bool SceneLvl2::Start()
 			app->player->position.y = 2256;
 		}
 	}
-	else if (app->player->checkpointLvl2 == true)
+	else if (app->player->checkpointLvl2 == true && app->player->dead == false)
 	{
 		app->player->position.x = 3216;
 		app->player->position.y = 1920;
@@ -166,6 +166,7 @@ bool SceneLvl2::Start()
 		app->player->position.y = 2256;
 		app->player->startLevel = false;
 	}
+	app->player->dead = false;
 	app->player->saveGame = false;
 
 	return true;

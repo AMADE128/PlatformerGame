@@ -104,6 +104,7 @@ public:
 
 	bool checkpointLvl1 = false;
 	bool checkpointLvl2 = false;
+	bool dead = false;
 
 	unsigned int hitFx;
 	unsigned int abilityFx;

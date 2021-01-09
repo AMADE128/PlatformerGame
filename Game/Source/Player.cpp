@@ -834,6 +834,8 @@ bool Player::PostUpdate()
 	{
 		if (lifes <= 1)
 		{
+			checkpointLvl1 == false;
+			checkpointLvl2 == false;
 			deathAnim.Reset();
 			playerColl->SetPos(position.x + 25, position.y + 20);
 			cameraColl->rect.x = position.x - 100;
@@ -854,6 +856,7 @@ bool Player::PostUpdate()
 		}
 		else
 		{
+			lifes--;
 			speedX = 0;
 			speedY = 0;
 			isJumping = false;
@@ -878,7 +881,6 @@ bool Player::PostUpdate()
 			playerColl->SetPos(position.x + 25, position.y + 20);
 			cameraColl->rect.x = position.x - 100;
 			cameraColl->rect.y = position.y - 100;
-			lifes--;
 			appear = true;
 			death = false;
 
@@ -1089,6 +1091,7 @@ bool Player::Fall(Collider* c1, Collider* c2)
 
 bool Player::Die(Collider* c1, Collider* c2)
 {
+	dead = true;
 	death = true;
 	currentAnimation = &deathAnim;
 	currentTex = deathTex;
@@ -1205,16 +1208,16 @@ bool Player::LoadState(pugi::xml_node& data)
 
 		currentLvl = data.child("level").attribute("lvl").as_int();
 		playerLoadF6 = false;
+		
 	}
 	else if (playerLoadF6 == false && setScore == false)
 	{
 
 		position.x = data.child("checkpoint").attribute("x").as_int();
 		position.y = data.child("checkpoint").attribute("y").as_int();
-
 	}
 
-	if (cont == true && started == false && setScore == false)
+	if (cont == true && started == false && setScore == false && dead == false)
 	{
 		cont = data.child("continue").attribute("cont").as_bool();
 
@@ -1240,6 +1243,7 @@ bool Player::LoadState(pugi::xml_node& data)
 		app->scene->savePoint = data.child("savepoint").attribute("lvl1").as_bool();
 		app->sceneLvl2->savePoint = data.child("savepoint").attribute("lvl2").as_bool();
 	}
+	
 	if(setScore == true)
 	{
 		highScore = data.child("highscore").attribute("score").as_int();
@@ -1253,7 +1257,6 @@ bool Player::LoadState(pugi::xml_node& data)
 			playerLoadF6 = false;
 		}
 	}
-
 	return true;
 }
 
