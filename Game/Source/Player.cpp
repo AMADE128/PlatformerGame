@@ -149,34 +149,6 @@ bool Player::Start()
 	setScore = true;
 	app->LoadGameRequest();
 
-	if (app->scene->active == true && cont == false)
-	{
-		if (checkpointLvl1 == false)
-		{
-			position.x = 720;
-			position.y = 1584;
-		}
-		else
-		{
-			position.x = 3860;
-			position.y = 1392;
-		}
-
-	}
-	else if (app->sceneLvl2->active == true && cont == false)
-	{
-		if (checkpointLvl2 == false)
-		{
-			position.x = 620;
-			position.y = 2256;
-		}
-		else
-		{
-			position.x = 3216;
-			position.y = 1920;
-		}
-
-	}
 	//Cargar texturas
 	idleTex = app->tex->Load("Assets/Textures/Character/idle.png");
 	fallTex = app->tex->Load("Assets/Textures/Character/fall.png");
@@ -866,6 +838,7 @@ bool Player::PostUpdate()
 			speedX = 0;
 			speedY = 0;
 			lifes = 3;
+			isJumping = false;
 			appleCounter = 0;
 			if (app->scene->active == true)
 			{
@@ -881,7 +854,7 @@ bool Player::PostUpdate()
 			speedX = 0;
 			speedY = 0;
 			isJumping = false;
-			if (app->scene->savePoint == true)
+			if ((app->scene->savePoint == true && app->scene->active == true) || (app->sceneLvl2->savePoint == true && app->sceneLvl2->active == true))
 			{
 				app->LoadGameRequest();
 			}

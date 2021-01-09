@@ -142,6 +142,20 @@ bool SceneLvl2::Start()
 		app->LoadGameRequest();
 	}
 
+	if (app->player->cont == false)
+	{
+		if (app->player->checkpointLvl2 == false)
+		{
+			app->player->position.x = 620;
+			app->player->position.y = 2256;
+		}
+		else
+		{
+			app->player->position.x = 3216;
+			app->player->position.y = 1920;
+		}
+	}
+
 	app->player->saveGame = false;
 
 	return true;

@@ -146,6 +146,20 @@ bool Scene::Start()
 		app->LoadGameRequest();
 	}
 
+	if (app->player->cont == false)
+	{
+		if (app->player->checkpointLvl1 == false)
+		{
+			app->player->position.x = 720;
+			app->player->position.y = 1584;
+		}
+		else
+		{
+			app->player->position.x = 3860;
+			app->player->position.y = 1392;
+		}
+	}
+
 	app->player->saveGame = false;
 
 	return true;
@@ -160,6 +174,7 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	app->map->Draw();
 
 	dt *= 6;
 	checkPointIdleAnim.speed = 4.0f * dt;
@@ -172,7 +187,6 @@ bool Scene::Update(float dt)
 		app->fadeToBlack->Fade(app->scene, (Module*)app->sceneLvl2, 80);
 	}
 
-	app->map->Draw();
 	if (savePoint == true)
 	{
 		if (checkPointTouchAnim.finish == false)
