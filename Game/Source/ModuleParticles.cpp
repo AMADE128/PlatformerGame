@@ -137,7 +137,6 @@ bool ModuleParticles::Update(float dt)
 			particles[i] = nullptr;
 		}
 	}
-
 	return ret;
 }
 
