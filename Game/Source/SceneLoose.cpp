@@ -103,7 +103,7 @@ bool SceneLoose::OnGuiMouseClickEvent(GuiControl* control)
 			app->fadeToBlack->Fade(this, (Module*)app->scene, 80);
 			break;
 		case 11:
-			app->fadeToBlack->Fade(this, (Module*)app->sceneMenu, 10);
+			app->fadeToBlack->Fade(this, (Module*)app->sceneMenu, 80);
 			break;
 		default:
 			break;

@@ -103,7 +103,7 @@ bool SceneIntro::Update(float dt)
 
 	if (frameMusic >= 392)
 	{
-		app->fadeToBlack->Fade(this, (Module*)app->sceneMenu, 1600*dt);
+		app->fadeToBlack->Fade(this, (Module*)app->sceneMenu, 80);
 	}
 
 	return true;

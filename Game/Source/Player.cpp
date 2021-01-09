@@ -388,12 +388,12 @@ bool Player::Update(float dt)
 				if (app->scene->active == true)
 				{
 					checkpointLvl2 = true;
-					app->fadeToBlack->Fade(app->scene, (Module*)app->sceneLvl2);
+					app->fadeToBlack->Fade(app->scene, (Module*)app->sceneLvl2, 80);
 				}
 				else if (app->sceneLvl2->active == true)
 				{
 					checkpointLvl1 = true;
-					app->fadeToBlack->Fade(app->sceneLvl2, (Module*)app->scene);
+					app->fadeToBlack->Fade(app->sceneLvl2, (Module*)app->scene, 80);
 				}
 			}
 			if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN && yDownCollision == true)
@@ -869,11 +869,11 @@ bool Player::PostUpdate()
 			appleCounter = 0;
 			if (app->scene->active == true)
 			{
-				app->fadeToBlack->Fade(app->scene, (Module*)app->sceneLoose, 10);
+				app->fadeToBlack->Fade(app->scene, (Module*)app->sceneLoose, 80);
 			}
 			else if (app->sceneLvl2->active == true)
 			{
-				app->fadeToBlack->Fade(app->sceneLvl2, (Module*)app->sceneLoose, 10);
+				app->fadeToBlack->Fade(app->sceneLvl2, (Module*)app->sceneLoose, 80);
 			}
 		}
 		else
@@ -933,11 +933,11 @@ bool Player::OnGuiMouseClickEvent(GuiControl* control)
 			app->audio->PlayFx(menuPressedFx);
 			if (app->scene->active == true)
 			{
-				app->fadeToBlack->Fade(app->scene, (Module*)app->sceneMenu, 10);
+				app->fadeToBlack->Fade(app->scene, (Module*)app->sceneMenu, 80);
 			}
 			else if (app->sceneLvl2->active == true)
 			{
-				app->fadeToBlack->Fade(app->sceneLvl2, (Module*)app->sceneMenu, 10);
+				app->fadeToBlack->Fade(app->sceneLvl2, (Module*)app->sceneMenu, 80);
 			}
 			break;
 		case 9:

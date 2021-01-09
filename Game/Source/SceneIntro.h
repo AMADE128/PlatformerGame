@@ -36,7 +36,7 @@ public:
 	SDL_Texture* logoOff;
 	
 	unsigned int logoMusic;
-	int frameMusic;
+	int frameMusic = 0;
 
 private:
 };

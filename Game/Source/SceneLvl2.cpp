@@ -158,7 +158,7 @@ bool SceneLvl2::Update(float dt)
 {
 	if (app->player->setScore == true)
 	{
-		app->fadeToBlack->Fade(app->sceneLvl2, (Module*)app->sceneWin, 1600 * dt);
+		app->fadeToBlack->Fade(app->sceneLvl2, (Module*)app->sceneWin, 80);
 	}
 
 	if (app->player->position.x > 4704 && app->player->position.y > 2256)

@@ -169,7 +169,7 @@ bool Scene::Update(float dt)
 	//Draw Scenes
 	if (app->player->position.x < 720 && app->player->position.y < 816 && app->player->god == false)
 	{
-		app->fadeToBlack->Fade(app->scene, (Module*)app->sceneLvl2, 1600 * dt);
+		app->fadeToBlack->Fade(app->scene, (Module*)app->sceneLvl2, 80);
 	}
 
 	app->map->Draw();
