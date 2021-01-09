@@ -145,9 +145,22 @@ bool SceneMenu::Update(float dt)
 		btnBack->Update(app->input, dt);
 		checkFullScreen->Update(app->input, dt);
 		sliderMusic->Update(app->input, dt);
-		app->volumeMusic = (int)(sliderMusic->value*VALUE_TO_VOLUME);
+		app->volumeMusic = (int)(sliderMusic->value * VALUE_TO_VOLUME);
 		sliderFx->Update(app->input, dt);
 		app->volumeFX = (int)(sliderFx->value * VALUE_TO_VOLUME);
+
+		int mouseX, mouseY;
+		app->input->GetMousePosition(mouseX, mouseY);
+		mouseX += app->render->camera.x * -1 / app->win->scale;
+		mouseY += app->render->camera.y * -1 / app->win->scale;
+		if ((mouseX > (1280 / 2 - SLIDER_WIDTH / 2)) && (mouseX < (1280 / 2 - SLIDER_WIDTH / 2 + SLIDER_WIDTH)) &&
+			(mouseY > 400) && (mouseY < (400 + SLIDER_HEIGHT)))
+		{
+			if (app->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP)
+			{
+				app->audio->PlayFx(pressedFx);
+			}
+		}
 		break;
 	case SceneMenu::CREDITS:
 		checkCredits->Update(app->input, dt);

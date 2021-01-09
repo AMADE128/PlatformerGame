@@ -1,5 +1,7 @@
 #include "GuiSlider.h"
 #include "Window.h"
+#include "Audio.h"
+
 
 GuiSlider::GuiSlider(uint32 id, SDL_Rect bounds, int min, int max) : GuiControl(GuiControlType::SLIDER, id)
 {
