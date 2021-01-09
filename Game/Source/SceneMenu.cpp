@@ -90,7 +90,7 @@ bool SceneMenu::Start()
 	sliderMusic->text = app->tex->Load("Assets/Textures/Interface/music.png");
 	sliderMusic->texture = sliderFx->texture = app->tex->Load("Assets/Textures/Interface/slider.png");
 
-	checkFullScreen->texture = checkCredits->texture = app->tex->Load("Assets/Textures/Interface/small_button.png");
+	checkCredits->texture = checkFullScreen->texture = app->tex->Load("Assets/Textures/Interface/small_button.png");
 	checkCredits->text = app->tex->Load("Assets/Textures/Interface/info.png");
 	checkFullScreen->text = app->tex->Load("Assets/Textures/Interface/checked.png");
 	checkFullScreen->leftText = app->tex->Load("Assets/Textures/Interface/full_screen.png");
@@ -124,6 +124,10 @@ bool SceneMenu::PreUpdate()
 // Called each loop iteration
 bool SceneMenu::Update(float dt)
 {
+	if (menuState != SETTINGS)
+	{
+		checkCredits->Update(app->input, dt);
+	}
 	switch (menuState)
 	{
 	case SceneMenu::NORMAL:
@@ -139,7 +143,6 @@ bool SceneMenu::Update(float dt)
 		btnExit->Update(app->input, dt);
 		btnLoad->Update(app->input, dt);
 		btnOptions->Update(app->input, dt);
-		checkCredits->Update(app->input, dt);
 		break;
 	case SceneMenu::SETTINGS:
 		btnBack->Update(app->input, dt);
@@ -163,7 +166,6 @@ bool SceneMenu::Update(float dt)
 		}
 		break;
 	case SceneMenu::CREDITS:
-		checkCredits->Update(app->input, dt);
 		break;
 	case SceneMenu::EXIT:
 		return false;
@@ -180,7 +182,7 @@ bool SceneMenu::PostUpdate()
 {
 	bool ret = true;
 	app->render->DrawTexture(menuTex, 0, 0);
-	
+	checkCredits->Draw(app->render);
 	switch (menuState)
 	{
 	case SceneMenu::NORMAL:
@@ -188,7 +190,6 @@ bool SceneMenu::PostUpdate()
 		btnExit->Draw(app->render);
 		btnLoad->Draw(app->render);
 		btnOptions->Draw(app->render);
-		checkCredits->Draw(app->render);
 		break;
 	case SceneMenu::SETTINGS:
 		app->render->DrawRectangle({ 0, 0, 1280, 720 }, { 0, 0, 0, 170 });
@@ -201,7 +202,6 @@ bool SceneMenu::PostUpdate()
 	case SceneMenu::CREDITS:
 		app->render->DrawTexture(creditsTex, 50, 10);
 		app->render->DrawTexture(licenseTex, 200, 120);
-		checkCredits->Draw(app->render);
 		break;
 	case SceneMenu::EXIT:
 		break;
