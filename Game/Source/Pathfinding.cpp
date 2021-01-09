@@ -152,7 +152,6 @@ bool PathFinding::PropagateAStar(const iPoint& destination)
 }
 void PathFinding::ComputePathAStar(const iPoint& origin, const iPoint& destination)
 {
-	//ResetPath(origin);
 	bool wasFind = true;
 	int count = 0;
 	while (destinationIsFind == false)

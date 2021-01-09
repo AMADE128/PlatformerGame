@@ -160,6 +160,7 @@ bool ModuleEnemies::PostUpdate()
 		{
 			if (enemies[i]->deathFinish == true)
 			{
+				app->pathfinding->ResetPath({ enemies[i]->collider->rect.x, enemies[i]->collider->rect.y });
 				app->collision->RemoveCollider(enemies[i]->collider);
 				delete enemies[i];
 				enemies[i] = nullptr;
