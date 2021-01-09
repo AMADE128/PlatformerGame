@@ -907,10 +907,12 @@ bool Player::OnGuiMouseClickEvent(GuiControl* control)
 			if (app->scene->active == true)
 			{
 				app->fadeToBlack->Fade(app->scene, (Module*)app->sceneMenu, 80);
+				app->sceneMenu->menuState = app->sceneMenu->NORMAL;
 			}
 			else if (app->sceneLvl2->active == true)
 			{
 				app->fadeToBlack->Fade(app->sceneLvl2, (Module*)app->sceneMenu, 80);
+				app->sceneMenu->menuState = app->sceneMenu->NORMAL;
 			}
 			break;
 		case 9:
