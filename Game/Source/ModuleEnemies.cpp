@@ -64,6 +64,38 @@ bool ModuleEnemies::Update(float dt)
 
 			if (app->player->playerState == app->player->NORMAL)
 			{
+				if (enemies[i]->position.DistanceManhattan(app->player->position) < 400)
+				{
+					switch (enemies[i]->enemyType)
+					{
+					case EnemyType::BUNNY:
+					{
+						iPoint mapPositionEnemy = app->map->WorldToMap(enemies[i]->position.x, enemies[i]->position.y);
+						enemies[i]->Pathfinding(enemies[i]->position.x, enemies[i]->position.y);
+						int j = GetCurrentPositionInPath(mapPositionEnemy);
+						if (lastPath->At(j + 1) != NULL)
+						{
+							iPoint nextPositionEnemy = *lastPath->At(j + 1);
+							iPoint nextAuxPositionEenemy = MapToWorld(nextPositionEnemy);
+							enemies[i]->MoveEnemy(enemies[i]->position, nextAuxPositionEenemy, mapPositionEnemy, enemies[i]->enemyType);
+						}
+					}
+					case EnemyType::BIRD:
+					{
+						iPoint mapPositionEnemy = app->map->WorldToMap(enemies[i]->position.x, enemies[i]->position.y);
+						enemies[i]->Pathfinding(enemies[i]->position.x, enemies[i]->position.y);
+						int j = GetCurrentPositionInPath(mapPositionEnemy);
+						if (lastPath->At(j + 1) != NULL)
+						{
+							iPoint nextPositionEnemy = *lastPath->At(j + 1);
+							iPoint nextAuxPositionEenemy = MapToWorld(nextPositionEnemy);
+							enemies[i]->MoveEnemy(enemies[i]->position, nextAuxPositionEenemy, mapPositionEnemy, enemies[i]->enemyType);
+						}
+					}
+					default:
+						break;
+					}
+				}
 				switch (enemies[i]->enemyType)
 				{
 				case EnemyType::NO_TYPE:
@@ -105,45 +137,11 @@ bool ModuleEnemies::Update(float dt)
 				default:
 					break;
 				}
-				if (enemies[i] != nullptr)
-				{
-					if (enemies[i]->position.DistanceManhattan(app->player->position) < 400)
-					{
-						switch (enemies[i]->enemyType)
-						{
-						case EnemyType::BUNNY:
-						{
-							iPoint mapPositionEnemy = app->map->WorldToMap(enemies[i]->position.x, enemies[i]->position.y);
-							enemies[i]->Pathfinding(enemies[i]->position.x, enemies[i]->position.y);
-							int j = GetCurrentPositionInPath(mapPositionEnemy);
-							if (lastPath->At(j + 1) != NULL)
-							{
-								iPoint nextPositionEnemy = *lastPath->At(j + 1);
-								iPoint nextAuxPositionEenemy = MapToWorld(nextPositionEnemy);
-								enemies[i]->MoveEnemy(enemies[i]->position, nextAuxPositionEenemy, mapPositionEnemy, enemies[i]->enemyType);
-							}
-						}
-						case EnemyType::BIRD:
-						{
-							iPoint mapPositionEnemy = app->map->WorldToMap(enemies[i]->position.x, enemies[i]->position.y);
-							enemies[i]->Pathfinding(enemies[i]->position.x, enemies[i]->position.y);
-							int j = GetCurrentPositionInPath(mapPositionEnemy);
-							if (lastPath->At(j + 1) != NULL)
-							{
-								iPoint nextPositionEnemy = *lastPath->At(j + 1);
-								iPoint nextAuxPositionEenemy = MapToWorld(nextPositionEnemy);
-								enemies[i]->MoveEnemy(enemies[i]->position, nextAuxPositionEenemy, mapPositionEnemy, enemies[i]->enemyType);
-							}
-						}
-						default:
-							break;
-						}
-					}
-				}
 
 				enemies[i]->Update();
 
 			}
+			enemies[i]->Draw();
 		}
 	}
 
@@ -160,7 +158,6 @@ bool ModuleEnemies::PostUpdate()
 	{
 		if (enemies[i] != nullptr)
 		{
-			enemies[i]->Draw();
 			if (enemies[i]->deathFinish == true)
 			{
 				app->collision->RemoveCollider(enemies[i]->collider);
@@ -345,14 +342,10 @@ bool ModuleEnemies::StopMovementY(Collider* c1, Collider* c2)
 
 void ModuleEnemies::CreatePathEnemy(iPoint mapPositionEnemy, iPoint mapPositionDestination)
 {
-	if (checkDestination->Time(1000))
-	{
-		//destination != mapPositionDestination
-		app->pathfinding->ResetPath(mapPositionEnemy);
-		checkDestination->Start();
-		app->pathfinding->ComputePathAStar(mapPositionEnemy, mapPositionDestination);
-		lastPath = app->pathfinding->GetLastPath();
-	}
+	app->pathfinding->ResetPath(mapPositionEnemy);
+	checkDestination->Start();
+	app->pathfinding->ComputePathAStar(mapPositionEnemy, mapPositionDestination);
+	lastPath = app->pathfinding->GetLastPath();
 }
 
 int ModuleEnemies::GetCurrentPositionInPath(iPoint mapPositionEnemy)

@@ -60,18 +60,25 @@ void EnemyBunny::Update()
 		break;
 	}
 
-	if (yDownCollision == true)
+	if (enemyState != HIT)
 	{
-		if (speedX == 0 && enemyState != HIT)
+		if (yDownCollision == true)
 		{
-			enemyState = IDLE;
+			speedY = 0;
 		}
-		speedY = 0;
+		else
+		{
+			speedY += 1.0f;
+		}
 	}
-	else if (enemyState != HIT)
+
+	if (speedY != 0)
 	{
 		enemyState = FALL;
-		speedY += 1.0f;
+	}
+	else if (speedX == 0)
+	{
+		enemyState = IDLE;
 	}
 
 	if (hit.finish == true)

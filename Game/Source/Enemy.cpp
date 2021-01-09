@@ -88,7 +88,7 @@ void Enemy::MoveEnemy(iPoint positions, iPoint nextAuxPositionEenemy, iPoint map
 		{
 			speedX = velocity;
 			flip = true;
-			if (speedX != 0 && speedY == 0)
+			if (speedY == 0)
 			{
 				enemyState = WALK;
 			}
@@ -98,7 +98,7 @@ void Enemy::MoveEnemy(iPoint positions, iPoint nextAuxPositionEenemy, iPoint map
 		{
 			speedX = velocity;
 			flip = false;
-			if (speedX != 0 && speedY == 0)
+			if (speedY == 0)
 			{
 				enemyState = WALK;
 			}
