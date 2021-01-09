@@ -168,9 +168,10 @@ void PathFinding::ComputePathAStar(const iPoint& origin, const iPoint& destinati
 			}
 		}
 		else destinationIsFind = true, wasFind = false;
+		LOG("Loop in");
 	}
+	LOG("Loop out");
 	destinationIsFind = false;
-	//PropagateAStar(destination);
 	if (wasFind == true)
 	{
 		lastPath.Clear();

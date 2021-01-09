@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "SDL/include/SDL.h"
 #include "Map.h"
+#include "Log.h"
 
 Enemy::Enemy(int x, int y) : position(x, y)
 {

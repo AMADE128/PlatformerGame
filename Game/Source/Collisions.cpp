@@ -218,6 +218,7 @@ bool Collisions::Awake()
 // Called before the first frame
 bool Collisions::Start()
 {
+	LOG("Loading collisions");
 	MapLayer* layer;
 	TileSet* tileset;
 	iPoint cord;

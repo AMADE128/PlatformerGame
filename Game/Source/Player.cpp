@@ -987,9 +987,6 @@ bool Player::CleanUp()
 	app->tex->UnLoad(dronTex);
 	app->tex->UnLoad(chickenFlyTex);
 	app->tex->UnLoad(btnResume->texture);
-	app->tex->UnLoad(btnSettings->texture);
-	app->tex->UnLoad(btnBack->texture);
-	app->tex->UnLoad(btnExit->texture);
 	app->tex->UnLoad(boxTex);
 	app->tex->UnLoad(btnResume->text);
 	app->tex->UnLoad(btnSettings->text);
@@ -999,7 +996,6 @@ bool Player::CleanUp()
 	app->tex->UnLoad(btnBack2->text);
 	app->tex->UnLoad(playerSliderMusic->texture);
 	app->tex->UnLoad(playerSliderMusic->text);
-	app->tex->UnLoad(playerSliderFx->texture);
 	app->tex->UnLoad(playerSliderFx->text);
 
 	app->tex->UnLoad(playerCheckFullScreen->texture);

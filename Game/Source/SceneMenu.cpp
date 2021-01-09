@@ -225,10 +225,6 @@ bool SceneMenu::CleanUp()
 	app->tex->UnLoad(licenseTex);
 
 	app->tex->UnLoad(btnNew->texture);
-	app->tex->UnLoad(btnExit->texture);
-	app->tex->UnLoad(btnLoad->texture);
-	app->tex->UnLoad(btnOptions->texture);
-	app->tex->UnLoad(btnBack->texture);
 
 	app->tex->UnLoad(boxTex);
 
@@ -239,13 +235,11 @@ bool SceneMenu::CleanUp()
 	app->tex->UnLoad(btnBack->text);
 	app->tex->UnLoad(sliderMusic->texture);
 	app->tex->UnLoad(sliderMusic->text);
-	app->tex->UnLoad(sliderFx->texture);
 	app->tex->UnLoad(sliderFx->text);
 
 	app->tex->UnLoad(checkFullScreen->texture);
 	app->tex->UnLoad(checkFullScreen->text);
 	app->tex->UnLoad(checkFullScreen->leftText);
-	app->tex->UnLoad(checkCredits->texture);
 
 
 	app->audio->UnloadFX(startButtonFx);

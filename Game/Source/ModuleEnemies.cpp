@@ -36,6 +36,7 @@ ModuleEnemies::~ModuleEnemies()
 
 bool ModuleEnemies::Start()
 {
+	LOG("Loading enemies textures and sounds");
 	bunnyIdle = app->tex->Load("Assets/Textures/Enemies/Bunny/idle.png");
 	bunnyRun = app->tex->Load("Assets/Textures/Enemies/Bunny/run.png");
 	bunnyFall = app->tex->Load("Assets/Textures/Enemies/Bunny/fall.png");
@@ -61,7 +62,6 @@ bool ModuleEnemies::Update(float dt)
 	{
 		if (enemies[i] != nullptr)
 		{
-
 			if (app->player->playerState == app->player->NORMAL)
 			{
 				if (enemies[i]->position.DistanceManhattan(app->player->position) < 400)
@@ -137,7 +137,6 @@ bool ModuleEnemies::Update(float dt)
 				default:
 					break;
 				}
-
 				enemies[i]->Update();
 
 			}
@@ -146,7 +145,6 @@ bool ModuleEnemies::Update(float dt)
 	}
 
 	EnemiesDespawn();
-
 	return ret;
 }
 
