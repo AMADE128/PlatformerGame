@@ -159,7 +159,7 @@ bool Scene::Start()
 			app->player->position.y = 1584;
 		}
 	}
-	else if (app->player->checkpointLvl1 == true)
+	if (app->player->checkpointLvl1 == true)
 	{
 		app->player->position.x = 3860;
 		app->player->position.y = 1392;
