@@ -23,9 +23,6 @@ public:
 	SDL_Texture* leftText;
 
 private:
-
-	// GuiCheckBox specific properties
-	// Maybe some animation properties for state change?
 };
 
 #endif // __GUICHECKBOX_H__

@@ -70,15 +70,15 @@ void EnemyBunny::Update()
 		{
 			speedY += 1.0f;
 		}
-	}
 
-	if (speedY != 0)
-	{
-		enemyState = FALL;
-	}
-	else if (speedX == 0)
-	{
-		enemyState = IDLE;
+		if (speedY != 0)
+		{
+			enemyState = FALL;
+		}
+		else if (speedX == 0)
+		{
+			enemyState = IDLE;
+		}
 	}
 
 	if (hit.finish == true)

@@ -931,7 +931,14 @@ bool Player::OnGuiMouseClickEvent(GuiControl* control)
 			break;
 		case 8:
 			app->audio->PlayFx(menuPressedFx);
-			app->fadeToBlack->Fade(app->scene, (Module*)app->sceneMenu, 10);
+			if (app->scene->active == true)
+			{
+				app->fadeToBlack->Fade(app->scene, (Module*)app->sceneMenu, 10);
+			}
+			else if (app->sceneLvl2->active == true)
+			{
+				app->fadeToBlack->Fade(app->sceneLvl2, (Module*)app->sceneMenu, 10);
+			}
 			break;
 		case 9:
 			app->audio->PlayFx(menuPressedFx);

@@ -34,9 +34,6 @@ bool GuiSlider::Update(Input* input, float dt)
 				state = GuiControlState::PRESSED;
 				value = mouseX - bounds.x;
 			}
-
-			
-			// TODO.
 		}
 		else state = GuiControlState::NORMAL;
 	}

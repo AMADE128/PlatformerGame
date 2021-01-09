@@ -25,8 +25,6 @@ public:
 	int maxValue;
 
 private:
-
-
 };
 
 #endif // __GUISLIDER_H__
