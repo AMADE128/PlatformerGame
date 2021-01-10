@@ -13,7 +13,7 @@
 #include "SDL/include/SDL.h"
 #include "SDL/include/SDL_timer.h"
 
-ModuleParticles::ModuleParticles() : Module()
+ModuleParticles::ModuleParticles() : Entity()
 {
 	for (uint i = 0; i < MAX_ACTIVE_PARTICLES; ++i)
 		particles[i] = nullptr;

@@ -27,13 +27,12 @@ enum TypeEntity {
 struct EntityData
 {
 	iPoint position;
-	Animation* currentAnimation = nullptr;
 	float velocity;
 	TypeEntity type;
 	SDL_Texture* texture;
 
 public:
-	EntityData(TypeEntity pTypeEntity, iPoint pPosition, float pVelocity, SDL_Texture* pTexture, int dropScore, uint deadFx) :
+	EntityData(TypeEntity pTypeEntity, iPoint pPosition, float pVelocity, SDL_Texture* pTexture) :
 		position(pPosition), texture(pTexture), type(pTypeEntity)
 	{};
 	EntityData::EntityData() {};
@@ -62,6 +61,10 @@ public:
 	virtual bool PostUpdate();
 	// Called before quitting
 	virtual bool CleanUp();
+	// Virtual methods to Load state
+	bool LoadState(pugi::xml_node&);
+	// Virtual methods to Save state
+	bool SaveState(pugi::xml_node&) const;
 
 public:
 

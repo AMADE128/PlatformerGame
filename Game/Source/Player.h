@@ -10,9 +10,11 @@
 #include "GuiSlider.h"
 #include "GuiCheckBox.h"
 
+#include "Entity.h"
+
 struct Collider;
 
-class Player : public Module
+class Player : public Entity
 {
 
 public:

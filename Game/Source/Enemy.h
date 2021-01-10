@@ -47,7 +47,7 @@ public:
 	virtual void MoveEnemy(iPoint position, iPoint nextAuxPositionEenemy, iPoint mapPositionEnemy, EnemyType type);
 
 	enum State {
-		IDLE,
+		IDLE = 0,
 		WALK,
 		JUMP,
 		FALL

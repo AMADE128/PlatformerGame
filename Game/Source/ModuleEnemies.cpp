@@ -23,7 +23,7 @@
 #include "SDL/include/SDL.h"
 
 
-ModuleEnemies::ModuleEnemies() : Module()
+ModuleEnemies::ModuleEnemies() : Entity()
 {
 	for (uint i = 0; i < MAX_ENEMIES; ++i)
 		enemies[i] = nullptr;
@@ -179,13 +179,13 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info)
 				LOG("Loading bird info");
 				enemies[i] = new EnemyBird(info.x, info.y);
 				enemies[i]->enemyType = info.type;
-				enemies[i]->texture = birdFly;
+				//enemies[i]->texture = birdFly;
 				break;
 			case EnemyType::BUNNY:
 				LOG("Loading Bunny info");
 				enemies[i] = new EnemyBunny(info.x, info.y);
 				enemies[i]->enemyType = info.type;
-				enemies[i]->texture = bunnyIdle;
+				//enemies[i]->texture = bunnyIdle;
 				break;
 			}
 			break;

@@ -24,7 +24,7 @@
 #define POSXINIT 720
 #define POXYINIT 1584
 
-Player::Player() : Module()
+Player::Player() : Entity()
 {
 	name.Create("player");
 	
@@ -1197,7 +1197,7 @@ bool Player::CheckPoint(Collider* c1, Collider* c2)
 	
 
 	return true;
-}
+ }
 
 bool Player::LoadState(pugi::xml_node& data)
 {

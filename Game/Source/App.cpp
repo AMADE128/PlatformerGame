@@ -18,6 +18,8 @@
 #include "SceneIntro.h"
 #include "SceneLoose.h"
 #include "SceneWin.h"
+#include "Entity.h"
+#include "EntityManager.h"
 #include "Pathfinding.h"
 
 #include "Defs.h"
@@ -50,6 +52,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	sceneWin = new SceneWin();
 	sceneLvl2 = new SceneLvl2();
 	pathfinding = new PathFinding();
+	entityManager = new EntityManager();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -64,6 +67,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(sceneLvl2);
 	AddModule(sceneLoose);
 	AddModule(sceneWin);
+	AddModule(entityManager);
 	AddModule(moduleParticles);
 	AddModule(moduleEnemies);
 	AddModule(collision);

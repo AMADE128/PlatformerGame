@@ -7,13 +7,14 @@
 #include "Particle.h"
 #include "Collider.h"
 #include "Path.h"
+#include "Entity.h"
 
 #define MAX_ACTIVE_PARTICLES 100
 
 struct SDL_Texture;
 struct Collider;
 
-class ModuleParticles : public Module
+class ModuleParticles : public Entity
 {
 public:
 	// Constructor

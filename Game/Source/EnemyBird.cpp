@@ -24,15 +24,8 @@ EnemyBird::EnemyBird(int x, int y) : Enemy(x, y)
 
 void EnemyBird::Update()
 {
-	switch (enemyState)
-	{
-	case Enemy::IDLE:
-		currentAnim = &idle;
-		texture = app->moduleEnemies->birdFly;
-		break;
-	default:
-		break;
-	}
+	currentAnim = &idle;
+	texture = app->moduleEnemies->birdFly;
 
 	if (position.DistanceManhattan(app->player->position) < 400)
 	{

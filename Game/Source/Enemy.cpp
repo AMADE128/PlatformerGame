@@ -87,23 +87,23 @@ void Enemy::MoveEnemy(iPoint positions, iPoint nextAuxPositionEenemy, iPoint map
 	{
 		if (nextAuxPositionEenemy.x < positionEnemyX && xLeftCollision == false)
 		{
+			position.x -= velocity;
 			speedX = velocity;
 			flip = true;
 			if (speedY == 0)
 			{
 				enemyState = WALK;
 			}
-			position.x -= velocity;
 		}
 		else if (nextAuxPositionEenemy.x > positionEnemyX && xRightCollision == false)
 		{
+			position.x += velocity;
 			speedX = velocity;
 			flip = false;
 			if (speedY == 0)
 			{
 				enemyState = WALK;
 			}
-			position.x += velocity;
 		}
 		else
 		{
@@ -112,7 +112,6 @@ void Enemy::MoveEnemy(iPoint positions, iPoint nextAuxPositionEenemy, iPoint map
 	}
 	else if (type == EnemyType::BIRD)
 	{
-		velocity = 2;
 		if (nextAuxPositionEenemy.x < positionEnemyX)
 		{
 			speedX = velocity;
@@ -131,11 +130,17 @@ void Enemy::MoveEnemy(iPoint positions, iPoint nextAuxPositionEenemy, iPoint map
 		}
 		if (nextAuxPositionEenemy.y < positionEnemyY)
 		{
+			speedY = velocity;
 			position.y -= velocity;
 		}
 		else if (nextAuxPositionEenemy.y > positionEnemyY)
 		{
+			speedY = velocity;
 			position.y += velocity;
+		}
+		else
+		{
+			speedY = 0;
 		}
 	}
 }

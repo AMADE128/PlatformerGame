@@ -54,6 +54,8 @@
     <ClCompile Include="Source\GuiCheckBox.cpp">
       <Filter>GuiControl</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Entity.cpp" />
+    <ClCompile Include="Source\EntityManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -135,6 +137,7 @@
       <Filter>GuiControl</Filter>
     </ClInclude>
     <ClInclude Include="Source\Entity.h" />
+    <ClInclude Include="Source\EntityManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">

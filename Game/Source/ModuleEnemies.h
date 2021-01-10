@@ -5,6 +5,7 @@
 #include "Timer.h"
 #include "Point.h"
 #include "DynArray.h"
+#include "Entity.h"
 
 #define MAX_ENEMIES 100
 #define TILESIZE 96
@@ -26,7 +27,7 @@ struct EnemySpawnpoint
 class Enemy;
 struct SDL_Texture;
 
-class ModuleEnemies : public Module
+class ModuleEnemies : public Entity
 {
 public:
 	// Constructor

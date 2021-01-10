@@ -129,10 +129,10 @@ bool SceneLvl2::Start()
 	app->moduleEnemies->Init();
 	app->moduleEnemies->Start();
 
-	app->moduleEnemies->AddEnemy(EnemyType::BUNNY, 5952/2, 4032/2);
-	app->moduleEnemies->AddEnemy(EnemyType::BUNNY, 7872/2, 3072/2);
-	app->moduleEnemies->AddEnemy(EnemyType::BIRD, 5568/2, 2592/2);
-	app->moduleEnemies->AddEnemy(EnemyType::BIRD, 5472/2, 1152/2);
+	app->moduleEnemies->AddEnemy(EnemyType::BIRD, 5568 / 2, 2592 / 2);
+	app->moduleEnemies->AddEnemy(EnemyType::BIRD, 5472 / 2, 1152 / 2);
+	app->moduleEnemies->AddEnemy(EnemyType::BUNNY, 5952 / 2, 4032 / 2);
+	app->moduleEnemies->AddEnemy(EnemyType::BUNNY, 7872 / 2, 3072 / 2);
 	
 	app->player->currentLvl = 2;
 

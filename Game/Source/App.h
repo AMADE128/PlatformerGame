@@ -32,6 +32,8 @@ class SceneIntro;
 class SceneLoose;
 class SceneWin;
 class PathFinding;
+class EntityManager;
+class Entity;
 
 class App
 {
@@ -115,6 +117,8 @@ public:
 	SceneLoose* sceneLoose;
 	SceneWin* sceneWin;
 	PathFinding* pathfinding;
+	EntityManager* entityManager;
+	Entity* entity;
 
 	int frameRate = 60;
 	float fps = 0.f;
