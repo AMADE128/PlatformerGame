@@ -91,6 +91,13 @@ Player::Player() : Entity()
 	appeAnim.loop = false;
 	appeAnim.speed = 5.0f;
 
+	for (int i = 0; i < 96 * 17; i += 96)
+	{
+		appleGUIAnim.PushBack({ i, 0, 96, 96 });
+	}
+	appleGUIAnim.loop = true;
+	appleGUIAnim.speed = 0.4f;
+
 	for (int i = 0; i < TILESIZE * 7; i += TILESIZE)
 	{
 		desAppeAnim.PushBack({ i, 0, TILESIZE, TILESIZE });
@@ -287,6 +294,7 @@ bool Player::Update(float dt)
 		doubleJumpAnim.speed = 4.0f * dt;
 		desAppeAnim.speed = 4.0f * dt;
 		appeAnim.speed = 4.0f * dt;
+		appleGUIAnim.speed = 4.0f * dt;
 		dronAnim.speed = 4.0f * dt;
 		chickenAnim.speed = 4.0f * dt;
 		if (death == false && appear == false)
@@ -762,9 +770,13 @@ bool Player::PostUpdate()
 	{
 		app->render->DrawTexture(lifesTex, cameraColl->rect.x - 340, cameraColl->rect.y - 180, NULL);
 	}
-
-	SDL_Rect appleUi = { 0, 0, 96, 96};
-	app->render->DrawTexture(appleTex, cameraColl->rect.x + 640, cameraColl->rect.y - 203, &appleUi);
+	Animation* appleGUI = &appleGUIAnim;
+	if (playerState == NORMAL)
+	{
+		appleGUI->Update();
+	}
+	SDL_Rect appleGUIRect = appleGUI->GetCurrentFrame();
+	app->render->DrawTexture(appleTex, cameraColl->rect.x + 640, cameraColl->rect.y - 203, &appleGUIRect);
 	sprintf_s(scoreText, 10, "%d", appleCounter);
 	if (minutesLvl < 10) sprintf_s(minutesText, 10, "0%d:", minutesLvl);
 	else sprintf_s(minutesText, 10, "%d:", minutesLvl);

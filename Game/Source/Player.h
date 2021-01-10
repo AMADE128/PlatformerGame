@@ -127,6 +127,7 @@ public:
 	Animation desAppeAnim;
 	Animation dronAnim;
 	Animation chickenAnim;
+	Animation appleGUIAnim;
 
 	iPoint position;
 
