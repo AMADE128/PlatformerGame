@@ -2,11 +2,13 @@
 
 ## Description
 
-Ian adventure is a 2D platformer, where you play as Ian a young traveler who is looking for the treasure of the flying islands. Will you have the hability to travel arround diferents worlds and surpass all the obstacles?
+Ian adventure is a 2D platformer, where you play as Ian, a young traveler who is looking for the treasure of the flying islands. Will you have the ability to travel arround diferents worlds and surpass all the obstacles?
 
 ## Key Features
 
  - Fluid 2D platforming
+ - Smooth Menus
+ - Logo of the Team + Animation
  - Deadly spikes
  - Infinite attempts
  - Dangerous enemies
@@ -15,6 +17,7 @@ Ian adventure is a 2D platformer, where you play as Ian a young traveler who is 
  - CheckPoints throught the levels!
  - Amazing abilities to get rid of the enemies!
  - Multiple levels!
+ - Credits and License also avilable!
  
 ## Controls
 
@@ -31,14 +34,16 @@ Ian adventure is a 2D platformer, where you play as Ian a young traveler who is 
  - F3 Start the current level
  - F5 Save Game state
  - F6 Load Previous game state
- - F9 View Colliders / logic
+ - F7 Travel between checkpoints (even across levels!)
+ - F9 View Colliders / logic / pathfinding paths
  - F10 God Mode
  - F11 Enable/Disable FPS cap to 30
+ 
 ## Developers
 
- - Himar Bravo González - Lead Programmer, Desing
- - Pol Vázquez Porcar - Lead Artist, Programmer, Fx
- - Marc Pavon Llop - Lead Designer, Programmer, Q&A
+ - Himar Bravo González - Lead Programmer, Desing, Gui Designer
+ - Pol Vázquez Porcar - Lead Artist, Programmer, Audio Feedback
+ - Marc Pavon Llop - Lead Designer, Programmer, Q&A, In-Game Gui Designer 
 
 
 ## License
