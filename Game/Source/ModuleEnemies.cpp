@@ -255,10 +255,13 @@ bool ModuleEnemies::StopMovementY(Collider* c1, Collider* c2)
 
 void ModuleEnemies::CreatePathEnemy(iPoint mapPositionEnemy, iPoint mapPositionDestination)
 {
-	app->pathfinding->ResetPath(mapPositionEnemy);
-	checkDestination->Start();
-	app->pathfinding->ComputePathAStar(mapPositionEnemy, mapPositionDestination);
-	lastPath = app->pathfinding->GetLastPath();
+	if (checkDestination->Time(1000))
+	{
+		app->pathfinding->ResetPath(mapPositionEnemy);
+		checkDestination->Start();
+		app->pathfinding->ComputePathAStar(mapPositionEnemy, mapPositionDestination);
+		lastPath = app->pathfinding->GetLastPath();
+	}
 }
 
 int ModuleEnemies::GetCurrentPositionInPath(iPoint mapPositionEnemy)

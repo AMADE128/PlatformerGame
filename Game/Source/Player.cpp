@@ -871,11 +871,11 @@ bool Player::PostUpdate()
 			appleCounter = 0;
 			if (app->scene->active == true)
 			{
-				app->fadeToBlack->Fade(app->scene, (Module*)app->sceneLoose, 80);
+				app->fadeToBlack->Fade(app->scene, (Module*)app->sceneLoose, 0);
 			}
 			else if (app->sceneLvl2->active == true)
 			{
-				app->fadeToBlack->Fade(app->sceneLvl2, (Module*)app->sceneLoose, 80);
+				app->fadeToBlack->Fade(app->sceneLvl2, (Module*)app->sceneLoose, 0);
 			}
 		}
 		else
