@@ -155,12 +155,12 @@ bool SceneLvl2::Start()
 			app->player->position.y = 2256;
 		}
 	}
-	else if (app->player->checkpointLvl2 == true && app->player->dead == false)
+	if (app->player->checkpointLvl2 == true && app->player->dead == false && app->player->newGame == false)
 	{
 		app->player->position.x = 3216;
 		app->player->position.y = 1920;
 	}
-	if (app->player->startLevel == true)
+	else if (app->player->startLevel == true || app->player->newGame == true)
 	{
 		app->player->position.x = 620;
 		app->player->position.y = 2256;

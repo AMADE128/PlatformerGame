@@ -164,7 +164,7 @@ bool Scene::Start()
 		app->player->position.x = 3860;
 		app->player->position.y = 1392;
 	}
-	if (app->player->startLevel == true || app->player->newGame == true)
+	else if (app->player->startLevel == true || app->player->newGame == true)
 	{
 		app->player->position.x = 720;
 		app->player->position.y = 1584;
