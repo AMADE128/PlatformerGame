@@ -263,6 +263,7 @@ bool SceneMenu::OnGuiMouseClickEvent(GuiControl* control)
 		{
 		case 1:
 			app->player->cont = false;
+			app->player->newGame = true;
 			app->player->playerLoadF6 = false;
 			app->audio->PlayFx(startButtonFx);
 			app->fadeToBlack->Fade(this, (Module*)app->scene, 80); //Go to the start of the game
