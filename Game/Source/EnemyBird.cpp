@@ -7,6 +7,8 @@
 #include "Textures.h"
 #include "ModuleEnemies.h"
 #include "Player.h"
+#include "Map.h"
+#include "Audio.h"
 
 EnemyBird::EnemyBird(int x, int y) : Enemy(x, y)
 {
@@ -17,13 +19,6 @@ EnemyBird::EnemyBird(int x, int y) : Enemy(x, y)
 	idle.loop = true;
 	idle.speed = 0.25f;
 
-	for (int i = 0; i < TILESIZE * 7; i += TILESIZE)
-	{
-		hit.PushBack({ i, 0, TILESIZE, TILESIZE });
-	}
-	hit.loop = false;
-	hit.speed = 0.25f;
-
 	collider = app->collision->AddCollider({ position.x, position.y, 80, 80 }, Collider::Type::ENEMY, (Module*)app->moduleEnemies);
 }
 
@@ -33,18 +28,26 @@ void EnemyBird::Update()
 	{
 	case Enemy::IDLE:
 		currentAnim = &idle;
-		break;
-	case Enemy::HIT:
-		currentAnim = &hit;
+		texture = app->moduleEnemies->birdFly;
 		break;
 	default:
 		break;
 	}
 
-	if (hit.finish == true)
+	if (position.DistanceManhattan(app->player->position) < 400)
 	{
-		deathFinish = true;
+		iPoint mapPositionEnemy = app->map->WorldToMap(position.x, position.y);
+		Pathfinding(position.x, position.y);
+		int j = app->moduleEnemies->GetCurrentPositionInPath(mapPositionEnemy);
+		if (app->moduleEnemies->lastPath->At(j + 1) != NULL)
+		{
+			iPoint nextPositionEnemy = *app->moduleEnemies->lastPath->At(j + 1);
+			iPoint nextAuxPositionEenemy = app->moduleEnemies->MapToWorld(nextPositionEnemy);
+			MoveEnemy(position, nextAuxPositionEenemy, mapPositionEnemy, enemyType);
+		}
 	}
+
+	collider->SetPos(position.x + 10, position.y + 10);
 
 	Enemy::Update();
 }
@@ -98,6 +101,8 @@ bool EnemyBird::StopMovement(Collider* c1, Collider* c2)
 
 bool EnemyBird::Die(Collider* c1, Collider* c2)
 {
-	enemyState = HIT;
+	app->audio->PlayFx(app->moduleEnemies->birdDieFx);
+	deathFinish = true;
+	collider->type = collider->NONE;
 	return true;
 }

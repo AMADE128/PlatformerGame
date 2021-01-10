@@ -40,10 +40,8 @@ bool ModuleEnemies::Start()
 	bunnyIdle = app->tex->Load("Assets/Textures/Enemies/Bunny/idle.png");
 	bunnyRun = app->tex->Load("Assets/Textures/Enemies/Bunny/run.png");
 	bunnyFall = app->tex->Load("Assets/Textures/Enemies/Bunny/fall.png");
-	bunnyHit = app->tex->Load("Assets/Textures/Enemies/Bunny/hit.png");
 
 	birdFly = app->tex->Load("Assets/Textures/Enemies/Bird/flying.png");
-	birdHit = app->tex->Load("Assets/Textures/Enemies/Bird/hit.png");
 
 	bunnyDieFx = app->audio->LoadFx("Assets/Audio/EnemiesMusic/bunny_hit.wav");
 	app->fxList.Add(&bunnyDieFx);
@@ -51,6 +49,25 @@ bool ModuleEnemies::Start()
 	app->fxList.Add(&birdDieFx);
 
 	return true;
+}
+
+bool ModuleEnemies::PreUpdate()
+{
+	bool ret = true;
+
+	for (uint i = 0; i < MAX_ENEMIES; ++i)
+	{
+		if (enemies[i] != nullptr && enemies[i]->deathFinish == true)
+		{
+			LOG("Despawning enemy");
+			app->pathfinding->ResetPath({ enemies[i]->collider->rect.x, enemies[i]->collider->rect.y });
+			app->collision->RemoveCollider(enemies[i]->collider);
+			delete enemies[i];
+			enemies[i] = nullptr;
+		}
+	}
+
+	return ret;
 }
 
 bool ModuleEnemies::Update(float dt)
@@ -64,86 +81,10 @@ bool ModuleEnemies::Update(float dt)
 		{
 			if (app->player->playerState == app->player->NORMAL)
 			{
-				if (enemies[i]->position.DistanceManhattan(app->player->position) < 400)
-				{
-					switch (enemies[i]->enemyType)
-					{
-					case EnemyType::BUNNY:
-					{
-						iPoint mapPositionEnemy = app->map->WorldToMap(enemies[i]->position.x, enemies[i]->position.y);
-						enemies[i]->Pathfinding(enemies[i]->position.x, enemies[i]->position.y);
-						int j = GetCurrentPositionInPath(mapPositionEnemy);
-						if (lastPath->At(j + 1) != NULL)
-						{
-							iPoint nextPositionEnemy = *lastPath->At(j + 1);
-							iPoint nextAuxPositionEenemy = MapToWorld(nextPositionEnemy);
-							enemies[i]->MoveEnemy(enemies[i]->position, nextAuxPositionEenemy, mapPositionEnemy, enemies[i]->enemyType);
-						}
-					}
-					case EnemyType::BIRD:
-					{
-						iPoint mapPositionEnemy = app->map->WorldToMap(enemies[i]->position.x, enemies[i]->position.y);
-						enemies[i]->Pathfinding(enemies[i]->position.x, enemies[i]->position.y);
-						int j = GetCurrentPositionInPath(mapPositionEnemy);
-						if (lastPath->At(j + 1) != NULL)
-						{
-							iPoint nextPositionEnemy = *lastPath->At(j + 1);
-							iPoint nextAuxPositionEenemy = MapToWorld(nextPositionEnemy);
-							enemies[i]->MoveEnemy(enemies[i]->position, nextAuxPositionEenemy, mapPositionEnemy, enemies[i]->enemyType);
-						}
-					}
-					default:
-						break;
-					}
-				}
-				switch (enemies[i]->enemyType)
-				{
-				case EnemyType::NO_TYPE:
-					break;
-				case EnemyType::BIRD:
-					switch (enemies[i]->enemyState)
-					{
-					case Enemy::IDLE:
-						enemies[i]->texture = birdFly;
-						break;
-					case Enemy::HIT:
-						enemies[i]->texture = birdHit;
-						break;
-					default:
-						break;
-					}
-					enemies[i]->collider->SetPos(enemies[i]->position.x + 10, enemies[i]->position.y + 10);
-					break;
-				case EnemyType::BUNNY:
-					switch (enemies[i]->enemyState)
-					{
-					case Enemy::IDLE:
-						enemies[i]->texture = bunnyIdle;
-						break;
-					case Enemy::WALK:
-						enemies[i]->texture = bunnyRun;
-						break;
-					case Enemy::FALL:
-						enemies[i]->texture = bunnyFall;
-						break;
-					case Enemy::HIT:
-						enemies[i]->texture = bunnyHit;
-						break;
-					default:
-						break;
-					}
-					enemies[i]->collider->SetPos(enemies[i]->position.x + 14, enemies[i]->position.y + 20);
-					break;
-				default:
-					break;
-				}
 				enemies[i]->Update();
-
 			}
 		}
 	}
-
-	EnemiesDespawn();
 	return ret;
 }
 
@@ -156,13 +97,6 @@ bool ModuleEnemies::PostUpdate()
 		if (enemies[i] != nullptr)
 		{
 			enemies[i]->Draw();
-			if (enemies[i]->deathFinish == true)
-			{
-				app->pathfinding->ResetPath({ enemies[i]->collider->rect.x, enemies[i]->collider->rect.y });
-				app->collision->RemoveCollider(enemies[i]->collider);
-				delete enemies[i];
-				enemies[i] = nullptr;
-			}
 		}
 	}
 
@@ -189,11 +123,12 @@ bool ModuleEnemies::CleanUp()
 	app->tex->UnLoad(bunnyIdle);
 	app->tex->UnLoad(bunnyRun);
 	app->tex->UnLoad(birdFly);
-	app->tex->UnLoad(birdHit);
 
 	app->audio->UnloadFX(bunnyDieFx);
 	app->audio->UnloadFX(birdDieFx);
 	app->fxList.Clear();
+
+	active = false;
 
 	return true;
 }
@@ -224,21 +159,9 @@ void ModuleEnemies::EnemiesSpawn()
 	{
 		if (spawnQueue[i].type != EnemyType::NO_TYPE)
 		{
+			LOG("Spawning enemy at %d", spawnQueue[i].x);
 			SpawnEnemy(spawnQueue[i]);
 			spawnQueue[i].type = EnemyType::NO_TYPE;
-		}
-	}
-}
-
-void ModuleEnemies::EnemiesDespawn()
-{
-	//// Iterate existing enemies
-	for (uint i = 0; i < MAX_ENEMIES; ++i)
-	{
-		if (enemies[i] != nullptr && enemies[i]->death == true)
-		{
-			delete enemies[i];
-			enemies[i] = nullptr;
 		}
 	}
 }
@@ -253,12 +176,16 @@ void ModuleEnemies::SpawnEnemy(const EnemySpawnpoint& info)
 			switch (info.type)
 			{
 			case EnemyType::BIRD:
+				LOG("Loading bird info");
 				enemies[i] = new EnemyBird(info.x, info.y);
 				enemies[i]->enemyType = info.type;
+				enemies[i]->texture = birdFly;
 				break;
 			case EnemyType::BUNNY:
+				LOG("Loading Bunny info");
 				enemies[i] = new EnemyBunny(info.x, info.y);
 				enemies[i]->enemyType = info.type;
+				enemies[i]->texture = bunnyIdle;
 				break;
 			}
 			break;
@@ -272,19 +199,6 @@ bool ModuleEnemies::Die(Collider* c1, Collider* c2)
 	{
 		if (enemies[i] != nullptr && enemies[i]->GetCollider() == c1)
 		{
-			switch (enemies[i]->enemyType)
-			{
-			case EnemyType::BUNNY:
-				app->audio->PlayFx(bunnyDieFx);
-				break;
-			case EnemyType::BIRD:
-				app->audio->PlayFx(birdDieFx);
-				break;
-			default:
-				break;
-			}
-
-			enemies[i]->collider->type = enemies[i]->collider->NONE;
 			enemies[i]->Die(c1, c2);
 
 			break;

@@ -50,8 +50,7 @@ public:
 		IDLE,
 		WALK,
 		JUMP,
-		FALL,
-		HIT
+		FALL
 	};
 
 public:
@@ -86,11 +85,9 @@ public:
 	float speedX;
 	float speedY;
 
-	bool death = false;
 	bool deathFinish = false;
+
 protected:
-
-
 	// Original spawn position. Stored for movement calculations
 	iPoint spawnPos;
 

@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "Animation.h"
 #include "Map.h"
+#include "Audio.h"
 
 EnemyBunny::EnemyBunny(int x, int y) : Enemy(x, y)
 {
@@ -30,13 +31,6 @@ EnemyBunny::EnemyBunny(int x, int y) : Enemy(x, y)
 	fall.loop = true;
 	fall.speed = 0.25f;
 
-	for (int i = 0; i < 102 * 5; i += 102)
-	{
-		hit.PushBack({ i, 0, 102, 132 });
-	}
-	hit.loop = false;
-	hit.speed = 0.20f;
-
 	collider = app->collision->AddCollider({position.x, position.y, 80, 32 * 4 - 15 }, Collider::Type::ENEMY, (Module*)app->moduleEnemies);
 }
 
@@ -46,47 +40,54 @@ void EnemyBunny::Update()
 	{
 	case Enemy::IDLE:
 		currentAnim = &idle;
+		texture = app->moduleEnemies->bunnyIdle;
 		break;
 	case Enemy::WALK:
 		currentAnim = &run;
+		texture = app->moduleEnemies->bunnyRun;
 		break;
 	case Enemy::FALL:
 		currentAnim = &fall;
-		break;
-	case Enemy::HIT:
-		currentAnim = &hit;
+		texture = app->moduleEnemies->bunnyFall;
 		break;
 	default:
 		break;
 	}
 
-	if (enemyState != HIT)
+	if (position.DistanceManhattan(app->player->position) < 400)
 	{
-		if (yDownCollision == true)
+		iPoint mapPositionEnemy = app->map->WorldToMap(position.x, position.y);
+		Pathfinding(position.x, position.y);
+		int j = app->moduleEnemies->GetCurrentPositionInPath(mapPositionEnemy);
+		if (app->moduleEnemies->lastPath->At(j + 1) != NULL)
 		{
-			speedY = 0;
-		}
-		else
-		{
-			speedY += 1.0f;
-		}
-
-		if (speedY != 0)
-		{
-			enemyState = FALL;
-		}
-		else if (speedX == 0)
-		{
-			enemyState = IDLE;
+			iPoint nextPositionEnemy = *app->moduleEnemies->lastPath->At(j + 1);
+			iPoint nextAuxPositionEenemy = app->moduleEnemies->MapToWorld(nextPositionEnemy);
+			MoveEnemy(position, nextAuxPositionEenemy, mapPositionEnemy, enemyType);
 		}
 	}
 
-	if (hit.finish == true)
+	if (yDownCollision == true)
 	{
-		deathFinish = true;
+		speedY = 0;
+	}
+	else
+	{
+		speedY += 1.0f;
+	}
+
+	if (speedY != 0)
+	{
+		enemyState = FALL;
+	}
+	else if (speedX == 0)
+	{
+		enemyState = IDLE;
 	}
 
 	position.y += speedY;
+
+	collider->SetPos(position.x + 14, position.y + 20);
 
 	Enemy::Update();
 
@@ -141,6 +142,8 @@ bool EnemyBunny::StopMovement(Collider* c1, Collider* c2)
 
 bool EnemyBunny::Die(Collider* c1, Collider* c2)
 {
-	enemyState = HIT;
+	app->audio->PlayFx(app->moduleEnemies->bunnyDieFx);
+	deathFinish = true;
+	collider->type = collider->NONE;
 	return true;
 }

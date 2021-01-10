@@ -22,12 +22,9 @@ public :
 
 	bool StopMovement(Collider* c1, Collider* c2);
 
-	Animation idle;
-	Animation hit;
-
-	float speedX;
-
 private:
+
+	Animation idle;
 
 	bool yDownCollision;
 	bool yUpCollision;

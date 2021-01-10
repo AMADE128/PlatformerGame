@@ -37,6 +37,8 @@ public:
 
 	bool Start() override;
 
+	bool PreUpdate() override;
+
 	bool Update(float dt) override;
 
 	bool PostUpdate() override;
@@ -52,7 +54,6 @@ public:
 
 	void EnemiesSpawn();
 
-	void EnemiesDespawn();
 	void CreatePathEnemy(iPoint origin, iPoint destination);
 	int GetCurrentPositionInPath(iPoint mapPositionEnemy);
 	iPoint MapToWorld(iPoint position);

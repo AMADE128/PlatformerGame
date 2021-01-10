@@ -24,15 +24,12 @@ public:
 
 	bool StopMovement(Collider* c1, Collider* c2);
 
+private:
+
 	Animation idle;
 	Animation run;
 	Animation fall;
 	Animation jump;
-	Animation hit;
-
-private:
-
-
 };
 
 
