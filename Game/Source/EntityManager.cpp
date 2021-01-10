@@ -27,8 +27,6 @@ bool EntityManager::Start()
 	LOG("EntityManager start");
 	active = true;
 
-
-	// back background
 	return true;
 }
 
@@ -74,28 +72,4 @@ bool EntityManager::CleanUp()
 	entities.Clear();
 	active = false;
 	return ret;
-}
-
-bool EntityManager::LoadState(pugi::xml_node& entityManagerNode)
-{
-	bool ret = false;
-	for (ListItem<Entity*>* entiti = entities.start; entiti; entiti = entiti->next)
-	{
-		entiti->data->LoadState(entityManagerNode);
-		ret = true;
-	}
-
-	return ret;
-}
-
-bool EntityManager::SaveState(pugi::xml_node& entityManagerNode) const
-{
-	bool ret = false;
-	for (ListItem<Entity*>* entiti = entities.start; entiti; entiti = entiti->next)
-	{
-		entiti->data->SaveState(entityManagerNode);
-		ret = true;
-	}
-
-	return true;
 }

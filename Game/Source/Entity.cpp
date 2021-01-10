@@ -62,15 +62,3 @@ bool Entity::CleanUp()
 	delete entityData;
 	return true;
 }
-
-// Load Game State
-bool Entity::LoadState(pugi::xml_node& data)
-{
-	return true;
-}
-
-// Save Game State
-bool Entity::SaveState(pugi::xml_node& data) const
-{
-	return true;
-}

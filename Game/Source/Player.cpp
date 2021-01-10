@@ -24,7 +24,7 @@
 #define POSXINIT 720
 #define POXYINIT 1584
 
-Player::Player() : Entity()
+Player::Player() : Module()
 {
 	name.Create("player");
 	

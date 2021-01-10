@@ -14,7 +14,7 @@
 
 struct Collider;
 
-class Player : public Entity
+class Player : public Module
 {
 
 public:

@@ -61,10 +61,6 @@ public:
 	virtual bool PostUpdate();
 	// Called before quitting
 	virtual bool CleanUp();
-	// Virtual methods to Load state
-	bool LoadState(pugi::xml_node&);
-	// Virtual methods to Save state
-	bool SaveState(pugi::xml_node&) const;
 
 public:
 

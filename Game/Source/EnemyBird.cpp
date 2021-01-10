@@ -32,11 +32,14 @@ void EnemyBird::Update()
 		iPoint mapPositionEnemy = app->map->WorldToMap(position.x, position.y);
 		Pathfinding(position.x, position.y);
 		int j = app->moduleEnemies->GetCurrentPositionInPath(mapPositionEnemy);
-		if (app->moduleEnemies->lastPath->At(j + 1) != NULL)
+		if (app->moduleEnemies->lastPath != nullptr)
 		{
-			iPoint nextPositionEnemy = *app->moduleEnemies->lastPath->At(j + 1);
-			iPoint nextAuxPositionEenemy = app->moduleEnemies->MapToWorld(nextPositionEnemy);
-			MoveEnemy(position, nextAuxPositionEenemy, mapPositionEnemy, enemyType);
+			if (app->moduleEnemies->lastPath->At(j + 1) != NULL)
+			{
+				iPoint nextPositionEnemy = *app->moduleEnemies->lastPath->At(j + 1);
+				iPoint nextAuxPositionEenemy = app->moduleEnemies->MapToWorld(nextPositionEnemy);
+				MoveEnemy(position, nextAuxPositionEenemy, mapPositionEnemy, enemyType);
+			}
 		}
 	}
 

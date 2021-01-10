@@ -264,9 +264,12 @@ void ModuleEnemies::CreatePathEnemy(iPoint mapPositionEnemy, iPoint mapPositionD
 int ModuleEnemies::GetCurrentPositionInPath(iPoint mapPositionEnemy)
 {
 	int i;
-	for (i = 0; i < lastPath->Count(); i++)
+	if (lastPath != nullptr)
 	{
-		if (mapPositionEnemy == iPoint({ lastPath->At(i)->x, lastPath->At(i)->y })) break;
+		for (i = 0; i < lastPath->Count(); i++)
+		{
+			if (mapPositionEnemy == iPoint({ lastPath->At(i)->x, lastPath->At(i)->y })) break;
+		}
 	}
 	return i;
 }
