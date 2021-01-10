@@ -75,7 +75,7 @@ void Enemy::Pathfinding(int positionx, int positiony)
 	iPoint mapPositionEnemy = app->map->WorldToMap(positionx, positiony);
 	iPoint worldPositionPlayer = app->player->position;
 	iPoint mapPositionPlayer = app->map->WorldToMap(worldPositionPlayer.x, worldPositionPlayer.y);
-	if (app->player->death != true)app->moduleEnemies->CreatePathEnemy(mapPositionEnemy, mapPositionPlayer);
+	if (app->player->death != true && app->player->appear != true)app->moduleEnemies->CreatePathEnemy(mapPositionEnemy, mapPositionPlayer);
 }
 
 void Enemy::MoveEnemy(iPoint positions, iPoint nextAuxPositionEenemy, iPoint mapPositionEnemy, EnemyType type)
