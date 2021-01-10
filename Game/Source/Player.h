@@ -146,6 +146,7 @@ public:
 	bool god = false;
 	bool death = false;
 	bool appear = false;
+	bool appleGUICollected = false;
 
 	int appleCounter = 0;
 	int whiteFont = -1;

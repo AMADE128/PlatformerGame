@@ -95,7 +95,7 @@ Player::Player() : Entity()
 	{
 		appleGUIAnim.PushBack({ i, 0, 96, 96 });
 	}
-	appleGUIAnim.loop = true;
+	appleGUIAnim.loop = false;
 	appleGUIAnim.speed = 0.4f;
 
 	for (int i = 0; i < TILESIZE * 7; i += TILESIZE)
@@ -775,8 +775,21 @@ bool Player::PostUpdate()
 	{
 		appleGUI->Update();
 	}
-	SDL_Rect appleGUIRect = appleGUI->GetCurrentFrame();
-	app->render->DrawTexture(appleTex, cameraColl->rect.x + 640, cameraColl->rect.y - 203, &appleGUIRect);
+	if (appleGUICollected == false) 
+	{
+		SDL_Rect appleUi = { 0, 0, 96, 96 };
+		app->render->DrawTexture(appleTex, cameraColl->rect.x + 640, cameraColl->rect.y - 203, &appleUi);
+	}
+	else if (appleGUICollected == true)
+	{
+		SDL_Rect appleGUIRect = appleGUI->GetCurrentFrame();
+		app->render->DrawTexture(appleTex, cameraColl->rect.x + 640, cameraColl->rect.y - 203, &appleGUIRect);
+	}
+	if (appleGUIAnim.finish == true)
+	{
+		appleGUICollected = false;
+		appleGUIAnim.Reset();
+	}
 	sprintf_s(scoreText, 10, "%d", appleCounter);
 	if (minutesLvl < 10) sprintf_s(minutesText, 10, "0%d:", minutesLvl);
 	else sprintf_s(minutesText, 10, "%d:", minutesLvl);
@@ -1150,6 +1163,7 @@ bool Player::CollectApple(Collider* c1, Collider* c2)
 	c1->isCollected = true;
 	app->moduleParticles->AddParticle(app->moduleParticles->fruitGet, c1->rect.x, c1->rect.y);
 	app->collision->RemoveCollider(c1);
+	appleGUICollected = true;
 
 	return true;
 }
@@ -1165,6 +1179,7 @@ bool Player::CollectPineapple(Collider* c1, Collider* c2)
 		app->player->lifes++;
 	}
 	app->collision->RemoveCollider(c1);
+	appleGUICollected = true;
 
 	return true;
 }
