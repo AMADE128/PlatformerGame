@@ -327,7 +327,6 @@ bool Player::Update(float dt)
 				nothingSaved = false;
 				cont = true;
 				playerSave = true;
-				//playerLoadF6 = true;
 				auxp.x = position.x;
 				auxp.y = position.y;
 				if (currentLvl == 1)
