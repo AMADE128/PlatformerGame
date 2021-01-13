@@ -21,7 +21,7 @@ struct Font
 	// Font setup data
 	uint totalLength;
 	uint rows, columns;
-	uint char_w, char_h;
+	uint charW, charH;
 };
 
 class Fonts : public Module
